@@ -1,1 +1,3 @@
 node_modules/ 
+backend/logs/app.log
+logs/app.log
