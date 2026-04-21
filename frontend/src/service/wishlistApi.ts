@@ -28,10 +28,10 @@ export const wishlistService = {
     }
   },
 
-  // 3. Xóa: Thêm kiểu string cho wishlistId
-  remove: async (wishlistId: string) => {
+  // 3. Xóa: Đã sửa lại để nhận userId và productId, gọi đúng endpoint của Spring Boot
+  remove: async (userId: string, productId: string) => {
     try {
-      const response = await axios.delete(`${API_URL}/${String(wishlistId)}`);
+      const response = await axios.delete(`${API_URL}/${String(userId)}/${String(productId)}`);
       return response.data;
     } catch (error) {
       console.error("Error removing from wishlist:", error);
