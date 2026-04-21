@@ -49,10 +49,11 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // 3. Hàm xóa
   const removeFromWishlist = async (productId: string) => {
     try {
-      // Tìm ID của dòng wishlist để xóa (nếu backend yêu cầu wishlistId)
-      // Hoặc sửa service để xóa theo userId/productId
-      await wishlistService.remove(productId); 
-      setWishlist((prev) => prev.filter((item) => String(item.productId) !== String(productId)));
+      // SỬA CHỖ SAI: Truyền đủ CURRENT_USER_ID và productId xuống service
+      await wishlistService.remove(CURRENT_USER_ID, productId); 
+      
+      // SỬA CHỖ SAI: Thêm fallback item.id để filter chạy chính xác với dữ liệu API
+      setWishlist((prev) => prev.filter((item) => String(item.productId || item.id) !== String(productId)));
     } catch (error) {
       console.error("Lỗi khi xóa:", error);
     }
