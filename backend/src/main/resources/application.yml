@@ -49,6 +49,8 @@ pricehawk:
   crawler:
     node-binary: ${PRICEHAWK_NODE_BINARY:npx.cmd}
     cocolux-refresh-script: ${PRICEHAWK_COCOLUX_REFRESH_SCRIPT}
+    hasaki-refresh-script: ${PRICEHAWK_HASAKI_REFRESH_SCRIPT}
+    guardian-refresh-script: ${PRICEHAWK_GUARDIAN_REFRESH_SCRIPT}
     timeout-seconds: ${PRICEHAWK_CRAWLER_TIMEOUT_SECONDS:90}
 
   debug:
