@@ -17,6 +17,6 @@ public class ProductSearchDTO {
     private String categoryName;
     private String brandName;
     private Double score;
-    private String imageurl;
+    private String imageUrl;
     private List<PlatformDTO> platforms;
 }

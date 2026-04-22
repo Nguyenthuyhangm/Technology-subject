@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,18 +37,37 @@ public class PriceHistoryService {
                 String platformName = platformRepository.findById(platformId)
                     .map(p -> p.getName())
                     .orElse("Unknown");
-                
-                List<PriceHistoryResponse.PricePoint> pricePoints = 
-                    groupedByPlatform.getOrDefault(platformId, List.of()).stream()
+
+                List<PriceRecord> platformRecords = groupedByPlatform.getOrDefault(platformId, List.of());
+
+                List<PriceHistoryResponse.PricePoint> pricePoints =
+                    platformRecords.stream()
                         .map(pr -> PriceHistoryResponse.PricePoint.builder()
                             .crawledAt(pr.getCrawledAt())
                             .price(pr.getPrice())
                             .build())
                         .collect(Collectors.toList());
-                
+
+                Integer latestPrice = platformRecords.stream()
+                    .max(Comparator.comparing(PriceRecord::getCrawledAt))
+                    .map(PriceRecord::getPrice)
+                    .orElse(null);
+
+                Double averagePrice30Days = platformRecords.isEmpty()
+                    ? null
+                    : platformRecords.stream()
+                        .collect(Collectors.averagingInt(PriceRecord::getPrice));
+
+                Boolean fakePriceIncreaseWarning = latestPrice != null
+                    && averagePrice30Days != null
+                    && latestPrice > averagePrice30Days;
+
                 return PriceHistoryResponse.PlatformPriceData.builder()
                     .platformId(platformId)
                     .platformName(platformName)
+                    .latestPrice(latestPrice)
+                    .averagePrice30Days(averagePrice30Days)
+                    .fakePriceIncreaseWarning(fakePriceIncreaseWarning)
                     .prices(pricePoints)
                     .build();
             })

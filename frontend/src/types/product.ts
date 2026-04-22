@@ -1,66 +1,75 @@
-export type Platform = 'Shopee' | 'Lazada' | 'Tiki' | 'Sendo';
 
-export type PlatformPrice = {
-  platform: Platform;
-  shopName: string;
-  shopLogo?: string;
-  isOfficial: boolean;
-  currentPrice: number;
-  originalPrice: number;
-  voucherDiscount: number;
-  shippingFee: number;
-  finalPrice: number;
-  rating: number;
-  soldCount: number;
-  inStock: boolean;
-  lastCrawledAt: string;
-  url: string;
-};
+export type PlatformName = 'Coculux' | 'Gardian' | 'Hasaki';
 
-export type PricePoint = {
-  date: string;
-  price: number;
-  originalPrice?: number;
-};
+export interface Platform {
 
-export type PromotionEvent = {
-  id: string;
-  title: string;
-  date: string;
-  type: 'flash-sale' | 'voucher' | 'campaign' | 'price-drop';
-  note?: string;
-};
+  platform : string ;
+  url : string ;
+  platformImageUrl : string ;
+  finalPrice : number ;
+  isOfficial : boolean ;
 
-export type PriceInsight = {
-  isLowest30Days: boolean;
-  isLowest90Days: boolean;
-  isFakeDiscountRisk: boolean;
-  lowerThanAvg30dPercent: number;
-  recommendation: 'buy-now' | 'wait' | 'watch';
-  summary: string;
-};
 
-export type ProductSpecMap = Record<string, string>;
-
-export type Product = {
-  id: number;
-  slug: string;
+// Map từ ProductSearchDTO
+}
+export interface ProductSearch {
+  id: string;           // UUID — mock đang dùng number, cần đổi
   name: string;
-  brand: string;
-  model: string;
-  category: string;
-  subcategory?: string;
-  images: string;
   description: string;
-  specs: ProductSpecMap;
-  rating: number;
-  reviews: number;
-  platforms: PlatformPrice[];
-  priceHistory7d: PricePoint[];
-  priceHistory30d: PricePoint[];
-  priceHistory90d: PricePoint[];
-  promotionEvents: PromotionEvent[];
-  insight: PriceInsight;
-  isWishlisted: boolean;
-  relatedProductIds: number[];
+  categoryName: string;
+  brandName: string;
+  score: number;
+  imageUrl: string;
+  platforms: Platform[];
+}
+
+// Map từ PriceComparisonResponse
+export interface PriceComparison {
+  productId: string;
+  productName: string;
+  imageUrls: string[];
+  comparisons: PriceComparisonItem[];
+}
+
+export interface PriceComparisonItem {
+  platformId: number;
+  platformName: string;
+  listingId: string;
+  url: string;
+  platformImageUrl: string;
+  price: number;
+  originalPrice: number;
+  discountPct: number;
+  inStock: boolean;
+  promotionLabel: string;
+  isFlashSale: boolean;
+  crawledAt: string;
+}
+
+// Map từ PriceHistoryResponse
+export interface PriceHistory {
+  productId: string;
+  platforms: PlatformPriceData[];
+}
+
+export interface PlatformPriceData {
+  platformId: number;
+  platformName: string;
+  latestPrice: number;
+  averagePrice30Days: number;
+  fakePriceIncreaseWarning: boolean;
+  prices: PricePoint[];
+}
+
+export interface PricePoint {
+  crawledAt: string;
+  price: number;
+}
+export type Product = {
+  id: string;
+  name: string;
+  images: string[];
+  brand: string;
+  category: string;
+  platforms: any[];
 };

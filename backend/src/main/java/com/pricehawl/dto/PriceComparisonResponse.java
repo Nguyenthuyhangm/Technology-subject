@@ -16,7 +16,7 @@ public class PriceComparisonResponse {
 
     private UUID productId;
     private String productName;
-    private String productImageUrl;
+    private List<String> imageUrls;
 
     private List<PriceComparisonItemResponse> comparisons;
 }

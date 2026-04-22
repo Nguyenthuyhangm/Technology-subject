@@ -22,6 +22,9 @@ public class PriceHistoryResponse {
     public static class PlatformPriceData {
         private Integer platformId;
         private String platformName;
+        private Integer latestPrice;
+        private Double averagePrice30Days;
+        private Boolean fakePriceIncreaseWarning;
         private List<PricePoint> prices;
     }
     

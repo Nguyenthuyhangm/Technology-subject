@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Bell } from 'lucide-react';
+import  { useEffect, useState } from 'react';
+//import { Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const FONT_STACK = {

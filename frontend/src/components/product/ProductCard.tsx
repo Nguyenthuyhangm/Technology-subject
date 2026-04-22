@@ -1,6 +1,6 @@
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Badge from '../common/Badge';
+// import Badge from '../common/Badge';
 import type { Product } from '../../types/product';
 
 const FONT_STACK = {
@@ -25,14 +25,19 @@ export default function ProductCard({ product }: ProductCardProps) {
     (a, b) => a.finalPrice - b.finalPrice,
   )[0];
 
+  const imageSrc = product.images?.[0] || '/fallback-product.jpg';
+
   return (
     <Link to={`/product/${product.id}`} className="group block">
       <article className="glass shadow-soft overflow-hidden rounded-[32px] p-5 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_25px_60px_rgba(15,23,42,0.08)]">
         <div className="relative overflow-hidden rounded-[26px] bg-[#F6F1EB]">
           <img
-            src={product.images[0]}
+            src={imageSrc}
             alt={product.name}
             className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            onError={(e) => {
+              e.currentTarget.src = '/fallback-product.jpg';
+            }}
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/0 to-white/10" />
@@ -54,7 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
 
             <span className="text-xs text-stone-400">
-              {product.rating} · {product.reviews.toLocaleString('vi-VN')} reviews
+              {product.category}
             </span>
           </div>
 
@@ -65,16 +70,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {!product.insight.isFakeDiscountRisk && (
-              <Badge variant="brand">Deal tuyển chọn</Badge>
-            )}
-
-            {product.insight.isLowest30Days && (
-              <Badge variant="soft">Giá đẹp 30 ngày</Badge>
-            )}
-          </div>
-
           <div className="mt-5 flex items-baseline gap-3">
             <span className="text-[1.4rem] font-semibold tracking-tight text-stone-900">
               {formatPrice(bestOffer.finalPrice)}
@@ -84,10 +79,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               {formatPrice(bestOffer.originalPrice)}
             </span>
           </div>
-
-          <p className="mt-4 text-sm leading-7 text-stone-500">
-            {product.insight.summary}
-          </p>
         </div>
       </article>
     </Link>

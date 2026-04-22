@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Badge from '../common/Badge';
 
 type ProductGalleryProps = {
@@ -22,7 +22,7 @@ export default function ProductGallery({
 
       <div className="grid gap-4 md:grid-cols-[92px_1fr]">
         <div className="order-2 flex gap-3 md:order-1 md:flex-col">
-          {images.map((image, index) => (
+          {(images || []).map((image, index) => (
             <button
               key={`${image}-${index}`}
               type="button"
@@ -45,7 +45,7 @@ export default function ProductGallery({
         <div className="order-1 rounded-[32px] bg-[#F6F1EB] p-6 md:order-2">
           <div className="aspect-square overflow-hidden rounded-[30px]">
             <img
-              src={images[activeIndex]}
+             src={images?.[activeIndex] || ''}
               alt={title}
               className="h-full w-full object-cover"
             />
