@@ -54,6 +54,13 @@ public class ProductListing {
     @Builder.Default
     private Boolean isPinned = false;
 
+    /**
+     * Thời điểm lần cuối auto-crawl giá thành công.
+     * Map với cột crawl_time trong DB.
+     */
+    @Column(name = "crawl_time")
+    private LocalDateTime crawlTime;
+
     @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
