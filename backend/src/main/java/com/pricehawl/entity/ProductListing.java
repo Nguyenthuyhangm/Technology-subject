@@ -61,11 +61,21 @@ public class ProductListing {
     @Column(name = "crawl_time")
     private LocalDateTime crawlTime;
 
-    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Map quan hệ 1-Nhiều tới bảng price_record
+    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("updatedAt DESC") // Luôn lấy record mới nhất lên đầu
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
 
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Helper để lấy promotion label cho ProductService gọi
+    public String getPromotionLabel() {
+        if (this.priceRecords != null && !this.priceRecords.isEmpty()) {
+            return this.priceRecords.get(0).getPromotionLabel();
+        }
+        return null;
+    }
 }

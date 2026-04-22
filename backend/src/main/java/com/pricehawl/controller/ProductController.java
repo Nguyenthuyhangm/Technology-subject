@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.List;
 
-
 @RestController
 @RequestMapping(path = {"/products", "/api/products"})
 @CrossOrigin(origins = "http://localhost:5173")
@@ -30,35 +29,36 @@ public class ProductController {
     @GetMapping("/search")
     public List<ProductSearchDTO> search(
             @RequestParam(value = "q", required = false, defaultValue = "") String keyword,
-            // Hỗ trợ cả 2 cú pháp: `?platform=Hasaki&platform=Cocolux` (chuẩn REST,
-            // FE gửi mặc định) và `?platform=Hasaki,Cocolux` (fallback, sẽ được
-            // tách ở service layer nếu cần). Null khi FE không chọn sàn nào.
-            @RequestParam(value = "platform", required = false) List<String> platforms) {
-
+            @RequestParam(value = "platform", required = false) List<String> platforms,
+            @RequestParam(value = "categoryId", required = false, defaultValue = "all") String categoryId,
+            @RequestParam(value = "promo", required = false, defaultValue = "all") String promo) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            log.debug("/products/search: keyword rỗng → trả về []");
+            log.debug("/products/search: keyword rỗng -> trả về []");
             return Collections.emptyList();
         }
 
         try {
-            List<ProductSearchDTO> result = service.search(keyword, platforms);
+            List<ProductSearchDTO> result = service.search(keyword, platforms, categoryId, promo);
 
-            
             if (result == null) {
-                log.warn("/products/search: service.search(\"{}\") trả về null, quy về [] để FE render an toàn", keyword);
+                log.warn(
+                        "/products/search: service.search(keyword='{}', platforms={}, categoryId='{}', promo='{}') trả về null, quy về []",
+                        keyword, platforms, categoryId, promo
+                );
                 return Collections.emptyList();
             }
+
             return result;
 
         } catch (Exception ex) {
-            
             log.error(
-                    "/products/search FAILED — keyword='{}', exception={}, message={}",
-                    keyword,
+                    "/products/search FAILED - keyword='{}', platforms={}, categoryId='{}', promo='{}', exception={}, message={}",
+                    keyword, platforms, categoryId, promo,
                     ex.getClass().getSimpleName(),
                     ex.getMessage(),
-                    ex);
+                    ex
+            );
             return Collections.emptyList();
         }
     }

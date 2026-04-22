@@ -27,7 +27,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
 @Service
 public class ProductService {
 
@@ -44,38 +43,33 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<ProductSearchDTO> search(String keyword) {
-        // Giữ signature cũ → các caller/test hiện tại không cần đổi.
-        // Delegate sang overload có filter platform = null (không filter).
-        return search(keyword, null);
+        // Giữ signature cũ để không làm vỡ caller/test hiện tại
+        return search(keyword, null, "all", "all");
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductSearchDTO> search(String keyword, List<String> platforms) {
+        // Giữ overload cũ để không làm vỡ caller/test hiện tại
+        return search(keyword, platforms, "all", "all");
     }
 
     /**
-     * Search + filter động theo platform.
+     * Search + filter động theo platform + category + promo.
      *
-     * @param keyword     keyword fuzzy search
-     * @param platforms   danh sách platform name muốn lọc (ví dụ ["Hasaki","Cocolux"]).
-     *                    Null/empty → không filter platform, hành vi như search(keyword).
-     *
-     * Cách xây dựng dynamic filter platform:
-     *  - Không đổi native query fuzzySearchRaw (để không tác động đến ranking/score).
-     *  - Sau khi đã có danh sách products kèm listings, filter PlatformDTO theo
-     *    `platform name` (case-insensitive) ở tầng service. Product không còn
-     *    platform nào khớp → loại khỏi kết quả.
-     *
-     * Cách xử lý multiple platforms:
-     *  - Chuẩn hoá sang lowercase Set để O(1) contains và không phụ thuộc thứ tự.
-     *  - Null phần tử / chuỗi rỗng được bỏ qua → tránh filter toàn bộ về rỗng do
-     *    FE gửi "platform=" rỗng.
-     *
-     * Cách xử lý platform null (không filter):
-     *  - `platformFilter == null || isEmpty` → return early mà không touch
-     *    danh sách PlatformDTO gốc.
+     * @param keyword    keyword fuzzy search
+     * @param platforms  danh sách platform name muốn lọc
+     * @param categoryId category slug/id từ controller truyền xuống; "all" => bỏ qua
+     * @param promo      "all" | "sale" | "flash_sale"
      */
     @Transactional(readOnly = true)
-    public List<ProductSearchDTO> search(String keyword, List<String> platforms) {
+    public List<ProductSearchDTO> search(String keyword,
+                                         List<String> platforms,
+                                         String categoryId,
+                                         String promo) {
         if (keyword == null || keyword.trim().length() < 2) {
             return Collections.emptyList();
         }
+
         final String kw = keyword.trim();
         final Set<String> platformFilter = normalizePlatformFilter(platforms);
 
@@ -86,6 +80,7 @@ public class ProductService {
             log.error("fuzzySearchRaw failed for keyword='{}': {}", kw, ex.getMessage(), ex);
             return Collections.emptyList();
         }
+
         if (rows == null || rows.isEmpty()) {
             return Collections.emptyList();
         }
@@ -96,7 +91,6 @@ public class ProductService {
                 .distinct()
                 .toList();
 
-       
         Map<UUID, Product> productById = new HashMap<>();
         if (!ids.isEmpty()) {
             try {
@@ -112,24 +106,28 @@ public class ProductService {
                 log.warn("findAllByIdIn failed, tiếp tục với map rỗng: {}", ex.getMessage());
             }
         }
- 
+
         final Map<UUID, PriceRecord> latestPriceByListing =
                 fetchLatestPrices(productById.values());
 
         final Map<UUID, Product> productMap = productById;
+
         return rows.stream()
                 .map(r -> {
                     try {
-                        return mapRowToDto(r, productMap, latestPriceByListing);
+                        ProductSearchDTO dto = mapRowToDto(r, productMap, latestPriceByListing);
+                        if (dto == null) return null;
+
+                        Product product = productMap.get(dto.getId());
+                        if (!matchesCategory(product, categoryId)) return null;
+                        if (!matchesPromo(product, promo)) return null;
+
+                        return applyPlatformFilter(dto, platformFilter);
                     } catch (Exception ex) {
                         log.warn("Bỏ qua row search lỗi: {}", ex.getMessage());
                         return null;
                     }
                 })
-                .filter(Objects::nonNull)
-                // Áp filter platform sau khi đã map xong. Nếu platformFilter
-                // null → applyPlatformFilter trả về DTO không đổi.
-                .map(dto -> applyPlatformFilter(dto, platformFilter))
                 .filter(Objects::nonNull)
                 .toList();
     }
@@ -137,21 +135,22 @@ public class ProductService {
     /**
      * Lọc danh sách platforms của một DTO theo filter đã chuẩn hoá.
      * @return DTO mới với list đã lọc; null nếu filter không rỗng nhưng không còn
-     *         platform nào khớp (caller loại bỏ khỏi kết quả).
+     *         platform nào khớp.
      */
     private static ProductSearchDTO applyPlatformFilter(
             ProductSearchDTO dto,
             Set<String> platformFilter) {
         if (dto == null) return null;
+
         if (platformFilter == null || platformFilter.isEmpty()) {
-            // Không filter → trả thẳng DTO gốc để tránh copy không cần thiết.
             return dto;
         }
+
         List<PlatformDTO> src = dto.getPlatforms();
         if (src == null || src.isEmpty()) {
-            // Không có platform nào mà filter yêu cầu ít nhất 1 → loại.
             return null;
         }
+
         List<PlatformDTO> filtered = new ArrayList<>(src.size());
         for (PlatformDTO p : src) {
             if (p == null || p.getPlatform() == null) continue;
@@ -160,19 +159,22 @@ public class ProductService {
                 filtered.add(p);
             }
         }
+
         if (filtered.isEmpty()) {
             return null;
         }
+
         dto.setPlatforms(filtered);
         return dto;
     }
 
     /**
      * Chuẩn hoá list platform query param: trim + lowercase + bỏ rỗng + dedup.
-     * Trả về null khi không có filter hợp lệ (→ service bỏ qua filter).
+     * Trả về null khi không có filter hợp lệ.
      */
     private static Set<String> normalizePlatformFilter(List<String> raw) {
         if (raw == null || raw.isEmpty()) return null;
+
         Set<String> out = new LinkedHashSet<>();
         for (String s : raw) {
             if (s == null) continue;
@@ -180,13 +182,57 @@ public class ProductService {
             if (n.isEmpty()) continue;
             out.add(n.toLowerCase(Locale.ROOT));
         }
+
         return out.isEmpty() ? null : out;
+    }
+
+    private static boolean matchesCategory(Product product, String categoryId) {
+        if (categoryId == null || categoryId.isBlank() || "all".equalsIgnoreCase(categoryId)) {
+            return true;
+        }
+        if (product == null || product.getCategory() == null) {
+            return false;
+        }
+
+        String input = categoryId.trim();
+        String slug = product.getCategory().getSlug();
+
+        if (slug != null && input.equalsIgnoreCase(slug)) {
+            return true;
+        }
+
+        Integer catId = product.getCategory().getId();
+        return catId != null && input.equals(String.valueOf(catId));
+    }
+
+    private static boolean matchesPromo(Product product, String promo) {
+        if (promo == null || promo.isBlank() || "all".equalsIgnoreCase(promo)) {
+            return true;
+        }
+        if (product == null || product.getListings() == null || product.getListings().isEmpty()) {
+            return false;
+        }
+
+        return product.getListings().stream()
+                .filter(Objects::nonNull)
+                .anyMatch(l -> {
+                    String label = l.getPromotionLabel();
+                    if (label == null) return false;
+
+                    String normalized = label.toLowerCase(Locale.ROOT);
+                    if ("sale".equalsIgnoreCase(promo)) {
+                        return normalized.contains("sale");
+                    }
+                    if ("flash_sale".equalsIgnoreCase(promo)) {
+                        return normalized.contains("flash");
+                    }
+                    return true;
+                });
     }
 
     /**
      * Gom toàn bộ listing id từ các product đã load, gọi 1 query batch để lấy
-     * PriceRecord mới nhất của mỗi listing. Trả về Map&lt;listingId, record&gt;.
-     * Có lỗi DB → trả Map rỗng (finalPrice sẽ fallback 0.0, không 500).
+     * PriceRecord mới nhất của mỗi listing. Trả về Map<listingId, record>.
      */
     private Map<UUID, PriceRecord> fetchLatestPrices(Collection<Product> products) {
         if (products == null || products.isEmpty()) {
@@ -211,12 +257,11 @@ public class ProductService {
         try {
             List<PriceRecord> latest =
                     priceRecordRepository.findLatestByProductListingIdIn(listingIds);
+
             if (latest == null || latest.isEmpty()) {
                 return Collections.emptyMap();
             }
 
-            // Trong tình huống hiếm gặp có nhiều record cùng crawledAt trên
-            // cùng listing, giữ lại 1 (merger: a → a).
             return latest.stream()
                     .filter(pr -> pr != null
                             && pr.getProductListing() != null
@@ -224,7 +269,8 @@ public class ProductService {
                     .collect(Collectors.toMap(
                             pr -> pr.getProductListing().getId(),
                             pr -> pr,
-                            (a, b) -> a));
+                            (a, b) -> a
+                    ));
         } catch (Exception ex) {
             log.warn("findLatestByProductListingIdIn failed, giá sẽ fallback 0: {}",
                     ex.getMessage());
@@ -261,23 +307,25 @@ public class ProductService {
 
     private static String resolveImageUrl(Product product) {
         if (product == null) return null;
+
         String url = product.getImageUrl();
         if (url != null && !url.isEmpty()) return url;
+
         List<ProductListing> listings = product.getListings();
         if (listings != null && !listings.isEmpty()) {
             ProductListing first = listings.get(0);
-            if (first != null && first.getPlatformImageUrl() != null
+            if (first != null
+                    && first.getPlatformImageUrl() != null
                     && !first.getPlatformImageUrl().isEmpty()) {
                 return first.getPlatformImageUrl();
             }
         }
+
         return null;
     }
 
     /**
-     * Map listings → danh sách PlatformDTO. LUÔN trả về List (có thể rỗng,
-     * không bao giờ null). Điền finalPrice từ map giá mới nhất đã batch-fetch;
-     * nếu thiếu record thì fallback 0.0.
+     * Map listings -> danh sách PlatformDTO. Luôn trả về list, không null.
      */
     private static List<PlatformDTO> mapPlatforms(
             Product product,
@@ -285,6 +333,7 @@ public class ProductService {
         if (product == null || product.getListings() == null || product.getListings().isEmpty()) {
             return Collections.emptyList();
         }
+
         return product.getListings().stream()
                 .filter(Objects::nonNull)
                 .map(l -> {
@@ -297,13 +346,13 @@ public class ProductService {
                             ? null
                             : latestPriceByListing.get(l.getId());
                     p.setFinalPrice(toDoublePrice(latest));
-                    p.setIsOfficial(Boolean.TRUE); 
+                    p.setIsOfficial(Boolean.TRUE);
+
                     return p;
                 })
                 .toList();
     }
 
-    /** Lấy giá double an toàn từ PriceRecord (null → 0.0). */
     private static double toDoublePrice(PriceRecord pr) {
         if (pr == null || pr.getPrice() == null) return 0.0;
         return pr.getPrice().doubleValue();
@@ -326,7 +375,7 @@ public class ProductService {
                 safeStr(r, 4),        // brandName
                 safeScore(r, 5),      // score
                 resolveImageUrl(product),
-                mapPlatforms(product, latestPriceByListing) // luôn non-null
+                mapPlatforms(product, latestPriceByListing)
         );
     }
 }

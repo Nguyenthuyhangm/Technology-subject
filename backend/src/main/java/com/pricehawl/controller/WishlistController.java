@@ -1,7 +1,7 @@
 package com.pricehawl.controller;
 
-import com.pricehawl.dto.WishlistResponse;
 import com.pricehawl.dto.WishlistRequest;
+import com.pricehawl.dto.WishlistResponse;
 import com.pricehawl.entity.Wishlist;
 import com.pricehawl.exception.ResourceNotFoundException;
 import com.pricehawl.service.WishlistService;
@@ -34,48 +34,58 @@ public class WishlistController {
             List<WishlistResponse> wishlist = wishlistService.getWishlistByUser(userUuid);
             return ResponseEntity.ok(wishlist);
         } catch (IllegalArgumentException ex) {
-            // userId không phải UUID hợp lệ
             log.warn("getWishlist: userId không hợp lệ '{}'", userId);
             return buildError(HttpStatus.BAD_REQUEST, "userId không hợp lệ: " + userId);
         } catch (Exception ex) {
             log.error("getWishlist: lỗi khi lấy wishlist cho userId={}", userId, ex);
-            return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Không lấy được wishlist: " + ex.getMessage());
+            return buildError(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Không lấy được wishlist: " + ex.getMessage()
+            );
         }
     }
 
     // 2) Thêm vào wishlist
+    // Dùng @RequestBody để khớp với axios.post(URL, { userId, productId })
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody WishlistRequest request) {
         try {
             if (request == null || request.getUserId() == null || request.getProductId() == null) {
                 log.warn("add: payload thiếu userId hoặc productId: {}", request);
-                return buildError(HttpStatus.BAD_REQUEST,
-                        "Thiếu userId hoặc productId trong payload");
+                return buildError(
+                        HttpStatus.BAD_REQUEST,
+                        "Thiếu userId hoặc productId trong payload"
+                );
             }
 
-            Wishlist newEntry = wishlistService.addToWishlist(request.getUserId(), request.getProductId());
+            Wishlist newEntry = wishlistService.addToWishlist(
+                    request.getUserId(),
+                    request.getProductId()
+            );
+
             if (newEntry == null) {
                 // đã tồn tại
-                return buildError(HttpStatus.CONFLICT,
-                        "Sản phẩm đã có trong wishlist");
+                return buildError(HttpStatus.CONFLICT, "Sản phẩm đã có trong wishlist");
             }
+
             return ResponseEntity.ok(newEntry);
         } catch (Exception ex) {
-            log.error("add: lỗi khi thêm wishlist (userId={}, productId={})",
+            log.error(
+                    "add: lỗi khi thêm wishlist (userId={}, productId={})",
                     request != null ? request.getUserId() : null,
-                    request != null ? request.getProductId() : null, ex);
-            return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Không thêm được wishlist: " + ex.getMessage());
+                    request != null ? request.getProductId() : null,
+                    ex
+            );
+            return buildError(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Không thêm được wishlist: " + ex.getMessage()
+            );
         }
     }
 
     /**
-     * 3a) Xóa theo productId — endpoint chính FE đang gọi: DELETE /api/wishlist/{productId}?userId=xxx
-     *
-     * FE hiện gọi DELETE /api/wishlist/{productId} với chỉ 1 path param (productId),
-     * userId truyền qua query string. Trước đây BE chỉ có endpoint 2 path param nên
-     * request rơi vào no-handler → GlobalExceptionHandler bắt Exception → trả 500.
+     * 3a) Xóa theo productId — endpoint chính FE đang gọi:
+     * DELETE /api/wishlist/{productId}?userId=xxx
      */
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> removeByProduct(
@@ -84,11 +94,9 @@ public class WishlistController {
 
         log.info("DELETE /api/wishlist/{} (userId query = {})", productIdRaw, userIdRaw);
 
-        // Validate input
         if (userIdRaw == null || userIdRaw.isBlank()) {
             log.warn("removeByProduct: thiếu query param userId");
-            return buildError(HttpStatus.BAD_REQUEST,
-                    "Thiếu query parameter 'userId'");
+            return buildError(HttpStatus.BAD_REQUEST, "Thiếu query parameter 'userId'");
         }
 
         UUID userId;
@@ -97,25 +105,34 @@ public class WishlistController {
             userId = UUID.fromString(userIdRaw);
             productId = UUID.fromString(productIdRaw);
         } catch (IllegalArgumentException ex) {
-            log.warn("removeByProduct: UUID không hợp lệ userId={}, productId={}", userIdRaw, productIdRaw);
-            return buildError(HttpStatus.BAD_REQUEST,
-                    "userId hoặc productId không phải UUID hợp lệ");
+            log.warn(
+                    "removeByProduct: UUID không hợp lệ userId={}, productId={}",
+                    userIdRaw, productIdRaw
+            );
+            return buildError(
+                    HttpStatus.BAD_REQUEST,
+                    "userId hoặc productId không phải UUID hợp lệ"
+            );
         }
 
         try {
             wishlistService.removeFromWishlist(userId, productId);
             return ResponseEntity.noContent().build();
         } catch (ResourceNotFoundException ex) {
-            // không tìm thấy record → 404 thay vì 500
-            log.warn("removeByProduct: không tìm thấy wishlist item (userId={}, productId={})",
-                    userId, productId);
+            log.warn(
+                    "removeByProduct: không tìm thấy wishlist item (userId={}, productId={})",
+                    userId, productId
+            );
             return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
         } catch (Exception ex) {
-            // log full stacktrace để biết chính xác lỗi DB/JPA/constraint
-            log.error("removeByProduct: lỗi không xác định khi xóa wishlist (userId={}, productId={})",
-                    userId, productId, ex);
-            return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Không xóa được wishlist: " + ex.getMessage());
+            log.error(
+                    "removeByProduct: lỗi không xác định khi xóa wishlist (userId={}, productId={})",
+                    userId, productId, ex
+            );
+            return buildError(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Không xóa được wishlist: " + ex.getMessage()
+            );
         }
     }
 
@@ -129,12 +146,17 @@ public class WishlistController {
             wishlistService.removeFromWishlist(userId, productId);
             return ResponseEntity.noContent().build();
         } catch (ResourceNotFoundException ex) {
-            log.warn("remove: không tìm thấy wishlist item (userId={}, productId={})", userId, productId);
+            log.warn(
+                    "remove: không tìm thấy wishlist item (userId={}, productId={})",
+                    userId, productId
+            );
             return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
         } catch (Exception ex) {
             log.error("remove: lỗi khi xóa wishlist (userId={}, productId={})", userId, productId, ex);
-            return buildError(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Không xóa được wishlist: " + ex.getMessage());
+            return buildError(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Không xóa được wishlist: " + ex.getMessage()
+            );
         }
     }
 
