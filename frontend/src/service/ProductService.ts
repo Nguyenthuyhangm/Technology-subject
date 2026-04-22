@@ -2,9 +2,22 @@ import type {ProductSearch, PriceComparison, PriceHistory} from '../types/produc
 
 const BASE_URL = 'http://localhost:8080';
 
-// Search → GET /products/search?q=...
-export async function searchProducts(query: string): Promise<ProductSearch[]> {
-    const res = await fetch(`${BASE_URL}/products/search?q=${encodeURIComponent(query)}`);
+// 🔥 SỬA CHỖ NÀY: Thêm categorySlug và promo để đồng bộ với Frontend và Backend
+// Search → GET /products/search?q=...&categoryId=...&promo=...
+export async function searchProducts(query: string, categorySlug: string = 'all', promo: string = 'all'): Promise<ProductSearch[]> {
+    let url = `${BASE_URL}/products/search?q=${encodeURIComponent(query)}`;
+    
+    // Nếu có chọn danh mục khác "Tất cả", nối thêm vào URL
+    if (categorySlug !== 'all') {
+        url += `&categoryId=${encodeURIComponent(categorySlug)}`;
+    }
+    
+    // Nếu có chọn khuyến mãi khác "Tất cả", nối thêm vào URL
+    if (promo !== 'all') {
+        url += `&promo=${encodeURIComponent(promo)}`;
+    }
+
+    const res = await fetch(url);
     if (!res.ok) throw new Error("API error");
     return res.json();
 }

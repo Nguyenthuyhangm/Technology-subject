@@ -42,8 +42,8 @@ class ProductServiceTest {
 
         when(repository.fuzzySearchRaw("serum")).thenReturn(mockData);
 
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("serum", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("serum", "all", "all");
 
         assertEquals(1, result.size());
 
@@ -71,8 +71,8 @@ class ProductServiceTest {
 
         when(repository.fuzzySearchRaw("sunsreen")).thenReturn(mockData);
 
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("sunsreen", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("sunsreen", "all", "all");
 
         assertFalse(result.isEmpty());
         assertEquals("Anessa Perfect UV Sunscreen", result.get(0).getName());
@@ -94,8 +94,8 @@ class ProductServiceTest {
 
         when(repository.fuzzySearchRaw("hada")).thenReturn(mockData);
 
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("hada", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("hada", "all", "all");
 
         assertEquals(0.0, result.get(0).getScore());
     }
@@ -103,8 +103,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("Should return empty when keyword too short")
     void testSearch_invalidKeyword() {
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("a", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("a", "all", "all");
 
         assertTrue(result.isEmpty());
         verify(repository, never()).fuzzySearchRaw(any());
@@ -115,8 +115,8 @@ class ProductServiceTest {
     void testSearch_noResult() {
         when(repository.fuzzySearchRaw("xyzabc")).thenReturn(Collections.emptyList());
 
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("xyzabc", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("xyzabc", "all", "all");
 
         assertTrue(result.isEmpty());
     }
@@ -126,8 +126,8 @@ class ProductServiceTest {
     void testSearch_repoNull() {
         when(repository.fuzzySearchRaw("serum")).thenReturn(null);
 
-        // 🔥 SỬA: Thêm tham số "all"
-        List<ProductSearchDTO> result = service.search("serum", "all");
+        // Thêm tham số "all" thứ 3 cho promo
+        List<ProductSearchDTO> result = service.search("serum", "all", "all");
 
         assertTrue(result.isEmpty());
     }

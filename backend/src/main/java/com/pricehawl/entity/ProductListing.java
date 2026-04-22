@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -41,4 +42,17 @@ public class ProductListing {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Map quan hệ 1-Nhiều tới bảng price_record (để lấy giá và label)
+    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("updatedAt DESC") // Luôn lấy record mới nhất lên đầu
+    private List<PriceRecord> priceRecords;
+
+    //Hàm Helper để lấy promotion label cho ProductService gọi
+    public String getPromotionLabel() {
+        if (this.priceRecords != null && !this.priceRecords.isEmpty()) {
+            return this.priceRecords.get(0).getPromotionLabel();
+        }
+        return null;
+    }
 }

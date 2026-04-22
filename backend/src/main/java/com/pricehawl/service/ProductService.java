@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.Objects; // Bổ sung import này để dùng Objects.nonNull
+import java.util.Objects;
 
 @Service
 public class ProductService {
@@ -21,8 +21,7 @@ public class ProductService {
         this.repository = repository;
     }
 
-    // 🔥 SỬA: Thêm tham số categoryId vào hàm
-    public List<ProductSearchDTO> search(String keyword, String categoryId) {
+    public List<ProductSearchDTO> search(String keyword, String categorySlug, String promo) {
 
         if (keyword == null || keyword.trim().length() < 2) {
             return Collections.emptyList();
@@ -36,48 +35,61 @@ public class ProductService {
             return Collections.emptyList();
         }
 
-        // 🔥 B1: lấy list id
         List<UUID> ids = rows.stream()
                 .map(r -> (UUID) r[0])
                 .toList();
 
-        // 🔥 B2: load full product + listings
-        // SỬA LỖI JAVA: Đổi tên thành rawProducts để tránh lỗi Lambda
         List<Product> rawProducts = repository.findAllById(ids); 
         
-        // Khai báo một biến final để Java cho phép dùng bên trong vòng lặp
         final List<Product> finalProducts;
 
-        // 🔥 MỚI THÊM: Lọc danh sách products theo danh mục nếu người dùng có chọn
-        if (categoryId != null && !categoryId.equals("all") && !categoryId.trim().isEmpty()) {
-            finalProducts = rawProducts.stream()
-                    .filter(p -> p.getCategory() != null && categoryId.equals(p.getCategory().getSlug()))
-                    .toList();
-        } else {
-            finalProducts = rawProducts;
-        }
+        // LOGIC LỌC TỔNG HỢP: Category + Promo
+        finalProducts = rawProducts.stream()
+                .filter(p -> {
+                    // 1. Lọc theo Category Slug
+                    boolean matchCat = (categorySlug == null || categorySlug.equals("all") || 
+                                       (p.getCategory() != null && categorySlug.equals(p.getCategory().getSlug())));
+                    
+                    // 2. Lọc theo Promo
+                    boolean matchPromo = true;
+                    if (promo != null && !promo.equals("all")) {
+                        // Thêm p.getListings() != null để chống sập server (NullPointerException)
+                        matchPromo = p.getListings() != null && p.getListings().stream().anyMatch(l -> {
+                            // String label = l.getPriceRecords() != null && !l.getPriceRecords().isEmpty() ? l.getPriceRecords().get(0).getPromotionLabel() : null;
+                            
+                            // Tạm thời để gọi phương thức trực tiếp 
+                            String label = l.getPromotionLabel(); 
+                            
+                            if (label == null) return false;
+                            
+                            if (promo.equals("sale")) return label.toLowerCase().contains("sale");
+                            if (promo.equals("flash_sale")) return label.toLowerCase().contains("flash");
+                            return true;
+                        });
+                    }
+                    
+                    return matchCat && matchPromo;
+                })
+                .toList();
 
         return rows.stream().map(r -> {
 
             UUID id = (UUID) r[0];
 
-            // tìm product tương ứng
-            // SỬA LỖI JAVA: Dùng finalProducts ở đây
             Product product = finalProducts.stream() 
                     .filter(p -> p.getId().equals(id))
                     .findFirst()
                     .orElse(null);
 
-            // 🔥 MỚI THÊM: Nếu product bị null (do bị lọc bỏ vì không đúng danh mục), thì bỏ qua row này
             if (product == null) {
                 return null;
             }
 
             String imageUrl = null;
             if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-                imageUrl = product.getImageUrl(); // Lấy ảnh gốc nếu có
+                imageUrl = product.getImageUrl(); 
             } else if (product.getListings() != null && !product.getListings().isEmpty()) {
-                imageUrl = product.getListings().get(0).getPlatformImageUrl(); // Không có thì mượn tạm ảnh của link bán đầu tiên
+                imageUrl = product.getListings().get(0).getPlatformImageUrl(); 
             }
 
             ProductSearchDTO dto = new ProductSearchDTO(
@@ -100,8 +112,7 @@ public class ProductService {
                     p.setUrl(l.getUrl());
                     p.setPlatformImageUrl(l.getPlatformImageUrl());
 
-                    // fake tạm
-                    p.setFinalPrice(0.0);
+                    p.setFinalPrice(0.0); 
                     p.setIsOfficial(true);
 
                     return p;
@@ -113,7 +124,7 @@ public class ProductService {
             return dto;
 
         })
-        .filter(Objects::nonNull) // 🔥 MỚI THÊM: Lọc bỏ các phần tử null khỏi danh sách kết quả cuối cùng
+        .filter(Objects::nonNull) 
         .toList();
     }
 }

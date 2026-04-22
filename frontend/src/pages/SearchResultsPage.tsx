@@ -11,20 +11,44 @@ const FONT_STACK = {
     sans: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 } as const;
 
-const platformOptions: Array<PlatformName | 'all'> = [
-    'all',
-    'Coculux',
-    'Gardian',
-    'Hasaki',
+const promotionOptions = [
+    { id: 'all', name: 'Tất cả' },
+    { id: 'sale', name: 'Đang giảm giá' },
+    { id: 'flash_sale', name: 'Flash Sale' },
 ];
 
-// MỚI: Thêm mảng danh mục gốc để hiển thị trong Dropdown
-const categoryOptions = [
-    { id: 'all', name: 'Tất cả danh mục' },
-    { id: 'cham-soc-da', name: 'Chăm sóc da' },
-    { id: 'trang-diem', name: 'Trang điểm' },
-    { id: 'cham-soc-co-the', name: 'Chăm sóc cơ thể' },
-    { id: 'cham-soc-toc', name: 'Chăm sóc tóc' }
+// 🔥 MỚI: Định nghĩa các nhóm danh mục dựa theo TẤT CẢ slug từ Database (bao gồm cả có dấu và không dấu)
+const SKINCARE_SLUGS = [
+    'kem-chống-nắng', 'kem-chong-nang', 
+    'serum', 
+    'sữa-rửa-mặt', 'sua-rua-mat', 
+    'toner', 
+    'kem-dưỡng', 'kem-duong', 
+    'mặt-nạ', 'mat-na', 
+    'tẩy-da-chết', 
+    'dưỡng-thể', 
+    'sữa-tắm'
+];
+
+const MAKEUP_SLUGS = [
+    'son-thỏi', 
+    'phấn-phủ', 
+    'son-môi', 'son-moi', 
+    'kem-nền', 'kem-nen', 
+    'phấn-mắt', 'phan-mat', 
+    'má-hồng', 'ma-hong', 
+    'cushion', 
+    'kẻ-mắt', 
+    'mascara', 
+    'tẩy-trang', 'tay-trang', 
+    'nước-hoa'
+];
+
+const HAIRCARE_SLUGS = [
+    'dầu-gội', 'dau-goi', 
+    'tạo-kiểu-tóc', 
+    'dầu-xả', 
+    'dưỡng-tóc'
 ];
 
 export default function SearchResultsPage() {
@@ -39,22 +63,37 @@ export default function SearchResultsPage() {
     const [sortBy, setSortBy] = useState<'best-price' | 'rating' | 'reviews'>('best-price');
     const [products, setProducts] = useState<ProductSearch[]>([]);
     
-    // MỚI: Thêm State lưu giá trị danh mục được chọn trong Dropdown
+    const [categories, setCategories] = useState<any[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
-    
+    const [selectedPromo, setSelectedPromo] = useState<string>('all');
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/categories/all')
+            .then(res => res.json())
+            .then(data => setCategories(data))
+            .catch(err => console.error("Lỗi load category:", err));
+    }, []);
+
+    // 🔥 SỬA CHỖ NÀY: Mở khóa để khi chỉ chọn Danh mục (không cần từ khóa) cũng load được sản phẩm
     useEffect(() => {
         if (query) {
-            searchProducts(query)
+            searchProducts(query, selectedCategory, selectedPromo)
+                .then(data => setProducts(data))
+                .catch(err => console.error(err));
+        } else if (selectedCategory !== 'all') {
+            // Khi ô tìm kiếm trống, nhưng người dùng có chọn danh mục ở Dropdown
+            getProductsByCategory(selectedCategory)
                 .then(data => setProducts(data))
                 .catch(err => console.error(err));
         } else if (slug) {
+            // Khi truy cập trực tiếp từ URL
             getProductsByCategory(slug)
                 .then(data => setProducts(data))
                 .catch(err => console.error(err));
         } else {
             setProducts([]);
         }
-    }, [query, slug]);
+    }, [query, slug, selectedCategory, selectedPromo]);
 
     const onSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -68,13 +107,13 @@ export default function SearchResultsPage() {
     const summaryText = useMemo(() => {
         const parts: string[] = [];
         parts.push(`${products.length} kết quả`);
-        if (platform !== 'all') parts.push(`trên ${platform}`);
+        if (selectedPromo !== 'all') parts.push(`loại: ${promotionOptions.find(p => p.id === selectedPromo)?.name}`);
         if (onlyOfficial) parts.push('ưu tiên gian hàng chính hãng');
         if (sortBy === 'best-price') parts.push('sắp theo giá tốt nhất');
         else if (sortBy === 'rating') parts.push('sắp theo đánh giá cao');
         else parts.push('sắp theo nhiều review');
         return parts.join(' · ');
-    }, [products.length, onlyOfficial, platform, sortBy]);
+    }, [products.length, onlyOfficial, selectedPromo, sortBy]);
 
     return (
         <div className="min-h-screen bg-[#FCF8F4] text-stone-900" style={{ fontFamily: FONT_STACK.sans }}>
@@ -120,18 +159,18 @@ export default function SearchResultsPage() {
 
                         <div className="mt-4 flex flex-col gap-4 pt-2 xl:flex-row xl:items-center xl:justify-between">
                             <div className="flex flex-wrap gap-2">
-                                {platformOptions.map((item) => (
+                                {promotionOptions.map((item) => (
                                     <button
-                                        key={item}
+                                        key={item.id}
                                         type="button"
-                                        onClick={() => setPlatform(item)}
+                                        onClick={() => setSelectedPromo(item.id)}
                                         className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${
-                                            platform === item
+                                            selectedPromo === item.id
                                                 ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
                                                 : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
                                         }`}
                                     >
-                                        {item === 'all' ? 'Tất cả sàn' : item}
+                                        {item.name}
                                     </button>
                                 ))}
 
@@ -148,23 +187,43 @@ export default function SearchResultsPage() {
                                 </button>
                             </div>
 
-                            {/* MỚI: Cụm bên phải chứa 2 Dropdown (Danh mục và Sắp xếp) */}
                             <div className="flex items-center gap-4 flex-wrap">
-                                {/* Dropdown Danh mục */}
+                                {/* 🔥 SỬA CHỖ NÀY: Dùng optgroup để phân nhóm danh mục */}
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm text-stone-400">Danh mục</span>
                                     <select
                                         value={selectedCategory}
                                         onChange={(e) => setSelectedCategory(e.target.value)}
-                                        className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300 cursor-pointer"
+                                        className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300 cursor-pointer max-w-[180px]"
                                     >
-                                        {categoryOptions.map(cat => (
-                                            <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                        ))}
+                                        <option value="all">Tất cả danh mục</option>
+                                        
+                                        <optgroup label="🌿 Chăm sóc da">
+                                            {categories.filter(c => SKINCARE_SLUGS.includes(c.slug)).map(cat => (
+                                                <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                            ))}
+                                        </optgroup>
+
+                                        <optgroup label="💄 Trang điểm">
+                                            {categories.filter(c => MAKEUP_SLUGS.includes(c.slug)).map(cat => (
+                                                <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                            ))}
+                                        </optgroup>
+
+                                        <optgroup label="💇‍♀️ Chăm sóc tóc">
+                                            {categories.filter(c => HAIRCARE_SLUGS.includes(c.slug)).map(cat => (
+                                                <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                            ))}
+                                        </optgroup>
+
+                                        <optgroup label="📦 Khác">
+                                            {categories.filter(c => !SKINCARE_SLUGS.includes(c.slug) && !MAKEUP_SLUGS.includes(c.slug) && !HAIRCARE_SLUGS.includes(c.slug)).map(cat => (
+                                                <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                            ))}
+                                        </optgroup>
                                     </select>
                                 </div>
 
-                                {/* Dropdown Sắp xếp (Cũ) */}
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm text-stone-400">Sắp xếp theo</span>
                                     <select

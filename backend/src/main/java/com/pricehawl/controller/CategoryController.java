@@ -24,4 +24,9 @@ public class CategoryController {
         List<Category> tree = categoryService.getCategoryTree();
         return ResponseEntity.ok(tree);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<Category>> getAllCategories() {
+        // Bạn có thể dùng hàm mặc định findAll() của JpaRepository
+        return ResponseEntity.ok(categoryService.getAll()); 
+    }
 }

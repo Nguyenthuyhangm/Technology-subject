@@ -19,12 +19,13 @@ public class ProductController {
         this.service = service;
     }
 
-    //  Thêm @RequestParam cho categoryId và truyền xuống service
+    //Thêm  @RequestParam cho promo và truyền đủ 3 biến xuống service
     @GetMapping("/search")
     public List<ProductSearchDTO> search(
             @RequestParam("q") String keyword,
-            @RequestParam(value = "categoryId", required = false, defaultValue = "all") String categoryId
+            @RequestParam(value = "categoryId", required = false, defaultValue = "all") String categoryId,
+            @RequestParam(value = "promo", required = false, defaultValue = "all") String promo
     ) {
-        return service.search(keyword, categoryId);
+        return service.search(keyword, categoryId, promo);
     }
 }

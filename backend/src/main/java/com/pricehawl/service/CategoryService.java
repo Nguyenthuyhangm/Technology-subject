@@ -17,4 +17,9 @@ public class CategoryService {
     public List<Category> getCategoryTree() {
         return categoryRepository.findByParentIsNull();
     }
+
+    // Lấy tất cả danh mục (dạng phẳng) để đổ vào Dropdown lọc
+    public List<Category> getAll() {
+        return categoryRepository.findAll();
+    }
 }

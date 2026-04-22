@@ -28,7 +28,7 @@ public class WishlistController {
         return ResponseEntity.ok(wishlist);
     }
 
-    // 2. SỬA HÀM ADD: Dùng @RequestBody để khớp với axios.post(URL, {userId, productId})
+    // 2. Dùng @RequestBody để khớp với axios.post(URL, {userId, productId})
     @PostMapping("/add")
     public ResponseEntity<Wishlist> add(@RequestBody WishlistRequest request) {
         Wishlist newEntry = wishlistService.addToWishlist(request.getUserId(), request.getProductId());
@@ -38,7 +38,7 @@ public class WishlistController {
         return ResponseEntity.ok(newEntry);
     }
 
-    // 3. SỬA HÀM REMOVE: Thông thường nên xóa theo productId của user đó
+    // 3.Thông thường nên xóa theo productId của user đó
     @DeleteMapping("/{userId}/{productId}")
     public ResponseEntity<Void> remove(@PathVariable UUID userId, @PathVariable UUID productId) {
         wishlistService.removeFromWishlist(userId, productId);

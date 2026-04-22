@@ -16,7 +16,7 @@ public class WishlistService {
     private WishlistRepository wishlistRepository;
 
     /**
-     * ✅ SỬA: Thay đổi kiểu trả về từ List<Wishlist> thành List<WishlistResponse>
+     * Thay đổi kiểu trả về từ List<Wishlist> thành List<WishlistResponse>
      * Để Frontend có thể nhận được Tên, Ảnh và Giá từ câu Query JOIN 5 bảng.
      */
     public List<WishlistResponse> getWishlistByUser(UUID userId) {
