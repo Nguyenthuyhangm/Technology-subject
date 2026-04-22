@@ -15,11 +15,11 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.44/lombok-1.18.44.jar" />
         </processorPath>
-        <module name="backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AutoCrawler" target="17" />
+      <module name="backend" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
