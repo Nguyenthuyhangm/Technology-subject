@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="efe5a658-cf13-416d-9716-6f1220373ed7" name="Changes" comment="Merge remote-tracking branch 'origin/moimoy' into hthhang&#10;# Conflicts:&#10;#&#9;backend/pom.xml&#10;#&#9;backend/src/main/java/com/pricehawl/BackendApplication.java&#10;#&#9;backend/src/main/java/com/pricehawl/entity/Wishlist.java&#10;#&#9;backend/src/main/resources/application.yml&#10;#&#9;frontend/src/components/product/ProductCard.tsx&#10;#&#9;frontend/src/components/product/ProductSummary.tsx&#10;#&#9;frontend/src/pages/HomePage.tsx&#10;#&#9;frontend/src/pages/WishlistPage.tsx">
+      <change beforePath="$PROJECT_DIR$/backend/logs/app.log.2026-04-14.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/app.log.2026-04-14.1.gz" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="3106" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="hthhang" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="8ca7ae44d2af422e7fce98143573873f9d4afca4" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;thhang05&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Nguyenthuyhangm/Chuy-n-Nh-t-B-n---5-.git&quot;,
+    &quot;accountId&quot;: &quot;842cb1a5-4f5c-4211-bdf3-ded3abb67c65&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3BzWjtDd0bmBD8bvsrw8dVHcbQh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "jdk.selected.JAVA_MODULE": "22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/lennovo/Chuy-n-Nh-t-B-n---5-/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "ml.llm.AcpAgentsConfigurable",
+    "ts.external.directory.path": "C:\\Users\\lennovo\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate 2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/Change SQL Dialect": [
+      "PostgreSQL"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\frontend" />
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\backend\src\main\java\com\pricehawl" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\frontend\src" />
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\backend\src\main\resources\db" />
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\backend\src\main\resources\db\" />
+      <recent name="C:\Users\lennovo\Chuy-n-Nh-t-B-n---5-\backend\src\main\com\pricehawl" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="efe5a658-cf13-416d-9716-6f1220373ed7" name="Changes" comment="" />
+      <created>1775492520552</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775492520552</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Create Entities">
+      <option name="closed" value="true" />
+      <created>1775891441348</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1775891441348</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat : price history">
+      <option name="closed" value="true" />
+      <created>1775978773186</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1775978773186</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat : price history">
+      <option name="closed" value="true" />
+      <created>1775978851022</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775978851022</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat : fake price alert">
+      <option name="closed" value="true" />
+      <created>1776096500074</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776096500074</updated>
+    </task>
+    <task id="LOCAL-00005" summary="sua fe">
+      <option name="closed" value="true" />
+      <created>1776096591719</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776096591719</updated>
+    </task>
+    <task id="LOCAL-00006" summary="sua fe">
+      <option name="closed" value="true" />
+      <created>1776096649220</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776096649220</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&quot;fe : search + compare + price history&quot;">
+      <option name="closed" value="true" />
+      <created>1776173400885</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776173400885</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&quot;be : api search trả về image url &quot;">
+      <option name="closed" value="true" />
+      <created>1776188714963</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776188714963</updated>
+    </task>
+    <task id="LOCAL-00009" summary="&quot;fe : fix price chart &quot;">
+      <option name="closed" value="true" />
+      <created>1776188785651</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776188785651</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge remote-tracking branch 'origin/moimoy' into hthhang&#10;# Conflicts:&#10;#&#9;backend/pom.xml&#10;#&#9;backend/src/main/java/com/pricehawl/BackendApplication.java&#10;#&#9;backend/src/main/java/com/pricehawl/entity/Wishlist.java&#10;#&#9;backend/src/main/resources/application.yml&#10;#&#9;frontend/src/components/product/ProductCard.tsx&#10;#&#9;frontend/src/components/product/ProductSummary.tsx&#10;#&#9;frontend/src/pages/HomePage.tsx&#10;#&#9;frontend/src/pages/WishlistPage.tsx">
+      <option name="closed" value="true" />
+      <created>1776231046495</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776231046496</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="43998166-69ef-4c64-b7ed-e04daa08fccf" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="43998166-69ef-4c64-b7ed-e04daa08fccf">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="hthhang" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create Entities" />
+    <MESSAGE value="feat : price history" />
+    <MESSAGE value="feat : fake price alert" />
+    <MESSAGE value="sua fe" />
+    <MESSAGE value="&quot;fe : search + compare + price history&quot;" />
+    <MESSAGE value="&quot;be : api search trả về image url &quot;" />
+    <MESSAGE value="&quot;fe : fix price chart &quot;" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/moimoy' into hthhang&#10;# Conflicts:&#10;#&#9;backend/pom.xml&#10;#&#9;backend/src/main/java/com/pricehawl/BackendApplication.java&#10;#&#9;backend/src/main/java/com/pricehawl/entity/Wishlist.java&#10;#&#9;backend/src/main/resources/application.yml&#10;#&#9;frontend/src/components/product/ProductCard.tsx&#10;#&#9;frontend/src/components/product/ProductSummary.tsx&#10;#&#9;frontend/src/pages/HomePage.tsx&#10;#&#9;frontend/src/pages/WishlistPage.tsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/moimoy' into hthhang&#10;# Conflicts:&#10;#&#9;backend/pom.xml&#10;#&#9;backend/src/main/java/com/pricehawl/BackendApplication.java&#10;#&#9;backend/src/main/java/com/pricehawl/entity/Wishlist.java&#10;#&#9;backend/src/main/resources/application.yml&#10;#&#9;frontend/src/components/product/ProductCard.tsx&#10;#&#9;frontend/src/components/product/ProductSummary.tsx&#10;#&#9;frontend/src/pages/HomePage.tsx&#10;#&#9;frontend/src/pages/WishlistPage.tsx" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
