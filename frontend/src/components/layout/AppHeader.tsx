@@ -14,7 +14,8 @@ export type AppHeaderPage =
   | 'deals'
   | 'wishlist'
   | 'alerts'
-  | 'product';
+  | 'product'
+  | 'category';
 
 type AppHeaderProps = {
   currentPage: AppHeaderPage;

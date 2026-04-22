@@ -1,8 +1,8 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import ProductCompareCard from '../components/product/ProductCompareCard';
-import { searchProducts } from '../service/ProductService';
+import { searchProducts, getProductsByCategory } from '../service/ProductService';
 import type { ProductSearch, PlatformName } from '../types/product';
 import AppHeader from '../components/layout/AppHeader';
 
@@ -18,7 +18,18 @@ const platformOptions: Array<PlatformName | 'all'> = [
     'Hasaki',
 ];
 
+// MỚI: Thêm mảng danh mục gốc để hiển thị trong Dropdown
+const categoryOptions = [
+    { id: 'all', name: 'Tất cả danh mục' },
+    { id: 'cham-soc-da', name: 'Chăm sóc da' },
+    { id: 'trang-diem', name: 'Trang điểm' },
+    { id: 'cham-soc-co-the', name: 'Chăm sóc cơ thể' },
+    { id: 'cham-soc-toc', name: 'Chăm sóc tóc' }
+];
+
 export default function SearchResultsPage() {
+    const { slug } = useParams<{ slug: string }>();
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const initialQuery = searchParams.get('q') ?? '';
 
@@ -27,17 +38,31 @@ export default function SearchResultsPage() {
     const [onlyOfficial, setOnlyOfficial] = useState(false);
     const [sortBy, setSortBy] = useState<'best-price' | 'rating' | 'reviews'>('best-price');
     const [products, setProducts] = useState<ProductSearch[]>([]);
-
+    
+    // MỚI: Thêm State lưu giá trị danh mục được chọn trong Dropdown
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    
     useEffect(() => {
-        if (!query) return;
-        searchProducts(query)
-            .then(data => setProducts(data))
-            .catch(err => console.error(err));
-    }, [query]);
+        if (query) {
+            searchProducts(query)
+                .then(data => setProducts(data))
+                .catch(err => console.error(err));
+        } else if (slug) {
+            getProductsByCategory(slug)
+                .then(data => setProducts(data))
+                .catch(err => console.error(err));
+        } else {
+            setProducts([]);
+        }
+    }, [query, slug]);
 
     const onSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setSearchParams(query ? { q: query } : {});
+        if (slug && query) {
+            navigate(`/search?q=${encodeURIComponent(query)}`);
+        } else {
+            setSearchParams(query ? { q: query } : {});
+        }
     };
 
     const summaryText = useMemo(() => {
@@ -56,7 +81,7 @@ export default function SearchResultsPage() {
             <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] opacity-30 blur-[120px]" />
             <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] opacity-90 blur-[120px]" />
 
-            <AppHeader currentPage="search" />
+            <AppHeader currentPage="search" /> 
 
             <main className="mx-auto max-w-7xl px-6 pb-20 pt-36 lg:px-12">
                 <section className="mb-10">
@@ -123,17 +148,35 @@ export default function SearchResultsPage() {
                                 </button>
                             </div>
 
-                            <div className="flex items-center gap-3">
-                                <span className="text-sm text-stone-400">Sắp xếp theo</span>
-                                <select
-                                    value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value as 'best-price' | 'rating' | 'reviews')}
-                                    className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300"
-                                >
-                                    <option value="best-price">Giá tốt nhất</option>
-                                    <option value="rating">Đánh giá cao</option>
-                                    <option value="reviews">Nhiều review</option>
-                                </select>
+                            {/* MỚI: Cụm bên phải chứa 2 Dropdown (Danh mục và Sắp xếp) */}
+                            <div className="flex items-center gap-4 flex-wrap">
+                                {/* Dropdown Danh mục */}
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm text-stone-400">Danh mục</span>
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300 cursor-pointer"
+                                    >
+                                        {categoryOptions.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Dropdown Sắp xếp (Cũ) */}
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm text-stone-400">Sắp xếp theo</span>
+                                    <select
+                                        value={sortBy}
+                                        onChange={(e) => setSortBy(e.target.value as 'best-price' | 'rating' | 'reviews')}
+                                        className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300 cursor-pointer"
+                                    >
+                                        <option value="best-price">Giá tốt nhất</option>
+                                        <option value="rating">Đánh giá cao</option>
+                                        <option value="reviews">Nhiều review</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </form>

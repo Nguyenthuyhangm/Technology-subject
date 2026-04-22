@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.Objects; // Bổ sung import này để dùng Objects.nonNull
 
 @Service
 public class ProductService {
@@ -20,7 +21,8 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public List<ProductSearchDTO> search(String keyword) {
+    // 🔥 SỬA: Thêm tham số categoryId vào hàm
+    public List<ProductSearchDTO> search(String keyword, String categoryId) {
 
         if (keyword == null || keyword.trim().length() < 2) {
             return Collections.emptyList();
@@ -40,25 +42,43 @@ public class ProductService {
                 .toList();
 
         // 🔥 B2: load full product + listings
-        List<Product> products = repository.findAllById(ids);
+        // SỬA LỖI JAVA: Đổi tên thành rawProducts để tránh lỗi Lambda
+        List<Product> rawProducts = repository.findAllById(ids); 
+        
+        // Khai báo một biến final để Java cho phép dùng bên trong vòng lặp
+        final List<Product> finalProducts;
+
+        // 🔥 MỚI THÊM: Lọc danh sách products theo danh mục nếu người dùng có chọn
+        if (categoryId != null && !categoryId.equals("all") && !categoryId.trim().isEmpty()) {
+            finalProducts = rawProducts.stream()
+                    .filter(p -> p.getCategory() != null && categoryId.equals(p.getCategory().getSlug()))
+                    .toList();
+        } else {
+            finalProducts = rawProducts;
+        }
 
         return rows.stream().map(r -> {
 
             UUID id = (UUID) r[0];
 
             // tìm product tương ứng
-            Product product = products.stream()
+            // SỬA LỖI JAVA: Dùng finalProducts ở đây
+            Product product = finalProducts.stream() 
                     .filter(p -> p.getId().equals(id))
                     .findFirst()
                     .orElse(null);
+
+            // 🔥 MỚI THÊM: Nếu product bị null (do bị lọc bỏ vì không đúng danh mục), thì bỏ qua row này
+            if (product == null) {
+                return null;
+            }
+
             String imageUrl = null;
-if (product != null) {
-    if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-        imageUrl = product.getImageUrl(); // Lấy ảnh gốc nếu có
-    } else if (product.getListings() != null && !product.getListings().isEmpty()) {
-        imageUrl = product.getListings().get(0).getPlatformImageUrl(); // Không có thì mượn tạm ảnh của link bán đầu tiên
-    }
-}
+            if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+                imageUrl = product.getImageUrl(); // Lấy ảnh gốc nếu có
+            } else if (product.getListings() != null && !product.getListings().isEmpty()) {
+                imageUrl = product.getListings().get(0).getPlatformImageUrl(); // Không có thì mượn tạm ảnh của link bán đầu tiên
+            }
 
             ProductSearchDTO dto = new ProductSearchDTO(
                     (UUID) r[0],
@@ -71,7 +91,7 @@ if (product != null) {
                     null
             );
 
-            if (product != null && product.getListings() != null) {
+            if (product.getListings() != null) {
 
                 List<PlatformDTO> platforms = product.getListings().stream().map(l -> {
                     PlatformDTO p = new PlatformDTO();
@@ -92,6 +112,8 @@ if (product != null) {
 
             return dto;
 
-        }).toList();
+        })
+        .filter(Objects::nonNull) // 🔥 MỚI THÊM: Lọc bỏ các phần tử null khỏi danh sách kết quả cuối cùng
+        .toList();
     }
 }

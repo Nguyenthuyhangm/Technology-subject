@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -18,8 +19,12 @@ public class ProductController {
         this.service = service;
     }
 
+    //  Thêm @RequestParam cho categoryId và truyền xuống service
     @GetMapping("/search")
-    public List<ProductSearchDTO> search(@RequestParam("q") String keyword) {
-        return service.search(keyword);
+    public List<ProductSearchDTO> search(
+            @RequestParam("q") String keyword,
+            @RequestParam(value = "categoryId", required = false, defaultValue = "all") String categoryId
+    ) {
+        return service.search(keyword, categoryId);
     }
 }
