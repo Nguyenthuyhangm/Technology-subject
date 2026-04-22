@@ -48,16 +48,12 @@ logging:
 pricehawk:
   crawler:
     node-binary: ${PRICEHAWK_NODE_BINARY:npx.cmd}
-    cocolux-refresh-script: ${PRICEHAWK_COCOLUX_REFRESH_SCRIPT}
-    hasaki-refresh-script: ${PRICEHAWK_HASAKI_REFRESH_SCRIPT}
-    guardian-refresh-script: ${PRICEHAWK_GUARDIAN_REFRESH_SCRIPT}
-    timeout-seconds: ${PRICEHAWK_CRAWLER_TIMEOUT_SECONDS:90}
-
-  debug:
-    price-refresh-dir: ${PRICEHAWK_DEBUG_PRICE_REFRESH_DIR:debug/price-refresh}
-
+    cocolux-refresh-script: 'cocolux-crawler\src\main\refresh-price-once.ts'
+    hasaki-refresh-script: 'hasaki-crawler\src\main\refresh-price-hasaki.ts'
+    guardian-refresh-script: 'guardian_crawler\src\main\refesh-price-guardian.ts'
+    timeout-seconds: 90
   scheduler:
     price-refresh:
-      enabled: ${PRICEHAWK_SCHEDULER_ENABLED:true}
-      cron: ${PRICEHAWK_SCHEDULER_CRON:0 */30 * * * *}
-      zone: ${PRICEHAWK_SCHEDULER_ZONE:Asia/Bangkok}
+      enabled: true
+      cron: "0 */30 * * * *"
+      zone: "Asia/Bangkok"

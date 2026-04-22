@@ -25,12 +25,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;feature/auto-crawl&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "feature/auto-crawl",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\MY PC\Documents\GitHub\Chuy-n-Nh-t-B-n---5-\guardian_crawler" />
