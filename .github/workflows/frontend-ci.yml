@@ -1,0 +1,55 @@
+# CI Frontend — lint + build (TypeScript / Vite)
+#
+# Trigger: push và pull_request chỉ khi không nhắm vào nhánh `main`
+# (đổi `branches-ignore` nếu bạn muốn ví dụ chạy CI cho PR vào `main`).
+#
+# Biến môi trường Vite: Repository → Settings → Secrets and variables → Actions
+#   - Variables (vars.*): giá trị không nhạy cảm, ví dụ URL API public
+#   - Secrets (secrets.*): token / khóa (tùy chọn)
+# Trong code: import.meta.env.VITE_API_URL (Axios baseURL, v.v.)
+
+name: Frontend CI
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  lint-and-build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+
+    env:
+      # --- Ví dụ cấu hình cho Vite / Axios (đặt vars trong GitHub hoặc sửa placeholder) ---
+      # URL API — dùng trong axios: import.meta.env.VITE_API_URL
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
+      # Một số file dự án dùng VITE_API_BASE_URL; đồng bộ với .env.local khi dev
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

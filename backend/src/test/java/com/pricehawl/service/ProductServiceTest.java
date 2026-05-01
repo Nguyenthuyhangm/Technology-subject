@@ -1,13 +1,18 @@
 package com.pricehawl.service;
 
 import com.pricehawl.dto.ProductSearchDTO;
+import com.pricehawl.repository.PriceRecordRepository;
 import com.pricehawl.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,6 +22,9 @@ class ProductServiceTest {
 
     @Mock
     private ProductRepository repository;
+
+    @Mock
+    private PriceRecordRepository priceRecordRepository;
 
     @InjectMocks
     private ProductService service;
@@ -41,8 +49,9 @@ class ProductServiceTest {
         });
 
         when(repository.fuzzySearchRaw("serum")).thenReturn(mockData);
+        when(repository.findAllByIdIn(anyList())).thenReturn(Collections.emptyList());
 
-        List<ProductSearchDTO> result = service.search("serum");
+        List<ProductSearchDTO> result = service.search("serum", null, "all", "all");
 
         assertEquals(1, result.size());
 
@@ -69,8 +78,9 @@ class ProductServiceTest {
         });
 
         when(repository.fuzzySearchRaw("sunsreen")).thenReturn(mockData);
+        when(repository.findAllByIdIn(anyList())).thenReturn(Collections.emptyList());
 
-        List<ProductSearchDTO> result = service.search("sunsreen");
+        List<ProductSearchDTO> result = service.search("sunsreen", null, "all", "all");
 
         assertFalse(result.isEmpty());
         assertEquals("Anessa Perfect UV Sunscreen", result.get(0).getName());
@@ -91,16 +101,18 @@ class ProductServiceTest {
         });
 
         when(repository.fuzzySearchRaw("hada")).thenReturn(mockData);
+        when(repository.findAllByIdIn(anyList())).thenReturn(Collections.emptyList());
 
-        List<ProductSearchDTO> result = service.search("hada");
+        List<ProductSearchDTO> result = service.search("hada", null, "all", "all");
 
+        assertEquals(1, result.size());
         assertEquals(0.0, result.get(0).getScore());
     }
 
     @Test
     @DisplayName("Should return empty when keyword too short")
     void testSearch_invalidKeyword() {
-        List<ProductSearchDTO> result = service.search("a");
+        List<ProductSearchDTO> result = service.search("a", null, "all", "all");
 
         assertTrue(result.isEmpty());
         verify(repository, never()).fuzzySearchRaw(any());
@@ -111,7 +123,7 @@ class ProductServiceTest {
     void testSearch_noResult() {
         when(repository.fuzzySearchRaw("xyzabc")).thenReturn(Collections.emptyList());
 
-        List<ProductSearchDTO> result = service.search("xyzabc");
+        List<ProductSearchDTO> result = service.search("xyzabc", null, "all", "all");
 
         assertTrue(result.isEmpty());
     }
@@ -121,7 +133,7 @@ class ProductServiceTest {
     void testSearch_repoNull() {
         when(repository.fuzzySearchRaw("serum")).thenReturn(null);
 
-        List<ProductSearchDTO> result = service.search("serum");
+        List<ProductSearchDTO> result = service.search("serum", null, "all", "all");
 
         assertTrue(result.isEmpty());
     }

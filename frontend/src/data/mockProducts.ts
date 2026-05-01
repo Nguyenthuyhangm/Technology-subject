@@ -1,4 +1,4 @@
-import type { Product } from '../types/product';
+import type { Product, ProductSearch } from '../types/product';
 
 export const mockProducts: Product[] = [
     {
@@ -42,7 +42,7 @@ export const mockProducts: Product[] = [
                 url: '#',
             },
             {
-                platform: 'Gardian',
+                platform: 'guardian',
                 shopName: 'Shiseido Mall',
                 isOfficial: true,
                 currentPrice: 499000,
@@ -129,7 +129,7 @@ export const mockProducts: Product[] = [
         subcategory: 'Serum',
         images: [
             'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1556228578-dd6a486868d1?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1200&q=80',
             'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
         ],
         description:
@@ -160,7 +160,7 @@ export const mockProducts: Product[] = [
                 url: '#',
             },
             {
-                platform: 'Gardian',
+                platform: 'guardian',
                 shopName: 'Beauty Official Mall',
                 isOfficial: true,
                 currentPrice: 295000,
@@ -370,8 +370,33 @@ export const mockProducts: Product[] = [
     },
 ];
 
-export const getProductById = (id: number): Product | undefined =>
+export const getProductById = (id: string): Product | undefined =>
     mockProducts.find((product) => product.id === id);
 
-export const getProductsByIds = (ids: number[]): Product[] =>
+export const getProductsByIds = (ids: string[]): Product[] =>
     mockProducts.filter((product) => ids.includes(product.id));
+
+/** Gắn mock `Product` (đủ trường) với hình dạng API `ProductSearch` cho card/UI tìm kiếm */
+export function toProductSearch(product: Product): ProductSearch {
+    return {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        model: product.model,
+        category: product.category,
+        subcategory: product.subcategory,
+        images: product.images,
+        description: product.description,
+        categoryName: product.category,
+        brandName: product.brand,
+        score: Math.min(1, product.rating / 5),
+        imageUrl: product.images[0] ?? '',
+        platforms: product.platforms.map((p) => ({
+            platform: p.platform,
+            url: p.url,
+            platformImageUrl: '',
+            finalPrice: p.finalPrice,
+            isOfficial: p.isOfficial,
+        })),
+    };
+}

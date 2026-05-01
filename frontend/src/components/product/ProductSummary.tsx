@@ -2,6 +2,8 @@ import { Bell, Heart, MoveUpRight } from 'lucide-react';
 import Badge from '../common/Badge';
 import PlatformPill from '../common/PlatformPill';
 import type { PriceComparison } from '../../types/product';
+import type { WishlistComparisonStub } from '../../types/wishlist';
+import { useWishlist } from '../../context/useWishlist';
 
 const FONT_STACK = {
     serif: '"Times New Roman", Georgia, serif',
@@ -21,9 +23,32 @@ const formatPrice = (price: number): string =>
     }).format(price);
 
 export default function ProductSummary({ comparison }: ProductSummaryProps) {
-    // Lấy giá tốt nhất từ comparisons
+    // 2. Lấy hàm từ WishlistContext
+    const { addToWishlist, removeFromWishlist, isInWishlist, isRemoving } = useWishlist();
+
+    const productId = comparison.productId;
+    const isSaved = isInWishlist(productId);
+    const removing = isRemoving(productId);
+
     const sorted = [...comparison.comparisons].sort((a, b) => a.price - b.price);
     const bestOffer = sorted[0];
+
+    // 3. Hàm xử lý Click — provider đã lo optimistic update + rollback + alert.
+    const handleWishlistClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (removing) return;
+
+        if (isSaved) {
+            await removeFromWishlist(productId);
+        } else {
+            const payload: WishlistComparisonStub = {
+                id: productId,
+                name: comparison.productName,
+                platforms: comparison.comparisons,
+            };
+            await addToWishlist(payload);
+        }
+    };
 
     if (!bestOffer) return null;
 
@@ -32,7 +57,6 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
             className="rounded-[34px] border border-stone-200/80 bg-white p-7 shadow-soft"
             style={{ fontFamily: FONT_STACK.sans }}
         >
-            {/* Tên sản phẩm — API không có brand nên chỉ hiển thị tên */}
             <h1
                 className="text-[2.45rem] leading-[1.05] tracking-[-0.02em] text-stone-900 md:text-[2.95rem]"
                 style={{ fontFamily: FONT_STACK.serif }}
@@ -51,27 +75,26 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                 )}
             </div>
 
-            {/* Khung giá tốt nhất */}
             <div className="mt-8 rounded-[30px] bg-gradient-to-br from-[#F8F1F3] to-white p-6">
                 <p className="text-[11px] uppercase tracking-[0.12em] text-stone-400">
                     Giá đẹp nhất hiện tại
                 </p>
 
                 <div className="mt-3 flex flex-wrap items-end gap-3">
-          <span className="text-[2.8rem] font-semibold tracking-[-0.03em] text-[#8E6A72]">
-            {formatPrice(bestOffer.price)}
-          </span>
+                    <span className="text-[2.8rem] font-semibold tracking-[-0.03em] text-[#8E6A72]">
+                        {formatPrice(bestOffer.price)}
+                    </span>
 
                     {bestOffer.originalPrice > bestOffer.price && (
                         <span className="pb-2 text-sm text-stone-300 line-through">
-              {formatPrice(bestOffer.originalPrice)}
-            </span>
+                            {formatPrice(bestOffer.originalPrice)}
+                        </span>
                     )}
 
                     {bestOffer.discountPct > 0 && (
                         <span className="pb-2 text-sm font-medium text-[#8E6A72]">
-              -{Math.round(bestOffer.discountPct)}%
-            </span>
+                            -{bestOffer.discountPct}%
+                        </span>
                     )}
                 </div>
 
@@ -82,7 +105,6 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                     )}
                 </div>
 
-                {/* Link mua hàng */}
                 <div className="mt-5 rounded-[22px] border border-white/60 bg-white/70 px-4 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-sm">
                     <p className="text-[10px] uppercase tracking-[0.12em] text-stone-400">
                         Nơi bán tốt nhất
@@ -106,7 +128,6 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                 </div>
             </div>
 
-            {/* Các nút CTA */}
             <div className="mt-6 flex flex-wrap gap-3">
                 <a
                     href={bestOffer.url}
@@ -120,18 +141,29 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
 
                 <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-200 bg-white px-5 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-200 bg-white px-5 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] cursor-pointer"
                 >
                     <Bell size={16} />
                     Đặt alert
                 </button>
 
+                {/* 4. NÚT LƯU WISHLIST ĐÃ CÓ LOGIC VÀ ĐỔI MÀU */}
                 <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-200 bg-white px-5 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]"
+                    onClick={handleWishlistClick}
+                    disabled={removing}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full border px-5 py-4 text-sm font-medium transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 ${
+                        isSaved
+                            ? 'border-[#8E6A72] bg-[#8E6A72] text-white hover:opacity-90'
+                            : 'border-stone-200 bg-white text-stone-700 hover:text-[#8E6A72]'
+                    }`}
                 >
-                    <Heart size={16} />
-                    Lưu wishlist
+                    <Heart
+                        size={16}
+                        fill={isSaved ? "currentColor" : "none"}
+                        strokeWidth={isSaved ? 0 : 2}
+                    />
+                    {removing ? 'Đang xóa...' : isSaved ? 'Đã lưu wishlist' : 'Lưu wishlist'}
                 </button>
             </div>
         </div>

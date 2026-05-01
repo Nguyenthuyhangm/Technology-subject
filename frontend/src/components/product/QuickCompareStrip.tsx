@@ -94,7 +94,7 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                             </p>
                                         )}
                                         {item.discountPct > 0 && (
-                                            <p>Giảm {Math.round(item.discountPct)}%</p>
+                                            <p>Giảm {item.discountPct}%</p>
                                         )}
                                     </div>
                                 </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, CheckCheck, X } from 'lucide-react';
+import { CheckCheck, X } from 'lucide-react';
 import Badge from '../common/Badge';
-import type { Platform } from '../../types/product';
+import type { PlatformName } from '../../types/product';
 import type { AlertChannel } from '../../types/alert';
 
 type AlertModalProps = {
@@ -9,11 +9,14 @@ type AlertModalProps = {
   onClose: () => void;
   productName?: string;
   defaultPrice?: number;
-  defaultPlatform?: Platform | 'all';
+  defaultPlatform?: PlatformName | 'all';
 };
 
-const platformOptions: Array<Platform | 'all'> = [
+const platformOptions: Array<PlatformName | 'all'> = [
   'all',
+  'Cocolux',
+  'guardian',
+  'Hasaki',
   'Shopee',
   'Lazada',
   'Tiki',
@@ -39,12 +42,14 @@ export default function AlertModal({
   const [targetPrice, setTargetPrice] = useState(
     defaultPrice ? String(defaultPrice) : '',
   );
-  const [platform, setPlatform] = useState<Platform | 'all'>(defaultPlatform);
+  const [platform, setPlatform] = useState<PlatformName | 'all'>(defaultPlatform);
   const [channel, setChannel] = useState<AlertChannel>('email');
   const [frequency, setFrequency] = useState('Ngay khi chạm ngưỡng');
   const [note, setNote] = useState('');
   const [isCreated, setIsCreated] = useState(false);
 
+  /* Đồng bộ form khi mở modal — reset có chủ đích, không phụ thuộc external subscription */
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!isOpen) return;
     setTargetPrice(defaultPrice ? String(defaultPrice) : '');
@@ -54,6 +59,7 @@ export default function AlertModal({
     setNote('');
     setIsCreated(false);
   }, [defaultPlatform, defaultPrice, isOpen]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   if (!isOpen) return null;
 
@@ -162,12 +168,18 @@ export default function AlertModal({
                 </label>
                 <select
                   value={platform}
-                  onChange={(e) => setPlatform(e.target.value as Platform | 'all')}
+                  onChange={(e) =>
+                    setPlatform(e.target.value as PlatformName | 'all')
+                  }
                   className="w-full rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 text-sm text-stone-900 outline-none backdrop-blur-sm transition focus:border-[#D7B6BA]"
                 >
                   {platformOptions.map((item) => (
                     <option key={item} value={item}>
-                      {item === 'all' ? 'Tất cả sàn' : item}
+                      {item === 'all'
+                        ? 'Tất cả sàn'
+                        // Value khớp DB (ví dụ 'guardian' lowercase) → capitalize
+                        // khi hiển thị để UI đẹp mà vẫn giữ value gốc gửi API.
+                        : item.charAt(0).toUpperCase() + item.slice(1)}
                     </option>
                   ))}
                 </select>

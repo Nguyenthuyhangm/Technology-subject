@@ -8,7 +8,7 @@ export type DealType =
 
 export type Deal = {
   id: string;
-  productId: number;
+  productId: string;
   type: DealType;
   title: string;
   subtitle: string;

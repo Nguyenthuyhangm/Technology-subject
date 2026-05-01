@@ -1,13 +1,21 @@
 spring:
   datasource:
-    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres
-    username: postgres.astkanfsacxriwprspqr
+    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: "postgres.astkanfsacxriwprspqr"
     password: "PriceHawl123@"
     driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 1
+      idle-timeout: 10000
+      max-lifetime: 30000
+      connection-timeout: 30000
 
   jpa:
     hibernate:
       ddl-auto: validate
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -24,6 +32,9 @@ server:
 logging:
   level:
     root: DEBUG
+    com.pricehawl.service.CocoluxPriceCrawlerService: DEBUG
+    com.pricehawl.service.PriceRefreshScheduler: INFO
+    com.pricehawl.service.PriceRefreshServiceImpl: DEBUG
   file:
     name: logs/app.log
   pattern:
@@ -33,3 +44,18 @@ logging:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 30
+
+pricehawk:
+  crawler:
+    node-binary: npx.cmd
+    cocolux-refresh-script: D:/project/pricehawk/Chuy-n-Nh-t-B-n---5-/cocolux-crawler/src/main/refresh-price-once.ts
+    timeout-seconds: 90
+
+  debug:
+    price-refresh-dir: D:/project/pricehawk/Chuy-n-Nh-t-B-n---5-/backend/debug/price-refresh
+
+  scheduler:
+    price-refresh:
+      enabled: true
+      cron: "0 */30 * * * *"
+      zone: "Asia/Bangkok"

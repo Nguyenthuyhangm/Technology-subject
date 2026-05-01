@@ -3,7 +3,7 @@ import type { Alert } from '../types/alert';
 export const mockAlerts: Alert[] = [
   {
     id: 'alert-1',
-    productId: 1,
+    productId: '10000000-0000-0000-0000-000000000002',
     targetPrice: 6800000,
     platform: 'all',
     channel: 'email',
@@ -13,7 +13,7 @@ export const mockAlerts: Alert[] = [
   },
   {
     id: 'alert-2',
-    productId: 2,
+    productId: '0b3eab2c-dc2c-4443-81fa-cb48204e13c5',
     targetPrice: 450000,
     platform: 'Shopee',
     channel: 'push',
@@ -23,7 +23,7 @@ export const mockAlerts: Alert[] = [
   },
   {
     id: 'alert-3',
-    productId: 3,
+    productId: '10000000-0000-0000-0000-000000000009',
     targetPrice: 4100000,
     platform: 'Lazada',
     channel: 'zalo',
@@ -33,7 +33,7 @@ export const mockAlerts: Alert[] = [
   },
   {
     id: 'alert-4',
-    productId: 1,
+    productId: '10000000-0000-0000-0000-000000000002',
     targetPrice: 7000000,
     platform: 'Shopee',
     channel: 'push',

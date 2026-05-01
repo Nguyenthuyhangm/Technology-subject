@@ -11,8 +11,8 @@ const FONT_STACK = {
 } as const;
 
 const PLATFORM_COLORS: Record<string, string> = {
-    Coculux: '#B7848C',
-    Gardian: '#7A9E9F',
+    Cocolux: '#B7848C',
+    guardian: '#7A9E9F',
     Hasaki: '#C4A35A',
 };
 

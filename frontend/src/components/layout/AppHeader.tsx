@@ -1,12 +1,12 @@
-import  { useEffect, useState } from 'react';
-//import { Bell } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
   sans:
     'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-} as const;
+} as const
 
 export type AppHeaderPage =
   | 'home'
@@ -14,38 +14,45 @@ export type AppHeaderPage =
   | 'deals'
   | 'wishlist'
   | 'alerts'
-  | 'product';
+  | 'product'
+  | 'category'
 
 type AppHeaderProps = {
-  currentPage: AppHeaderPage;
-  className?: string;
-};
+  currentPage: AppHeaderPage
+  className?: string
+}
 
 const navItems: Array<{
-  key: Exclude<AppHeaderPage, 'product'>;
-  label: string;
-  to: string;
+  key: Exclude<AppHeaderPage, 'product'>
+  label: string
+  to: string
 }> = [
   { key: 'home', label: 'Trang chủ', to: '/' },
   { key: 'search', label: 'So sánh giá', to: '/search' },
   { key: 'deals', label: 'Chọn lọc hôm nay', to: '/deals' },
   { key: 'wishlist', label: 'Yêu thích', to: '/wishlist' },
   { key: 'alerts', label: 'Theo dõi giá', to: '/alerts' },
-];
+]
 
 export default function AppHeader({
   currentPage,
   className = '',
 }: AppHeaderProps) {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
+  const { user, signOut } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const handleScroll = (): void => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    const handleScroll = (): void => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleLogout = async () => {
+    await signOut()
+    navigate('/login')
+  }
 
   return (
     <header
@@ -72,7 +79,7 @@ export default function AppHeader({
 
           <nav className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => {
-              const isActive = currentPage === item.key;
+              const isActive = currentPage === item.key
 
               return (
                 <Link
@@ -87,13 +94,35 @@ export default function AppHeader({
                 >
                   {item.label}
                 </Link>
-              );
+              )
             })}
           </nav>
         </div>
 
-        
+        <div className="flex items-center gap-4">
+          {user ? (
+            <>
+              <span className="hidden sm:block text-sm text-stone-500">
+                {user.email}
+              </span>
+
+              <button
+                onClick={handleLogout}
+                className="rounded-full bg-stone-900 px-4 py-2 text-sm text-white transition hover:opacity-90"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => navigate('/login')}
+              className="rounded-full border border-stone-300 px-4 py-2 text-sm text-stone-700 transition hover:bg-stone-100"
+            >
+              Login
+            </button>
+          )}
+        </div>
       </div>
     </header>
-  );
+  )
 }

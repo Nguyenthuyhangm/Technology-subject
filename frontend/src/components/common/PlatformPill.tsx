@@ -1,4 +1,4 @@
-export type PlatformName = 'Coculux' | 'Gardian' | 'Hasaki';
+export type PlatformName = 'Cocolux' | 'guardian' | 'Hasaki';
 
 type PlatformMeta = { label: string; bg: string; text: string; dot: string; border: string };
 
@@ -8,15 +8,18 @@ type PlatformPillProps = {
 };
 
 const PLATFORM_META: Record<string, PlatformMeta> = {
-  Coculux: {
-    label: 'Coculux',
+  Cocolux: {
+    label: 'Cocolux',
     bg: 'bg-[#F8F1EC]',
     text: 'text-[#A56A4F]',
     dot: 'bg-[#C98563]',
     border: 'border-[#EAD8CF]',
   },
-  Gardian: {
-    label: 'Gardian',
+  // Key phải khớp chính xác platform.name trong DB để lookup không miss.
+  // DB lưu 'guardian' lowercase → key lowercase; label để "Guardian"
+  // capitalized cho UI đẹp.
+  guardian: {
+    label: 'Guardian',
     bg: 'bg-[#F4F0F8]',
     text: 'text-[#7C6A96]',
     dot: 'bg-[#9A87B6]',

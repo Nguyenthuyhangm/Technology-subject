@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -65,6 +66,7 @@ public class Product {
 
     @Column(name = "popularity_score", nullable = false)
     private Integer popularityScore;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private java.util.List<ProductListing> listings;
+    private List<ProductListing> listings;
 }

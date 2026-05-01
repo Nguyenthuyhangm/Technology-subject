@@ -1,5 +1,8 @@
-import  { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Badge from '../common/Badge';
+
+const FALLBACK_IMG =
+  'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=70';
 
 type ProductGalleryProps = {
   images: string[];
@@ -13,6 +16,19 @@ export default function ProductGallery({
   showLowestBadge = false,
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [broken, setBroken] = useState<Record<number, boolean>>({});
+
+  const srcAt = useCallback(
+    (index: number) => {
+      const imgs = images.length > 0 ? images : [FALLBACK_IMG];
+      return broken[index] ? FALLBACK_IMG : imgs[index];
+    },
+    [broken, images],
+  );
+
+  const onThumbError = (index: number) => {
+    setBroken((prev) => ({ ...prev, [index]: true }));
+  };
 
   return (
     <div className="rounded-[38px] border border-stone-200/70 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.04)]">
@@ -34,9 +50,10 @@ export default function ProductGallery({
               }`}
             >
               <img
-                src={image}
+                src={srcAt(index)}
                 alt={`${title}-${index}`}
                 className="h-20 w-20 object-cover"
+                onError={() => onThumbError(index)}
               />
             </button>
           ))}
@@ -48,6 +65,7 @@ export default function ProductGallery({
              src={images?.[activeIndex] || ''}
               alt={title}
               className="h-full w-full object-cover"
+              onError={() => onThumbError(activeIndex)}
             />
           </div>
         </div>

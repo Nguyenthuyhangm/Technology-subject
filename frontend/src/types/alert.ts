@@ -5,7 +5,7 @@ export type AlertStatus = 'active' | 'paused' | 'triggered';
 
 export type Alert = {
   id: string;
-  productId: number;
+  productId: string;
   targetPrice: number;
   platform?: PlatformName | 'all';
   channel: AlertChannel;

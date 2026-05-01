@@ -1,12 +1,16 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight, Loader2, Search } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Badge from '../components/common/Badge';
 import ProductCard from '../components/product/ProductCard';
-import { mockDeals, mockDealSections } from '../data/mockDeals';
 import { mockProducts } from '../data/mockProducts';
 import AppHeader from '../components/layout/AppHeader';
+import { useTrendingDeals } from '../util/useTrendingDeals';
+import {
+  sortByDealScoreDesc,
+  trendingDealToProductSearch,
+} from '../util/trendingDealSelectors';
 
 
 const FONT_STACK = {
@@ -45,6 +49,8 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
+  const { deals, loading } = useTrendingDeals();
+
 
 
   const curatedProducts = useMemo(() => {
@@ -57,29 +63,17 @@ export default function HomePage() {
     );
   }, []);
 
-  const todaySelection = useMemo(() => {
-    const trendingDealIds =
-        mockDealSections.find((section) => section.type === 'trending')?.dealIds ?? [];
-
-    const productIds = trendingDealIds
-        .map((dealId) => mockDeals.find((deal) => deal.id === dealId)?.productId)
-        .filter((id): id is number => typeof id === 'number');
-
-    return mockProducts.filter((product) => productIds.includes(product.id));
-  }, []);
-
   const featuredProduct = useMemo(() => {
     return curatedProducts[0] ?? mockProducts[0];
   }, [curatedProducts]);
 
   const homeHighlights = useMemo(() => {
-    const merged = [...todaySelection, ...curatedProducts];
-    const unique = merged.filter(
-        (product, index, arr) => arr.findIndex((item) => item.id === product.id) === index,
-    );
+    const list = deals ?? [];
+    if (list.length === 0) return [];
 
-    return unique.slice(0, 6);
-  }, [todaySelection, curatedProducts]);
+    const sorted = [...list].sort(sortByDealScoreDesc);
+    return sorted.slice(0, 3).map(trendingDealToProductSearch);
+  }, [deals]);
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -232,11 +226,35 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {homeHighlights.map((product) => (
+            {loading && homeHighlights.length === 0 && (
+              <div
+                className="flex min-h-[200px] flex-col items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-14 text-sm text-stone-500"
+                aria-busy="true"
+                aria-live="polite"
+              >
+                <p className="flex items-center gap-2">
+                  <Loader2
+                    className="h-5 w-5 shrink-0 animate-spin text-[#8E6A72]"
+                    aria-hidden
+                  />
+                  Đang tải{' '}
+                </p>
+              </div>
+            )}
+
+            {!loading && homeHighlights.length === 0 && (
+              <div className="flex min-h-[160px] items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-12 text-sm text-stone-500">
+                Không tìm thấy sản phẩm phù hợp
+              </div>
+            )}
+
+            {homeHighlights.length > 0 && (
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {homeHighlights.map((product) => (
                   <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </section>
 
           <section className="mt-20">

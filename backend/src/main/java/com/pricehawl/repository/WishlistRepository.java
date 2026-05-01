@@ -22,19 +22,19 @@ public interface WishlistRepository extends JpaRepository<Wishlist, UUID> {
      */
     @Query(value = """
         SELECT 
-            w.id as wishlistId, 
-            p.id as productId, 
-            p.name as productName, 
-            b.name as brandName, 
-            p.image_url as imageUrl, 
-            pr.price as minPrice, 
-            pl_platform.name as platformName
+            w.id as "wishlistId", 
+            p.id as "productId", 
+            p.name as "productName", 
+            b.name as "brandName", 
+            pl.platform_image_url as "imageUrl", 
+            pr.price as "minPrice", 
+            pl_platform.name as "platformName"
         FROM wishlist w
         JOIN product p ON w.product_id = p.id
         JOIN brand b ON p.brand_id = b.id
         LEFT JOIN LATERAL (
-            -- Tìm listing có giá thấp nhất hiện tại của sản phẩm đó
-            SELECT pl.id, pl.platform_id 
+            -- Thêm pl.platform_image_url để lấy ảnh từ listing
+            SELECT pl.id, pl.platform_id, pl.platform_image_url 
             FROM product_listing pl 
             WHERE pl.product_id = p.id 
             LIMIT 1
@@ -61,9 +61,10 @@ public interface WishlistRepository extends JpaRepository<Wishlist, UUID> {
     /**
      * Xóa sản phẩm khỏi wishlist của user.
      * Cần @Modifying và @Transactional vì đây là thao tác thay đổi dữ liệu (DML).
+     * Trả về số record bị xóa để service có thể phát hiện trường hợp không tìm thấy.
      */
     @Modifying
     @Transactional
     @Query("DELETE FROM Wishlist w WHERE w.userId = :userId AND w.productId = :productId")
-    void deleteByUserIdAndProductId(@Param("userId") UUID userId, @Param("productId") UUID productId);
+    int deleteByUserIdAndProductId(@Param("userId") UUID userId, @Param("productId") UUID productId);
 }

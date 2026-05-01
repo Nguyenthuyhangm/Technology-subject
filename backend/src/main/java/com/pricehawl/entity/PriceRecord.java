@@ -5,12 +5,11 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "price_record", indexes = {
-    @Index(name = "idx_price_record_listing_crawled", columnList = "product_listing_id, crawled_at DESC"),
-    @Index(name = "idx_price_record_crawled", columnList = "crawled_at DESC")
+        @Index(name = "idx_price_record_listing_crawled", columnList = "product_listing_id, crawled_at DESC"),
+        @Index(name = "idx_price_record_crawled", columnList = "crawled_at DESC")
 })
 @Data
 @NoArgsConstructor
