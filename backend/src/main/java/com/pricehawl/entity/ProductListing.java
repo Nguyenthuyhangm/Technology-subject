@@ -78,4 +78,29 @@ public class ProductListing {
         }
         return null;
     }
+
+    @Transient
+    public Integer getFinalPrice() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+        return priceRecords.get(0).getPrice(); // record mới nhất
+    }
+
+    @Transient
+    public Integer getOriginalPrice() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+        return priceRecords.get(0).getOriginalPrice();
+    }
+
+    @Transient
+    public Integer getDiscountPct() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+
+        Integer price = priceRecords.get(0).getPrice();
+        Integer original = priceRecords.get(0).getOriginalPrice();
+
+        if (price == null || original == null || original <= price) return null;
+
+        return (int) Math.round(((original - price) / original) * 100);
+    }
+
 }

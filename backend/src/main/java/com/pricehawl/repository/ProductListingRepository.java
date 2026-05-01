@@ -96,4 +96,13 @@ public interface ProductListingRepository
             @Param("platformName") String platformName,
             @Param("thresholdTime") LocalDateTime thresholdTime
     );
+
+    @Query("""
+    SELECT pl
+    FROM ProductListing pl
+    JOIN FETCH pl.product p
+    JOIN FETCH pl.platform pf
+    WHERE p.id IN :productIds
+""")
+    List<ProductListing> findByProductIds(@Param("productIds") List<UUID> productIds);
 }
