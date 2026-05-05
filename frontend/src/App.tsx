@@ -10,6 +10,7 @@ import WishlistPage from './pages/WishlistPage'
 import DealsPage from './pages/DealsPage'
 import TrendingDealsPage from './pages/TrendingDealsPage'
 import AuthPage from './pages/AuthPage'
+import ProfilePage from './pages/ProfilePage'
 
 export default function App(): JSX.Element {
   return (
@@ -31,6 +32,7 @@ export default function App(): JSX.Element {
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/deals" element={<DealsPage />} />
               <Route path="/trending-deals" element={<TrendingDealsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />

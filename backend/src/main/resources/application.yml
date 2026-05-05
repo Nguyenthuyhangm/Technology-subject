@@ -28,9 +28,15 @@ spring:
 server:
   port: 8080
 
+supabase:
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
+  api:
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
 logging:
   level:
     root: DEBUG
+    org.springframework.security: TRACE
   file:
     name: logs/app.log
   pattern:
