@@ -1,4 +1,8 @@
 @import "tailwindcss";
+
+/* Dark mode: class-based (Tailwind v4) */
+@variant dark (&:where(.dark, .dark *));
+
 html, body, #root {
   margin: 0;
   min-height: 100%;
@@ -7,6 +11,11 @@ html, body, #root {
 body {
   background: #fcfbf8;
 }
+
+html.dark body {
+  background: #0f0d0c;
+}
+
 .glass {
   background: linear-gradient(
     135deg,
@@ -19,6 +28,18 @@ body {
   box-shadow:
     0 10px 40px rgba(15, 23, 42, 0.06),
     inset 0 1px 1px rgba(255, 255, 255, 0.52);
+}
+
+html.dark .glass {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 25, 22, 0.82),
+    rgba(20, 17, 15, 0.68)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06);
 }
 
 .glass-strong {
@@ -35,6 +56,18 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.58);
 }
 
+html.dark .glass-strong {
+  background: linear-gradient(
+    135deg,
+    rgba(35, 30, 27, 0.9),
+    rgba(22, 18, 16, 0.78)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.07);
+}
+
 .shadow-soft {
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
 }
@@ -43,8 +76,16 @@ body {
   box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
 }
 
+html.dark .shadow-medium {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
 .shadow-deep {
   box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
+}
+
+html.dark .shadow-deep {
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
 }
 
 .editorial-title {
@@ -54,4 +95,4 @@ body {
 
 .caption-soft {
   letter-spacing: 0.12em;
-}
+}

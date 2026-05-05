@@ -16,17 +16,17 @@ type BadgeProps = {
 
 const VARIANT_STYLES: Record<BadgeVariant, string> = {
   brand:
-    'border border-[#E7D8DB] bg-[#F8F1F3] text-[#8E6A72]',
+    'border border-[#E7D8DB] dark:border-[#4A2D31] bg-[#F8F1F3] dark:bg-[#2A1A1D]/60 text-[#8E6A72]',
   success:
-    'border border-[#EAE7DF] bg-[#F8F6F1] text-[#6F6A62]',
+    'border border-[#EAE7DF] dark:border-stone-700/50 bg-[#F8F6F1] dark:bg-stone-800/50 text-[#6F6A62] dark:text-stone-400',
   warning:
-    'border border-[#EFE5D7] bg-[#FBF6EE] text-[#8A735C]',
+    'border border-[#EFE5D7] dark:border-[#4A3A28] bg-[#FBF6EE] dark:bg-[#2A2018]/60 text-[#8A735C] dark:text-[#C4A87A]',
   danger:
-    'border border-[#F1DFE2] bg-[#FCF4F5] text-[#9A6C73]',
+    'border border-[#F1DFE2] dark:border-[#5A2D31] bg-[#FCF4F5] dark:bg-[#2A1518]/60 text-[#9A6C73]',
   neutral:
-    'border border-stone-200 bg-white text-stone-600',
+    'border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800/60 text-stone-600 dark:text-stone-400',
   soft:
-    'border border-white/70 bg-white/80 text-stone-600 backdrop-blur-md',
+    'border border-white/70 dark:border-stone-700/40 bg-white/80 dark:bg-stone-800/50 text-stone-600 dark:text-stone-400 backdrop-blur-md',
 };
 
 export default function Badge({

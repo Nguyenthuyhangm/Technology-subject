@@ -30,10 +30,10 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FCF8F4] text-[#241B17]" style={{ fontFamily: FONT_STACK.sans }}>
+    <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-[#241B17] dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
       {/* Background Decor */}
-      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#E9DED1] opacity-45 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#EDE3D8] opacity-90 blur-[120px]" />
+      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#E9DED1] dark:bg-[#2A1F1A] opacity-45 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#EDE3D8] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
       <AppHeader currentPage="wishlist" />
 
@@ -60,7 +60,7 @@ export default function WishlistPage() {
               const pId = item.productId || item.id || '';
               
               return (
-                <article key={pId} className="relative z-10 rounded-[34px] border border-[#DDD2C6] bg-[#F8F4EE] p-6 shadow-sm transition-all hover:-translate-y-1">
+                <article key={pId} className="relative z-10 rounded-[34px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F8F4EE] dark:bg-[#1A1614] p-6 shadow-sm transition-all hover:-translate-y-1">
                   <div className="flex flex-col gap-6 xl:flex-row">
                     {/* Cột thông tin sản phẩm */}
                     <div className="flex gap-5 xl:w-[42%]">
@@ -95,13 +95,13 @@ export default function WishlistPage() {
                     {/* Cột giá và hành động */}
                     <div className="flex-1 space-y-5">
                       <div className="grid gap-3 md:grid-cols-3">
-                        <div className="rounded-[24px] border border-[#DDD2C6] bg-[#F3EDE5] p-4">
-                          <p className="text-[10px] uppercase text-[#9A8A7A]">Giá đẹp nhất</p>
-                          <p className="mt-3 text-lg font-semibold">{formatPrice(item.minPrice || item.price || 0)}</p>
+                        <div className="rounded-[24px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F3EDE5] dark:bg-[#252018] p-4">
+                          <p className="text-[10px] uppercase text-[#9A8A7A] dark:text-stone-400">Giá đẹp nhất</p>
+                          <p className="mt-3 text-lg font-semibold dark:text-stone-100">{formatPrice(item.minPrice || item.price || 0)}</p>
                         </div>
 
-                        <div className="rounded-[24px] border border-[#DDD2C6] bg-[#F3EDE5] p-4">
-                          <p className="text-[10px] uppercase text-[#9A8A7A]">Sàn tốt nhất</p>
+                        <div className="rounded-[24px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F3EDE5] dark:bg-[#252018] p-4">
+                          <p className="text-[10px] uppercase text-[#9A8A7A] dark:text-stone-400">Sàn tốt nhất</p>
                           <div className="mt-3">
                             {item.platformName ? (
                                 <PlatformPill platform={item.platformName} compact />
@@ -120,7 +120,7 @@ export default function WishlistPage() {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[26px] bg-[#F3EDE5] p-5">
+                      <div className="flex flex-wrap items-center justify-between gap-4 rounded-[26px] bg-[#F3EDE5] dark:bg-[#252018] p-5">
                         <div className="flex gap-3">
                           <Link to={`/product/${pId}`} className="inline-flex items-center gap-2 rounded-full bg-[#2A211D] px-5 py-3 text-sm text-white transition hover:bg-[#3A2D28]">
                             Xem chi tiết <MoveUpRight size={15} />

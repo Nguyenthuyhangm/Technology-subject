@@ -128,9 +128,9 @@ export default function SearchResultsPage() {
     }, [products.length, onlyOfficial, selectedPlatformsArr, isAllSelected, sortBy]);
 
     return (
-        <div className="min-h-screen bg-[#FCF8F4] text-stone-900" style={{ fontFamily: FONT_STACK.sans }}>
-            <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] opacity-30 blur-[120px]" />
-            <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] opacity-90 blur-[120px]" />
+        <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
+            <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-30 blur-[120px]" />
+            <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
             <AppHeader currentPage="search" />
 
@@ -149,16 +149,16 @@ export default function SearchResultsPage() {
 
                     <form
                         onSubmit={onSubmitSearch}
-                        className="mt-8 rounded-[32px] border border-stone-200/60 bg-[#FBF8F3] p-4 shadow-[0_10px_30px_rgba(28,24,20,0.04)]"
+                        className="mt-8 rounded-[32px] border border-stone-200/60 dark:border-stone-700/40 bg-[#FBF8F3] dark:bg-[#1A1614] p-4 shadow-[0_10px_30px_rgba(28,24,20,0.04)]"
                     >
                         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                            <div className="flex flex-1 items-center rounded-full bg-white px-5 py-3.5 ring-1 ring-stone-200/60">
+                            <div className="flex flex-1 items-center rounded-full bg-white dark:bg-stone-800/60 px-5 py-3.5 ring-1 ring-stone-200/60 dark:ring-stone-700/40">
                                 <Search className="h-4 w-4 text-stone-400" />
                                 <input
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     placeholder="Tìm theo tên sản phẩm, thương hiệu hoặc model"
-                                    className="ml-3 w-full bg-transparent text-[15px] text-stone-900 outline-none placeholder:text-stone-400"
+                                    className="ml-3 w-full bg-transparent text-[15px] text-stone-900 dark:text-stone-100 outline-none placeholder:text-stone-400 dark:placeholder:text-stone-600"
                                 />
                             </div>
                             <button
@@ -176,11 +176,10 @@ export default function SearchResultsPage() {
                                     type="button"
                                     onClick={clearPlatforms}
                                     aria-pressed={isAllSelected}
-                                    className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${
-                                        isAllSelected
-                                            ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
-                                            : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
-                                    }`}
+                                    className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${isAllSelected
+                                            ? 'bg-[#F3EDE5] dark:bg-[#2A221A] text-[#2C241F] dark:text-[#E8D5B8] ring-1 ring-[#DED3C7] dark:ring-[#4A3A2A]'
+                                            : 'bg-transparent text-stone-500 dark:text-stone-400 ring-1 ring-stone-200/70 dark:ring-stone-700/50 hover:text-stone-900 dark:hover:text-stone-100'
+                                        }`}
                                 >
                                     Tất cả sàn
                                 </button>
@@ -193,11 +192,10 @@ export default function SearchResultsPage() {
                                             type="button"
                                             onClick={() => togglePlatform(item)}
                                             aria-pressed={active}
-                                            className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${
-                                                active
+                                            className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${active
                                                     ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
                                                     : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
-                                            }`}
+                                                }`}
                                         >
                                             {formatPlatformLabel(item)}
                                         </button>
@@ -207,22 +205,21 @@ export default function SearchResultsPage() {
                                 <button
                                     type="button"
                                     onClick={() => setOnlyOfficial((prev) => !prev)}
-                                    className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.04em] transition ${
-                                        onlyOfficial
+                                    className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.04em] transition ${onlyOfficial
                                             ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
                                             : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
-                                    }`}
+                                        }`}
                                 >
                                     Official
                                 </button>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <span className="text-sm text-stone-400">Sắp xếp theo</span>
+                                <span className={`text-sm text-stone-400 dark:text-stone-500`}>Sắp xếp theo</span>
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value as 'best-price' | 'rating' | 'reviews')}
-                                    className="rounded-full bg-white px-4 py-2.5 text-sm text-stone-700 outline-none ring-1 ring-stone-200/70 transition focus:ring-stone-300"
+                                    className="rounded-full bg-white dark:bg-stone-800/60 px-4 py-2.5 text-sm text-stone-700 dark:text-stone-300 outline-none ring-1 ring-stone-200/70 dark:ring-stone-700/40 transition focus:ring-stone-300"
                                 >
                                     <option value="best-price">Giá tốt nhất</option>
                                     <option value="rating">Đánh giá cao</option>
