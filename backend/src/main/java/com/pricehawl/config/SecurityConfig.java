@@ -26,6 +26,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, 
+                                "/products/**", 
+                                "/api/products/**", 
+                                "/api/trending-deals/**", 
+                                "/api/v1/price-history/**", 
+                                "/api/compare/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter,
