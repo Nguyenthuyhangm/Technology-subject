@@ -10,6 +10,7 @@ import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.repository.ProductSearchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -25,7 +26,10 @@ public class ProductSearchService {
     // =========================
     // 🔄 1. SYNC DB → ELASTICSEARCH
     // =========================
+    @Transactional
     public void syncAll() {
+
+
         List<ProductDocument> docs = productRepository.findAll()
                 .stream()
                 .map(documentMapper::toDocument)
@@ -37,6 +41,7 @@ public class ProductSearchService {
     // =========================
     // 🔍 2. SEARCH (🔥 BEST PRICE)
     // =========================
+    @Transactional
     public List<ProductSearchDTO> search(String keyword) {
 
         // 🔹 1. search từ Elasticsearch
@@ -109,6 +114,7 @@ public class ProductSearchService {
     // =========================
     // 🛟 3. FALLBACK (nếu ES lỗi)
     // =========================
+    @Transactional
     public List<ProductSearchDTO> searchFallback(String keyword) {
 
         List<Product> products = productRepository
@@ -128,6 +134,7 @@ public class ProductSearchService {
     // =========================
     // 🔄 4. SYNC 1 PRODUCT
     // =========================
+    @Transactional
     public void syncOne(Product product) {
         ProductDocument doc = documentMapper.toDocument(product);
         searchRepository.save(doc);

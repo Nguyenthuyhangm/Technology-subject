@@ -63,7 +63,7 @@ public class ProductListing {
 
     // Map quan hệ 1-Nhiều tới bảng price_record
     @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @OrderBy("updatedAt DESC") // Luôn lấy record mới nhất lên đầu
+    @OrderBy("crawledAt DESC") // Luôn lấy record mới nhất lên đầu
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
 
