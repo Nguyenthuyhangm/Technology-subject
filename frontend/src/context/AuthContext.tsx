@@ -3,7 +3,7 @@ import {
     useContext,
     useEffect,
     useState,
-    ReactNode,
+    type ReactNode,
 } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase, BACKEND_URL, type UserProfile } from '../lib/supabase'
@@ -30,7 +30,6 @@ interface AuthContextType {
     profile: UserProfile | null
     loading: boolean
     signOut: () => Promise<void>
-    // ✅ THÊM: hàm refresh profile khi update xong
     refreshProfile: () => Promise<void>
 }
 
@@ -43,8 +42,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [profile, setProfile] = useState<UserProfile | null>(null)
     const [loading, setLoading] = useState(true)
 
-    // ✅ THAY ĐỔI: fetchProfile giờ gọi BE thay vì Supabase trực tiếp
-    // Lý do: BE dùng getOrCreate — nếu user chưa có trong public.users sẽ tự tạo
     const fetchProfile = async (accessToken: string) => {
         try {
             const res = await fetch(`${BACKEND_URL}/users/me`, {
@@ -62,7 +59,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
-    // ✅ THÊM: expose để các component khác gọi khi update profile xong
     const refreshProfile = async () => {
         if (session?.access_token) {
             await fetchProfile(session.access_token)
@@ -73,7 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // 1. Lấy session hiện tại khi app khởi động
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session)
-            // ✅ THAY ĐỔI: truyền access_token thay vì userId
             if (session?.access_token) fetchProfile(session.access_token)
             setLoading(false)
         })
@@ -83,7 +78,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             (_event, session) => {
                 setSession(session)
                 if (session?.access_token) {
-                    // ✅ THAY ĐỔI: truyền access_token thay vì userId
                     fetchProfile(session.access_token)
                 } else {
                     setProfile(null)
@@ -97,7 +91,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const signOut = async () => {
         await supabase.auth.signOut()
-        // ✅ THÊM: xóa profile khi logout
         setProfile(null)
     }
 
@@ -109,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 profile,
                 loading,
                 signOut,
-                refreshProfile, // ✅ THÊM
+                refreshProfile,
             }}
         >
             {children}

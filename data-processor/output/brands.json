@@ -1,0 +1,3314 @@
+[
+  {
+    "brandKey": "diana",
+    "displayBrand": "DIANA",
+    "count": 57,
+    "fileHint": "diana.json"
+  },
+  {
+    "brandKey": "laurier",
+    "displayBrand": "LAURIER",
+    "count": 57,
+    "fileHint": "laurier.json"
+  },
+  {
+    "brandKey": "sofy",
+    "displayBrand": "SOFY",
+    "count": 9,
+    "fileHint": "sofy.json"
+  },
+  {
+    "brandKey": "kotex",
+    "displayBrand": "KOTEX",
+    "count": 52,
+    "fileHint": "kotex.json"
+  },
+  {
+    "brandKey": "whisper",
+    "displayBrand": "WHISPER",
+    "count": 8,
+    "fileHint": "whisper.json"
+  },
+  {
+    "brandKey": "hotosu",
+    "displayBrand": "Hotosu",
+    "count": 16,
+    "fileHint": "hotosu.json"
+  },
+  {
+    "brandKey": "ipek klasik",
+    "displayBrand": "Ipek Klasik",
+    "count": 6,
+    "fileHint": "ipek-klasik.json"
+  },
+  {
+    "brandKey": "silcot",
+    "displayBrand": "SILCOT",
+    "count": 16,
+    "fileHint": "silcot.json"
+  },
+  {
+    "brandKey": "mihoo",
+    "displayBrand": "MIHOO",
+    "count": 11,
+    "fileHint": "mihoo.json"
+  },
+  {
+    "brandKey": "jomi",
+    "displayBrand": "JOMI",
+    "count": 17,
+    "fileHint": "jomi.json"
+  },
+  {
+    "brandKey": "bong bach tuyet",
+    "displayBrand": "Bông Bạch Tuyết",
+    "count": 15,
+    "fileHint": "bong-bach-tuyet.json"
+  },
+  {
+    "brandKey": "lilybell",
+    "displayBrand": "LilyBell",
+    "count": 2,
+    "fileHint": "lilybell.json"
+  },
+  {
+    "brandKey": "yusachi",
+    "displayBrand": "Yusachi",
+    "count": 1,
+    "fileHint": "yusachi.json"
+  },
+  {
+    "brandKey": "ecowipes",
+    "displayBrand": "EcoWipes",
+    "count": 3,
+    "fileHint": "ecowipes.json"
+  },
+  {
+    "brandKey": "ola",
+    "displayBrand": "ola",
+    "count": 2,
+    "fileHint": "ola.json"
+  },
+  {
+    "brandKey": "inci",
+    "displayBrand": "Inci",
+    "count": 2,
+    "fileHint": "inci.json"
+  },
+  {
+    "brandKey": "ceiba",
+    "displayBrand": "Ceiba",
+    "count": 2,
+    "fileHint": "ceiba.json"
+  },
+  {
+    "brandKey": "pop puf",
+    "displayBrand": "Pop Puf",
+    "count": 1,
+    "fileHint": "pop-puf.json"
+  },
+  {
+    "brandKey": "ariul",
+    "displayBrand": "Ariul",
+    "count": 4,
+    "fileHint": "ariul.json"
+  },
+  {
+    "brandKey": "cocoon",
+    "displayBrand": "COCOON",
+    "count": 117,
+    "fileHint": "cocoon.json"
+  },
+  {
+    "brandKey": "cleanic",
+    "displayBrand": "Cleanic",
+    "count": 1,
+    "fileHint": "cleanic.json"
+  },
+  {
+    "brandKey": "byphasse",
+    "displayBrand": "Byphasse",
+    "count": 2,
+    "fileHint": "byphasse.json"
+  },
+  {
+    "brandKey": "tempo",
+    "displayBrand": "Tempo",
+    "count": 1,
+    "fileHint": "tempo.json"
+  },
+  {
+    "brandKey": "perfect diary",
+    "displayBrand": "Perfect Diary",
+    "count": 1,
+    "fileHint": "perfect-diary.json"
+  },
+  {
+    "brandKey": "halio",
+    "displayBrand": "HALIO",
+    "count": 7,
+    "fileHint": "halio.json"
+  },
+  {
+    "brandKey": "bioderma",
+    "displayBrand": "Bioderma",
+    "count": 50,
+    "fileHint": "bioderma.json"
+  },
+  {
+    "brandKey": "l'oreal",
+    "displayBrand": "L'Oreal",
+    "count": 68,
+    "fileHint": "l-oreal.json"
+  },
+  {
+    "brandKey": "la roche-posay",
+    "displayBrand": "La Roche-Posay",
+    "count": 50,
+    "fileHint": "la-roche-posay.json"
+  },
+  {
+    "brandKey": "garnier",
+    "displayBrand": "Garnier",
+    "count": 53,
+    "fileHint": "garnier.json"
+  },
+  {
+    "brandKey": "chacott",
+    "displayBrand": "Chacott",
+    "count": 1,
+    "fileHint": "chacott.json"
+  },
+  {
+    "brandKey": "hada labo",
+    "displayBrand": "HADA LABO",
+    "count": 43,
+    "fileHint": "hada-labo.json"
+  },
+  {
+    "brandKey": "jmsolution",
+    "displayBrand": "JMsolution",
+    "count": 5,
+    "fileHint": "jmsolution.json"
+  },
+  {
+    "brandKey": "banila co",
+    "displayBrand": "BANILA CO",
+    "count": 3,
+    "fileHint": "banila-co.json"
+  },
+  {
+    "brandKey": "simple",
+    "displayBrand": "SIMPLE",
+    "count": 28,
+    "fileHint": "simple.json"
+  },
+  {
+    "brandKey": "caryophy",
+    "displayBrand": "CARYOPHY",
+    "count": 4,
+    "fileHint": "caryophy.json"
+  },
+  {
+    "brandKey": "eucerin",
+    "displayBrand": "EUCERIN",
+    "count": 79,
+    "fileHint": "eucerin.json"
+  },
+  {
+    "brandKey": "eveline",
+    "displayBrand": "Eveline",
+    "count": 1,
+    "fileHint": "eveline.json"
+  },
+  {
+    "brandKey": "bio-essence",
+    "displayBrand": "BIO-ESSENCE",
+    "count": 39,
+    "fileHint": "bio-essence.json"
+  },
+  {
+    "brandKey": "drceutics",
+    "displayBrand": "DrCeutics",
+    "count": 1,
+    "fileHint": "drceutics.json"
+  },
+  {
+    "brandKey": "swiss image",
+    "displayBrand": "Swiss Image",
+    "count": 2,
+    "fileHint": "swiss-image.json"
+  },
+  {
+    "brandKey": "svr",
+    "displayBrand": "SVR",
+    "count": 21,
+    "fileHint": "svr.json"
+  },
+  {
+    "brandKey": "hatomugi",
+    "displayBrand": "HATOMUGI",
+    "count": 4,
+    "fileHint": "hatomugi.json"
+  },
+  {
+    "brandKey": "derladie",
+    "displayBrand": "DERLADIE",
+    "count": 3,
+    "fileHint": "derladie.json"
+  },
+  {
+    "brandKey": "ma:nyo",
+    "displayBrand": "Ma:nyo",
+    "count": 4,
+    "fileHint": "ma-nyo.json"
+  },
+  {
+    "brandKey": "maybelline",
+    "displayBrand": "Maybelline",
+    "count": 45,
+    "fileHint": "maybelline.json"
+  },
+  {
+    "brandKey": "silkygirl",
+    "displayBrand": "Silkygirl",
+    "count": 52,
+    "fileHint": "silkygirl.json"
+  },
+  {
+    "brandKey": "australis",
+    "displayBrand": "australis",
+    "count": 1,
+    "fileHint": "australis.json"
+  },
+  {
+    "brandKey": "colorkey",
+    "displayBrand": "COLORKEY",
+    "count": 75,
+    "fileHint": "colorkey.json"
+  },
+  {
+    "brandKey": "kiss my body",
+    "displayBrand": "Kiss My Body",
+    "count": 29,
+    "fileHint": "kiss-my-body.json"
+  },
+  {
+    "brandKey": "b.o.m",
+    "displayBrand": "B.O.M",
+    "count": 4,
+    "fileHint": "b-o-m.json"
+  },
+  {
+    "brandKey": "bodymiss",
+    "displayBrand": "Bodymiss",
+    "count": 2,
+    "fileHint": "bodymiss.json"
+  },
+  {
+    "brandKey": "armaf",
+    "displayBrand": "ARMAF",
+    "count": 8,
+    "fileHint": "armaf.json"
+  },
+  {
+    "brandKey": "cotoneve",
+    "displayBrand": "COTONEVE",
+    "count": 11,
+    "fileHint": "cotoneve.json"
+  },
+  {
+    "brandKey": "lily bell",
+    "displayBrand": "LiLy Bell",
+    "count": 1,
+    "fileHint": "lily-bell.json"
+  },
+  {
+    "brandKey": "s select",
+    "displayBrand": "S Select",
+    "count": 2,
+    "fileHint": "s-select.json"
+  },
+  {
+    "brandKey": "calla",
+    "displayBrand": "CALLA",
+    "count": 4,
+    "fileHint": "calla.json"
+  },
+  {
+    "brandKey": "biore",
+    "displayBrand": "BIORÉ",
+    "count": 36,
+    "fileHint": "biore.json"
+  },
+  {
+    "brandKey": "ipek",
+    "displayBrand": "IPEK",
+    "count": 2,
+    "fileHint": "ipek.json"
+  },
+  {
+    "brandKey": "befou",
+    "displayBrand": "BEFOU",
+    "count": 8,
+    "fileHint": "befou.json"
+  },
+  {
+    "brandKey": "horus",
+    "displayBrand": "HORUS",
+    "count": 4,
+    "fileHint": "horus.json"
+  },
+  {
+    "brandKey": "olexrs",
+    "displayBrand": "OLEXRS",
+    "count": 14,
+    "fileHint": "olexrs.json"
+  },
+  {
+    "brandKey": "skinlovers",
+    "displayBrand": "SKINLOVERS",
+    "count": 1,
+    "fileHint": "skinlovers.json"
+  },
+  {
+    "brandKey": "rohto",
+    "displayBrand": "ROHTO",
+    "count": 9,
+    "fileHint": "rohto.json"
+  },
+  {
+    "brandKey": "bella",
+    "displayBrand": "BELLA",
+    "count": 1,
+    "fileHint": "bella.json"
+  },
+  {
+    "brandKey": "kai",
+    "displayBrand": "KAI",
+    "count": 11,
+    "fileHint": "kai.json"
+  },
+  {
+    "brandKey": "bio-oil",
+    "displayBrand": "BIO-OIL",
+    "count": 10,
+    "fileHint": "bio-oil.json"
+  },
+  {
+    "brandKey": "louv cell",
+    "displayBrand": "LOUV CELL",
+    "count": 1,
+    "fileHint": "louv-cell.json"
+  },
+  {
+    "brandKey": "white conc",
+    "displayBrand": "WHITE CONC",
+    "count": 5,
+    "fileHint": "white-conc.json"
+  },
+  {
+    "brandKey": "chilly",
+    "displayBrand": "Chilly",
+    "count": 4,
+    "fileHint": "chilly.json"
+  },
+  {
+    "brandKey": "hera lab",
+    "displayBrand": "HERA LAB",
+    "count": 1,
+    "fileHint": "hera-lab.json"
+  },
+  {
+    "brandKey": "jmella",
+    "displayBrand": "JMELLA",
+    "count": 6,
+    "fileHint": "jmella.json"
+  },
+  {
+    "brandKey": "tesori d'oriente",
+    "displayBrand": "TESORI D'ORIENTE",
+    "count": 15,
+    "fileHint": "tesori-d-oriente.json"
+  },
+  {
+    "brandKey": "ziaja",
+    "displayBrand": "ZIAJA",
+    "count": 11,
+    "fileHint": "ziaja.json"
+  },
+  {
+    "brandKey": "exclusive cosmetic",
+    "displayBrand": "Exclusive Cosmetic",
+    "count": 2,
+    "fileHint": "exclusive-cosmetic.json"
+  },
+  {
+    "brandKey": "femfresh",
+    "displayBrand": "FEMFRESH",
+    "count": 11,
+    "fileHint": "femfresh.json"
+  },
+  {
+    "brandKey": "vaseline",
+    "displayBrand": "VASELINE",
+    "count": 47,
+    "fileHint": "vaseline.json"
+  },
+  {
+    "brandKey": "pelican",
+    "displayBrand": "PELICAN",
+    "count": 9,
+    "fileHint": "pelican.json"
+  },
+  {
+    "brandKey": "cleo",
+    "displayBrand": "CLEO",
+    "count": 8,
+    "fileHint": "cleo.json"
+  },
+  {
+    "brandKey": "grace and glow",
+    "displayBrand": "GRACE AND GLOW",
+    "count": 15,
+    "fileHint": "grace-and-glow.json"
+  },
+  {
+    "brandKey": "roger &amp; gallet",
+    "displayBrand": "ROGER &amp; GALLET",
+    "count": 19,
+    "fileHint": "roger-amp-gallet.json"
+  },
+  {
+    "brandKey": "felina",
+    "displayBrand": "FELINA",
+    "count": 3,
+    "fileHint": "felina.json"
+  },
+  {
+    "brandKey": "lux",
+    "displayBrand": "LUX",
+    "count": 8,
+    "fileHint": "lux.json"
+  },
+  {
+    "brandKey": "paula's choice",
+    "displayBrand": "PAULA'S CHOICE",
+    "count": 22,
+    "fileHint": "paula-s-choice.json"
+  },
+  {
+    "brandKey": "median",
+    "displayBrand": "Median",
+    "count": 4,
+    "fileHint": "median.json"
+  },
+  {
+    "brandKey": "marvis",
+    "displayBrand": "MARVIS",
+    "count": 8,
+    "fileHint": "marvis.json"
+  },
+  {
+    "brandKey": "eucryl",
+    "displayBrand": "EUCRYL",
+    "count": 4,
+    "fileHint": "eucryl.json"
+  },
+  {
+    "brandKey": "listerine",
+    "displayBrand": "LISTERINE",
+    "count": 14,
+    "fileHint": "listerine.json"
+  },
+  {
+    "brandKey": "tasteless",
+    "displayBrand": "TASTELESS",
+    "count": 5,
+    "fileHint": "tasteless.json"
+  },
+  {
+    "brandKey": "biorica",
+    "displayBrand": "BIORICA",
+    "count": 4,
+    "fileHint": "biorica.json"
+  },
+  {
+    "brandKey": "batiste",
+    "displayBrand": "Batiste",
+    "count": 13,
+    "fileHint": "batiste.json"
+  },
+  {
+    "brandKey": "tresemme",
+    "displayBrand": "TRESEMME",
+    "count": 30,
+    "fileHint": "tresemme.json"
+  },
+  {
+    "brandKey": "girlz only",
+    "displayBrand": "GIRLZ ONLY",
+    "count": 12,
+    "fileHint": "girlz-only.json"
+  },
+  {
+    "brandKey": "pantene",
+    "displayBrand": "PANTENE",
+    "count": 20,
+    "fileHint": "pantene.json"
+  },
+  {
+    "brandKey": "dove",
+    "displayBrand": "DOVE",
+    "count": 54,
+    "fileHint": "dove.json"
+  },
+  {
+    "brandKey": "selsun",
+    "displayBrand": "SELSUN",
+    "count": 5,
+    "fileHint": "selsun.json"
+  },
+  {
+    "brandKey": "foellie",
+    "displayBrand": "Foellie",
+    "count": 15,
+    "fileHint": "foellie.json"
+  },
+  {
+    "brandKey": "kobayashi",
+    "displayBrand": "Kobayashi",
+    "count": 1,
+    "fileHint": "kobayashi.json"
+  },
+  {
+    "brandKey": "ph japan premium",
+    "displayBrand": "PH JAPAN PREMIUM",
+    "count": 6,
+    "fileHint": "ph-japan-premium.json"
+  },
+  {
+    "brandKey": "dionel",
+    "displayBrand": "DIONEL",
+    "count": 4,
+    "fileHint": "dionel.json"
+  },
+  {
+    "brandKey": "omo",
+    "displayBrand": "OMO",
+    "count": 1,
+    "fileHint": "omo.json"
+  },
+  {
+    "brandKey": "the saem",
+    "displayBrand": "THE SAEM",
+    "count": 12,
+    "fileHint": "the-saem.json"
+  },
+  {
+    "brandKey": "lemonade",
+    "displayBrand": "LEMONADE",
+    "count": 38,
+    "fileHint": "lemonade.json"
+  },
+  {
+    "brandKey": "clio",
+    "displayBrand": "CLIO",
+    "count": 22,
+    "fileHint": "clio.json"
+  },
+  {
+    "brandKey": "peripera",
+    "displayBrand": "PERIPERA",
+    "count": 17,
+    "fileHint": "peripera.json"
+  },
+  {
+    "brandKey": "catrice",
+    "displayBrand": "CATRICE",
+    "count": 34,
+    "fileHint": "catrice.json"
+  },
+  {
+    "brandKey": "judydoll",
+    "displayBrand": "JUDYDOLL",
+    "count": 57,
+    "fileHint": "judydoll.json"
+  },
+  {
+    "brandKey": "luna",
+    "displayBrand": "LUNA",
+    "count": 3,
+    "fileHint": "luna.json"
+  },
+  {
+    "brandKey": "jary",
+    "displayBrand": "JARY",
+    "count": 61,
+    "fileHint": "jary.json"
+  },
+  {
+    "brandKey": "vacosi",
+    "displayBrand": "VACOSI",
+    "count": 57,
+    "fileHint": "vacosi.json"
+  },
+  {
+    "brandKey": "real techniques",
+    "displayBrand": "Real Techniques",
+    "count": 1,
+    "fileHint": "real-techniques.json"
+  },
+  {
+    "brandKey": "amortals",
+    "displayBrand": "AMORTALS",
+    "count": 31,
+    "fileHint": "amortals.json"
+  },
+  {
+    "brandKey": "voudioty",
+    "displayBrand": "VOUDIOTY",
+    "count": 2,
+    "fileHint": "voudioty.json"
+  },
+  {
+    "brandKey": "vichy",
+    "displayBrand": "VICHY",
+    "count": 38,
+    "fileHint": "vichy.json"
+  },
+  {
+    "brandKey": "unilever",
+    "displayBrand": "UNILEVER",
+    "count": 1,
+    "fileHint": "unilever.json"
+  },
+  {
+    "brandKey": "kumano",
+    "displayBrand": "KUMANO",
+    "count": 5,
+    "fileHint": "kumano.json"
+  },
+  {
+    "brandKey": "tsubaki",
+    "displayBrand": "TSUBAKI",
+    "count": 8,
+    "fileHint": "tsubaki.json"
+  },
+  {
+    "brandKey": "curel",
+    "displayBrand": "Curél",
+    "count": 18,
+    "fileHint": "curel.json"
+  },
+  {
+    "brandKey": "evoluderm",
+    "displayBrand": "EVOLUDERM",
+    "count": 11,
+    "fileHint": "evoluderm.json"
+  },
+  {
+    "brandKey": "kr.lab",
+    "displayBrand": "KR.LAB",
+    "count": 2,
+    "fileHint": "kr-lab.json"
+  },
+  {
+    "brandKey": "habaria",
+    "displayBrand": "HABARIA",
+    "count": 10,
+    "fileHint": "habaria.json"
+  },
+  {
+    "brandKey": "chillwipes",
+    "displayBrand": "CHILLWIPES",
+    "count": 2,
+    "fileHint": "chillwipes.json"
+  },
+  {
+    "brandKey": "mumchit",
+    "displayBrand": "MUMCHIT",
+    "count": 5,
+    "fileHint": "mumchit.json"
+  },
+  {
+    "brandKey": "davichi",
+    "displayBrand": "DAVICHI",
+    "count": 1,
+    "fileHint": "davichi.json"
+  },
+  {
+    "brandKey": "wellderma",
+    "displayBrand": "WELLDERMA",
+    "count": 1,
+    "fileHint": "wellderma.json"
+  },
+  {
+    "brandKey": "corine de farme",
+    "displayBrand": "Corine De Farme",
+    "count": 4,
+    "fileHint": "corine-de-farme.json"
+  },
+  {
+    "brandKey": "wettrust",
+    "displayBrand": "WETTRUST",
+    "count": 1,
+    "fileHint": "wettrust.json"
+  },
+  {
+    "brandKey": "fino",
+    "displayBrand": "FINO",
+    "count": 4,
+    "fileHint": "fino.json"
+  },
+  {
+    "brandKey": "shiseido",
+    "displayBrand": "SHISEIDO",
+    "count": 1,
+    "fileHint": "shiseido.json"
+  },
+  {
+    "brandKey": "aromatica",
+    "displayBrand": "AROMATICA",
+    "count": 3,
+    "fileHint": "aromatica.json"
+  },
+  {
+    "brandKey": "cow",
+    "displayBrand": "COW",
+    "count": 2,
+    "fileHint": "cow.json"
+  },
+  {
+    "brandKey": "mise en scene",
+    "displayBrand": "Mise En Scene",
+    "count": 5,
+    "fileHint": "mise-en-scene.json"
+  },
+  {
+    "brandKey": "mega we care",
+    "displayBrand": "MEGA WE CARE",
+    "count": 3,
+    "fileHint": "mega-we-care.json"
+  },
+  {
+    "brandKey": "skin1004",
+    "displayBrand": "SKIN1004",
+    "count": 16,
+    "fileHint": "skin1004.json"
+  },
+  {
+    "brandKey": "smas",
+    "displayBrand": "SMAS",
+    "count": 1,
+    "fileHint": "smas.json"
+  },
+  {
+    "brandKey": "dr.pepti",
+    "displayBrand": "DR.PEPTI",
+    "count": 6,
+    "fileHint": "dr-pepti.json"
+  },
+  {
+    "brandKey": "goodal",
+    "displayBrand": "GOODAL",
+    "count": 3,
+    "fileHint": "goodal.json"
+  },
+  {
+    "brandKey": "angel's liquid",
+    "displayBrand": "ANGEL'S LIQUID",
+    "count": 3,
+    "fileHint": "angel-s-liquid.json"
+  },
+  {
+    "brandKey": "cerave",
+    "displayBrand": "CERAVE",
+    "count": 28,
+    "fileHint": "cerave.json"
+  },
+  {
+    "brandKey": "round lab",
+    "displayBrand": "ROUND LAB",
+    "count": 9,
+    "fileHint": "round-lab.json"
+  },
+  {
+    "brandKey": "forencos",
+    "displayBrand": "FORENCOS",
+    "count": 2,
+    "fileHint": "forencos.json"
+  },
+  {
+    "brandKey": "rmon",
+    "displayBrand": "RMON",
+    "count": 1,
+    "fileHint": "rmon.json"
+  },
+  {
+    "brandKey": "some by mi",
+    "displayBrand": "SOME BY MI",
+    "count": 29,
+    "fileHint": "some-by-mi.json"
+  },
+  {
+    "brandKey": "olay",
+    "displayBrand": "OLAY",
+    "count": 41,
+    "fileHint": "olay.json"
+  },
+  {
+    "brandKey": "dhc",
+    "displayBrand": "DHC",
+    "count": 13,
+    "fileHint": "dhc.json"
+  },
+  {
+    "brandKey": "kiss me",
+    "displayBrand": "KISS ME",
+    "count": 20,
+    "fileHint": "kiss-me.json"
+  },
+  {
+    "brandKey": "milk touch",
+    "displayBrand": "MILK TOUCH",
+    "count": 7,
+    "fileHint": "milk-touch.json"
+  },
+  {
+    "brandKey": "ciracle",
+    "displayBrand": "CIRACLE",
+    "count": 1,
+    "fileHint": "ciracle.json"
+  },
+  {
+    "brandKey": "gamma chemicals",
+    "displayBrand": "GAMMA CHEMICALS",
+    "count": 1,
+    "fileHint": "gamma-chemicals.json"
+  },
+  {
+    "brandKey": "mayan",
+    "displayBrand": "MAYAN",
+    "count": 12,
+    "fileHint": "mayan.json"
+  },
+  {
+    "brandKey": "alcom",
+    "displayBrand": "ALCOM",
+    "count": 1,
+    "fileHint": "alcom.json"
+  },
+  {
+    "brandKey": "acnes",
+    "displayBrand": "ACNES",
+    "count": 28,
+    "fileHint": "acnes.json"
+  },
+  {
+    "brandKey": "lanbena",
+    "displayBrand": "LANBENA",
+    "count": 28,
+    "fileHint": "lanbena.json"
+  },
+  {
+    "brandKey": "cosrx",
+    "displayBrand": "COSRX",
+    "count": 4,
+    "fileHint": "cosrx.json"
+  },
+  {
+    "brandKey": "obagi",
+    "displayBrand": "OBAGI",
+    "count": 3,
+    "fileHint": "obagi.json"
+  },
+  {
+    "brandKey": "dongsung",
+    "displayBrand": "DongSung",
+    "count": 2,
+    "fileHint": "dongsung.json"
+  },
+  {
+    "brandKey": "gentacin",
+    "displayBrand": "Gentacin",
+    "count": 1,
+    "fileHint": "gentacin.json"
+  },
+  {
+    "brandKey": "kose",
+    "displayBrand": "KOSÉ",
+    "count": 5,
+    "fileHint": "kose.json"
+  },
+  {
+    "brandKey": "ohui",
+    "displayBrand": "OHUI",
+    "count": 1,
+    "fileHint": "ohui.json"
+  },
+  {
+    "brandKey": "klairs",
+    "displayBrand": "KLAIRS",
+    "count": 5,
+    "fileHint": "klairs.json"
+  },
+  {
+    "brandKey": "uno",
+    "displayBrand": "UNO",
+    "count": 6,
+    "fileHint": "uno.json"
+  },
+  {
+    "brandKey": "coopy",
+    "displayBrand": "COOPY",
+    "count": 2,
+    "fileHint": "coopy.json"
+  },
+  {
+    "brandKey": "mooekiss",
+    "displayBrand": "MOOEKISS",
+    "count": 10,
+    "fileHint": "mooekiss.json"
+  },
+  {
+    "brandKey": "0",
+    "displayBrand": "0",
+    "count": 10,
+    "fileHint": "0.json"
+  },
+  {
+    "brandKey": "numbuz:n",
+    "displayBrand": "NUMBUZ:N",
+    "count": 9,
+    "fileHint": "numbuz-n.json"
+  },
+  {
+    "brandKey": "mlen diary",
+    "displayBrand": "MLEN DIARY",
+    "count": 37,
+    "fileHint": "mlen-diary.json"
+  },
+  {
+    "brandKey": "3ce",
+    "displayBrand": "3CE",
+    "count": 110,
+    "fileHint": "3ce.json"
+  },
+  {
+    "brandKey": "make prem",
+    "displayBrand": "MAKE PREM",
+    "count": 2,
+    "fileHint": "make-prem.json"
+  },
+  {
+    "brandKey": "carslan",
+    "displayBrand": "CARSLAN",
+    "count": 15,
+    "fileHint": "carslan.json"
+  },
+  {
+    "brandKey": "embryolisse",
+    "displayBrand": "EMBRYOLISSE",
+    "count": 2,
+    "fileHint": "embryolisse.json"
+  },
+  {
+    "brandKey": "eou",
+    "displayBrand": "EOU",
+    "count": 1,
+    "fileHint": "eou.json"
+  },
+  {
+    "brandKey": "joocyee",
+    "displayBrand": "JOOCYEE",
+    "count": 8,
+    "fileHint": "joocyee.json"
+  },
+  {
+    "brandKey": "espoir",
+    "displayBrand": "ESPOIR",
+    "count": 10,
+    "fileHint": "espoir.json"
+  },
+  {
+    "brandKey": "unleashia",
+    "displayBrand": "UNLEASHIA",
+    "count": 4,
+    "fileHint": "unleashia.json"
+  },
+  {
+    "brandKey": "dearmay",
+    "displayBrand": "DEARMAY",
+    "count": 9,
+    "fileHint": "dearmay.json"
+  },
+  {
+    "brandKey": "tonymoly",
+    "displayBrand": "TONYMOLY",
+    "count": 2,
+    "fileHint": "tonymoly.json"
+  },
+  {
+    "brandKey": "lilybyred",
+    "displayBrand": "LILYBYRED",
+    "count": 2,
+    "fileHint": "lilybyred.json"
+  },
+  {
+    "brandKey": "browit",
+    "displayBrand": "BROWIT",
+    "count": 17,
+    "fileHint": "browit.json"
+  },
+  {
+    "brandKey": "martiderm",
+    "displayBrand": "MARTIDERM",
+    "count": 2,
+    "fileHint": "martiderm.json"
+  },
+  {
+    "brandKey": "anessa",
+    "displayBrand": "ANESSA",
+    "count": 11,
+    "fileHint": "anessa.json"
+  },
+  {
+    "brandKey": "cell fusion c",
+    "displayBrand": "CELL FUSION C",
+    "count": 5,
+    "fileHint": "cell-fusion-c.json"
+  },
+  {
+    "brandKey": "sunplay",
+    "displayBrand": "SUNPLAY",
+    "count": 29,
+    "fileHint": "sunplay.json"
+  },
+  {
+    "brandKey": "beplain",
+    "displayBrand": "BEPLAIN",
+    "count": 10,
+    "fileHint": "beplain.json"
+  },
+  {
+    "brandKey": "d'alba",
+    "displayBrand": "D'ALBA",
+    "count": 11,
+    "fileHint": "d-alba.json"
+  },
+  {
+    "brandKey": "nuxe",
+    "displayBrand": "NUXE",
+    "count": 12,
+    "fileHint": "nuxe.json"
+  },
+  {
+    "brandKey": "torriden",
+    "displayBrand": "Torriden",
+    "count": 9,
+    "fileHint": "torriden.json"
+  },
+  {
+    "brandKey": "klavuu",
+    "displayBrand": "KLAVUU",
+    "count": 3,
+    "fileHint": "klavuu.json"
+  },
+  {
+    "brandKey": "code glokolor",
+    "displayBrand": "CODE GLOKOLOR",
+    "count": 1,
+    "fileHint": "code-glokolor.json"
+  },
+  {
+    "brandKey": "2an",
+    "displayBrand": "2aN",
+    "count": 2,
+    "fileHint": "2an.json"
+  },
+  {
+    "brandKey": "the face shop",
+    "displayBrand": "THE FACE SHOP",
+    "count": 2,
+    "fileHint": "the-face-shop.json"
+  },
+  {
+    "brandKey": "city color",
+    "displayBrand": "CITY COLOR",
+    "count": 2,
+    "fileHint": "city-color.json"
+  },
+  {
+    "brandKey": "focallure",
+    "displayBrand": "FOCALLURE",
+    "count": 26,
+    "fileHint": "focallure.json"
+  },
+  {
+    "brandKey": "kumargic",
+    "displayBrand": "KUMARGIC",
+    "count": 2,
+    "fileHint": "kumargic.json"
+  },
+  {
+    "brandKey": "m.asam",
+    "displayBrand": "M.ASAM",
+    "count": 10,
+    "fileHint": "m-asam.json"
+  },
+  {
+    "brandKey": "maxclinic",
+    "displayBrand": "MAXCLINIC",
+    "count": 1,
+    "fileHint": "maxclinic.json"
+  },
+  {
+    "brandKey": "bergamo",
+    "displayBrand": "Bergamo",
+    "count": 3,
+    "fileHint": "bergamo.json"
+  },
+  {
+    "brandKey": "estee lauder",
+    "displayBrand": "ESTEE LAUDER",
+    "count": 1,
+    "fileHint": "estee-lauder.json"
+  },
+  {
+    "brandKey": "sur.medic+",
+    "displayBrand": "SUR.MEDIC+",
+    "count": 5,
+    "fileHint": "sur-medic.json"
+  },
+  {
+    "brandKey": "meishoku",
+    "displayBrand": "MEISHOKU",
+    "count": 1,
+    "fileHint": "meishoku.json"
+  },
+  {
+    "brandKey": "shu uemura",
+    "displayBrand": "SHU UEMURA",
+    "count": 1,
+    "fileHint": "shu-uemura.json"
+  },
+  {
+    "brandKey": "cetaphil",
+    "displayBrand": "CETAPHIL",
+    "count": 23,
+    "fileHint": "cetaphil.json"
+  },
+  {
+    "brandKey": "glorie",
+    "displayBrand": "GLORIE",
+    "count": 1,
+    "fileHint": "glorie.json"
+  },
+  {
+    "brandKey": "rosette",
+    "displayBrand": "ROSETTE",
+    "count": 8,
+    "fileHint": "rosette.json"
+  },
+  {
+    "brandKey": "prettyskin",
+    "displayBrand": "Prettyskin",
+    "count": 2,
+    "fileHint": "prettyskin.json"
+  },
+  {
+    "brandKey": "jm solution",
+    "displayBrand": "JM SOLUTION",
+    "count": 13,
+    "fileHint": "jm-solution.json"
+  },
+  {
+    "brandKey": "oxy",
+    "displayBrand": "OXY",
+    "count": 9,
+    "fileHint": "oxy.json"
+  },
+  {
+    "brandKey": "neutrogena",
+    "displayBrand": "NEUTROGENA",
+    "count": 10,
+    "fileHint": "neutrogena.json"
+  },
+  {
+    "brandKey": "etiaxil",
+    "displayBrand": "ETIAXIL",
+    "count": 6,
+    "fileHint": "etiaxil.json"
+  },
+  {
+    "brandKey": "refre",
+    "displayBrand": "REFRE",
+    "count": 21,
+    "fileHint": "refre.json"
+  },
+  {
+    "brandKey": "axe",
+    "displayBrand": "AXE",
+    "count": 12,
+    "fileHint": "axe.json"
+  },
+  {
+    "brandKey": "perspirex",
+    "displayBrand": "Perspirex",
+    "count": 2,
+    "fileHint": "perspirex.json"
+  },
+  {
+    "brandKey": "nivea",
+    "displayBrand": "NIVEA",
+    "count": 86,
+    "fileHint": "nivea.json"
+  },
+  {
+    "brandKey": "clinique",
+    "displayBrand": "CLINIQUE",
+    "count": 1,
+    "fileHint": "clinique.json"
+  },
+  {
+    "brandKey": "naruko",
+    "displayBrand": "NARUKO",
+    "count": 3,
+    "fileHint": "naruko.json"
+  },
+  {
+    "brandKey": "bebeskin",
+    "displayBrand": "BEBESKIN",
+    "count": 1,
+    "fileHint": "bebeskin.json"
+  },
+  {
+    "brandKey": "naris",
+    "displayBrand": "NARIS",
+    "count": 11,
+    "fileHint": "naris.json"
+  },
+  {
+    "brandKey": "romand",
+    "displayBrand": "ROMAND",
+    "count": 5,
+    "fileHint": "romand.json"
+  },
+  {
+    "brandKey": "luk fixx",
+    "displayBrand": "LUK FIXX",
+    "count": 1,
+    "fileHint": "luk-fixx.json"
+  },
+  {
+    "brandKey": "medianswer",
+    "displayBrand": "MEDIANSWER",
+    "count": 1,
+    "fileHint": "medianswer.json"
+  },
+  {
+    "brandKey": "belif",
+    "displayBrand": "BELIF",
+    "count": 2,
+    "fileHint": "belif.json"
+  },
+  {
+    "brandKey": "mediheal",
+    "displayBrand": "MEDIHEAL",
+    "count": 43,
+    "fileHint": "mediheal.json"
+  },
+  {
+    "brandKey": "i'm from",
+    "displayBrand": "I'M FROM",
+    "count": 3,
+    "fileHint": "i-m-from.json"
+  },
+  {
+    "brandKey": "queen helene",
+    "displayBrand": "QUEEN HELENE",
+    "count": 1,
+    "fileHint": "queen-helene.json"
+  },
+  {
+    "brandKey": "kiehl's",
+    "displayBrand": "KIEHL'S",
+    "count": 1,
+    "fileHint": "kiehl-s.json"
+  },
+  {
+    "brandKey": "autumn",
+    "displayBrand": "AUTUMN",
+    "count": 2,
+    "fileHint": "autumn.json"
+  },
+  {
+    "brandKey": "beautylabo",
+    "displayBrand": "BEAUTYLABO",
+    "count": 2,
+    "fileHint": "beautylabo.json"
+  },
+  {
+    "brandKey": "liese",
+    "displayBrand": "LIESE",
+    "count": 2,
+    "fileHint": "liese.json"
+  },
+  {
+    "brandKey": "jean paul gaultier",
+    "displayBrand": "Jean Paul Gaultier",
+    "count": 1,
+    "fileHint": "jean-paul-gaultier.json"
+  },
+  {
+    "brandKey": "narciso rodriguez",
+    "displayBrand": "NARCISO RODRIGUEZ",
+    "count": 18,
+    "fileHint": "narciso-rodriguez.json"
+  },
+  {
+    "brandKey": "versace",
+    "displayBrand": "Versace",
+    "count": 2,
+    "fileHint": "versace.json"
+  },
+  {
+    "brandKey": "burberry",
+    "displayBrand": "BURBERRY",
+    "count": 2,
+    "fileHint": "burberry.json"
+  },
+  {
+    "brandKey": "coach",
+    "displayBrand": "COACH",
+    "count": 1,
+    "fileHint": "coach.json"
+  },
+  {
+    "brandKey": "montblanc",
+    "displayBrand": "MONTBLANC",
+    "count": 2,
+    "fileHint": "montblanc.json"
+  },
+  {
+    "brandKey": "jimmy choo",
+    "displayBrand": "Jimmy Choo",
+    "count": 2,
+    "fileHint": "jimmy-choo.json"
+  },
+  {
+    "brandKey": "gucci",
+    "displayBrand": "GUCCI",
+    "count": 2,
+    "fileHint": "gucci.json"
+  },
+  {
+    "brandKey": "sungboon",
+    "displayBrand": "SUNGBOON",
+    "count": 1,
+    "fileHint": "sungboon.json"
+  },
+  {
+    "brandKey": "dokudami",
+    "displayBrand": "DOKUDAMI",
+    "count": 2,
+    "fileHint": "dokudami.json"
+  },
+  {
+    "brandKey": "chloe",
+    "displayBrand": "CHLOÉ",
+    "count": 1,
+    "fileHint": "chloe.json"
+  },
+  {
+    "brandKey": "dolce &amp; gabbana",
+    "displayBrand": "Dolce &amp; Gabbana",
+    "count": 2,
+    "fileHint": "dolce-amp-gabbana.json"
+  },
+  {
+    "brandKey": "carolina herrera",
+    "displayBrand": "Carolina Herrera",
+    "count": 1,
+    "fileHint": "carolina-herrera.json"
+  },
+  {
+    "brandKey": "celler",
+    "displayBrand": "CELLER",
+    "count": 4,
+    "fileHint": "celler.json"
+  },
+  {
+    "brandKey": "cocolux",
+    "displayBrand": "COCOLUX",
+    "count": 1,
+    "fileHint": "cocolux.json"
+  },
+  {
+    "brandKey": "sancoba",
+    "displayBrand": "SANCOBA",
+    "count": 1,
+    "fileHint": "sancoba.json"
+  },
+  {
+    "brandKey": "3w",
+    "displayBrand": "3W",
+    "count": 1,
+    "fileHint": "3w.json"
+  },
+  {
+    "brandKey": "huxley",
+    "displayBrand": "HUXLEY",
+    "count": 4,
+    "fileHint": "huxley.json"
+  },
+  {
+    "brandKey": "cnp",
+    "displayBrand": "CNP",
+    "count": 2,
+    "fileHint": "cnp.json"
+  },
+  {
+    "brandKey": "su:m 37",
+    "displayBrand": "SU:M 37",
+    "count": 1,
+    "fileHint": "su-m-37.json"
+  },
+  {
+    "brandKey": "9wishes",
+    "displayBrand": "9WISHES",
+    "count": 5,
+    "fileHint": "9wishes.json"
+  },
+  {
+    "brandKey": "tia'm",
+    "displayBrand": "TIA'M",
+    "count": 1,
+    "fileHint": "tia-m.json"
+  },
+  {
+    "brandKey": "black rouge",
+    "displayBrand": "BLACK ROUGE",
+    "count": 5,
+    "fileHint": "black-rouge.json"
+  },
+  {
+    "brandKey": "the whoo",
+    "displayBrand": "THE WHOO",
+    "count": 12,
+    "fileHint": "the-whoo.json"
+  },
+  {
+    "brandKey": "senka",
+    "displayBrand": "SENKA",
+    "count": 25,
+    "fileHint": "senka.json"
+  },
+  {
+    "brandKey": "ynm",
+    "displayBrand": "YNM",
+    "count": 2,
+    "fileHint": "ynm.json"
+  },
+  {
+    "brandKey": "lipice",
+    "displayBrand": "LIPICE",
+    "count": 3,
+    "fileHint": "lipice.json"
+  },
+  {
+    "brandKey": "on:the body",
+    "displayBrand": "ON:THE BODY",
+    "count": 3,
+    "fileHint": "on-the-body.json"
+  },
+  {
+    "brandKey": "happy bath",
+    "displayBrand": "HAPPY BATH",
+    "count": 1,
+    "fileHint": "happy-bath.json"
+  },
+  {
+    "brandKey": "st.ives",
+    "displayBrand": "ST.IVES",
+    "count": 7,
+    "fileHint": "st-ives.json"
+  },
+  {
+    "brandKey": "algemarin",
+    "displayBrand": "ALGEMARIN",
+    "count": 1,
+    "fileHint": "algemarin.json"
+  },
+  {
+    "brandKey": "shower mate",
+    "displayBrand": "SHOWER MATE",
+    "count": 1,
+    "fileHint": "shower-mate.json"
+  },
+  {
+    "brandKey": "cathy doll",
+    "displayBrand": "CATHY DOLL",
+    "count": 18,
+    "fileHint": "cathy-doll.json"
+  },
+  {
+    "brandKey": "arrahan",
+    "displayBrand": "ARRAHAN",
+    "count": 11,
+    "fileHint": "arrahan.json"
+  },
+  {
+    "brandKey": "a bonne",
+    "displayBrand": "A BONNÉ",
+    "count": 3,
+    "fileHint": "a-bonne.json"
+  },
+  {
+    "brandKey": "tree hut",
+    "displayBrand": "TREE HUT",
+    "count": 11,
+    "fileHint": "tree-hut.json"
+  },
+  {
+    "brandKey": "treaclemoon",
+    "displayBrand": "TREACLEMOON",
+    "count": 1,
+    "fileHint": "treaclemoon.json"
+  },
+  {
+    "brandKey": "organic shop",
+    "displayBrand": "ORGANIC SHOP",
+    "count": 1,
+    "fileHint": "organic-shop.json"
+  },
+  {
+    "brandKey": "veet",
+    "displayBrand": "VEET",
+    "count": 6,
+    "fileHint": "veet.json"
+  },
+  {
+    "brandKey": "biowet",
+    "displayBrand": "BioWet",
+    "count": 5,
+    "fileHint": "biowet.json"
+  },
+  {
+    "brandKey": "cure",
+    "displayBrand": "CURE",
+    "count": 4,
+    "fileHint": "cure.json"
+  },
+  {
+    "brandKey": "dr.g",
+    "displayBrand": "DR.G",
+    "count": 7,
+    "fileHint": "dr-g.json"
+  },
+  {
+    "brandKey": "unpa",
+    "displayBrand": "UNPA",
+    "count": 1,
+    "fileHint": "unpa.json"
+  },
+  {
+    "brandKey": "beauty treats",
+    "displayBrand": "BEAUTY TREATS",
+    "count": 1,
+    "fileHint": "beauty-treats.json"
+  },
+  {
+    "brandKey": "mac",
+    "displayBrand": "MAC",
+    "count": 4,
+    "fileHint": "mac.json"
+  },
+  {
+    "brandKey": "bobbi brown",
+    "displayBrand": "BOBBI BROWN",
+    "count": 2,
+    "fileHint": "bobbi-brown.json"
+  },
+  {
+    "brandKey": "renoderm",
+    "displayBrand": "RENODERM",
+    "count": 2,
+    "fileHint": "renoderm.json"
+  },
+  {
+    "brandKey": "laneige",
+    "displayBrand": "LANEIGE",
+    "count": 1,
+    "fileHint": "laneige.json"
+  },
+  {
+    "brandKey": "menow",
+    "displayBrand": "MENOW",
+    "count": 1,
+    "fileHint": "menow.json"
+  },
+  {
+    "brandKey": "pramy",
+    "displayBrand": "PRAMY",
+    "count": 5,
+    "fileHint": "pramy.json"
+  },
+  {
+    "brandKey": "evian",
+    "displayBrand": "EVIAN",
+    "count": 6,
+    "fileHint": "evian.json"
+  },
+  {
+    "brandKey": "s.nature",
+    "displayBrand": "S.NATURE",
+    "count": 1,
+    "fileHint": "s-nature.json"
+  },
+  {
+    "brandKey": "bsc",
+    "displayBrand": "BSC",
+    "count": 5,
+    "fileHint": "bsc.json"
+  },
+  {
+    "brandKey": "omi",
+    "displayBrand": "OMI",
+    "count": 3,
+    "fileHint": "omi.json"
+  },
+  {
+    "brandKey": "clear",
+    "displayBrand": "CLEAR",
+    "count": 16,
+    "fileHint": "clear.json"
+  },
+  {
+    "brandKey": "oral clean",
+    "displayBrand": "ORAL CLEAN",
+    "count": 13,
+    "fileHint": "oral-clean.json"
+  },
+  {
+    "brandKey": "benew",
+    "displayBrand": "BENEW",
+    "count": 10,
+    "fileHint": "benew.json"
+  },
+  {
+    "brandKey": "ricola",
+    "displayBrand": "RICOLA",
+    "count": 3,
+    "fileHint": "ricola.json"
+  },
+  {
+    "brandKey": "palmolive",
+    "displayBrand": "PALMOLIVE",
+    "count": 11,
+    "fileHint": "palmolive.json"
+  },
+  {
+    "brandKey": "gatsby",
+    "displayBrand": "GATSBY",
+    "count": 10,
+    "fileHint": "gatsby.json"
+  },
+  {
+    "brandKey": "teenilicious",
+    "displayBrand": "Teenilicious",
+    "count": 8,
+    "fileHint": "teenilicious.json"
+  },
+  {
+    "brandKey": "soffell",
+    "displayBrand": "SOFFELL",
+    "count": 4,
+    "fileHint": "soffell.json"
+  },
+  {
+    "brandKey": "mee beautie",
+    "displayBrand": "MEE BEAUTIE",
+    "count": 4,
+    "fileHint": "mee-beautie.json"
+  },
+  {
+    "brandKey": "five grains",
+    "displayBrand": "Five Grains",
+    "count": 5,
+    "fileHint": "five-grains.json"
+  },
+  {
+    "brandKey": "bnbg",
+    "displayBrand": "BNBG",
+    "count": 21,
+    "fileHint": "bnbg.json"
+  },
+  {
+    "brandKey": "thorakao",
+    "displayBrand": "THORAKAO",
+    "count": 29,
+    "fileHint": "thorakao.json"
+  },
+  {
+    "brandKey": "vedette",
+    "displayBrand": "VEDETTE",
+    "count": 17,
+    "fileHint": "vedette.json"
+  },
+  {
+    "brandKey": "mistine",
+    "displayBrand": "MISTINE",
+    "count": 6,
+    "fileHint": "mistine.json"
+  },
+  {
+    "brandKey": "x-men",
+    "displayBrand": "X-MEN",
+    "count": 42,
+    "fileHint": "x-men.json"
+  },
+  {
+    "brandKey": "maybelline new york",
+    "displayBrand": "MAYBELLINE NEW YORK",
+    "count": 102,
+    "fileHint": "maybelline-new-york.json"
+  },
+  {
+    "brandKey": "ahc",
+    "displayBrand": "AHC",
+    "count": 4,
+    "fileHint": "ahc.json"
+  },
+  {
+    "brandKey": "itoh",
+    "displayBrand": "ITOH",
+    "count": 4,
+    "fileHint": "itoh.json"
+  },
+  {
+    "brandKey": "double rich",
+    "displayBrand": "DOUBLE RICH",
+    "count": 4,
+    "fileHint": "double-rich.json"
+  },
+  {
+    "brandKey": "st. ives",
+    "displayBrand": "ST. IVES",
+    "count": 19,
+    "fileHint": "st-ives.json"
+  },
+  {
+    "brandKey": "dabo",
+    "displayBrand": "DABO",
+    "count": 14,
+    "fileHint": "dabo.json"
+  },
+  {
+    "brandKey": "lifebuoy",
+    "displayBrand": "LIFEBUOY",
+    "count": 20,
+    "fileHint": "lifebuoy.json"
+  },
+  {
+    "brandKey": "aimee",
+    "displayBrand": "AIMEE",
+    "count": 2,
+    "fileHint": "aimee.json"
+  },
+  {
+    "brandKey": "mannings guardian",
+    "displayBrand": "MANNINGS GUARDIAN",
+    "count": 69,
+    "fileHint": "mannings-guardian.json"
+  },
+  {
+    "brandKey": "cheeryep",
+    "displayBrand": "CHEERYEP",
+    "count": 5,
+    "fileHint": "cheeryep.json"
+  },
+  {
+    "brandKey": "duft and doft",
+    "displayBrand": "DUFT AND DOFT",
+    "count": 8,
+    "fileHint": "duft-and-doft.json"
+  },
+  {
+    "brandKey": "xuan nguyen",
+    "displayBrand": "XUAN NGUYEN",
+    "count": 3,
+    "fileHint": "xuan-nguyen.json"
+  },
+  {
+    "brandKey": "bom",
+    "displayBrand": "BOM",
+    "count": 60,
+    "fileHint": "bom.json"
+  },
+  {
+    "brandKey": "neoderm",
+    "displayBrand": "NEODERM",
+    "count": 1,
+    "fileHint": "neoderm.json"
+  },
+  {
+    "brandKey": "avene",
+    "displayBrand": "AVENE",
+    "count": 5,
+    "fileHint": "avene.json"
+  },
+  {
+    "brandKey": "durex",
+    "displayBrand": "DUREX",
+    "count": 21,
+    "fileHint": "durex.json"
+  },
+  {
+    "brandKey": "honey land",
+    "displayBrand": "HONEY LAND",
+    "count": 4,
+    "fileHint": "honey-land.json"
+  },
+  {
+    "brandKey": "lana",
+    "displayBrand": "LANA",
+    "count": 12,
+    "fileHint": "lana.json"
+  },
+  {
+    "brandKey": "wakemake",
+    "displayBrand": "WAKEMAKE",
+    "count": 48,
+    "fileHint": "wakemake.json"
+  },
+  {
+    "brandKey": "gillette",
+    "displayBrand": "GILLETTE",
+    "count": 10,
+    "fileHint": "gillette.json"
+  },
+  {
+    "brandKey": "banobagi",
+    "displayBrand": "BANOBAGI",
+    "count": 18,
+    "fileHint": "banobagi.json"
+  },
+  {
+    "brandKey": "valentine",
+    "displayBrand": "VALENTINE",
+    "count": 1,
+    "fileHint": "valentine.json"
+  },
+  {
+    "brandKey": "oral-b",
+    "displayBrand": "ORAL-B",
+    "count": 6,
+    "fileHint": "oral-b.json"
+  },
+  {
+    "brandKey": "tmr",
+    "displayBrand": "TMR",
+    "count": 4,
+    "fileHint": "tmr.json"
+  },
+  {
+    "brandKey": "belle flora",
+    "displayBrand": "BELLE FLORA",
+    "count": 9,
+    "fileHint": "belle-flora.json"
+  },
+  {
+    "brandKey": "p/s",
+    "displayBrand": "P/S",
+    "count": 19,
+    "fileHint": "p-s.json"
+  },
+  {
+    "brandKey": "purederm",
+    "displayBrand": "PUREDERM",
+    "count": 16,
+    "fileHint": "purederm.json"
+  },
+  {
+    "brandKey": "young girl",
+    "displayBrand": "YOUNG GIRL",
+    "count": 2,
+    "fileHint": "young-girl.json"
+  },
+  {
+    "brandKey": "orihiro",
+    "displayBrand": "ORIHIRO",
+    "count": 7,
+    "fileHint": "orihiro.json"
+  },
+  {
+    "brandKey": "foodaholic",
+    "displayBrand": "FOODAHOLIC",
+    "count": 21,
+    "fileHint": "foodaholic.json"
+  },
+  {
+    "brandKey": "l'oreal paris",
+    "displayBrand": "L'OREAL PARIS",
+    "count": 35,
+    "fileHint": "l-oreal-paris.json"
+  },
+  {
+    "brandKey": "old spice",
+    "displayBrand": "OLD SPICE",
+    "count": 17,
+    "fileHint": "old-spice.json"
+  },
+  {
+    "brandKey": "sac ngoc khang",
+    "displayBrand": "SAC NGOC KHANG",
+    "count": 7,
+    "fileHint": "sac-ngoc-khang.json"
+  },
+  {
+    "brandKey": "ootd",
+    "displayBrand": "OOTD",
+    "count": 5,
+    "fileHint": "ootd.json"
+  },
+  {
+    "brandKey": "opc",
+    "displayBrand": "OPC",
+    "count": 1,
+    "fileHint": "opc.json"
+  },
+  {
+    "brandKey": "guardian",
+    "displayBrand": "GUARDIAN",
+    "count": 35,
+    "fileHint": "guardian.json"
+  },
+  {
+    "brandKey": "za",
+    "displayBrand": "ZA",
+    "count": 11,
+    "fileHint": "za.json"
+  },
+  {
+    "brandKey": "allione",
+    "displayBrand": "ALLIONE",
+    "count": 3,
+    "fileHint": "allione.json"
+  },
+  {
+    "brandKey": "moist diane",
+    "displayBrand": "MOIST DIANE",
+    "count": 12,
+    "fileHint": "moist-diane.json"
+  },
+  {
+    "brandKey": "enchanteur",
+    "displayBrand": "ENCHANTEUR",
+    "count": 20,
+    "fileHint": "enchanteur.json"
+  },
+  {
+    "brandKey": "verites",
+    "displayBrand": "VERITES",
+    "count": 6,
+    "fileHint": "verites.json"
+  },
+  {
+    "brandKey": "ofelia",
+    "displayBrand": "OFELIA",
+    "count": 4,
+    "fileHint": "ofelia.json"
+  },
+  {
+    "brandKey": "kudos",
+    "displayBrand": "KUDOS",
+    "count": 8,
+    "fileHint": "kudos.json"
+  },
+  {
+    "brandKey": "heimish",
+    "displayBrand": "HEIMISH",
+    "count": 5,
+    "fileHint": "heimish.json"
+  },
+  {
+    "brandKey": "sagami",
+    "displayBrand": "SAGAMI",
+    "count": 7,
+    "fileHint": "sagami.json"
+  },
+  {
+    "brandKey": "nami",
+    "displayBrand": "NAMI",
+    "count": 12,
+    "fileHint": "nami.json"
+  },
+  {
+    "brandKey": "kissme",
+    "displayBrand": "KISSME",
+    "count": 20,
+    "fileHint": "kissme.json"
+  },
+  {
+    "brandKey": "benzac",
+    "displayBrand": "BENZAC",
+    "count": 4,
+    "fileHint": "benzac.json"
+  },
+  {
+    "brandKey": "lip ice",
+    "displayBrand": "LIP ICE",
+    "count": 17,
+    "fileHint": "lip-ice.json"
+  },
+  {
+    "brandKey": "mentholatum",
+    "displayBrand": "MENTHOLATUM",
+    "count": 10,
+    "fileHint": "mentholatum.json"
+  },
+  {
+    "brandKey": "dododots",
+    "displayBrand": "DODODOTS",
+    "count": 15,
+    "fileHint": "dododots.json"
+  },
+  {
+    "brandKey": "head & shoulders",
+    "displayBrand": "HEAD & SHOULDERS",
+    "count": 17,
+    "fileHint": "head-shoulders.json"
+  },
+  {
+    "brandKey": "close up",
+    "displayBrand": "CLOSE UP",
+    "count": 20,
+    "fileHint": "close-up.json"
+  },
+  {
+    "brandKey": "nara",
+    "displayBrand": "NARA",
+    "count": 5,
+    "fileHint": "nara.json"
+  },
+  {
+    "brandKey": "merrezca",
+    "displayBrand": "MERREZCA",
+    "count": 16,
+    "fileHint": "merrezca.json"
+  },
+  {
+    "brandKey": "dr.muoi",
+    "displayBrand": "DR.MUOI",
+    "count": 5,
+    "fileHint": "dr-muoi.json"
+  },
+  {
+    "brandKey": "innisfree",
+    "displayBrand": "INNISFREE",
+    "count": 6,
+    "fileHint": "innisfree.json"
+  },
+  {
+    "brandKey": "baby bright",
+    "displayBrand": "BABY BRIGHT",
+    "count": 21,
+    "fileHint": "baby-bright.json"
+  },
+  {
+    "brandKey": "wonjin",
+    "displayBrand": "WONJIN",
+    "count": 12,
+    "fileHint": "wonjin.json"
+  },
+  {
+    "brandKey": "tera20's",
+    "displayBrand": "TERA20'S",
+    "count": 11,
+    "fileHint": "tera20-s.json"
+  },
+  {
+    "brandKey": "azarine",
+    "displayBrand": "AZARINE",
+    "count": 3,
+    "fileHint": "azarine.json"
+  },
+  {
+    "brandKey": "milaganics",
+    "displayBrand": "MILAGANICS",
+    "count": 1,
+    "fileHint": "milaganics.json"
+  },
+  {
+    "brandKey": "about tone",
+    "displayBrand": "ABOUT TONE",
+    "count": 4,
+    "fileHint": "about-tone.json"
+  },
+  {
+    "brandKey": "uucare",
+    "displayBrand": "UUCARE",
+    "count": 11,
+    "fileHint": "uucare.json"
+  },
+  {
+    "brandKey": "colgate",
+    "displayBrand": "COLGATE",
+    "count": 54,
+    "fileHint": "colgate.json"
+  },
+  {
+    "brandKey": "plusssz",
+    "displayBrand": "PLUSSSZ",
+    "count": 3,
+    "fileHint": "plusssz.json"
+  },
+  {
+    "brandKey": "laboratorios babe",
+    "displayBrand": "LABORATORIOS BABÉ",
+    "count": 2,
+    "fileHint": "laboratorios-babe.json"
+  },
+  {
+    "brandKey": "rejoice",
+    "displayBrand": "REJOICE",
+    "count": 3,
+    "fileHint": "rejoice.json"
+  },
+  {
+    "brandKey": "dear klairs",
+    "displayBrand": "DEAR KLAIRS",
+    "count": 14,
+    "fileHint": "dear-klairs.json"
+  },
+  {
+    "brandKey": "shinnippai",
+    "displayBrand": "SHINNIPPAI",
+    "count": 2,
+    "fileHint": "shinnippai.json"
+  },
+  {
+    "brandKey": "keyshu",
+    "displayBrand": "KEYSHU",
+    "count": 5,
+    "fileHint": "keyshu.json"
+  },
+  {
+    "brandKey": "tiger balm",
+    "displayBrand": "TIGER BALM",
+    "count": 10,
+    "fileHint": "tiger-balm.json"
+  },
+  {
+    "brandKey": "melano cc",
+    "displayBrand": "MELANO CC",
+    "count": 5,
+    "fileHint": "melano-cc.json"
+  },
+  {
+    "brandKey": "lip on lip",
+    "displayBrand": "LIP ON LIP",
+    "count": 5,
+    "fileHint": "lip-on-lip.json"
+  },
+  {
+    "brandKey": "romano",
+    "displayBrand": "ROMANO",
+    "count": 33,
+    "fileHint": "romano.json"
+  },
+  {
+    "brandKey": "kimmamut",
+    "displayBrand": "KIMMAMUT",
+    "count": 1,
+    "fileHint": "kimmamut.json"
+  },
+  {
+    "brandKey": "bring green",
+    "displayBrand": "BRING GREEN",
+    "count": 8,
+    "fileHint": "bring-green.json"
+  },
+  {
+    "brandKey": "16plain",
+    "displayBrand": "16PLAIN",
+    "count": 5,
+    "fileHint": "16plain.json"
+  },
+  {
+    "brandKey": "oliv",
+    "displayBrand": "OLIV",
+    "count": 3,
+    "fileHint": "oliv.json"
+  },
+  {
+    "brandKey": "perspi-guard",
+    "displayBrand": "PERSPI-GUARD",
+    "count": 2,
+    "fileHint": "perspi-guard.json"
+  },
+  {
+    "brandKey": "skinsista",
+    "displayBrand": "SKINSISTA",
+    "count": 4,
+    "fileHint": "skinsista.json"
+  },
+  {
+    "brandKey": "airfit",
+    "displayBrand": "AIRFIT",
+    "count": 4,
+    "fileHint": "airfit.json"
+  },
+  {
+    "brandKey": "green cross",
+    "displayBrand": "GREEN CROSS",
+    "count": 4,
+    "fileHint": "green-cross.json"
+  },
+  {
+    "brandKey": "sace lady",
+    "displayBrand": "SACE LADY",
+    "count": 21,
+    "fileHint": "sace-lady.json"
+  },
+  {
+    "brandKey": "ailus",
+    "displayBrand": "AILUS",
+    "count": 9,
+    "fileHint": "ailus.json"
+  },
+  {
+    "brandKey": "aestura",
+    "displayBrand": "AESTURA",
+    "count": 11,
+    "fileHint": "aestura.json"
+  },
+  {
+    "brandKey": "unicharm",
+    "displayBrand": "UNICHARM",
+    "count": 3,
+    "fileHint": "unicharm.json"
+  },
+  {
+    "brandKey": "lashe",
+    "displayBrand": "LASHE",
+    "count": 6,
+    "fileHint": "lashe.json"
+  },
+  {
+    "brandKey": "lactacyd",
+    "displayBrand": "LACTACYD",
+    "count": 9,
+    "fileHint": "lactacyd.json"
+  },
+  {
+    "brandKey": "parasola",
+    "displayBrand": "PARASOLA",
+    "count": 4,
+    "fileHint": "parasola.json"
+  },
+  {
+    "brandKey": "laura anne",
+    "displayBrand": "LAURA ANNE",
+    "count": 8,
+    "fileHint": "laura-anne.json"
+  },
+  {
+    "brandKey": "reihaku hatomugi",
+    "displayBrand": "REIHAKU HATOMUGI",
+    "count": 15,
+    "fileHint": "reihaku-hatomugi.json"
+  },
+  {
+    "brandKey": "beyaki",
+    "displayBrand": "BEYAKI",
+    "count": 2,
+    "fileHint": "beyaki.json"
+  },
+  {
+    "brandKey": "nature republic",
+    "displayBrand": "NATURE REPUBLIC",
+    "count": 10,
+    "fileHint": "nature-republic.json"
+  },
+  {
+    "brandKey": "ngoc chau",
+    "displayBrand": "NGOC CHAU",
+    "count": 2,
+    "fileHint": "ngoc-chau.json"
+  },
+  {
+    "brandKey": "bbia",
+    "displayBrand": "BBIA",
+    "count": 8,
+    "fileHint": "bbia.json"
+  },
+  {
+    "brandKey": "matrix",
+    "displayBrand": "MATRIX",
+    "count": 6,
+    "fileHint": "matrix.json"
+  },
+  {
+    "brandKey": "suri",
+    "displayBrand": "SURI",
+    "count": 2,
+    "fileHint": "suri.json"
+  },
+  {
+    "brandKey": "cnp laboratory",
+    "displayBrand": "CNP LABORATORY",
+    "count": 12,
+    "fileHint": "cnp-laboratory.json"
+  },
+  {
+    "brandKey": "the perfect diary",
+    "displayBrand": "THE PERFECT DIARY",
+    "count": 5,
+    "fileHint": "the-perfect-diary.json"
+  },
+  {
+    "brandKey": "da huong",
+    "displayBrand": "DA HUONG",
+    "count": 4,
+    "fileHint": "da-huong.json"
+  },
+  {
+    "brandKey": "jumiso",
+    "displayBrand": "JUMISO",
+    "count": 8,
+    "fileHint": "jumiso.json"
+  },
+  {
+    "brandKey": "hazeline",
+    "displayBrand": "HAZELINE",
+    "count": 9,
+    "fileHint": "hazeline.json"
+  },
+  {
+    "brandKey": "nghia",
+    "displayBrand": "NGHIA",
+    "count": 8,
+    "fileHint": "nghia.json"
+  },
+  {
+    "brandKey": "pond's",
+    "displayBrand": "POND'S",
+    "count": 11,
+    "fileHint": "pond-s.json"
+  },
+  {
+    "brandKey": "rainbow l'affair",
+    "displayBrand": "RAINBOW L'AFFAIR",
+    "count": 3,
+    "fileHint": "rainbow-l-affair.json"
+  },
+  {
+    "brandKey": "e100",
+    "displayBrand": "E100",
+    "count": 9,
+    "fileHint": "e100.json"
+  },
+  {
+    "brandKey": "care:nel",
+    "displayBrand": "CARE:NEL",
+    "count": 7,
+    "fileHint": "care-nel.json"
+  },
+  {
+    "brandKey": "abib",
+    "displayBrand": "ABIB",
+    "count": 4,
+    "fileHint": "abib.json"
+  },
+  {
+    "brandKey": "cindy",
+    "displayBrand": "CINDY",
+    "count": 9,
+    "fileHint": "cindy.json"
+  },
+  {
+    "brandKey": "himalaya",
+    "displayBrand": "HIMALAYA",
+    "count": 7,
+    "fileHint": "himalaya.json"
+  },
+  {
+    "brandKey": "nguyen vuong",
+    "displayBrand": "NGUYEN VUONG",
+    "count": 2,
+    "fileHint": "nguyen-vuong.json"
+  },
+  {
+    "brandKey": "eagle brand",
+    "displayBrand": "EAGLE BRAND",
+    "count": 9,
+    "fileHint": "eagle-brand.json"
+  },
+  {
+    "brandKey": "50 megumi",
+    "displayBrand": "50 MEGUMI",
+    "count": 2,
+    "fileHint": "50-megumi.json"
+  },
+  {
+    "brandKey": "showermate",
+    "displayBrand": "SHOWERMATE",
+    "count": 6,
+    "fileHint": "showermate.json"
+  },
+  {
+    "brandKey": "nature",
+    "displayBrand": "NATURE",
+    "count": 9,
+    "fileHint": "nature.json"
+  },
+  {
+    "brandKey": "pororo",
+    "displayBrand": "PORORO",
+    "count": 1,
+    "fileHint": "pororo.json"
+  },
+  {
+    "brandKey": "nature's way",
+    "displayBrand": "NATURE'S WAY",
+    "count": 6,
+    "fileHint": "nature-s-way.json"
+  },
+  {
+    "brandKey": "d-program",
+    "displayBrand": "D-PROGRAM",
+    "count": 19,
+    "fileHint": "d-program.json"
+  },
+  {
+    "brandKey": "molped",
+    "displayBrand": "MOLPED",
+    "count": 5,
+    "fileHint": "molped.json"
+  },
+  {
+    "brandKey": "deonatulle",
+    "displayBrand": "DEONATULLE",
+    "count": 4,
+    "fileHint": "deonatulle.json"
+  },
+  {
+    "brandKey": "urgo",
+    "displayBrand": "URGO",
+    "count": 7,
+    "fileHint": "urgo.json"
+  },
+  {
+    "brandKey": "nguyen xuan",
+    "displayBrand": "NGUYEN XUAN",
+    "count": 9,
+    "fileHint": "nguyen-xuan.json"
+  },
+  {
+    "brandKey": "anua",
+    "displayBrand": "ANUA",
+    "count": 4,
+    "fileHint": "anua.json"
+  },
+  {
+    "brandKey": "palmer's",
+    "displayBrand": "PALMER'S",
+    "count": 9,
+    "fileHint": "palmer-s.json"
+  },
+  {
+    "brandKey": "rojukiss",
+    "displayBrand": "ROJUKISS",
+    "count": 7,
+    "fileHint": "rojukiss.json"
+  },
+  {
+    "brandKey": "elasten",
+    "displayBrand": "ELASTEN",
+    "count": 2,
+    "fileHint": "elasten.json"
+  },
+  {
+    "brandKey": "shimbi method",
+    "displayBrand": "SHIMBI METHOD",
+    "count": 3,
+    "fileHint": "shimbi-method.json"
+  },
+  {
+    "brandKey": "her feel",
+    "displayBrand": "HER FEEL",
+    "count": 8,
+    "fileHint": "her-feel.json"
+  },
+  {
+    "brandKey": "sensodyne",
+    "displayBrand": "SENSODYNE",
+    "count": 13,
+    "fileHint": "sensodyne.json"
+  },
+  {
+    "brandKey": "men stay simplicity",
+    "displayBrand": "MEN STAY SIMPLICITY",
+    "count": 6,
+    "fileHint": "men-stay-simplicity.json"
+  },
+  {
+    "brandKey": "perfetta",
+    "displayBrand": "PERFETTA",
+    "count": 5,
+    "fileHint": "perfetta.json"
+  },
+  {
+    "brandKey": "prolex",
+    "displayBrand": "PROLEX",
+    "count": 2,
+    "fileHint": "prolex.json"
+  },
+  {
+    "brandKey": "secret",
+    "displayBrand": "SECRET",
+    "count": 7,
+    "fileHint": "secret.json"
+  },
+  {
+    "brandKey": "peeling pack",
+    "displayBrand": "PEELING PACK",
+    "count": 3,
+    "fileHint": "peeling-pack.json"
+  },
+  {
+    "brandKey": "fresh",
+    "displayBrand": "FRESH",
+    "count": 4,
+    "fileHint": "fresh.json"
+  },
+  {
+    "brandKey": "crest",
+    "displayBrand": "CREST",
+    "count": 7,
+    "fileHint": "crest.json"
+  },
+  {
+    "brandKey": "john for homme",
+    "displayBrand": "JOHN FOR HOMME",
+    "count": 2,
+    "fileHint": "john-for-homme.json"
+  },
+  {
+    "brandKey": "purite",
+    "displayBrand": "PURITE",
+    "count": 5,
+    "fileHint": "purite.json"
+  },
+  {
+    "brandKey": "vt cosmetics",
+    "displayBrand": "VT Cosmetics",
+    "count": 3,
+    "fileHint": "vt-cosmetics.json"
+  },
+  {
+    "brandKey": "swisse",
+    "displayBrand": "SWISSE",
+    "count": 4,
+    "fileHint": "swisse.json"
+  },
+  {
+    "brandKey": "mizumi",
+    "displayBrand": "MIZUMI",
+    "count": 10,
+    "fileHint": "mizumi.json"
+  },
+  {
+    "brandKey": "bamboo salt",
+    "displayBrand": "BAMBOO SALT",
+    "count": 6,
+    "fileHint": "bamboo-salt.json"
+  },
+  {
+    "brandKey": "yukazan",
+    "displayBrand": "YUKAZAN",
+    "count": 11,
+    "fileHint": "yukazan.json"
+  },
+  {
+    "brandKey": "jordan",
+    "displayBrand": "JORDAN",
+    "count": 5,
+    "fileHint": "jordan.json"
+  },
+  {
+    "brandKey": "play ah!",
+    "displayBrand": "PLAY AH!",
+    "count": 7,
+    "fileHint": "play-ah.json"
+  },
+  {
+    "brandKey": "kinohimitsu",
+    "displayBrand": "KINOHIMITSU",
+    "count": 1,
+    "fileHint": "kinohimitsu.json"
+  },
+  {
+    "brandKey": "on the body",
+    "displayBrand": "ON THE BODY",
+    "count": 7,
+    "fileHint": "on-the-body.json"
+  },
+  {
+    "brandKey": "welcos",
+    "displayBrand": "WELCOS",
+    "count": 5,
+    "fileHint": "welcos.json"
+  },
+  {
+    "brandKey": "gennie",
+    "displayBrand": "GENNIE",
+    "count": 1,
+    "fileHint": "gennie.json"
+  },
+  {
+    "brandKey": "mee bath",
+    "displayBrand": "MEE BATH",
+    "count": 6,
+    "fileHint": "mee-bath.json"
+  },
+  {
+    "brandKey": "2080",
+    "displayBrand": "2080",
+    "count": 3,
+    "fileHint": "2080.json"
+  },
+  {
+    "brandKey": "the lab",
+    "displayBrand": "THE LAB",
+    "count": 2,
+    "fileHint": "the-lab.json"
+  },
+  {
+    "brandKey": "elis",
+    "displayBrand": "ELIS",
+    "count": 2,
+    "fileHint": "elis.json"
+  },
+  {
+    "brandKey": "kokimi",
+    "displayBrand": "KOKIMI",
+    "count": 2,
+    "fileHint": "kokimi.json"
+  },
+  {
+    "brandKey": "lipstician",
+    "displayBrand": "LIPSTICIAN",
+    "count": 3,
+    "fileHint": "lipstician.json"
+  },
+  {
+    "brandKey": "one-day's you",
+    "displayBrand": "ONE-DAY'S YOU",
+    "count": 3,
+    "fileHint": "one-day-s-you.json"
+  },
+  {
+    "brandKey": "bk acne",
+    "displayBrand": "BK ACNE",
+    "count": 4,
+    "fileHint": "bk-acne.json"
+  },
+  {
+    "brandKey": "tiam",
+    "displayBrand": "TIAM",
+    "count": 3,
+    "fileHint": "tiam.json"
+  },
+  {
+    "brandKey": "schwarzkopf",
+    "displayBrand": "SCHWARZKOPF",
+    "count": 8,
+    "fileHint": "schwarzkopf.json"
+  },
+  {
+    "brandKey": "xisat",
+    "displayBrand": "XISAT",
+    "count": 2,
+    "fileHint": "xisat.json"
+  },
+  {
+    "brandKey": "nerman",
+    "displayBrand": "NERMAN",
+    "count": 1,
+    "fileHint": "nerman.json"
+  },
+  {
+    "brandKey": "thai duong",
+    "displayBrand": "THAI DUONG",
+    "count": 6,
+    "fileHint": "thai-duong.json"
+  },
+  {
+    "brandKey": "deve",
+    "displayBrand": "DEVE",
+    "count": 2,
+    "fileHint": "deve.json"
+  },
+  {
+    "brandKey": "murad",
+    "displayBrand": "MURAD",
+    "count": 2,
+    "fileHint": "murad.json"
+  },
+  {
+    "brandKey": "healthy care",
+    "displayBrand": "HEALTHY CARE",
+    "count": 4,
+    "fileHint": "healthy-care.json"
+  },
+  {
+    "brandKey": "into you",
+    "displayBrand": "Into You",
+    "count": 1,
+    "fileHint": "into-you.json"
+  },
+  {
+    "brandKey": "pharmekal",
+    "displayBrand": "PHARMEKAL",
+    "count": 2,
+    "fileHint": "pharmekal.json"
+  },
+  {
+    "brandKey": "mille",
+    "displayBrand": "MILLE",
+    "count": 5,
+    "fileHint": "mille.json"
+  },
+  {
+    "brandKey": "banana boat",
+    "displayBrand": "BANANA BOAT",
+    "count": 3,
+    "fileHint": "banana-boat.json"
+  },
+  {
+    "brandKey": "sunsilk",
+    "displayBrand": "SUNSILK",
+    "count": 7,
+    "fileHint": "sunsilk.json"
+  },
+  {
+    "brandKey": "blackmores",
+    "displayBrand": "BLACKMORES",
+    "count": 8,
+    "fileHint": "blackmores.json"
+  },
+  {
+    "brandKey": "red lion",
+    "displayBrand": "RED LION",
+    "count": 1,
+    "fileHint": "red-lion.json"
+  },
+  {
+    "brandKey": "keana",
+    "displayBrand": "KEANA",
+    "count": 2,
+    "fileHint": "keana.json"
+  },
+  {
+    "brandKey": "colab",
+    "displayBrand": "COLAB",
+    "count": 2,
+    "fileHint": "colab.json"
+  },
+  {
+    "brandKey": "miss saigon elegance",
+    "displayBrand": "MISS SAIGON ELEGANCE",
+    "count": 5,
+    "fileHint": "miss-saigon-elegance.json"
+  },
+  {
+    "brandKey": "dr happy",
+    "displayBrand": "DR HAPPY",
+    "count": 1,
+    "fileHint": "dr-happy.json"
+  },
+  {
+    "brandKey": "naturie",
+    "displayBrand": "NATURIE",
+    "count": 3,
+    "fileHint": "naturie.json"
+  },
+  {
+    "brandKey": "johnson's baby",
+    "displayBrand": "JOHNSON'S BABY",
+    "count": 1,
+    "fileHint": "johnson-s-baby.json"
+  },
+  {
+    "brandKey": "eugica",
+    "displayBrand": "EUGICA",
+    "count": 2,
+    "fileHint": "eugica.json"
+  },
+  {
+    "brandKey": "beauty of joseon",
+    "displayBrand": "BEAUTY OF JOSEON",
+    "count": 3,
+    "fileHint": "beauty-of-joseon.json"
+  },
+  {
+    "brandKey": "merzy",
+    "displayBrand": "MERZY",
+    "count": 5,
+    "fileHint": "merzy.json"
+  },
+  {
+    "brandKey": "derma",
+    "displayBrand": "DERMA",
+    "count": 1,
+    "fileHint": "derma.json"
+  },
+  {
+    "brandKey": "s:kin heritage",
+    "displayBrand": "S:KIN HERITAGE",
+    "count": 3,
+    "fileHint": "s-kin-heritage.json"
+  },
+  {
+    "brandKey": "uruoi",
+    "displayBrand": "URUOI",
+    "count": 4,
+    "fileHint": "uruoi.json"
+  },
+  {
+    "brandKey": "lipit",
+    "displayBrand": "LIPIT",
+    "count": 6,
+    "fileHint": "lipit.json"
+  },
+  {
+    "brandKey": "okamoto",
+    "displayBrand": "OKAMOTO",
+    "count": 12,
+    "fileHint": "okamoto.json"
+  },
+  {
+    "brandKey": "blossomy",
+    "displayBrand": "BLOSSOMY",
+    "count": 5,
+    "fileHint": "blossomy.json"
+  },
+  {
+    "brandKey": "purito",
+    "displayBrand": "PURITO",
+    "count": 3,
+    "fileHint": "purito.json"
+  },
+  {
+    "brandKey": "su star",
+    "displayBrand": "SU STAR",
+    "count": 2,
+    "fileHint": "su-star.json"
+  },
+  {
+    "brandKey": "vinh phuc",
+    "displayBrand": "VINH PHUC",
+    "count": 2,
+    "fileHint": "vinh-phuc.json"
+  },
+  {
+    "brandKey": "aroma",
+    "displayBrand": "AROMA",
+    "count": 2,
+    "fileHint": "aroma.json"
+  },
+  {
+    "brandKey": "pinkflash",
+    "displayBrand": "PINKFLASH",
+    "count": 14,
+    "fileHint": "pinkflash.json"
+  },
+  {
+    "brandKey": "balance",
+    "displayBrand": "BALANCE",
+    "count": 3,
+    "fileHint": "balance.json"
+  },
+  {
+    "brandKey": "yuri",
+    "displayBrand": "YURI",
+    "count": 1,
+    "fileHint": "yuri.json"
+  },
+  {
+    "brandKey": "merci",
+    "displayBrand": "MERCI",
+    "count": 3,
+    "fileHint": "merci.json"
+  },
+  {
+    "brandKey": "pure paw paw",
+    "displayBrand": "PURE PAW PAW",
+    "count": 3,
+    "fileHint": "pure-paw-paw.json"
+  },
+  {
+    "brandKey": "dazzle me",
+    "displayBrand": "DAZZLE ME",
+    "count": 2,
+    "fileHint": "dazzle-me.json"
+  },
+  {
+    "brandKey": "ogx",
+    "displayBrand": "OGX",
+    "count": 2,
+    "fileHint": "ogx.json"
+  },
+  {
+    "brandKey": "dorco",
+    "displayBrand": "DORCO",
+    "count": 1,
+    "fileHint": "dorco.json"
+  },
+  {
+    "brandKey": "schick",
+    "displayBrand": "SCHICK",
+    "count": 1,
+    "fileHint": "schick.json"
+  },
+  {
+    "brandKey": "aperire",
+    "displayBrand": "APERIRE",
+    "count": 1,
+    "fileHint": "aperire.json"
+  },
+  {
+    "brandKey": "remos",
+    "displayBrand": "REMOS",
+    "count": 2,
+    "fileHint": "remos.json"
+  },
+  {
+    "brandKey": "badlab",
+    "displayBrand": "BADLAB",
+    "count": 2,
+    "fileHint": "badlab.json"
+  },
+  {
+    "brandKey": "beucup",
+    "displayBrand": "BEUCUP",
+    "count": 1,
+    "fileHint": "beucup.json"
+  },
+  {
+    "brandKey": "kerasys",
+    "displayBrand": "KERASYS",
+    "count": 2,
+    "fileHint": "kerasys.json"
+  },
+  {
+    "brandKey": "salon link",
+    "displayBrand": "SALON LINK",
+    "count": 1,
+    "fileHint": "salon-link.json"
+  },
+  {
+    "brandKey": "kimagi",
+    "displayBrand": "Kimagi",
+    "count": 2,
+    "fileHint": "kimagi.json"
+  },
+  {
+    "brandKey": "greenbird",
+    "displayBrand": "GREENBIRD",
+    "count": 5,
+    "fileHint": "greenbird.json"
+  },
+  {
+    "brandKey": "gamma",
+    "displayBrand": "GAMMA",
+    "count": 1,
+    "fileHint": "gamma.json"
+  },
+  {
+    "brandKey": "nookoi",
+    "displayBrand": "NOOKOI",
+    "count": 7,
+    "fileHint": "nookoi.json"
+  },
+  {
+    "brandKey": "derma angel",
+    "displayBrand": "DERMA ANGEL",
+    "count": 4,
+    "fileHint": "derma-angel.json"
+  },
+  {
+    "brandKey": "lipzo",
+    "displayBrand": "LIPZO",
+    "count": 5,
+    "fileHint": "lipzo.json"
+  },
+  {
+    "brandKey": "decumar",
+    "displayBrand": "DECUMAR",
+    "count": 2,
+    "fileHint": "decumar.json"
+  },
+  {
+    "brandKey": "somaderm",
+    "displayBrand": "SOMADERM",
+    "count": 2,
+    "fileHint": "somaderm.json"
+  },
+  {
+    "brandKey": "foasu",
+    "displayBrand": "FOASU",
+    "count": 1,
+    "fileHint": "foasu.json"
+  },
+  {
+    "brandKey": "quickstick",
+    "displayBrand": "QUICKSTICK",
+    "count": 2,
+    "fileHint": "quickstick.json"
+  },
+  {
+    "brandKey": "rii",
+    "displayBrand": "RII",
+    "count": 1,
+    "fileHint": "rii.json"
+  },
+  {
+    "brandKey": "gota",
+    "displayBrand": "GOTA",
+    "count": 1,
+    "fileHint": "gota.json"
+  },
+  {
+    "brandKey": "chinoshio",
+    "displayBrand": "CHINOSHIO",
+    "count": 2,
+    "fileHint": "chinoshio.json"
+  },
+  {
+    "brandKey": "pekah",
+    "displayBrand": "PEKAH",
+    "count": 1,
+    "fileHint": "pekah.json"
+  },
+  {
+    "brandKey": "mee nature",
+    "displayBrand": "MEE NATURE",
+    "count": 2,
+    "fileHint": "mee-nature.json"
+  },
+  {
+    "brandKey": "jane",
+    "displayBrand": "JANE",
+    "count": 2,
+    "fileHint": "jane.json"
+  },
+  {
+    "brandKey": "zeesea",
+    "displayBrand": "ZEESEA",
+    "count": 2,
+    "fileHint": "zeesea.json"
+  },
+  {
+    "brandKey": "lilian",
+    "displayBrand": "LILIAN",
+    "count": 1,
+    "fileHint": "lilian.json"
+  },
+  {
+    "brandKey": "luvum",
+    "displayBrand": "Luvum",
+    "count": 2,
+    "fileHint": "luvum.json"
+  },
+  {
+    "brandKey": "emmie",
+    "displayBrand": "EMMIE",
+    "count": 3,
+    "fileHint": "emmie.json"
+  },
+  {
+    "brandKey": "nature bounty",
+    "displayBrand": "NATURE BOUNTY",
+    "count": 1,
+    "fileHint": "nature-bounty.json"
+  },
+  {
+    "brandKey": "avatar",
+    "displayBrand": "AVATAR",
+    "count": 2,
+    "fileHint": "avatar.json"
+  },
+  {
+    "brandKey": "miri",
+    "displayBrand": "MIRI",
+    "count": 4,
+    "fileHint": "miri.json"
+  },
+  {
+    "brandKey": "megaduo",
+    "displayBrand": "MEGADUO",
+    "count": 2,
+    "fileHint": "megaduo.json"
+  },
+  {
+    "brandKey": "acnacare",
+    "displayBrand": "ACNACARE",
+    "count": 1,
+    "fileHint": "acnacare.json"
+  },
+  {
+    "brandKey": "perioe",
+    "displayBrand": "PERIOE",
+    "count": 1,
+    "fileHint": "perioe.json"
+  },
+  {
+    "brandKey": "yuejin",
+    "displayBrand": "YUEJIN",
+    "count": 3,
+    "fileHint": "yuejin.json"
+  },
+  {
+    "brandKey": "hiruscar",
+    "displayBrand": "HIRUSCAR",
+    "count": 1,
+    "fileHint": "hiruscar.json"
+  },
+  {
+    "brandKey": "rexona",
+    "displayBrand": "REXONA",
+    "count": 1,
+    "fileHint": "rexona.json"
+  },
+  {
+    "brandKey": "monday",
+    "displayBrand": "MONDAY",
+    "count": 2,
+    "fileHint": "monday.json"
+  },
+  {
+    "brandKey": "moaw moaws",
+    "displayBrand": "Moaw Moaws",
+    "count": 2,
+    "fileHint": "moaw-moaws.json"
+  },
+  {
+    "brandKey": "vietmec",
+    "displayBrand": "VIETMEC",
+    "count": 1,
+    "fileHint": "vietmec.json"
+  },
+  {
+    "brandKey": "gervenne",
+    "displayBrand": "GERVENNE",
+    "count": 2,
+    "fileHint": "gervenne.json"
+  },
+  {
+    "brandKey": "nno",
+    "displayBrand": "NNO",
+    "count": 1,
+    "fileHint": "nno.json"
+  },
+  {
+    "brandKey": "bic",
+    "displayBrand": "BIC",
+    "count": 1,
+    "fileHint": "bic.json"
+  },
+  {
+    "brandKey": "m.pros",
+    "displayBrand": "M.PROS",
+    "count": 1,
+    "fileHint": "m-pros.json"
+  },
+  {
+    "brandKey": "dermedy",
+    "displayBrand": "DERMEDY",
+    "count": 1,
+    "fileHint": "dermedy.json"
+  },
+  {
+    "brandKey": "rebirth",
+    "displayBrand": "REBIRTH",
+    "count": 2,
+    "fileHint": "rebirth.json"
+  },
+  {
+    "brandKey": "alcofree",
+    "displayBrand": "ALCOFREE",
+    "count": 1,
+    "fileHint": "alcofree.json"
+  },
+  {
+    "brandKey": "axis-y",
+    "displayBrand": "AXIS-Y",
+    "count": 1,
+    "fileHint": "axis-y.json"
+  },
+  {
+    "brandKey": "x men for boss",
+    "displayBrand": "X MEN FOR BOSS",
+    "count": 1,
+    "fileHint": "x-men-for-boss.json"
+  },
+  {
+    "brandKey": "justnest",
+    "displayBrand": "JUSTNEST",
+    "count": 2,
+    "fileHint": "justnest.json"
+  },
+  {
+    "brandKey": "uriage",
+    "displayBrand": "URIAGE",
+    "count": 1,
+    "fileHint": "uriage.json"
+  },
+  {
+    "brandKey": "menitems",
+    "displayBrand": "Menitems",
+    "count": 2,
+    "fileHint": "menitems.json"
+  },
+  {
+    "brandKey": "darlie",
+    "displayBrand": "DARLIE",
+    "count": 2,
+    "fileHint": "darlie.json"
+  },
+  {
+    "brandKey": "scarz",
+    "displayBrand": "SCARZ",
+    "count": 1,
+    "fileHint": "scarz.json"
+  },
+  {
+    "brandKey": "derma forte",
+    "displayBrand": "DERMA FORTE",
+    "count": 1,
+    "fileHint": "derma-forte.json"
+  },
+  {
+    "brandKey": "pucelle",
+    "displayBrand": "PUCELLE",
+    "count": 1,
+    "fileHint": "pucelle.json"
+  },
+  {
+    "brandKey": "glow code",
+    "displayBrand": "GLOW CODE",
+    "count": 1,
+    "fileHint": "glow-code.json"
+  },
+  {
+    "brandKey": "missha",
+    "displayBrand": "MISSHA",
+    "count": 1,
+    "fileHint": "missha.json"
+  }
+]

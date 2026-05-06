@@ -47,9 +47,10 @@ export const wishlistService = {
   /**
    * Xóa wishlist theo productId.
    *
-   * QUAN TRỌNG: Backend endpoint là DELETE /api/wishlist/{productId}?userId=xxx
-   * (trước đây FE gọi thiếu userId nên BE không match handler → 500).
-   * Giờ bắt buộc truyền kèm userId qua query param.
+   * Backend endpoint chính:
+   * DELETE /api/wishlist/{productId}?userId=xxx
+   *
+   * Giữ cách gọi này để khớp với WishlistController hiện tại.
    */
   remove: async (productId: string, userId: string) => {
     try {

@@ -1,8 +1,8 @@
 package com.pricehawl.dto;
 
 import lombok.*;
+
 import java.util.UUID;
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,11 +13,16 @@ public class ProductSearchDTO {
 
     private UUID id;
     private String name;
-    private String description;
-    private String categoryName;
+
     private String brandName;
-    private Double score;
+    private String categoryName;
 
     private String imageUrl;
-    private List<PlatformDTO> platforms;
+
+
+    private Integer bestPrice;
+    private Integer originalPrice;
+    private Integer discountPct;
+    private String bestPlatform;
+    private Double score;
 }

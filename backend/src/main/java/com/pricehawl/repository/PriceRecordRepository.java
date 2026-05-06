@@ -15,6 +15,10 @@ import java.util.UUID;
 @Repository
 public interface PriceRecordRepository extends JpaRepository<PriceRecord, Long> {
 
+    // =========================
+    // LOGIC CŨ - GIỮ NGUYÊN
+    // =========================
+
     @Query("""
         SELECT pr FROM PriceRecord pr
         JOIN FETCH pr.productListing pl
@@ -34,12 +38,7 @@ public interface PriceRecordRepository extends JpaRepository<PriceRecord, Long> 
     List<PriceRecord> findByProductListingIdOrderByCrawledAtDesc(UUID productListingId);
 
     /**
-     * Batch lấy PriceRecord MỚI NHẤT cho từng productListingId trong danh sách.
-     * Tránh N+1: thay vì gọi {@link #findTopByProductListingIdOrderByCrawledAtDesc}
-     * cho từng listing, dùng 1 query với correlated subquery.
-     *
-     * Trả về tối đa 1 record / listing (giả định unique crawledAt trên từng
-     * listing; nếu trùng crawledAt thì trả nhiều record — service sẽ merge).
+     * Batch lấy PriceRecord mới nhất cho từng productListingId.
      */
     @Query("""
         SELECT pr FROM PriceRecord pr
@@ -51,5 +50,33 @@ public interface PriceRecordRepository extends JpaRepository<PriceRecord, Long> 
     """)
     List<PriceRecord> findLatestByProductListingIdIn(
         @Param("listingIds") Collection<UUID> listingIds
+    );
+
+    // =========================
+    // LOGIC MỚI - AUTO CRAWL GIAI ĐOẠN 1
+    // KHÔNG ĐỤNG LOGIC CŨ
+    // =========================
+
+    /**
+     * Lấy record giá mới nhất của một productListing.
+     *
+     * Ghi chú:
+     * - Thực tế method findTopByProductListingIdOrderByCrawledAtDesc(...) ở trên
+     *   đã làm được việc này rồi.
+     * - Method này thêm vào để dùng tên rõ nghĩa hơn cho auto crawl service sau này,
+     *   tránh ảnh hưởng các chỗ đang dùng method cũ.
+     */
+    @Query("""
+        SELECT pr
+        FROM PriceRecord pr
+        WHERE pr.productListing.id = :productListingId
+          AND pr.crawledAt = (
+              SELECT MAX(pr2.crawledAt)
+              FROM PriceRecord pr2
+              WHERE pr2.productListing.id = :productListingId
+          )
+    """)
+    Optional<PriceRecord> findLatestByProductListingId(
+            @Param("productListingId") UUID productListingId
     );
 }

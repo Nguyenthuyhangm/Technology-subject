@@ -54,11 +54,53 @@ public class ProductListing {
     @Builder.Default
     private Boolean isPinned = false;
 
-    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true)
+    /**
+     * Thời điểm lần cuối auto-crawl giá thành công.
+     * Map với cột crawl_time trong DB.
+     */
+    @Column(name = "crawl_time")
+    private LocalDateTime crawlTime;
+
+    // Map quan hệ 1-Nhiều tới bảng price_record
+    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("crawledAt DESC") // Luôn lấy record mới nhất lên đầu
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
 
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Helper để lấy promotion label cho ProductService gọi
+    public String getPromotionLabel() {
+        if (this.priceRecords != null && !this.priceRecords.isEmpty()) {
+            return this.priceRecords.get(0).getPromotionLabel();
+        }
+        return null;
+    }
+
+    @Transient
+    public Integer getFinalPrice() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+        return priceRecords.get(0).getPrice(); // record mới nhất
+    }
+
+    @Transient
+    public Integer getOriginalPrice() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+        return priceRecords.get(0).getOriginalPrice();
+    }
+
+    @Transient
+    public Integer getDiscountPct() {
+        if (priceRecords == null || priceRecords.isEmpty()) return null;
+
+        Integer price = priceRecords.get(0).getPrice();
+        Integer original = priceRecords.get(0).getOriginalPrice();
+
+        if (price == null || original == null || original <= price) return null;
+
+        return (int) Math.round(((original - price) / original) * 100);
+    }
+
 }

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { wishlistService } from '../service/wishlistApi';
-import { supabase } from '../lib/supabaseClient'; // import supabase client của bạn
+import { supabase } from '../lib/supabaseClient';
 import type { WishlistItem } from '../types/wishlist';
 import type { Product } from '../types/product';
 
@@ -15,7 +15,7 @@ const WishlistContext = createContext<WishlistContextType | undefined>(undefined
 
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
-  const [userId, setUserId] = useState<string | null>(null); // ← lấy động từ Supabase
+  const [userId, setUserId] = useState<string | null>(null);
 
   // 1. Lấy userId từ Supabase session
   useEffect(() => {
@@ -35,7 +35,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // 2. Load wishlist khi có userId
   useEffect(() => {
-    if (!userId) return; // chưa đăng nhập thì bỏ qua
+    if (!userId) return;
     const fetchWishlist = async () => {
       try {
         const data = await wishlistService.getWishlist(userId);
@@ -45,7 +45,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     };
     fetchWishlist();
-  }, [userId]); // ← chạy lại khi userId thay đổi
+  }, [userId]);
 
   // 3. Thêm
   const addToWishlist = async (product: Product) => {

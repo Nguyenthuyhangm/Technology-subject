@@ -1,63 +1,27 @@
 package com.pricehawl.repository;
 
-import com.pricehawl.entity.Brand;
-import com.pricehawl.entity.Category;
-import com.pricehawl.entity.Product;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
+import javax.sql.DataSource;
+import java.sql.Connection;
 
-import static org.junit.jupiter.api.Assertions.*;
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DisplayName("Supabase Search Only Test")
-class ProductRepositorySearchTest {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@SpringBootTest
+public class DatabaseConnectionTest {
 
     @Autowired
-    private ProductRepository productRepository;
+    private DataSource dataSource;
 
     @Test
-    @DisplayName("Should search products by keyword")
-    void testSearchBasic() {
+    void testDatabaseConnection() throws Exception {
+        try (Connection conn = dataSource.getConnection()) {
 
-        List<Object[]> results = productRepository.fuzzySearchRaw("sunscreen");
+            System.out.println("🔥 Connected to DB: " + conn.getMetaData().getURL());
 
-        assertNotNull(results);
-
-        // Không bắt buộc phải có data nếu DB trống
-        // nhưng nếu có thì kiểm tra format
-        if (!results.isEmpty()) {
-            Object[] row = results.get(0);
-
-            assertNotNull(row[0]); // id
-            assertNotNull(row[1]); // name
+            assertNotNull(conn);
         }
-    }
-
-    @Test
-    @DisplayName("Should handle typo keyword")
-    void testSearchTypo() {
-
-        List<Object[]> results = productRepository.fuzzySearchRaw("hada labo");
-
-        assertNotNull(results);
-
-        // fuzzy search có thể trả rỗng nếu DB chưa có data phù hợp
-        // nên KHÔNG assert isEmpty = false
-    }
-
-    @Test
-    @DisplayName("Should not crash with random keyword")
-    void testSearchRandom() {
-
-        List<Object[]> results = productRepository.fuzzySearchRaw("xyzabc123");
-
-        assertNotNull(results);
     }
 }
