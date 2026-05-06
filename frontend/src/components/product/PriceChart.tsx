@@ -11,8 +11,8 @@ const FONT_STACK = {
 } as const;
 
 const PLATFORM_COLORS: Record<string, string> = {
-    Coculux: '#B7848C',
-    Gardian: '#7A9E9F',
+    Cocolux: '#B7848C',
+    guardian: '#7A9E9F',
     Hasaki: '#C4A35A',
 };
 
@@ -126,12 +126,12 @@ export default function PriceChart({ platforms, title = 'Biến động giá g�
     };
 
     return (
-        <div className="rounded-[30px] border border-stone-200/80 bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
+        <div className="rounded-[30px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
             <div className="max-w-2xl">
-                <h3 className="text-3xl tracking-normal text-stone-900" style={{ fontFamily: FONT_STACK.serif }}>
+                <h3 className="text-3xl tracking-normal text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.serif }}>
                     {title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-stone-500">
+                <p className="mt-3 text-sm leading-7 text-stone-500 dark:text-stone-400">
                     Di chuột vào đường giá để xem thời điểm và mức giá cụ thể.
                 </p>
             </div>
@@ -140,7 +140,7 @@ export default function PriceChart({ platforms, title = 'Biến động giá g�
                 {platformChartData.map((p) => (
                     <div key={p.platformName} className="flex items-center gap-2">
                         <span className="inline-block h-2.5 w-6 rounded-full" style={{ backgroundColor: p.color }} />
-                        <span className="text-sm text-stone-600">{p.platformName}</span>
+                        <span className="text-sm text-stone-600 dark:text-stone-300">{p.platformName}</span>
                         {p.fakePriceWarning && (
                             <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">
                       Cảnh báo tăng giá ảo
@@ -154,7 +154,7 @@ export default function PriceChart({ platforms, title = 'Biến động giá g�
                 <div className="relative">
                     {activePoint && activePlatform && (
                         <div
-                            className="pointer-events-none absolute z-10 rounded-[18px] border border-stone-200/80 bg-white/95 px-3 py-2 text-xs shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-md"
+                            className="pointer-events-none absolute z-10 rounded-[18px] border border-stone-200/80 dark:border-stone-700/60 bg-white/95 dark:bg-stone-800/95 px-3 py-2 text-xs shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-md"
                             style={{
                                 left: `calc(${(activePoint.x / width) * 100}% - 56px)`,
                                 top: Math.max(0, (activePoint.y / height) * 100 - 22) + '%',
@@ -163,8 +163,8 @@ export default function PriceChart({ platforms, title = 'Biến động giá g�
                             <p className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-wide" style={{ color: activePlatform.color }}>
                                 {activePlatform.platformName}
                             </p>
-                            <p className="whitespace-nowrap font-medium text-stone-900">{formatPrice(activePoint.price)}</p>
-                            <p className="mt-1 whitespace-nowrap text-stone-500">{formatDateLabel(activePoint.date)}</p>
+                            <p className="whitespace-nowrap font-medium text-stone-900 dark:text-stone-100">{formatPrice(activePoint.price)}</p>
+                            <p className="mt-1 whitespace-nowrap text-stone-500 dark:text-stone-400">{formatDateLabel(activePoint.date)}</p>
                         </div>
                     )}
 
@@ -202,19 +202,19 @@ export default function PriceChart({ platforms, title = 'Biến động giá g�
 
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
                 {platformChartData.map((p) => (
-                    <div key={p.platformName} className="rounded-[16px] border border-stone-100 bg-[#FAFAF9] px-4 py-3">
+                    <div key={p.platformName} className="rounded-[16px] border border-stone-100 dark:border-stone-700/40 bg-[#FAFAF9] dark:bg-stone-800/40 px-4 py-3">
                         <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: p.color }}>
                             {p.platformName}
                         </p>
-                        <p className="mt-2 text-lg font-semibold text-stone-900">{formatPrice(p.latestPrice)}</p>
-                        <p className="text-xs text-stone-400">TB 30 ngày: {formatPrice(p.averagePrice)}</p>
+                        <p className="mt-2 text-lg font-semibold text-stone-900 dark:text-stone-100">{formatPrice(p.latestPrice)}</p>
+                        <p className="text-xs text-stone-400 dark:text-stone-500">TB 30 ngày: {formatPrice(p.averagePrice)}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone-500">
-                <span>Thấp nhất: <span className="font-medium text-stone-900">{formatPrice(globalMin)}</span></span>
-                <span>Cao nhất: <span className="font-medium text-stone-900">{formatPrice(globalMax)}</span></span>
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone-500 dark:text-stone-400">
+                <span>Thấp nhất: <span className="font-medium text-stone-900 dark:text-stone-100">{formatPrice(globalMin)}</span></span>
+                <span>Cao nhất: <span className="font-medium text-stone-900 dark:text-stone-100">{formatPrice(globalMax)}</span></span>
             </div>
         </div>
     );

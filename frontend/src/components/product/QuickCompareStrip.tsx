@@ -23,10 +23,10 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
         <section>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div className="max-w-2xl">
-                    <h2 className="mt-1 text-[1.45rem] font-medium tracking-[-0.02em] text-stone-900">
+                    <h2 className="mt-1 text-[1.45rem] font-medium tracking-[-0.02em] text-stone-900 dark:text-stone-100">
                         Nơi mua phù hợp
                     </h2>
-                    <p className="mt-1 text-sm leading-6 text-stone-500">
+                    <p className="mt-1 text-sm leading-6 text-stone-500 dark:text-stone-400">
                         So sánh nhanh giá, ưu đãi để chọn nơi mua phù hợp hơn.
                     </p>
                 </div>
@@ -34,7 +34,7 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                 {best && (
                     <p className="text-sm text-stone-500">
                         Tốt nhất hiện tại:{' '}
-                        <span className="font-medium text-stone-800">{best.platformName}</span>
+                        <span className="font-medium text-stone-800 dark:text-stone-200">{best.platformName}</span>
                     </p>
                 )}
             </div>
@@ -49,8 +49,8 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                 key={item.listingId}
                                 className={`w-[248px] shrink-0 snap-start rounded-[20px] border p-4 transition-all duration-200 ${
                                     isBest
-                                        ? 'border-[#D9CEC1] bg-[#F6F0E8]'
-                                        : 'border-stone-200/70 bg-white'
+                                        ? 'border-[#D9CEC1] dark:border-stone-600 bg-[#F6F0E8] dark:bg-stone-800/80'
+                                        : 'border-stone-200/70 dark:border-stone-700/40 bg-white dark:bg-[#1A1614]'
                                 }`}
                             >
                                 <div className="flex items-start justify-between gap-3">
@@ -83,7 +83,7 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-[1.35rem] font-semibold leading-none tracking-[-0.03em] text-stone-900">
+                                    <p className="text-[1.35rem] font-semibold leading-none tracking-[-0.03em] text-stone-900 dark:text-stone-100">
                                         {formatPrice(item.price)}
                                     </p>
 
@@ -103,7 +103,7 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                     href={item.url}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-stone-200 px-3 py-2 text-[12px] font-medium text-stone-700 transition hover:text-stone-900"
+                                    className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-stone-200 dark:border-stone-700 px-3 py-2 text-[12px] font-medium text-stone-700 dark:text-stone-300 transition hover:text-stone-900 dark:hover:text-stone-100"
                                 >
                                     Xem nơi bán
                                     <MoveUpRight size={12} />

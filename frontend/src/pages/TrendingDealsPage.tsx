@@ -57,7 +57,7 @@ export default function TrendingDealsPage() {
 
   return (
     <div
-      className="min-h-screen bg-[#FCF8F4] text-stone-900"
+      className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100"
       style={{ fontFamily: TRENDING_DEAL_FONT_STACK.sans }}
     >
       <AppHeader currentPage="deals" />
@@ -85,7 +85,7 @@ export default function TrendingDealsPage() {
         </div>
 
         {loading && total === 0 && (
-          <p className="mt-6 flex items-center gap-2 text-sm text-stone-500">
+          <p className="mt-6 flex items-center gap-2 text-sm text-stone-500 dark:text-stone-400">
             <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden />
             <span>Đang tải </span>
           </p>
@@ -131,7 +131,7 @@ export default function TrendingDealsPage() {
                 type="button"
                 onClick={() => goToPage(safePage - 1)}
                 disabled={safePage <= 1}
-                className="inline-flex items-center gap-2 rounded-full border border-stone-200/90 bg-white/90 px-4 py-2 text-xs font-medium text-stone-600 transition hover:border-[#C9A9B0] hover:bg-[#FCF8F4] hover:text-stone-900 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-full border border-stone-200/90 dark:border-stone-700/60 bg-white/90 dark:bg-stone-800/60 px-4 py-2 text-xs font-medium text-stone-600 dark:text-stone-400 transition hover:border-[#C9A9B0] hover:bg-[#FCF8F4] dark:hover:bg-stone-700/60 hover:text-stone-900 dark:hover:text-stone-100 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
                 Trước
@@ -146,7 +146,7 @@ export default function TrendingDealsPage() {
                 type="button"
                 onClick={() => goToPage(safePage + 1)}
                 disabled={safePage >= totalPages}
-                className="inline-flex items-center gap-2 rounded-full border border-stone-200/90 bg-white/90 px-4 py-2 text-xs font-medium text-stone-600 transition hover:border-[#C9A9B0] hover:bg-[#FCF8F4] hover:text-stone-900 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-full border border-stone-200/90 dark:border-stone-700/60 bg-white/90 dark:bg-stone-800/60 px-4 py-2 text-xs font-medium text-stone-600 dark:text-stone-400 transition hover:border-[#C9A9B0] hover:bg-[#FCF8F4] dark:hover:bg-stone-700/60 hover:text-stone-900 dark:hover:text-stone-100 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Sau
                 <ChevronRight className="h-3.5 w-3.5" />

@@ -13,7 +13,9 @@ const FONT_STACK = {
 } as const;
 
 type ProductCompareCardProps = {
-  product: ProductSearch;
+  // Cho phép undefined để component không bị crash khi parent chưa fetch
+  // xong dữ liệu hoặc API trả về 500 (array item có thể là null).
+  product: ProductSearch | null | undefined;
 };
 
 const formatPrice = (price: number): string =>
@@ -25,6 +27,12 @@ const formatPrice = (price: number): string =>
 
 export default function ProductCompareCard({ product }: ProductCompareCardProps) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+
+  // Early return để không bao giờ crash giao diện khi backend 500 / data thiếu.
+  if (!product || !product.id) {
+    return null;
+  }
+
   const isSaved = isInWishlist(String(product.id));
 
   const handleWishlistClick = async (e: React.MouseEvent) => {
@@ -42,15 +50,21 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
     }
   };
 
-  const sorted = [...product.platforms].sort((a, b) => a.finalPrice - b.finalPrice);
+  // Null-safe sau khi merge: API có thể không trả về `images`/`platforms`,
+  // hoặc trả 500 → các field này có thể undefined. Luôn ép về mảng trước khi
+  // sort/truy cập index để tránh "Cannot read properties of undefined".
+  const platforms = Array.isArray(product?.platforms) ? product.platforms : [];
+  const sorted = [...platforms].sort((a, b) => (a?.finalPrice ?? 0) - (b?.finalPrice ?? 0));
   const bestOffer = sorted[0];
   const worstOffer = sorted[sorted.length - 1];
-  const spread = worstOffer && bestOffer ? worstOffer.finalPrice - bestOffer.finalPrice : 0;
-const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80';
+  const spread =
+    worstOffer && bestOffer ? (worstOffer.finalPrice ?? 0) - (bestOffer.finalPrice ?? 0) : 0;
+  const coverSrc =
+    product?.images?.[0] ?? product?.imageUrl ?? '/fallback-product.jpg';
 
   return (
     <article
-      className="group relative rounded-[34px] border border-[#DDD2C6] bg-[#F8F4EE] p-7 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
+      className="group relative rounded-[34px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F8F4EE] dark:bg-[#1A1614] p-7 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
       style={{ fontFamily: FONT_STACK.sans }}
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -69,7 +83,7 @@ const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsp
         </button>
 
         <Link to={`/product/${product.id}`} className="flex min-w-0 gap-5 lg:flex-1">
-          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA]">
+          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA] dark:bg-stone-800">
             <img
               src={coverSrc}
               alt={product.name}
@@ -90,7 +104,7 @@ const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsp
             <p className="text-[10px] uppercase tracking-[0.16em] text-[#8D7663]">{product.brandName}</p>
 
             <h3
-              className="mt-3 line-clamp-2 text-[1.72rem] leading-[1.12] tracking-[-0.025em] text-[#241B17] transition-colors duration-300 group-hover:text-[#3A2B23]"
+              className="mt-3 line-clamp-2 text-[1.72rem] leading-[1.12] tracking-[-0.025em] text-[#241B17] dark:text-stone-100 transition-colors duration-300 group-hover:text-[#3A2B23] dark:group-hover:text-stone-200"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               {product.name}
@@ -99,8 +113,8 @@ const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsp
             <p className="mt-3 text-sm text-[#74685F]">{product.categoryName}</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              {product.score >= 0.8 && <Badge variant="brand">Phù hợp cao</Badge>}
-              {product.platforms.some((p) => p.isOfficial) && <Badge variant="soft">Official</Badge>}
+              {(product?.score ?? 0) >= 0.8 && <Badge variant="brand">Phù hợp cao</Badge>}
+              {platforms.some((p) => p?.isOfficial) && <Badge variant="soft">Official</Badge>}
             </div>
           </div>
         </Link>
@@ -110,7 +124,7 @@ const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsp
 
           {bestOffer && (
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
-              <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17]">
+              <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17] dark:text-stone-100">
                 {formatPrice(bestOffer.finalPrice)}
               </span>
               <PlatformPill platform={bestOffer.platform} />

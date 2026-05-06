@@ -39,7 +39,7 @@ function listingFromPlatform(
   const pinned =
     productPinned &&
     platform.isOfficial &&
-    (platform.platform === 'Cocolux' || platform.platform === 'Coculux')
+    platform.platform === 'Cocolux'
 
   return {
     listingId,

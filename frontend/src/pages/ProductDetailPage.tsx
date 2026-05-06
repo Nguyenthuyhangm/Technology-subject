@@ -53,8 +53,8 @@ export default function ProductDetailPage() {
     // Loading state
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center bg-[#FCF8F4]">
-                <p className="text-sm text-stone-400">Đang tải...</p>
+            <div className="flex min-h-screen items-center justify-center bg-[#FCF8F4] dark:bg-[#0F0D0C]">
+                <p className="text-sm text-stone-400 dark:text-stone-500">Đang tải...</p>
             </div>
         );
     }
@@ -62,14 +62,14 @@ export default function ProductDetailPage() {
     // Not found
     if (!comparison) {
         return (
-            <div className="flex min-h-screen items-center justify-center bg-[#FCF8F4] px-6">
-                <div className="rounded-[34px] border border-stone-200/80 bg-white px-8 py-10 text-center shadow-[0_14px_35px_rgba(15,23,42,0.04)]">
-                    <h2 className="text-3xl text-stone-900" style={{ fontFamily: FONT_STACK.serif }}>
+            <div className="flex min-h-screen items-center justify-center bg-[#FCF8F4] dark:bg-[#0F0D0C] px-6">
+                <div className="rounded-[34px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] px-8 py-10 text-center shadow-[0_14px_35px_rgba(15,23,42,0.04)]">
+                    <h2 className="text-3xl text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.serif }}>
                         Không tìm thấy sản phẩm
                     </h2>
                     <Link
                         to="/"
-                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1F1A17] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1F1A17] dark:bg-stone-100 px-5 py-3 text-sm font-medium text-white dark:text-stone-900 transition hover:opacity-90"
                     >
                         <ArrowLeft size={16} />
                         Quay về trang chủ
@@ -80,23 +80,23 @@ export default function ProductDetailPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FCF8F4] text-stone-900" style={{ fontFamily: FONT_STACK.sans }}>
-            <div className="pointer-events-none fixed left-[-10%] top-[-15%] h-[42vw] w-[42vw] rounded-full bg-[#F7ECEE] opacity-30 blur-[120px]" />
-            <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[32vw] w-[32vw] rounded-full bg-[#F4EEE7] opacity-90 blur-[120px]" />
+        <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
+            <div className="pointer-events-none fixed left-[-10%] top-[-15%] h-[42vw] w-[42vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-30 blur-[120px]" />
+            <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[32vw] w-[32vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
             <div className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:px-10">
 
                 {/* Breadcrumb */}
-                <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-stone-500">
+                <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-stone-500 dark:text-stone-400">
                     <Link
                         to="/"
-                        className="inline-flex items-center gap-2 rounded-full border border-stone-200/80 bg-white/80 px-4 py-2 transition hover:text-stone-900"
+                        className="inline-flex items-center gap-2 rounded-full border border-stone-200/80 dark:border-stone-700/60 bg-white/80 dark:bg-stone-800/50 px-4 py-2 transition hover:text-stone-900 dark:hover:text-stone-100"
                     >
                         <ArrowLeft size={16} />
                         Trang chủ
                     </Link>
                     <ChevronRight size={16} />
-                    <span className="text-stone-900">{comparison.productName}</span>
+                    <span className="text-stone-900 dark:text-stone-100">{comparison.productName}</span>
                 </div>
 
                 {/* Gallery + Summary */}

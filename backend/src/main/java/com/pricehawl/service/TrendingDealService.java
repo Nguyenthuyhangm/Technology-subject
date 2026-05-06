@@ -6,41 +6,46 @@ import com.pricehawl.dto.TrendingDealModels.TrendingDealResponse;
 import com.pricehawl.dto.TrendingDealModels.TrendingDealsSnapshot;
 import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.ProductListing;
-import com.pricehawl.repository.TrendingDealRepositories.PriceRecordRepository;
+import com.pricehawl.exception.TrendingDealsComputationException;
 import com.pricehawl.repository.TrendingDealRepositories.TrendingDealRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TrendingDealService {
 
-    /** Giới hạn số listing xét trending mỗi lần tính (đủ lớn cho UX, tránh quét full DB). */
-    private static final int TRENDING_MAX_CANDIDATE_LISTINGS = 600;
+    // Slice/batch: tránh N+1 + tránh transaction dài.
+    private static final int TRENDING_CANDIDATE_SLICE_SIZE = 1000;   // 800~1200 theo yêu cầu
+    private static final int TRENDING_MAX_CANDIDATE_LISTINGS = 3000; // tăng để giảm bỏ sót
+
+    // Fetch PriceRecord theo batch, rồi cắt top N per listing trong service.
+    static final int MAX_PRICE_RECORDS_PER_LISTING = 400;
+    private static final int MAX_TRENDING_DEALS_RETURN = 100;
 
     private final TrendingDealRepository trendingDealRepository;
-    private final PriceRecordRepository priceRecordRepository;
+    private final TrendingDealTxBatchRunner txBatchRunner;
 
-    /**
-     * Mặc định dùng cache (TTL do CacheManager cấu hình).
-     * Nếu refresh=true thì xóa cache (theo key) và tính lại ngay từ DB.
-     */
+    
     public TrendingDealsSnapshot getTrendingDealsSnapshot(boolean expand, boolean refresh) {
         return refresh ? refreshTrendingDealsSnapshot(expand) : getTrendingDealsSnapshotCached(expand);
     }
@@ -50,10 +55,7 @@ public class TrendingDealService {
         return buildSnapshot(expand);
     }
 
-    /**
-     * Evict cache trước, sau đó tính lại từ DB và put lại vào cache.
-     * Lưu ý: phải là method public được gọi từ bên ngoài bean (controller) để Spring AOP áp dụng caching.
-     */
+   
     @Caching(
             evict = @CacheEvict(cacheNames = "trendingDeals", key = "#expand"),
             put = @CachePut(cacheNames = "trendingDeals", key = "#expand")
@@ -63,77 +65,109 @@ public class TrendingDealService {
     }
 
     private TrendingDealsSnapshot buildSnapshot(boolean expand) {
+       
+        try {
+            return buildSnapshotUnsafe(expand);
+        } catch (TrendingDealsComputationException e) {
+            throw e;
+        } catch (RuntimeException e) {
+            log.error("Trending snapshot computation failed (expand={})", expand, e);
+            throw new TrendingDealsComputationException(
+                    "Hệ thống đang cập nhật dữ liệu trending, vui lòng thử lại sau.", e);
+        }
+    }
+
+    private TrendingDealsSnapshot buildSnapshotUnsafe(boolean expand) {
         Instant computedAt = Instant.now();
-        var candidatePage = trendingDealRepository.findTrendingCandidateIds(
-                PageRequest.of(
-                        0,
-                        TRENDING_MAX_CANDIDATE_LISTINGS,
-                        Sort.by(Sort.Order.desc("isPinned"), Sort.Order.desc("updatedAt"))));
-        List<UUID> candidateIds = candidatePage.getContent();
-        if (candidateIds.isEmpty()) {
+
+        // Pre-filter ở DB: platform active + trustScore + EXISTS PriceRecord 60 ngày.
+        LocalDateTime priceSince = LocalDateTime.now()
+                .minusDays(TrendingDealEngine.PRICE_LOOKBACK_DAYS_FOR_CANDIDATE_EXISTS);
+
+        Pageable pageable = PageRequest.of(
+                0,
+                TRENDING_CANDIDATE_SLICE_SIZE,
+                Sort.by(Sort.Order.desc("isPinned"), Sort.Order.desc("updatedAt")));
+
+        // Giảm memory: giữ best-per-product + stats xung đột giá, không giữ toàn bộ 240k PriceRecord.
+        Map<UUID, TrendingDealDTO> bestByProduct = new HashMap<>();
+        Map<UUID, PriceConflictStats> priceStatsByProduct = new HashMap<>();
+
+        int totalCandidatesScanned = 0;
+        int batchNo = 0;
+
+        while (true) {
+            Slice<UUID> slice = trendingDealRepository.findTrendingCandidateIdsSlice(
+                    TrendingDealEngine.REQUIRED_TRUST_SCORE_EXACT,
+                    priceSince,
+                    pageable);
+
+            List<UUID> candidateIds = slice.getContent();
+            if (candidateIds == null || candidateIds.isEmpty()) {
+                break;
+            }
+
+            batchNo++;
+            totalCandidatesScanned += candidateIds.size();
+
+            TrendingDealTxBatchRunner.BatchOutcome outcome = txBatchRunner.processBatch(
+                    candidateIds,
+                    priceSince,
+                    bestByProduct,
+                    priceStatsByProduct);
+
+            log.info("Trending batch#{} candidates={} eligible={} productsSoFar={}",
+                    batchNo,
+                    outcome.candidates(),
+                    outcome.eligible(),
+                    bestByProduct.size());
+
+            if (!slice.hasNext()) {
+                break;
+            }
+            if (totalCandidatesScanned >= TRENDING_MAX_CANDIDATE_LISTINGS) {
+                log.info("Trending stop early: scannedCandidates={} (max={})",
+                        totalCandidatesScanned,
+                        TRENDING_MAX_CANDIDATE_LISTINGS);
+                break;
+            }
+
+            pageable = slice.nextPageable();
+        }
+
+        if (bestByProduct.isEmpty()) {
             return new TrendingDealsSnapshot(
                     List.of(),
                     computedAt,
                     TrendingDealEngine.SNAPSHOT_CACHE_TTL_SECONDS);
         }
-        List<ProductListing> candidates =
-                trendingDealRepository.findAllWithProductAndPlatformByIdIn(candidateIds);
-        Map<UUID, Integer> candidateOrder = new HashMap<>(candidateIds.size());
-        for (int i = 0; i < candidateIds.size(); i++) {
-            candidateOrder.put(candidateIds.get(i), i);
-        }
-        candidates.sort(
-                Comparator.comparingInt(l -> candidateOrder.getOrDefault(l.getId(), Integer.MAX_VALUE)));
 
-        List<TrendingDealDTO> organicCandidates = new ArrayList<>();
-
-        for (ProductListing listing : candidates) {
-            List<PriceRecord> recsDesc = priceRecordRepository
-                    .findTop400ByProductListingIdOrderByCrawledAtDesc(listing.getId());
-
-            if (TrendingDealEngine.isEligibleOrganic(listing, recsDesc)) {
-                DealScoreCalculation calc = TrendingDealEngine.score(listing, recsDesc);
-                PriceRecord latest = TrendingDealEngine.latest(recsDesc);
-                organicCandidates.add(new TrendingDealDTO(listing, calc, latest, recsDesc));
-            }
-        }
-
-        List<TrendingDealDTO> scored = organicCandidates.stream()
+        List<TrendingDealDTO> representatives = bestByProduct.values().stream()
+                .filter(Objects::nonNull)
                 .sorted(trendingSortComparator())
+                .limit(MAX_TRENDING_DEALS_RETURN)
                 .toList();
 
-        // --- Dedup theo product (tránh nhiều listing cùng 1 sản phẩm) ---
-        Map<UUID, List<TrendingDealDTO>> groupedByProduct = scored.stream()
-                .collect(Collectors.groupingBy(d -> d.listing().getProduct().getId()));
-
-        List<TrendingDealDTO> representatives = new ArrayList<>();
-        Map<UUID, Boolean> priceConflictByProduct = new HashMap<>();
-
-        for (Map.Entry<UUID, List<TrendingDealDTO>> e : groupedByProduct.entrySet()) {
-            UUID productId = e.getKey();
-            List<TrendingDealDTO> group = e.getValue();
-            priceConflictByProduct.put(productId, hasPriceConflict(group));
-
-            TrendingDealDTO best = group.stream()
-                    .max(dedupRepresentativeComparator())
-                    .orElse(null);
-            if (best != null) {
-                representatives.add(best);
-            }
+        Map<UUID, Boolean> priceConflictByProduct = new HashMap<>(priceStatsByProduct.size());
+        for (Map.Entry<UUID, PriceConflictStats> e : priceStatsByProduct.entrySet()) {
+            priceConflictByProduct.put(e.getKey(), e.getValue() != null && e.getValue().isConflict());
         }
 
-        representatives = representatives.stream().sorted(trendingSortComparator()).toList();
-
         List<TrendingDealResponse> body;
-        // Backend luôn trả full danh sách đã chấm điểm (không giới hạn 5),
-        // việc hiển thị/pagination để frontend xử lý.
+    
         body = representatives.stream()
-                .map(
-                        d ->
-                                mapToResponse(
-                                        d,
-                                        priceConflictByProduct.get(
-                                                d.listing().getProduct().getId())))
+                .map(d -> {
+                    try {
+                        if (d == null || d.listing() == null || d.listing().getProduct() == null) {
+                            return null;
+                        }
+                        UUID pid = d.listing().getProduct().getId();
+                        return mapToResponse(d, pid != null ? priceConflictByProduct.get(pid) : Boolean.FALSE);
+                    } catch (Exception ex) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .toList();
 
         return new TrendingDealsSnapshot(
@@ -143,17 +177,21 @@ public class TrendingDealService {
     }
 
     private TrendingDealResponse mapToResponse(ProductListing l, DealScoreCalculation calc, PriceRecord latest) {
+        if (l == null) {
+            return null;
+        }
         Integer currentPrice = latest != null ? latest.getPrice() : null;
         Integer originalPrice = latest != null ? latest.getOriginalPrice() : null;
-        float discountPct = latest != null ? (float) TrendingDealEngine.platformDiscountPct(latest) : 0f;
+        // IMPORTANT: Display mới tính lại từ originalPrice/price để hiển thị đúng % (không dùng để filter).
+        float discountPct = TrendingDealEngine.calculateDisplayDiscountPct(latest);
         boolean flashSale = latest != null && Boolean.TRUE.equals(latest.getIsFlashSale());
 
-        boolean pinned = l.getIsPinned() != null && Boolean.TRUE.equals(l.getIsPinned());
-        String badge = computeBadge(pinned, discountPct);
+        boolean pinned = Boolean.TRUE.equals(l.getIsPinned());
+        String badge = TrendingDealEngine.computeBadge(pinned, discountPct);
 
         String explanation = TrendingDealEngine.Explanations.forDeal(l, calc, discountPct, latest);
 
-        // Ưu tiên ảnh gốc của product; nếu thiếu thì fallback sang ảnh của listing (tương tự ProductService).
+        // Ưu tiên ảnh gốc của product; nếu thiếu thì fallback sang ảnh của listing.
         String imageUrl = null;
         if (l.getProduct() != null && l.getProduct().getImageUrl() != null && !l.getProduct().getImageUrl().isEmpty()) {
             imageUrl = l.getProduct().getImageUrl();
@@ -161,10 +199,15 @@ public class TrendingDealService {
             imageUrl = l.getPlatformImageUrl();
         }
 
+        UUID productId = l.getProduct() != null ? l.getProduct().getId() : null;
+        String productName = l.getProduct() != null ? l.getProduct().getName() : null;
+
+        DealScoreCalculation safeCalc = calc != null ? calc : DealScoreCalculation.zero();
+
         return TrendingDealResponse.builder()
                 .listingId(l.getId())
-                .productId(l.getProduct().getId())
-                .productName(l.getProduct().getName())
+                .productId(productId)
+                .productName(productName)
                 .imageUrl(imageUrl)
                 .platformName(l.getPlatform() != null && l.getPlatform().getName() != null
                         ? l.getPlatform().getName()
@@ -173,19 +216,25 @@ public class TrendingDealService {
                 .originalPrice(originalPrice)
                 .discountPercent(discountPct)
                 .isFlashSale(flashSale)
-                .dealScore(calc.totalDealScore())
+                .dealScore(safeCalc.totalDealScore())
                 .badge(badge)
                 .explanation(explanation)
                 .isPinned(pinned)
-                .discountScore(calc.discountScore())
-                .trustScore(calc.trustScore())
-                .freshnessScore(calc.freshnessScore())
+                .discountScore(safeCalc.discountScore())
+                .trustScore(safeCalc.trustScore())
+                .freshnessScore(safeCalc.freshnessScore())
                 .build();
     }
 
     private TrendingDealResponse mapToResponse(TrendingDealDTO dto, Boolean priceConflict) {
+        if (dto == null) {
+            return null;
+        }
         TrendingDealResponse res =
                 mapToResponse(dto.listing(), dto.score(), dto.latestPriceRecord());
+        if (res == null) {
+            return null;
+        }
         boolean conflict = Boolean.TRUE.equals(priceConflict);
         res.setPriceConflict(conflict);
         res.setPriceConflictMessage(conflict ? "Có chênh lệch giá giữa các shop/sàn" : null);
@@ -196,21 +245,7 @@ public class TrendingDealService {
         return res;
     }
 
-    private static String computeBadge(boolean pinned, float discountPct) {
-        if (pinned) {
-            return "PINNED";
-        }
-        if (discountPct >= 30f) {
-            return "HOT";
-        }
-        if (discountPct > 20f) {
-            return "DEAL";
-        }
-        // fallback an toàn để UI có nhãn mặc định
-        return "TRENDING";
-    }
-
-    private static Comparator<TrendingDealDTO> dedupRepresentativeComparator() {
+    static Comparator<TrendingDealDTO> dedupRepresentativeComparator() {
         return Comparator
                 .comparingDouble((TrendingDealDTO d) -> d.listing() != null && d.listing().getTrustScore() != null
                         ? d.listing().getTrustScore()
@@ -253,28 +288,32 @@ public class TrendingDealService {
     }
 
 
-    private static boolean hasPriceConflict(List<TrendingDealDTO> group) {
-        if (group == null || group.size() < 2) {
-            return false;
+
+    static final class PriceConflictStats {
+        private Integer minPrice;
+        private Integer maxPrice;
+
+        void observe(Integer price) {
+            if (price == null || price <= 0) {
+                return;
+            }
+            if (minPrice == null || price < minPrice) {
+                minPrice = price;
+            }
+            if (maxPrice == null || price > maxPrice) {
+                maxPrice = price;
+            }
         }
-        List<Integer> prices = group.stream()
-                .map(TrendingDealDTO::latestPriceRecord)
-                .filter(Objects::nonNull)
-                .map(PriceRecord::getPrice)
-                .filter(Objects::nonNull)
-                .filter(p -> p > 0)
-                .distinct()
-                .sorted()
-                .toList();
-        if (prices.size() < 2) {
-            return false;
+
+        boolean isConflict() {
+            if (minPrice == null || maxPrice == null) {
+                return false;
+            }
+            if (minPrice <= 0) {
+                return false;
+            }
+            double diffPct = (maxPrice - minPrice) / (double) minPrice * 100.0;
+            return diffPct >= 7.0;
         }
-        int min = prices.get(0);
-        int max = prices.get(prices.size() - 1);
-        if (min <= 0) {
-            return false;
-        }
-        double diffPct = (max - min) / (double) min * 100.0;
-        return diffPct >= 7.0; // heuristic cho "chênh lệch đáng kể"
     }
 }

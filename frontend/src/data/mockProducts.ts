@@ -4,8 +4,8 @@ export const mockProducts: Product[] = [
     {
         id: '10000000-0000-0000-0000-000000000002',
         slug: 'anessa-perfect-uv-sunscreen-milk',
-        name: 'Kem chống nắng Anessa Perfect UV Sunscreen Milk',
-        brand: 'Anessa',
+        name: 'Kem dưỡng thể Rich Nourishment Body Care Dove',
+        brand: 'Dove',
         model: 'Perfect UV Milk 60ml',
         category: 'Mỹ phẩm',
         subcategory: 'Chống nắng',
@@ -42,7 +42,7 @@ export const mockProducts: Product[] = [
                 url: '#',
             },
             {
-                platform: 'Gardian',
+                platform: 'guardian',
                 shopName: 'Shiseido Mall',
                 isOfficial: true,
                 currentPrice: 499000,
@@ -160,7 +160,7 @@ export const mockProducts: Product[] = [
                 url: '#',
             },
             {
-                platform: 'Gardian',
+                platform: 'guardian',
                 shopName: 'Beauty Official Mall',
                 isOfficial: true,
                 currentPrice: 295000,

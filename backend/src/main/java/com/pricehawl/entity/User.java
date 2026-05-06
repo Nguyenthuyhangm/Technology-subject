@@ -3,6 +3,8 @@ package com.pricehawl.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,7 +18,6 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, length = 255, unique = true)
@@ -32,7 +33,18 @@ public class User {
     @Column(length = 20)
     private String phone;
 
+    @Column(nullable = false, length = 10)
+    private String theme = "system"; // light | dark | system
+
+    @Column(nullable = false, length = 5)
+    private String language = "vi";  // vi | en
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
+    @JsonProperty("created_at")
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @JsonProperty("updated_at")
+    private LocalDateTime updatedAt;
 }

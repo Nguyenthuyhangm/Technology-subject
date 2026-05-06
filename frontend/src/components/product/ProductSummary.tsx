@@ -24,18 +24,20 @@ const formatPrice = (price: number): string =>
 
 export default function ProductSummary({ comparison }: ProductSummaryProps) {
     // 2. Lấy hàm từ WishlistContext
-    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+    const { addToWishlist, removeFromWishlist, isInWishlist, isRemoving } = useWishlist();
 
     const productId = comparison.productId;
     const isSaved = isInWishlist(productId);
+    const removing = isRemoving(productId);
 
     const sorted = [...comparison.comparisons].sort((a, b) => a.price - b.price);
     const bestOffer = sorted[0];
 
-    // 3. Hàm xử lý Click
+    // 3. Hàm xử lý Click — provider đã lo optimistic update + rollback + alert.
     const handleWishlistClick = async (e: React.MouseEvent) => {
         e.preventDefault();
-        
+        if (removing) return;
+
         if (isSaved) {
             await removeFromWishlist(productId);
         } else {
@@ -52,17 +54,17 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
 
     return (
         <div
-            className="rounded-[34px] border border-stone-200/80 bg-white p-7 shadow-soft"
+            className="rounded-[34px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-7 shadow-soft"
             style={{ fontFamily: FONT_STACK.sans }}
         >
             <h1
-                className="text-[2.45rem] leading-[1.05] tracking-[-0.02em] text-stone-900 md:text-[2.95rem]"
+                className="text-[2.45rem] leading-[1.05] tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-[2.95rem]"
                 style={{ fontFamily: FONT_STACK.serif }}
             >
                 {comparison.productName}
             </h1>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-stone-500">
+            <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-stone-500 dark:text-stone-400">
                 {bestOffer.isFlashSale && (
                     <Badge variant="danger">Flash Sale</Badge>
                 )}
@@ -73,7 +75,7 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                 )}
             </div>
 
-            <div className="mt-8 rounded-[30px] bg-gradient-to-br from-[#F8F1F3] to-white p-6">
+            <div className="mt-8 rounded-[30px] bg-gradient-to-br from-[#F8F1F3] dark:from-[#2A1A1D]/60 to-white dark:to-stone-800/30 p-6">
                 <p className="text-[11px] uppercase tracking-[0.12em] text-stone-400">
                     Giá đẹp nhất hiện tại
                 </p>
@@ -103,13 +105,13 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                     )}
                 </div>
 
-                <div className="mt-5 rounded-[22px] border border-white/60 bg-white/70 px-4 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-sm">
+                <div className="mt-5 rounded-[22px] border border-white/60 dark:border-stone-700/40 bg-white/70 dark:bg-stone-800/40 px-4 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-sm">
                     <p className="text-[10px] uppercase tracking-[0.12em] text-stone-400">
                         Nơi bán tốt nhất
                     </p>
 
                     <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="text-sm font-medium text-stone-900">
+                        <p className="text-sm font-medium text-stone-900 dark:text-stone-100">
                             {bestOffer.platformName}
                         </p>
 
@@ -117,7 +119,7 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                             href={bestOffer.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 text-sm font-medium text-[#8E6A72] transition hover:text-stone-900"
+                            className="inline-flex items-center gap-2 text-sm font-medium text-[#8E6A72] transition hover:text-stone-900 dark:hover:text-stone-100"
                         >
                             Đến cửa hàng
                             <MoveUpRight size={15} />
@@ -131,7 +133,7 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                     href={bestOffer.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F1A17] px-6 py-4 text-sm font-medium text-white transition hover:opacity-90"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F1A17] dark:bg-stone-100 px-6 py-4 text-sm font-medium text-white dark:text-stone-900 transition hover:opacity-90"
                 >
                     Mua tại {bestOffer.platformName}
                     <MoveUpRight size={16} />
@@ -139,7 +141,7 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
 
                 <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-200 bg-white px-5 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800/50 px-5 py-4 text-sm font-medium text-stone-700 dark:text-stone-300 transition hover:text-[#8E6A72] cursor-pointer"
                 >
                     <Bell size={16} />
                     Đặt alert
@@ -149,18 +151,19 @@ export default function ProductSummary({ comparison }: ProductSummaryProps) {
                 <button
                     type="button"
                     onClick={handleWishlistClick}
-                    className={`inline-flex items-center justify-center gap-2 rounded-full border px-5 py-4 text-sm font-medium transition cursor-pointer ${
-                        isSaved 
-                            ? 'border-[#8E6A72] bg-[#8E6A72] text-white hover:opacity-90' 
-                            : 'border-stone-200 bg-white text-stone-700 hover:text-[#8E6A72]'
+                    disabled={removing}
+                    className={`inline-flex items-center justify-center gap-2 rounded-full border px-5 py-4 text-sm font-medium transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 ${
+                        isSaved
+                            ? 'border-[#8E6A72] bg-[#8E6A72] text-white hover:opacity-90'
+                            : 'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800/50 text-stone-700 dark:text-stone-300 hover:text-[#8E6A72]'
                     }`}
                 >
-                    <Heart 
-                        size={16} 
-                        fill={isSaved ? "currentColor" : "none"} 
-                        strokeWidth={isSaved ? 0 : 2} 
+                    <Heart
+                        size={16}
+                        fill={isSaved ? "currentColor" : "none"}
+                        strokeWidth={isSaved ? 0 : 2}
                     />
-                    {isSaved ? "Đã lưu wishlist" : "Lưu wishlist"}
+                    {removing ? 'Đang xóa...' : isSaved ? 'Đã lưu wishlist' : 'Lưu wishlist'}
                 </button>
             </div>
         </div>

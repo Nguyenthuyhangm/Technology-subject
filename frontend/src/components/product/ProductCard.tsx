@@ -113,14 +113,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
 
             <h3
-              className="editorial-title mt-3 line-clamp-2 text-[1.45rem] text-stone-900 transition-colors duration-300 group-hover:text-[#8E6A72]"
+              className="editorial-title mt-3 line-clamp-2 text-[1.45rem] text-stone-900 dark:text-stone-100 transition-colors duration-300 group-hover:text-[#8E6A72]"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               {product.name}
             </h3>
 
             <div className="mt-5 flex flex-wrap items-baseline gap-3">
-              <span className="text-[1.4rem] font-semibold tracking-tight text-stone-900">
+              <span className="text-[1.4rem] font-semibold tracking-tight text-stone-900 dark:text-stone-100">
                 {formatPrice(finalRounded)}
               </span>
               {showSale && (

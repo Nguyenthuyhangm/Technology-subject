@@ -1,7 +1,15 @@
-/** Tên sàn: API chính + giá trị dùng trong mock alert / legacy */
+/** Tên sàn: GIÁ TRỊ phải TRÙNG CHÍNH XÁC với platform.name trong DB (kể cả
+ *  hoa/thường), vì API trả về đúng chuỗi này và FE dùng làm key lookup
+ *  (PlatformPill style, chart color, so sánh ===).
+ *  - DB hiện có: 'Cocolux', 'guardian' (lowercase), 'Hasaki'.
+ *  - Để hiển thị chip UI đẹp ("Guardian" capitalized), dùng map label riêng
+ *    trong PlatformPill / SearchResultsPage — KHÔNG sửa value ở type này.
+ *  - Backend filter lowercase 2 phía nên case-insensitive khi compare, nhưng
+ *    value FE vẫn phải giống API để lookup ở client không bị miss.
+ */
 export type PlatformName =
-  | 'Coculux'
-  | 'Gardian'
+  | 'Cocolux'
+  | 'guardian'
   | 'Hasaki'
   | 'Shopee'
   | 'Lazada'
@@ -28,12 +36,15 @@ export interface ProductSearch {
   model: string;
   category: string;
   subcategory?: string;
-  images: string[];
+  // Backend chỉ trả `imageUrl` (string), `images` có thể không có hoặc rỗng.
+  // Để optional để FE buộc phải null-check khi truy cập images[0].
+  images?: string[];
   description: string;
   categoryName: string;
   brandName: string;
   score: number;
   imageUrl: string;
+  // Có thể undefined khi API lỗi / chưa có dữ liệu.
   platforms: Platform[];
 }
 

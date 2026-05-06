@@ -61,9 +61,10 @@ public interface WishlistRepository extends JpaRepository<Wishlist, UUID> {
     /**
      * Xóa sản phẩm khỏi wishlist của user.
      * Cần @Modifying và @Transactional vì đây là thao tác thay đổi dữ liệu (DML).
+     * Trả về số record bị xóa để service có thể phát hiện trường hợp không tìm thấy.
      */
     @Modifying
     @Transactional
     @Query("DELETE FROM Wishlist w WHERE w.userId = :userId AND w.productId = :productId")
-    void deleteByUserIdAndProductId(@Param("userId") UUID userId, @Param("productId") UUID productId);
+    int deleteByUserIdAndProductId(@Param("userId") UUID userId, @Param("productId") UUID productId);
 }

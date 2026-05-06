@@ -22,27 +22,27 @@ const FONT_STACK = {
 const quickKeywords = [
   'Anessa',
   'Laneige',
-  'Sony WH-1000XM5',
   'Kem chống nắng',
   'Serum niacinamide',
 ];
 
 const categories = [
   {
-    title: 'Mỹ phẩm',
-    subtitle: 'Những sản phẩm đang ở vùng giá đẹp, phù hợp để mua hoặc lưu lại theo dõi.',
+    title: 'Make Up',
+    subtitle: 'Son môi, kem nền, phấn phủ và mỹ phẩm nổi bật đang có mức giá đáng cân nhắc.',
     to: '/search?q=Mỹ phẩm',
   },
   {
-    title: 'Điện tử',
-    subtitle: 'Tai nghe, phụ kiện và thiết bị công nghệ được chọn lọc theo mức giá tốt nhất.',
-    to: '/search?q=Điện tử',
+    title: 'Skin Care',
+    subtitle: 'Sữa rửa mặt, serum, kem dưỡng và sản phẩm chăm da được chọn lọc giá tốt.',
+    to: '/search?q=Chăm sóc da',
   },
   {
-    title: 'Gia dụng',
-    subtitle: 'Các món thiết yếu cho không gian sống với mức giá dễ ra quyết định hơn.',
-    to: '/search?q=Gia dụng',
+    title: 'Hair Care',
+    subtitle: 'Dầu gội, dầu xả, tinh chất và sản phẩm chăm tóc giúp bạn dễ dàng lựa chọn.',
+    to: '/search?q=Chăm sóc tóc',
   },
+
 ];
 
 export default function HomePage() {
@@ -89,11 +89,11 @@ export default function HomePage() {
 
   return (
       <div
-          className="min-h-screen bg-[#FCF8F4] text-stone-900"
+          className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100"
           style={{ fontFamily: FONT_STACK.sans }}
       >
-        <div className="pointer-events-none fixed left-[-10%] top-[-14%] h-[42vw] w-[42vw] rounded-full bg-[#F7ECEE] opacity-40 blur-[160px]" />
-        <div className="pointer-events-none fixed bottom-[-12%] right-[-6%] h-[34vw] w-[34vw] rounded-full bg-[#F4EEE7] opacity-40 blur-[160px]" />
+        <div className="pointer-events-none fixed left-[-10%] top-[-14%] h-[42vw] w-[42vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-40 blur-[160px]" />
+        <div className="pointer-events-none fixed bottom-[-12%] right-[-6%] h-[34vw] w-[34vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-40 blur-[160px]" />
 
         <AppHeader currentPage="home" />
 
@@ -103,7 +103,7 @@ export default function HomePage() {
 
 
               <h1
-                  className="mt-4 text-6xl leading-[0.98] tracking-[-0.03em] text-stone-900 md:text-7xl xl:text-[5.6rem]"
+                  className="mt-4 text-6xl leading-[0.98] tracking-[-0.03em] text-stone-900 dark:text-stone-100 md:text-7xl xl:text-[5.6rem]"
                   style={{ fontFamily: FONT_STACK.serif }}
               >
                 Mua sắm tinh tế,
@@ -119,7 +119,7 @@ export default function HomePage() {
 
               <form
                   onSubmit={handleSearchSubmit}
-                  className="mt-9 rounded-[34px] border border-white/50 bg-white/80 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.05)] backdrop-blur-md"
+                  className="mt-9 rounded-[34px] border border-white/50 dark:border-stone-700/50 bg-white/80 dark:bg-[#1A1614]/80 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.05)] backdrop-blur-md"
               >
                 <div className="flex flex-col gap-3 md:flex-row">
                   <div className="relative flex-1">
@@ -140,13 +140,13 @@ export default function HomePage() {
                   </button>
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2 border-t border-white/50 pt-4">
+                <div className="mt-4 flex flex-wrap gap-2 border-t border-white/50 dark:border-stone-700/30 pt-4">
                   {quickKeywords.map((keyword) => (
                       <button
                           key={keyword}
                           type="button"
                           onClick={() => handleQuickSearch(keyword)}
-                          className="rounded-full border border-white/40 bg-white/60 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.08em] text-stone-500 backdrop-blur-sm transition hover:text-stone-900"
+                          className="rounded-full border border-white/40 dark:border-stone-700/40 bg-white/60 dark:bg-stone-800/40 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.08em] text-stone-500 dark:text-stone-400 backdrop-blur-sm transition hover:text-stone-900 dark:hover:text-stone-100"
                       >
                         {keyword}
                       </button>
@@ -155,7 +155,7 @@ export default function HomePage() {
               </form>
             </div>
 
-            <div className="rounded-[36px] border border-white/50 bg-white/70 p-5 shadow-[0_18px_45px_rgba(15,23,42,0.05)] backdrop-blur-xl">
+            <div className="rounded-[36px] border border-white/50 dark:border-stone-700/30 bg-white/70 dark:bg-[#1A1614]/70 p-5 shadow-[0_18px_45px_rgba(15,23,42,0.05)] backdrop-blur-xl">
               <div className="relative overflow-hidden rounded-[28px] bg-[#F5EEE8]">
                 <img
                     src={featuredProduct.images[0]}
@@ -190,7 +190,7 @@ export default function HomePage() {
 
                 <Link
                     to={`/product/${featuredProduct.id}`}
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 dark:text-stone-300 transition hover:text-[#8E6A72]"
                 >
                   Xem chi tiết
                   <ArrowRight size={16} />
@@ -228,7 +228,7 @@ export default function HomePage() {
 
             {loading && homeHighlights.length === 0 && (
               <div
-                className="flex min-h-[200px] flex-col items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-14 text-sm text-stone-500"
+                className="flex min-h-[200px] flex-col items-center justify-center rounded-[28px] border border-stone-200/60 dark:border-stone-700/40 bg-white/50 dark:bg-[#1A1614]/50 py-14 text-sm text-stone-500 dark:text-stone-400"
                 aria-busy="true"
                 aria-live="polite"
               >
@@ -243,7 +243,7 @@ export default function HomePage() {
             )}
 
             {!loading && homeHighlights.length === 0 && (
-              <div className="flex min-h-[160px] items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-12 text-sm text-stone-500">
+              <div className="flex min-h-[160px] items-center justify-center rounded-[28px] border border-stone-200/60 dark:border-stone-700/40 bg-white/50 dark:bg-[#1A1614]/50 py-12 text-sm text-stone-500 dark:text-stone-400">
                 Không tìm thấy sản phẩm phù hợp
               </div>
             )}
@@ -275,24 +275,24 @@ export default function HomePage() {
                   <Link
                       key={category.title}
                       to={category.to}
-                      className="rounded-[28px] border border-stone-200/80 bg-white/80 p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(15,23,42,0.06)]"
+                      className="rounded-[28px] border border-stone-200/80 dark:border-stone-700/40 bg-white/80 dark:bg-[#1A1614]/80 p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(15,23,42,0.06)]"
                   >
                     <p className="text-[10px] uppercase tracking-[0.12em] text-[#8E6A72]">
                       Danh mục
                     </p>
 
                     <h3
-                        className="mt-3 text-[1.7rem] leading-[1.12] tracking-[-0.02em] text-stone-900"
+                        className="mt-3 text-[1.7rem] leading-[1.12] tracking-[-0.02em] text-stone-900 dark:text-stone-100"
                         style={{ fontFamily: FONT_STACK.serif }}
                     >
                       {category.title}
                     </h3>
 
-                    <p className="mt-3 text-sm leading-7 text-stone-500">
+                    <p className="mt-3 text-sm leading-7 text-stone-500 dark:text-stone-400">
                       {category.subtitle}
                     </p>
 
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]">
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 dark:text-stone-300 transition hover:text-[#8E6A72]">
                   Xem sản phẩm
                   <ArrowRight size={15} />
                 </span>
@@ -301,7 +301,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="mt-20 rounded-[38px] border border-stone-200/80 bg-white p-8 shadow-[0_18px_45px_rgba(15,23,42,0.04)] md:p-10">
+          <section className="mt-20 rounded-[38px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-8 shadow-[0_18px_45px_rgba(15,23,42,0.04)] md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.12em] text-[#8E6A72]">
@@ -342,7 +342,7 @@ export default function HomePage() {
           </section>
         </main>
 
-        <footer className="mt-24 border-t border-stone-200/70 bg-white/60 pb-12 pt-16 backdrop-blur-xl">
+        <footer className="mt-24 border-t border-stone-200/70 dark:border-stone-700/40 bg-white/60 dark:bg-[#1A1614]/60 pb-12 pt-16 backdrop-blur-xl">
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-3 lg:px-12">
             <div className="space-y-4">
               <div
@@ -393,8 +393,8 @@ export default function HomePage() {
                 <h5 className="text-sm text-stone-900">Danh mục</h5>
                 <ul className="space-y-3 text-sm text-stone-500">
                   <li className="cursor-pointer hover:text-stone-900">Mỹ phẩm</li>
-                  <li className="cursor-pointer hover:text-stone-900">Điện tử</li>
-                  <li className="cursor-pointer hover:text-stone-900">Gia dụng</li>
+                  <li className="cursor-pointer hover:text-stone-900">Chăm sóc da</li>
+                  <li className="cursor-pointer hover:text-stone-900">Chăm sóc tóc</li>
                 </ul>
               </div>
             </div>

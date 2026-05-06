@@ -1,0 +1,14 @@
+<DataSourcesHistory>
+  <DataSourceFromHistory isRemovedFromProject="true">
+    <data-source source="LOCAL" name="PostgreSQL" uuid="ad3a2287-229b-4b0e-852c-b1414f769feb">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>dbc:postgresql://db.astkanfsacxriwprspqr.supabase.co:5432/postgres</jdbc-url>
+      <secret-storage>master_key</secret-storage>
+      <schema-mapping />
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </DataSourceFromHistory>
+</DataSourcesHistory>

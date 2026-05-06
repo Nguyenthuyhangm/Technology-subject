@@ -126,11 +126,11 @@ export default function DealsPage() {
 
   return (
     <div
-      className="min-h-screen bg-[#FCF8F4] text-stone-900"
+      className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100"
       style={{ fontFamily: FONT_STACK.sans }}
     >
-      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] opacity-30 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] opacity-90 blur-[120px]" />
+      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-30 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
      <AppHeader currentPage="deals" />
 
@@ -158,7 +158,7 @@ export default function DealsPage() {
           </div>
         </section>
 
-        <section className="mb-12 rounded-[34px] border border-stone-200/80  p-4 shadow-[0_16px_40px_rgba(15,23,42,0.04)]">
+        <section className="mb-12 rounded-[34px] border border-stone-200/80 dark:border-stone-700/40 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.04)]">
           <div className="flex flex-wrap gap-2">
             {tabOptions.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -170,8 +170,8 @@ export default function DealsPage() {
   onClick={() => setActiveTab(tab.id)}
   className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition-all duration-300 ${
     isActive
-      ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
-      : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900 hover:bg-[#F6F1EA]'
+      ? 'bg-[#F3EDE5] dark:bg-[#2A221A] text-[#2C241F] dark:text-[#E8D5B8] ring-1 ring-[#DED3C7] dark:ring-[#4A3A2A]'
+      : 'bg-transparent text-stone-500 dark:text-stone-400 ring-1 ring-stone-200/70 dark:ring-stone-700/50 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-[#F6F1EA] dark:hover:bg-stone-800/40'
   }`}
 >
   {tab.label}
@@ -217,7 +217,7 @@ export default function DealsPage() {
           })}
 
           {filteredSections.length === 0 && (
-            <div className="rounded-[34px] border border-stone-200/80 bg-white p-10 text-center shadow-[0_14px_35px_rgba(15,23,42,0.04)]">
+            <div className="rounded-[34px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-10 text-center shadow-[0_14px_35px_rgba(15,23,42,0.04)]">
               {loading ? (
                 <p className="flex items-center justify-center gap-2 text-sm text-stone-500">
                   <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden />

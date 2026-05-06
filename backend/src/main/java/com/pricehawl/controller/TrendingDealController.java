@@ -2,8 +2,10 @@ package com.pricehawl.controller;
 
 import com.pricehawl.dto.TrendingDealModels.TrendingDealResponse;
 import com.pricehawl.dto.TrendingDealModels.TrendingDealsSnapshot;
+import com.pricehawl.exception.TrendingDealsComputationException;
 import com.pricehawl.service.TrendingDealService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +34,13 @@ public class TrendingDealController {
         TrendingDealsSnapshot snap;
         try {
             snap = trendingDealService.getTrendingDealsSnapshot(expand, refresh);
-        } catch (Exception e) {
-            // If DB/network is slow/unreachable, fail fast with a clear status instead of hanging.
+        } catch (TrendingDealsComputationException e) {
+            // Lỗi tính toán trending (NPE dữ liệu bẩn, scoring fail...) đã được
+            // service bọc sẵn. Ném tiếp để @ExceptionHandler chuyên biệt trả về
+            // 503 + code TRENDING_COMPUTATION_FAILED, không bị quy về 500.
+            throw e;
+        } catch (DataAccessException e) {
+            // Lỗi DB thật sự (timeout, connection refused, query fail) → 503.
             throw new ResponseStatusException(
                     HttpStatus.SERVICE_UNAVAILABLE,
                     "Không lấy được trending deals (DB/network timeout).",

@@ -14,8 +14,8 @@ type AlertModalProps = {
 
 const platformOptions: Array<PlatformName | 'all'> = [
   'all',
-  'Coculux',
-  'Gardian',
+  'Cocolux',
+  'guardian',
   'Hasaki',
   'Shopee',
   'Lazada',
@@ -175,7 +175,11 @@ export default function AlertModal({
                 >
                   {platformOptions.map((item) => (
                     <option key={item} value={item}>
-                      {item === 'all' ? 'Tất cả sàn' : item}
+                      {item === 'all'
+                        ? 'Tất cả sàn'
+                        // Value khớp DB (ví dụ 'guardian' lowercase) → capitalize
+                        // khi hiển thị để UI đẹp mà vẫn giữ value gốc gửi API.
+                        : item.charAt(0).toUpperCase() + item.slice(1)}
                     </option>
                   ))}
                 </select>

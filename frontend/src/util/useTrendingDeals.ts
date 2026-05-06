@@ -53,6 +53,21 @@ function isNetworkErrorMessage(msg: string) {
   return s.includes('network error') || s.includes('failed to fetch')
 }
 
+/**
+ * Bắt lỗi 5xx từ message dạng "API 500: Internal Server Error" do
+ * `fetchTrendingDeals` chuẩn hoá. Khi backend trả 5xx, dữ liệu cũ trong cache
+ * không còn đáng tin (giá cũ / deal đã hết hạn) → cần xoá để tránh đánh lừa
+ * người dùng.
+ */
+function isServerErrorMessage(msg: string): boolean {
+  const m = /^API\s+(\d{3})\b/i.exec(msg)
+  if (!m) return false
+  const status = Number(m[1])
+  return Number.isFinite(status) && status >= 500 && status <= 599
+}
+
+const SYSTEM_UPDATING_MESSAGE = 'Hệ thống đang cập nhật, vui lòng thử lại sau.'
+
 function resolveAllowMockFallback(): boolean {
   const raw = import.meta.env.VITE_TRENDING_ALLOW_MOCK_FALLBACK
   const s = String(raw ?? '').toLowerCase().trim()
@@ -124,8 +139,23 @@ export function useTrendingDeals() {
             : 'Không thể tải dữ liệu trending từ backend.'
         console.error('[useTrendingDeals] fetchTrendingDeals failed:', e)
 
-        // Nếu lỗi network: xoá cache để lần sau chắc chắn lấy mới
-        if (isNetworkErrorMessage(msg)) clearCacheNow()
+        const isServerError = isServerErrorMessage(msg)
+        const isNetworkError = isNetworkErrorMessage(msg)
+
+        // 5xx hoặc network error: xoá cache. Dữ liệu cũ có thể đã hết hạn
+        // (giá sai, deal đã kết thúc) - không được phép hiển thị cho người dùng.
+        if (isServerError || isNetworkError) {
+          clearCacheNow()
+        }
+
+        if (isServerError) {
+          setDeals([])
+          setMeta(null)
+          setUsingMockFallback(false)
+          setError(SYSTEM_UPDATING_MESSAGE)
+          setLoading(false)
+          return
+        }
 
         setError(msg)
         if (allowMockFallback) {
@@ -191,6 +221,16 @@ export function useTrendingDeals() {
             setDeals([])
             setMeta(null)
             setError('Backend không chạy. Không tìm thấy sản phẩm')
+            return
+          }
+          if (isServerErrorMessage(msg)) {
+            // Backend 5xx: dữ liệu cache cũ không còn tin cậy (giá/deal có thể đã
+            // hết hạn). Xoá sạch và hiển thị thông báo rõ ràng cho người dùng.
+            clearCacheNow()
+            setDeals([])
+            setMeta(null)
+            setUsingMockFallback(false)
+            setError(SYSTEM_UPDATING_MESSAGE)
           }
         })
     }
