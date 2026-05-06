@@ -1,0 +1,2471 @@
+{
+  "crawled_at": "2026-05-04T20:39:42.548Z",
+  "total_brands": 11,
+  "total_products": 264,
+  "brands": {
+    "Acnes": {
+      "brand_id": 208,
+      "brand_url": "https://cocolux.com/thuong-hieu/acnes-i.208",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 14,
+      "products": [
+        {
+          "name": "Serum Acnes B5 Recovery Serum Tăng Cường Dưỡng Ẩm, Làm Dịu Da 25ml",
+          "price": 218000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/serum-acnes-b5-recovery-serum-tang-cuong-duong-am-lam-diu-da-25ml.jpg",
+          "url": "https://cocolux.com/serum-acnes-b5-recovery-serum-tang-cuong-duong-am-lam-diu-da-25ml-i.8935006546226",
+          "sku": "8935006546226"
+        },
+        {
+          "name": "Kem Dưỡng Acnes Repair Cream Giảm Mụn Chuyên Sâu 20g",
+          "price": 93000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/kem-duong-acnes-repair-cream-giam-mun-chuyen-sau-20g.jpg",
+          "url": "https://cocolux.com/kem-duong-acnes-repair-cream-giam-mun-chuyen-sau-20g-i.8935006546233",
+          "sku": "8935006546233"
+        },
+        {
+          "name": "Giấy Thấm Dầu Acnes Trà Xanh Green Tea Oil Remover Paper 100 Tờ",
+          "price": 41000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/04/images/products/1682308736011-giay-tham-dau-acnes-tra-xanh-green-tea-oil-remover-paper-100-to.jpeg",
+          "url": "https://cocolux.com/giay-tham-dau-acnes-tra-xanh-green-tea-oil-remover-paper-100-to-i.8935006545038",
+          "sku": "8935006545038"
+        },
+        {
+          "name": "Gel Dưỡng Acnes Kháng Khuẩn, Ngăn Ngừa và Giảm Mụn 18g",
+          "price": 74000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657165126754-gel-duong-acnes-khang-khuan-ngan-ngua-va-giam-mun-18g-3.jpeg",
+          "url": "https://cocolux.com/gel-duong-acnes-khang-khuan-ngan-ngua-va-giam-mun-18g-i.8935006530775",
+          "sku": "8935006530775"
+        },
+        {
+          "name": "Miếng Dán Mụn Acnes Giúp Giảm Mụn Sưng Viêm 24 PCS",
+          "price": 65000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657167146302-mieng-dan-mun-acnes-clear-patch-4.jpeg",
+          "url": "https://cocolux.com/mieng-dan-mun-acnes-clear-patch-i.8935006538924",
+          "sku": "8935006538924"
+        },
+        {
+          "name": "Kem Rửa Mặt Acnes Anti-Blackhead Ngăn Ngừa Mụn Đầu Đen 100g",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657164158483-kem-rua-mat-va-mat-na-ngan-ngua-mun-dau-den-acnes-anti-blackhead-100g-1.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-va-mat-na-ngan-ngua-mun-dau-den-100g-i.8935006538900",
+          "sku": "8935006538900"
+        },
+        {
+          "name": "Giấy Thấm Dầu Acnes Oil Remover Paper 100 PCS",
+          "price": 34000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168151415-giay-tham-dau-acnes.jpeg",
+          "url": "https://cocolux.com/giay-tham-dau-acnes-oil-remover-paper-100-to-i.8935006531048",
+          "sku": "8935006531048"
+        },
+        {
+          "name": "Kem Rửa Mặt Acnes Vitamin Làm Sáng Da, Mờ Sẹo Thâm 100g",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657165905385-kem-rua-mat-acnes-vitamin-100g.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-acnes-vitamin-100g-i.8935006532663",
+          "sku": "8935006532663"
+        },
+        {
+          "name": "Phim Thấm Dầu Acnes 50 PCS",
+          "price": 67000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168449696-phim-tham-dau-acnes-50-to.jpeg",
+          "url": "https://cocolux.com/phim-tham-dau-acnes-50-to-i.4548623623801",
+          "sku": "4548623623801"
+        },
+        {
+          "name": "Serum Acnes Vitamin C Làm Mờ Sẹo & Vết Thâm 15ml",
+          "price": 183000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657163179548-tinh-chat-dac-tri-seo-va-vet-tham-acnes-c10-15ml.jpeg",
+          "url": "https://cocolux.com/tinh-chat-dac-tri-seo-va-vet-tham-acnes-c10-15ml-i.8935006531963",
+          "sku": "8935006531963"
+        },
+        {
+          "name": "​​Gel Dưỡng Acnes Scar Care Giúp Mờ Sẹo Và Vết Thâm 12g",
+          "price": 73000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/09/images/products/1663912233319-1609120342309-san-pham-mo-vet-tham-va-lien-seo-acnes-4.jpeg",
+          "url": "https://cocolux.com/gel-giup-mo-seo-va-vet-tham-acnes-scar-care-12g-i.8935006531376",
+          "sku": "8935006531376"
+        },
+        {
+          "name": "Sữa Rửa Mặt Whitening+ Acnes Dưỡng Trắng 100g 8935006533295",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657167747464-sua-rua-mat-duong-trang-acnes-100g-1.jpeg",
+          "url": "https://cocolux.com/sua-rua-mat-duong-trang-acnes-100g-i.8935006533295",
+          "sku": "8935006533295"
+        },
+        {
+          "name": "Dung Dịch Acnes Soothing Lotion Làm Dịu Da, Kháng Khuẩn & Ngăn Ngừa Mụn 90ml",
+          "price": 65000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/02/images/products/1644377179267-dung-dich-lam-diu-da-khang-khuan-acnes-90ml.jpeg",
+          "url": "https://cocolux.com/dung-dich-diu-da-khang-khuan-acnes-90ml-i.8935006535428",
+          "sku": "8935006535428"
+        },
+        {
+          "name": "Sữa rửa mặt Acnes ngăn ngừa mụn 100g",
+          "price": 75000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657165622689-kem-rua-mat-ngan-ngua-mun-acnes-100g-2.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-ngan-ngua-mun-acnes-100g-i.8935006530966",
+          "sku": "8935006530966"
+        }
+      ]
+    },
+    "La Roche-Posay": {
+      "brand_id": 100,
+      "brand_url": "https://cocolux.com/thuong-hieu/la-roche-posay-i.100",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 40,
+      "products": [
+        {
+          "name": "Gel Rửa Mặt La Roche-Posay Tạo Bọt Effaclar Gel Cho Da Dầu, Nhạy Cảm 400ml",
+          "price": 5890006,
+          "original_price": 55000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337872411991.jpg",
+          "url": "https://cocolux.com/gel-rua-mat-la-roche-posay-effaclar-danh-cho-da-dau-nhay-cam-400ml-i.3337872411991",
+          "sku": "3337872411991"
+        },
+        {
+          "name": "Kem Chống Nắng La Roche-Posay Anthelios Uvair SPF50+ PA++++ 50ml (Dạng Serum)",
+          "price": 620000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-chong-nang-la-roche-posay-anthelios-uvair-spf50-pa-50ml-i.3337875932349",
+          "sku": "3337875932349"
+        },
+        {
+          "name": "Kem dưỡng da La Roche-Posay Cicaplast Baume B5+ Giúp Làm Dịu Và Phục Hồi 100ml",
+          "price": 880000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-duong-da-la-roche-posay-cicaplast-baume-b5-giup-lam-diu-va-phuc-hoi-100ml-i.3337875816847",
+          "sku": "3337875816847"
+        },
+        {
+          "name": "Gel Rửa Mặt La Roche-Posay Tạo Bọt Effaclar Gel Cho Da Dầu, Nhạy Cảm 50ml",
+          "price": 210000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1686794367303-gel-rua-mat-tao-bot-la-roche-posay-danh-cho-da-dau-nhay-cam-50ml.jpeg",
+          "url": "https://cocolux.com/gel-rua-mat-la-roche-posay-effaclar-danh-cho-da-dau-nhay-cam-50ml-i.3337872414961",
+          "sku": "3337872414961"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Cicaplast Baume B5+ Ultra Reparateur Apaisant Làm Dịu Mát, Phục Hồi Da 40ml",
+          "price": 440000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-cicaplast-baume-b5-ultra-reparateur-apaisant-lam-diu-phuc-hoi-da-40ml-i.3337875816809",
+          "sku": "3337875816809"
+        },
+        {
+          "name": "Nước Tẩy Trang La Roche-Posay Micellar Water Ultra Sensitive Skin Dành Cho Da Thường Da Nhạy Cảm 400ml",
+          "price": 560000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337872411595.jpg",
+          "url": "https://cocolux.com/nuoc-tay-trang-la-roche-posay-danh-cho-da-thuong-da-nhay-cam-400ml-i.3337872411595",
+          "sku": "3337872411595"
+        },
+        {
+          "name": "Kem Chống Nắng La Roche-Posay Anthelios Dry Touch Finish Mattifying Effect SPF50+ Kiểm Soát Bóng Nhờn 50ml",
+          "price": 590000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337875546430.jpg",
+          "url": "https://cocolux.com/chong-nang-kiem-soat-bong-nhon-anthelios-xl-la-roche-posay-i.3337875546430",
+          "sku": "3337875546430"
+        },
+        {
+          "name": "Gel Rửa Mặt La Roche-Posay Tạo Bọt Effaclar Gel Cho Da Dầu, Nhạy Cảm 200ml",
+          "price": 3690004,
+          "original_price": 10000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/gel-rua-mat-tao-bot-cho-da-dau-nhay-cam-la-roche-posay-effaclar-foaming-gel-200ml.jpg",
+          "url": "https://cocolux.com/gel-rua-mat-la-roche-posay-effaclar-danh-cho-da-dau-nhay-cam-200ml-i.3337872411083",
+          "sku": "3337872411083"
+        },
+        {
+          "name": "Sữa Chống Nắng La Roche-Posay Anthelios UVMUNE400 Oil Control Fluid Cho Da Dầu Mụn 50ml",
+          "price": 640000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337875847292.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-la-roche-posay-anthelios-uvmune400-oil-control-fluid-cho-da-dau-mun-50ml-i.3337875847292",
+          "sku": "3337875847292"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Effaclar DUO+M Giảm Mụn 40ml",
+          "price": 540000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/kem-duong-la-roche-posay-effaclar-duom-giam-mun-40ml.jpg",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-effaclar-duom-giam-mun-40ml-i.3337875863377",
+          "sku": "3337875863377"
+        },
+        {
+          "name": "Nước Tẩy trang La Roche-Posay Effaclar Effaclar Micellar Water Ultra Oily Skin Dành Cho Da Dầu Mụn 400ml",
+          "price": 555000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-la-roche-posay-effaclar-da-dau-mun-400ml-i.3337872412516",
+          "sku": "3337872412516"
+        },
+        {
+          "name": "Serum La Roche Posay Mela B3 Dưỡng Sáng Da 30ml",
+          "price": 1350000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/serum-la-roche-posay-mela-b3-duong-sang-da-30ml-1.jpg",
+          "url": "https://cocolux.com/serum-la-roche-posay-mela-b3-duong-sang-da-30ml-i.3337875890021",
+          "sku": "3337875890021"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Effaclar Duo+ M Giảm Mụn Hiệu Quả 7.5ml",
+          "price": 130000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/kem-duong-la-roche-posay-effaclar-duom-giam-mun-7-5-ml.jpg",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-effaclar-duom-giam-mun-7-5ml-i.3337875878807",
+          "sku": "3337875878807"
+        },
+        {
+          "name": "Sữa Rửa Mặt Dạng Gel Cho Da Dầu Mụn La Roche-Posay Effaclar Purifying Foaming Gel For Oily Sensitive Skin 15ml",
+          "price": 65000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/gel-rua-mat-la-roche-posay-15ml.jpg",
+          "url": "https://cocolux.com/gel-rua-mat-la-roche-posay-effaclar-purifying-foaming-gel-for-oily-sensitive-skin-cho-da-dau-mun-15ml-i.3337872416460",
+          "sku": "3337872416460"
+        },
+        {
+          "name": "Kem Dưỡng La Roche Posay Mela B3 Ngừa Thâm SPF30 40ml",
+          "price": 1049000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-duong-la-roche-posay-mela-b3-ngua-tham-spf30-40ml.jpg",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-mela-b3-ngua-tham-spf30-40ml-i.3337875890113",
+          "sku": "3337875890113"
+        },
+        {
+          "name": "Xịt Khoáng La Roche-Posay Serozinc Làm Sạch & Làm Dịu Da Dầu Mụn 150ml",
+          "price": 400000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630903599519-xit-khoang-serozinc-la-roche-posay-150ml-m9119301-1.jpeg",
+          "url": "https://cocolux.com/xit-khoang-serozinc-la-roche-posay-i.3433422406728",
+          "sku": "3433422406728"
+        },
+        {
+          "name": "Sữa Rửa Mặt Làm Sạch Sáng Da La Roche-Posay Mela B3 Clarifying Micro-Peeling Gel 200ml",
+          "price": 635000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-rua-mat-lam-sach-sang-da-la-roche-posay-mela-b3-clarifying-micro-peeling-gel-200ml-4.jpg",
+          "url": "https://cocolux.com/sua-rua-mat-lam-sach-sang-da-la-roche-posay-mela-b3-clarifying-micro-peeling-gel-200ml-i.3337875890069",
+          "sku": "3337875890069"
+        },
+        {
+          "name": "Sữa Chống Nắng La Roche-Posay Anthelios UVMune 400 Fluide Invisible SPF50+ 50ml",
+          "price": 640000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337875797597.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-la-roche-posay-anthelios-uvmune-400-fluide-invisible-spf50-50ml-i.3337875797597",
+          "sku": "3337875797597"
+        },
+        {
+          "name": "Sữa Chống Nắng La Roche - Posay Giúp Ngăn Ngừa Thâm Nám 50ml",
+          "price": 638000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/CCL/SP/3337875917407.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-la-roche-posay-giup-ngan-ngua-tham-nam-50ml-i.3337875917407",
+          "sku": "3337875917407"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Giảm Mụn Chuyên Biệt 15ml",
+          "price": 650000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/01/products/1610606384555-kem-cham-mun-effaclar-a-i-la-roche-posay.jpeg",
+          "url": "https://cocolux.com/kem-cham-mun-effaclar-a-i-la-roche-posay-i.3337875609593",
+          "sku": "3337875609593"
+        },
+        {
+          "name": "Serum Giảm Mụn Effaclar Serum La Roche-Posay 30ml",
+          "price": 1115000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/1-3337875722827.jpg",
+          "url": "https://cocolux.com/kem-giam-mun-effaclar-serum-la-roche-posay-30ml-i.3337875722827",
+          "sku": "3337875722827"
+        },
+        {
+          "name": "Kem dưỡng Da La Roche-Posay Effaclar Mat+ 40ml",
+          "price": 505000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-duong-da-la-roche-posay-effaclar-mat-40ml.jpg",
+          "url": "https://cocolux.com/kem-duong-da-la-roche-posay-effaclar-mat-40ml-i.3337872413025",
+          "sku": "3337872413025"
+        },
+        {
+          "name": "Xịt Khoáng La Roche-Posay Làm Dịu Và Bảo Vệ Da 150ml",
+          "price": 2890003,
+          "original_price": 35000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3433422404397.jpg",
+          "url": "https://cocolux.com/xit-khoang-thermal-la-roche-posay-danh-cho-da-nhay-cam-150ml-i.3433422404397",
+          "sku": "3433422404397"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Cicaplast Gel B5 Làm Mờ Sẹo 40ml",
+          "price": 520000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/01/products/1610607226625-kem-duong-dang-gel-mo-seo-cicaplast-1.jpeg",
+          "url": "https://cocolux.com/kem-duong-dang-gel-mo-seo-cicaplast-gel-b5-i.3337875586269",
+          "sku": "3337875586269"
+        },
+        {
+          "name": "Gel Rửa Mặt La Roche-Posay Effaclar Gel Purifying Micro-Peeling Giảm Mụn Cho Mặt, Toàn Thân 400ml",
+          "price": 679000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1609228746645-gel-rua-mat-tam-la-roche-posay-1.jpeg",
+          "url": "https://cocolux.com/gel-rua-mat-tam-la-roche-posay-lam-sach-giam-mun-i.3337875708289",
+          "sku": "3337875708289"
+        },
+        {
+          "name": "Nước Tẩy Trang La Roche-Posay Dành Cho Da Thường Da Nhạy Cảm 200ml",
+          "price": 455000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1608534648402-tay-trang-sensitive-la-roche-posay-200ml-m0365700-(chai)-1.png",
+          "url": "https://cocolux.com/nuoc-tay-trang-la-roche-posay-200ml-da-nhay-cam-i.3337872410338",
+          "sku": "3337872410338"
+        },
+        {
+          "name": "Bộ Sản Phẩm Kem Dưỡng Giảm Mụn La Roche-Posay Effaclar Duo+M 40ml Tặng Gel Rửa Mặt Cho Da Dầu Effaclar 50ml",
+          "price": 480000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/bo-san-pham-kem-duong-giam-mun-la-roche-posay-effaclar-duom-40ml-tang-gel-rua-mat-cho-da-dau-effaclar-50ml.jpg",
+          "url": "https://cocolux.com/bo-san-pham-kem-duong-giam-mun-la-roche-posay-effaclar-duom-40ml-tang-gel-rua-mat-cho-da-dau-effaclar-50ml-i.8935274669955",
+          "sku": "8935274669955"
+        },
+        {
+          "name": "Xịt Khoáng La Roche-Posay Làm Dịu Và Bảo Vệ Da 300ml",
+          "price": 509000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3433422404403.jpg",
+          "url": "https://cocolux.com/xit-khoang-thermal-la-roche-posay-danh-cho-da-nhay-cam-300ml-i.3433422404403",
+          "sku": "3433422404403"
+        },
+        {
+          "name": "Nước Cân Bằng La Roche-Posay Soothing Lotion Cho Da Thường Da Nhạy Cảm 200ml",
+          "price": 540000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/nuoc-can-bang-giup-lam-diu-va-bao-ve-da-nhay-cam-la-roche-posay-lotion-sensitive-skin-200ml-0.jpg",
+          "url": "https://cocolux.com/nuoc-can-bang-la-roche-posay-soothing-cho-da-thuong-da-nhay-cam-200ml-i.3337872410321",
+          "sku": "3337872410321"
+        },
+        {
+          "name": "Gel Rửa Mặt La Roche-Posay Effaclar Gel Purifying Micro-Peeling Giảm Mụn Cho Mặt, Toàn Thân 200ml",
+          "price": 480000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/gel-rua-mat-tam-la-roche-posay-lam-sach-giam-mun-200ml.jpg",
+          "url": "https://cocolux.com/gel-rua-mat-la-roche-posay-effaclar-gel-purifying-micro-peeling-giam-mun-cho-mat-toan-than-200ml-i.3337875708265",
+          "sku": "3337875708265"
+        },
+        {
+          "name": "Nước Cân Bằng La Roche-Posay Effaclar Astringente Lotion Cho Da Dầu 200ml",
+          "price": 490000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3433422408159.jpg",
+          "url": "https://cocolux.com/nuoc-can-bang-la-roche-posay-200ml-i.3433422408159",
+          "sku": "3433422408159"
+        },
+        {
+          "name": "Nước Tẩy trang La Roche-Posay Effaclar Da Dầu Mụn 200ml",
+          "price": 450000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630904538301-tay-trang-effaclar-da-dau-la-roche-posay-200ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-la-roche-posay-200ml-da-dau-i.3433422408357",
+          "sku": "3433422408357"
+        },
+        {
+          "name": "Kem Dưỡng La Roche - Posay Effaclar Duo (+) Giảm Mụn, Ngừa Thâm 40ml Tặng Gel Rửa Mặt Effaclar Purifying Foaming Gel 50ml",
+          "price": 475000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/bo-san-pham-la-roche-posay-gel-rua-mat-kem-duong-giam-mun-ngua-tham-tang-gel-rua-mat.jpg",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-effaclar-duo-giam-mun-ngua-tham-40ml-tang-gel-rua-mat-effaclar-purifying-foaming-gel-50ml-i.8935274658645",
+          "sku": "8935274658645"
+        },
+        {
+          "name": "Bộ Sản Phẩm La Roche-Posay Tẩy Trang Effaclar 400ml + Sữa Rửa Mặt Effaclar 50ml Làm Sạch Sâu Cho Da Dầu Mụn",
+          "price": 705000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/8935274662963-1.jpg",
+          "url": "https://cocolux.com/bo-doi-san-pham-la-roche-posay-effaclar-lam-sach-sau-cho-da-dau-mun-i.8935274662963",
+          "sku": "8935274662963"
+        },
+        {
+          "name": "Tinh Chất La Roche-Posay Hyalu B5 Serum Phục Hồi Độ Ẩm Săn Chắc Da 30ml",
+          "price": 1550000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/3337875583626.jpg",
+          "url": "https://cocolux.com/duong-chat-la-roche-posay-phuc-hoi-do-am-san-chac-da-hyalu-b5-serum-30ml-i.3337875583626",
+          "sku": "3337875583626"
+        },
+        {
+          "name": "Kem Dưỡng La Roche-Posay Cicaplast B5 Ultra-Repair Light Cream Cấp Ẩm, Làm Dịu, Phục Hồi Da 40ml",
+          "price": 585000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/02/images/products/1677230824973-kem-duong-la-roche-posay-cicaplast-b5-cap-am-lam-diu-phuc-hoi-da-40ml-ava.jpeg",
+          "url": "https://cocolux.com/kem-duong-la-roche-posay-cicaplast-b5-cap-am-lam-diu-phuc-hoi-da-40ml-i.3337875823012",
+          "sku": "3337875823012"
+        },
+        {
+          "name": "Tinh Chất La Roche-Posay Retinol B3 Mờ Thâm Nám, Làm Đều Màu Da 30ml",
+          "price": 1320000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1633320301136-duong-chat-laroche-posay-retinol-b3-30ml.jpeg",
+          "url": "https://cocolux.com/duong-chat-la-roche-posay-retinol-b3-30ml-i.3337875694469",
+          "sku": "3337875694469"
+        },
+        {
+          "name": "Serum La Roche-Posay Pure Vitamin C10 Giảm Lão Hóa 30ml",
+          "price": 1602000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/duong-chat-giam-lao-hoa-pure-vitamin-c10-la-roche-posay-i.3337875660570",
+          "sku": "3337875660570"
+        },
+        {
+          "name": "Bộ Sản Phẩm Laroche-Posay Giảm Mụn Chống Nắng 15ml",
+          "price": 225000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1685586194510-bo-san-pham-la-roche-posay.jpeg",
+          "url": "https://cocolux.com/bo-san-pham-laroche-posay-giam-mun-chong-nang-15ml-i.8935274614023",
+          "sku": "8935274614023"
+        },
+        {
+          "name": "Son Dưỡng La Roche-Posay Cicaplast Phục Hồi Và Bảo Vệ Môi",
+          "price": 350000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1608353684733-duong-moi-cicaplast-la-roche-posay.jpeg",
+          "url": "https://cocolux.com/duong-moi-cicaplast-la-roche-posay-i.30106659",
+          "sku": "30106659"
+        }
+      ]
+    },
+    "Cocoon": {
+      "brand_id": 125,
+      "brand_url": "https://cocolux.com/thuong-hieu/cocoon-i.125",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 40,
+      "products": [
+        {
+          "name": "Nước Tẩy Trang Cocoon Sen Hậu Giang Cho Da Rất Nhạy Cảm 500ml",
+          "price": 309000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-cocoon-sen-hau-giang-cho-da-rat-nhay-cam-500ml-i.8936217701176",
+          "sku": "8936217701176"
+        },
+        {
+          "name": "Nước Tẩy Trang Cocoon Winter Melon Micellar Water Chiết Xuất Bí Đao Làm Sạch Da 500ml",
+          "price": 2950002,
+          "original_price": 99000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/8936217700223.jpg",
+          "url": "https://cocolux.com/nuoc-tay-trang-cocoon-winter-melon-micellar-water-chiet-xuat-bi-dao-lam-sach-da-500ml-i.8936217700223",
+          "sku": "8936217700223"
+        },
+        {
+          "name": "Nước Hoa Hồng Cocoon Sen Hậu Giang Phục Hồi Da 310ml",
+          "price": 2950002,
+          "original_price": 99000,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-hoa-hong-cocoon-sen-hau-giang-phuc-hoi-da-310ml-i.8936217700889",
+          "sku": "8936217700889"
+        },
+        {
+          "name": "Tẩy Tế Bào Chết Da Mặt Cocoon Dak Lak Coffee Face Polish Cà Phê Đắk Lắk 150ml (Mã Mới)",
+          "price": 1650001,
+          "original_price": 72000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/05/images/products/1684124989566-tay-te-bao-da-mat-cocoon-ca-phe-daklak.jpeg",
+          "url": "https://cocolux.com/tay-te-bao-chet-da-mat-cocoon-dak-lak-coffee-face-polish-150ml-i.8936217700018",
+          "sku": "8936217700018"
+        },
+        {
+          "name": "Nước Tẩy Trang Cocoon Winter Melon Micellar Water Chiết Xuất Bí Đao 50ml",
+          "price": 50000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/nuoc-tay-trang-cocoon-winter-melon-micellar-water-chiet-xuat-bi-dao-50ml.jpg",
+          "url": "https://cocolux.com/nuoc-tay-trang-cocoon-winter-melon-micellar-water-chiet-xuat-bi-dao-50ml-i.8936217700841",
+          "sku": "8936217700841"
+        },
+        {
+          "name": "Sữa Rửa Mặt Cocoon Sen Hậu Giang Làm Dịu Da Nhạy Cảm 310ml",
+          "price": 339000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/sua-rua-mat-cocoon-sen-hau-giang-lam-diu-da-nhay-cam-310ml-i.8936217701053",
+          "sku": "8936217701053"
+        },
+        {
+          "name": "Nước Dưỡng Tóc Cocoon Pomelo Hair Tonic Tinh Dầu Bưởi 140ml (Phiên Bản Mới)",
+          "price": 165000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/nuoc-duong-toc-cocoon-pomelo-hair-tonic-tinh-dau-buoi-140ml-phien-ban-moi.jpg",
+          "url": "https://cocolux.com/nuoc-duong-toc-cocoon-pomelo-hair-tonic-tinh-dau-buoi-140ml-phien-ban-moi-i.8936217700131",
+          "sku": "8936217700131"
+        },
+        {
+          "name": "Dầu Gội Cocoon Bưởi Cung Cấp Dưỡng Chất & Độ Ẩm 500ml",
+          "price": 395000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-goi-cocoon-buoi-cung-cap-duong-chat-do-am-500ml.jpg",
+          "url": "https://cocolux.com/dau-goi-cocoon-buoi-cung-cap-duong-chat-do-am-500ml-i.8936217700094",
+          "sku": "8936217700094"
+        },
+        {
+          "name": "Dầu Tẩy Trang Cocoon Rose Cleansing Oil Chiết Xuất Hoa Hồng 140ml",
+          "price": 180000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sale-thang-7-ky-1/dau-tay-trang-cocoon-rose-cleansing-oil-chiet-xuat-hoa-hong-140ml.jpg",
+          "url": "https://cocolux.com/dau-tay-trang-cocoon-rose-cleansing-oil-chiet-xuat-hoa-hong-140ml-i.8936217700377",
+          "sku": "8936217700377"
+        },
+        {
+          "name": "Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+          "price": 165000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/tay-da-chet-toan-than-cocoon-duong-thot-not-an-giang-200ml-i.8936217700933",
+          "sku": "8936217700933"
+        },
+        {
+          "name": "Tẩy Tế Bào Chết Body Cocoon Dak Lak Coffee Body Polish Cà Phê Đắk Lắk 200ml (Mã Mới)",
+          "price": 1250001,
+          "original_price": 33000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/banner-web/tay-te-bao-chet-body-cocoon.jpg",
+          "url": "https://cocolux.com/tay-te-bao-chet-body-cocoon-dak-lak-coffee-body-polish-ca-phe-dak-lak-200ml-i.8936217700032",
+          "sku": "8936217700032"
+        },
+        {
+          "name": "Kem Chống Nắng Bí Đao Cocoon Winter Melon Suncreen SPF50+ PA ++++ 50ml",
+          "price": 198000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/kem-chong-nang-cocoon-bi-dao-winter-melon-sunscreen-spf50-pa-50ml.jpg",
+          "url": "https://cocolux.com/kem-chong-nang-cocoon-bi-dao-winter-melon-suncreen-spf50-pa-50ml-i.8936217700339",
+          "sku": "8936217700339"
+        },
+        {
+          "name": "Tinh Chất Bí Đao Cocoon Winter Melon Serum Làm Giảm Mụn, Mờ Thâm 70ml",
+          "price": 2950002,
+          "original_price": 99000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/tinh-chat-bi-dao-cocoon-winter-melon-serum-lam-giam-mun-mo-tham-70ml.jpg",
+          "url": "https://cocolux.com/tinh-chat-bi-dao-cocoon-winter-melon-serum-lam-giam-mun-mo-tham-70ml-i.8936217700230",
+          "sku": "8936217700230"
+        },
+        {
+          "name": "Dầu Gội Cocoon Bưởi Giảm Rụng & Kích Thích Mọc Tóc 310ml",
+          "price": 245000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1686638407700-dau-goi-cocoon-buoi-giam-rung-toc.jpeg",
+          "url": "https://cocolux.com/dau-goi-cocoon-buoi-giam-rung-kich-thich-moc-toc-310ml-i.8936217700070",
+          "sku": "8936217700070"
+        },
+        {
+          "name": "Nước Dưỡng Tóc Cocoon Gleditsia Sclap Tonic Bồ Kết 140ml",
+          "price": 185000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/nuoc-duong-da-dau-cocoon-bo-ket-gleditsia-sclap-tonic-140ml(1).jpg",
+          "url": "https://cocolux.com/nuoc-duong-da-dau-cocoon-bo-ket-gleditsia-sclap-tonic-140ml-i.8936217700995",
+          "sku": "8936217700995"
+        },
+        {
+          "name": "Thạch Bí Đao Cocoon Winter Melon Gel Cream 30ml",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Huyen/0312/thach-bi-dao-cocoon-winter-melon-gel-cream-30ml-5.jpg",
+          "url": "https://cocolux.com/thach-bi-dao-cocoon-winter-melon-gel-cream-30ml-i.8936217700308",
+          "sku": "8936217700308"
+        },
+        {
+          "name": "Mặt Nạ Cocoon Bí Đao 30ml",
+          "price": 1450001,
+          "original_price": 52000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/mat-na-cocoon-bi-dao-30ml.jpg",
+          "url": "https://cocolux.com/mat-na-cocoon-bi-dao-30ml-i.8936217700285",
+          "sku": "8936217700285"
+        },
+        {
+          "name": "Sữa Chống Nắng Cocoon Bí Đao Winter Melon Sn Fluid SPF50+ PA++++ 50ml",
+          "price": 3512004,
+          "original_price": 39000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Huyen/H2111/sua-chong-nang-cocoon-bi-dao-winter-melon-sun-fluid-spf50-pa-50ml.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-cocoon-bi-dao-winter-melon-sun-fluid-spf50-pa-50ml-i.8936217700735",
+          "sku": "8936217700735"
+        },
+        {
+          "name": "Gel Rửa Mặt Cocoon Winter Melon Cleanser Chiết Xuất Bí Đao 310ml",
+          "price": 2950002,
+          "original_price": 99000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/gel-rua-mat-cocoon-winter-melon-cleanser-chiet-xuat-bi-dao-310ml.jpg",
+          "url": "https://cocolux.com/gel-rua-mat-cocoon-winter-melon-cleanser-chiet-xuat-bi-dao-310ml-i.8936217700179",
+          "sku": "8936217700179"
+        },
+        {
+          "name": "Tẩy Tế Bào Chết Da Đầu Cocoon Chiết Xuất Bồ Kết Gleditsia Scalp Scrub 200ml",
+          "price": 241000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/tay-te-bao-chet-da-dau-cocoon-chiet-xuat-bo-ket-gleditsia-scalp-scrub-200ml-i.8936217701046",
+          "sku": "8936217701046"
+        },
+        {
+          "name": "Nước Tẩy Trang Cocoon Winter Melon Micellar Water Chiết Xuất Bí Đao Làm Sạch Da 140ml",
+          "price": 145000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669275751728-nuoc-tay-trang-cocoon-chiet-xuat-bi-dao-lam-sach-da-140ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-cocoon-chiet-xuat-bi-dao-lam-sach-da-140ml-i.8936104220988",
+          "sku": "8936104220988"
+        },
+        {
+          "name": "Tẩy Tế Bào Chết Môi Cocoon Từ Cà Phê Đắk Lắk 5g",
+          "price": 75000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/08/images/products/1691741652451-tay-te-bao-chet-moi-cocoon-tu-ca-phe-dak-lak-5g.jpeg",
+          "url": "https://cocolux.com/tay-te-bao-chet-moi-cocoon-tu-ca-phe-dak-lak-5g-i.8936217700056",
+          "sku": "8936217700056"
+        },
+        {
+          "name": "Dầu Xả Cocoon Bưởi Cung Cấp Dưỡng Chất & Độ Ẩm 310ml",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-xa-cocoon-buoi-cung-cap-duong-chat-do-am-310ml.jpg",
+          "url": "https://cocolux.com/dau-xa-cocoon-buoi-cung-cap-duong-chat-do-am-310ml-i.8936217700117",
+          "sku": "8936217700117"
+        },
+        {
+          "name": "Gel Rửa Mặt Cocoon Cà Phê Đắk Lắk 140ml",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1687416781624-gel-rua-mat-cocoon-ca-phe-dak-lak-140ml.jpeg",
+          "url": "https://cocolux.com/gel-rua-mat-cocoon-ca-phe-dak-lak-140ml-i.8936217700025",
+          "sku": "8936217700025"
+        },
+        {
+          "name": "Son Dưỡng Cocoon Dầu Dừa Bến Tre 5g",
+          "price": 32000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/8936217700575.jpg",
+          "url": "https://cocolux.com/son-duong-cocoon-dau-dua-ben-tre-5g-i.8936217700575",
+          "sku": "8936217700575"
+        },
+        {
+          "name": "Gel Tắm Cocoon Đường Thốt Nốt 500ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/gel-tam-cocoon-duong-thot-not-500ml.jpg",
+          "url": "https://cocolux.com/gel-tam-cocoon-duong-thot-not-500ml-i.8936217701022",
+          "sku": "8936217701022"
+        },
+        {
+          "name": "Serum Dạng Xịt Cocoon Sen Hậu Giang 100ml",
+          "price": 241000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/serum-dang-xit-cocoon-sen-hau-giang-100ml-i.8936217701350",
+          "sku": "8936217701350"
+        },
+        {
+          "name": "Kem Dưỡng Dạng Thạch Cocoon Hoa Hồng Dưỡng Ẩm 30ml",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-duong-cocoon-duong-am-dang-thach-tu-hoa-hong-30ml-1.jpg",
+          "url": "https://cocolux.com/kem-duong-dang-thach-cocoon-hoa-hong-duong-am-30ml-i.8936217700438",
+          "sku": "8936217700438"
+        },
+        {
+          "name": "Nước Hoa Hồng Cocoon Sen Hậu Giang Phục Hồi Da 140ml",
+          "price": 192000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-hoa-hong-cocoon-sen-hau-giang-phuc-hoi-da-140ml-i.8936217700872",
+          "sku": "8936217700872"
+        },
+        {
+          "name": "Nước Sen Hậu Giang Cocoon Lotus Soothing Toner Làm Dịu Cho Da Nhạy Cảm 40ml",
+          "price": 60000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/km-nuoc-sen-hau-giang-cocoon-lotus-soothing-toner-lam-diu-cho-da-nhay-cam-40ml-i.KM36217700865",
+          "sku": ""
+        },
+        {
+          "name": "Sữa Rửa Mặt Cocoon Sen Hậu Giang 50ml",
+          "price": 75000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-rua-mat-cocoon-sen-hau-giang-50ml.jpg",
+          "url": "https://cocolux.com/sua-rua-mat-cocoon-sen-hau-giang-50ml-i.8936217700971",
+          "sku": "8936217700971"
+        },
+        {
+          "name": "Gel Rửa Mặt Cocoon Winter Melon Cleanser Chiết Xuất Bí Đao 140ml (Mã Mới)",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/05/images/products/1685412596651-gel-rua-mat-cocoon-chiet-xuat-bi-dao-3.jpeg",
+          "url": "https://cocolux.com/gel-rua-mat-cocoon-winter-melon-cleanser-chiet-xuat-bi-dao-140ml-i.8936217700162",
+          "sku": "8936217700162"
+        },
+        {
+          "name": "Tẩy Tế Bào Chết Body Cocoon Dak Lak Coffee Body Polish Cà Phê Đắk Lắk 200ml MC",
+          "price": 125000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1687425201023-tay-te-bao-chet-body-cocoon.jpeg",
+          "url": "https://cocolux.com/tay-da-chet-ca-phe-dak-lak-cocoon-i.8936104220537",
+          "sku": "8936104220537"
+        },
+        {
+          "name": "Dầu Xả Cocoon Bưởi Cung Cấp Dưỡng Chất & Độ Ẩm 310ml MC",
+          "price": 185000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1632709964181-dau-xa-cocoon-buoi-310ml.png",
+          "url": "https://cocolux.com/dau-xa-cocoon-buoi-310ml-i.8936104223026",
+          "sku": "8936104223026"
+        },
+        {
+          "name": "Sữa Rửa Mặt Cocoon Sen Hậu Giang 140ml",
+          "price": 195000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-rua-mat-cocoon-sen-hau-giang-140ml.jpg",
+          "url": "https://cocolux.com/sua-rua-mat-cocoon-sen-hau-giang-140ml-i.8936217700896",
+          "sku": "8936217700896"
+        },
+        {
+          "name": "Kem Chống Nắng Cocoon Bí Đao Quang Phổ Rộng 50ml",
+          "price": 395000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/04/images/products/1681713656002-kem-chong-nang-Cocoon-bi-dao-quang-pho-rong-50-ml.jpeg",
+          "url": "https://cocolux.com/kem-chong-nang-cocoon-bi-dao-quang-pho-rong-50-ml-i.8936104223293",
+          "sku": "8936104223293"
+        },
+        {
+          "name": "Nước Dưỡng Tóc Cocoon Gleditsia Sclap Tonic Bồ Kết 50ml",
+          "price": 60000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/nuoc-duong-da-dau-cocoon-bo-ket-gleditsia-sclap-tonic-50ml.jpg",
+          "url": "https://cocolux.com/nuoc-duong-da-dau-cocoon-bo-ket-gleditsia-sclap-tonic-50ml-i.8936217700988",
+          "sku": "8936217700988"
+        },
+        {
+          "name": "Kem Ủ Tóc Cocoon Pomelo Hair Mask Tinh Dầu Bưởi 200ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1687420952502-kem-u-toc-cocoon-pomelo-hair-mask-tinh-dau-buoi-200ml-10.jpeg",
+          "url": "https://cocolux.com/kem-u-toc-cocoon-pomelo-hair-mask-tinh-dau-buoi-200ml-i.8936217700155",
+          "sku": "8936217700155"
+        },
+        {
+          "name": "Son Dưỡng Cocoon Dầu Dừa Bến Tre MC",
+          "price": 32000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/01/products/1611394452154-son-duong-dau-dua-ben-tre-cocoon-1.jpeg",
+          "url": "https://cocolux.com/son-duong-dau-dua-ben-tre-cocoon-i.8936104220575",
+          "sku": "8936104220575"
+        },
+        {
+          "name": "Bơ Dưỡng Thể Cocoon Chiết Xuất Cà Phê Đắk Lắk 200ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/06/images/products/1687420338865-bo-duong-the-cocoon-chiet-xuat-ca-phe-dak-lak-200ml-3.jpeg",
+          "url": "https://cocolux.com/bo-duong-the-cocoon-ca-phe-dak-lak-200ml-i.8936104221305",
+          "sku": "8936104221305"
+        }
+      ]
+    },
+    "Hada Labo": {
+      "brand_id": 185,
+      "brand_url": "https://cocolux.com/thuong-hieu/hada-labo-i.185",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 26,
+      "products": [
+        {
+          "name": "Sữa Rửa Mặt Hada Labo Perfect White Arbutin Cleanser Sạch Sâu, Dưỡng Sáng Da 80g",
+          "price": 102000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/02/products/1612755008742-kem-rua-mat-hada-labo-perfect-white-80g.jpeg",
+          "url": "https://cocolux.com/sua-rua-duong-trang-mat-hada-labo-perfect-white-arbutin-cleanser-80g-i.8935006533875",
+          "sku": "8935006533875"
+        },
+        {
+          "name": "Dầu Tẩy Trang Hadalabo Advanced Nourish Cleansing Oil Sạch sâu, Dưỡng ẩm 200ml",
+          "price": 269000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657166621425-dau-tay-trang-sach-sau-duong-am-hadalabo-200ml-2.jpeg",
+          "url": "https://cocolux.com/dau-tay-trang-sach-sau-duong-am-hadalabo-advanced-nourish-cleansing-oil-200ml-i.8935006538634",
+          "sku": "8935006538634"
+        },
+        {
+          "name": "Kem Rửa Mặt Hada Labo Pro Anti Aging 80g",
+          "price": 102000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1658214985072-kem-rua-mat-hada-labo.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-hada-labo-pro-anti-aging-80g-i.8935006537637",
+          "sku": "8935006537637"
+        },
+        {
+          "name": "Dung Dịch Hada Labo Acne Care Calming Lotion Dưỡng Ẩm Cho Da Mụn 170ml",
+          "price": 135000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657169283619-dung-dich-duong-am-cho-da-mun-hada-labo-170ml.jpeg",
+          "url": "https://cocolux.com/dung-dich-duong-am-cho-da-mun-hada-labo-170ml-i.8935006543133",
+          "sku": "8935006543133"
+        },
+        {
+          "name": "Kem Rửa Mặt Hada Labo Acne Care Calming Cleanser Cho Da Mụn Và Nhạy Cảm 80g",
+          "price": 102000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657169231022-kem-rua-mat-hada-labo-cho-da-mun-va-nhay-cam-80g.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-hada-labo-cho-da-mun-va-nhay-cam-80g-i.8935006543140",
+          "sku": "8935006543140"
+        },
+        {
+          "name": "Kem Dưỡng Mắt Hada Labo Gokujyun Premium Siêu Cấp Ẩm Mờ Nếp Nhăn 20g",
+          "price": 285000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-duong-mat-hada-labo-gokujyun-premium-sieu-cap-am-mo-nep-nhan-20g-i.4987241173884",
+          "sku": "4987241173884"
+        },
+        {
+          "name": "Sữa Rửa Mặt Hada Labo Premium Dưỡng Ẩm Cao Cấp 100g",
+          "price": 125000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/sua-rua-mat-hada-labo-premium-duong-am-cao-cap-100g-i.8935006548213",
+          "sku": "8935006548213"
+        },
+        {
+          "name": "Gel Rửa Mặt Hada Labo Advanced Nourish Dưỡng Ẩm Cho Da Nhạy Cảm 80g",
+          "price": 99000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/gel-rua-mat-hada-labo-advanced-nourish-duong-am-cho-da-nhay-cam-80g-i.8935006548800",
+          "sku": "8935006548800"
+        },
+        {
+          "name": "Mặt Nạ Hada Labo Premium Pore Care Serum Dịu Da Ngừa Mụn Cao Cấp 23g",
+          "price": 44000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/mat-na-hada-labo-premium-pore-care-serum-diu-da-ngua-mun-cao-cap-23g-i.8935006547711",
+          "sku": "8935006547711"
+        },
+        {
+          "name": "Gel Chống Nắng Hada Labo Koi-Gokujyun Perfect UV Dưỡng Ẩm Mịn Mượt Da SPF50+ PA++++ 50g",
+          "price": 280000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/gel-chong-nang-hada-labo-koigokujyun-perfect-uv-duong-am-min-muot-da-spf50+-pa++++-50g-i.4987241139286",
+          "sku": "4987241139286"
+        },
+        {
+          "name": "Dung Dịch Hada Labo Perfect White Supreme Dưỡng Trắng Chuyên Sâu 100ml",
+          "price": 236000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657166537972-dung-dich-duong-trang-chuyen-sau-hada-labo-perfect-white-supreme-lotion-100ml-1.jpeg",
+          "url": "https://cocolux.com/dung-dich-duong-trang-chuyen-sau-hada-labo-perfect-white-supreme-lotion-100ml-i.8935006539310",
+          "sku": "8935006539310"
+        },
+        {
+          "name": "Kem Dưỡng Hada Labo Perfect White Cream Dưỡng Sáng Da Ẩm Mịn 50g",
+          "price": 250000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1609122284620-1-kem-hada-labo-perfect-white-50g-1.jpeg",
+          "url": "https://cocolux.com/kem-duong-trang-hada-labo-perfect-white-cream-50g-i.8935006534070",
+          "sku": "8935006534070"
+        },
+        {
+          "name": "Bộ Sản Phẩm Hada Labo Dưỡng Trắng Da Tối Ưu",
+          "price": 95000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657169124224-bo-duong-trang-toi-uu-hada-labo.jpeg",
+          "url": "https://cocolux.com/bo-duong-trang-toi-uu-hada-labo-i.8935006542914",
+          "sku": "8935006542914"
+        },
+        {
+          "name": "Serum Hada Labo Advanced Nourish Hyaluronic Acid Cấp Ẩm Tối Ưu, Phục Hồi Da 30ml",
+          "price": 320000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Huyen/serum-hada-labo-advanced-nourish-hyaluronic-acid-cap-am-toi-uu-phuc-hoi-da-30ml.jpg",
+          "url": "https://cocolux.com/serum-hada-labo-advanced-nourish-hyaluronic-acid-cap-am-toi-uu-phuc-hoi-da-30ml-i.8935006546400",
+          "sku": "8935006546400"
+        },
+        {
+          "name": "Kem Gel Dưỡng Ẩm Hada Labo Acne Care Calming Ngừa Mụn, Làm Dịu Da 50g",
+          "price": 270000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Huyen/0422/gel-duong-am-hada-labo-acne-care-calming-ngua-mun-lam-diu-da-50g-1.jpg",
+          "url": "https://cocolux.com/gel-duong-am-hada-labo-acne-care-calming-ngua-mun-lam-diu-da-50g-i.8935006546110",
+          "sku": "8935006546110"
+        },
+        {
+          "name": "Toner Hada Labo Dưỡng Ẩm Tối Ưu Cho Da Dầu 170ml",
+          "price": 208000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657176009556-dung-dich-hada-labo-advanced-nourish-cho-da-dau-170ml.jpeg",
+          "url": "https://cocolux.com/dung-dich-hada-labo-advanced-nourish-cho-da-dau-170ml-i.8935006537712",
+          "sku": "8935006537712"
+        },
+        {
+          "name": "Bộ Sản Phẩm Sữa Rửa Mặt Hada Labo Premium Cleanser Radiance 100g + Dung dịch Hada Labo Advanced Nourish 40ml",
+          "price": 135000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657589178701-sua-rua-mat-duong-trang-cao-cap-hada-labo-100g-2.jpeg",
+          "url": "https://cocolux.com/sua-rua-mat-duong-trang-cao-cap-hada-labo-100g-kem-dung-dich-duong-am-hada-labo-40ml-i.8935006544147",
+          "sku": "8935006544147"
+        },
+        {
+          "name": "Bọt Rửa Mặt Hadalabo Dành Cho Da Khô",
+          "price": 204000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/sua-rua-mat-tao-bot-hadalabo-nhat-ban-trang.jpg",
+          "url": "https://cocolux.com/sua-rua-mat-tao-bot-hadalabo-nhat-ban-trang-i.4987241145614",
+          "sku": "4987241145614"
+        },
+        {
+          "name": "Gel Dưỡng Hada Labo Perfect White Tranexamic Acid Sáng Da, Giảm Thâm 50g",
+          "price": 270000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1678160951811-facebook-dynamic-gel-duong-hada-labo-sang-da-chuyen-sau-giam-tham-sam-50g-1676947580_img_358x358_843626_fit_center.jpeg",
+          "url": "https://cocolux.com/gel-duong-hada-labo-sang-da-chuyen-sau-giam-tham-sam-50g-i.8935006544826",
+          "sku": "8935006544826"
+        },
+        {
+          "name": "Bộ Sản Phẩm Hada Labo Perfect White Dưỡng Trắng",
+          "price": 120000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657164539184-bo-duong-trang-hada-labo-perfect-white.jpeg",
+          "url": "https://cocolux.com/bo-duong-trang-hada-labo-perfect-white-i.8935006540453",
+          "sku": "8935006540453"
+        },
+        {
+          "name": "Nước Tẩy Trang Hada Labo Sạch Sâu 240ml - Màu Sắc:dưỡng ẩm",
+          "price": 135000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/10/images/products/1666079982912-nuoc-tay-trang-hada-labo-sach-sau-240ml-duong-trang-1.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-hada-labo-sach-sau-duong-am-240ml-i.8935006544161",
+          "sku": "8935006544161"
+        },
+        {
+          "name": "Nước Tẩy Trang Hada Labo Sạch Sâu 240ml - Màu Sắc:dưỡng trắng",
+          "price": 140000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/10/images/products/1666079995576-nuoc-tay-trang-hada-labo-sach-sau-240ml-duong-trang.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-hada-labo-sach-sau-duong-trang-240ml-i.8935006544178",
+          "sku": "8935006544178"
+        },
+        {
+          "name": "Toner Hada Labo Dưỡng Ẩm Tối Ưu Cho Da Dầu 100ml",
+          "price": 146000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1668746314679-dung-dich-duong-am-hada-labo-advanced-nourish-cho-da-dau-5.jpeg",
+          "url": "https://cocolux.com/dung-dich-hada-labo-advanced-nourish-cho-da-dau-100ml-i.8935006537705",
+          "sku": "8935006537705"
+        },
+        {
+          "name": "Nước Tẩy Trang Hada Labo Sạch Sâu Cho Da Mụn, Nhạy Cảm 240ml",
+          "price": 145000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/banner-web/nuoc-tay-trang-hada-labo-sach-sau-cho-da-mun-nhay-cam-240ml-5.jpg",
+          "url": "https://cocolux.com/nuoc-tay-trang-hada-labo-sach-sau-cho-da-mun-nhay-cam-240ml-i.8935006547384",
+          "sku": "8935006547384"
+        },
+        {
+          "name": "Serum Hada Labo Dưỡng Sáng Da Tối Ưu 30ml + Tặng Bộ Dưỡng Da 3 Món",
+          "price": 350000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/05/images/products/1685439152715-serum-hada-labo-duong-sang-da-toi-uu-30ml-tang-bo-duong-da-3-mon-6.jpeg",
+          "url": "https://cocolux.com/serum-hada-labo-duong-sang-da-toi-uu-30ml-tang-bo-duong-da-3-mon-i.8935006544833",
+          "sku": "8935006544833"
+        },
+        {
+          "name": "Mặt Nạ Hada Labo Dưỡng Ẩm Da Chuyên Sâu 20 PCS",
+          "price": 340000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657175441484-mat-na-hada-labo-duong-am-da-chuyen-sau-20-mieng-2.jpeg",
+          "url": "https://cocolux.com/mat-na-giay-hada-labo-duong-am-da-chuyen-sau-20-pcs-i.4987241155798",
+          "sku": "4987241155798"
+        }
+      ]
+    },
+    "Selsun": {
+      "brand_id": 576,
+      "brand_url": "https://cocolux.com/thuong-hieu/selsun-i.576",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 4,
+      "products": [
+        {
+          "name": "Dầu Gội Selsun Chứa 1% Selenium Sulfide Ngừa Gàu & Ngứa 100ml",
+          "price": 99000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657167259000-selsun-1-100ml-(1)-min.jpeg",
+          "url": "https://cocolux.com/dau-goi-tri-gau-selsun-100ml-i.8935006533363",
+          "sku": "8935006533363"
+        },
+        {
+          "name": "Dầu Gội Selsun Chứa 1% Selenium Sulfide Ngăn Ngừa Gàu & Ngứa 250ml",
+          "price": 223000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/dau-goi-selsun-chua-1-selenium-sulfide-259ml-3.jpg",
+          "url": "https://cocolux.com/dau-goi-selsun-chua-1-selenium-sulfide-ngan-ngua-gau-ngua-250ml-i.8935006542365",
+          "sku": "8935006542365"
+        },
+        {
+          "name": "Dầu Xả Selsun Dưỡng Tóc Ngăn Ngừa Gàu 100ml",
+          "price": 48000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657167372183-selsun-anti-dandruff-conditioner-(1)-min.jpeg",
+          "url": "https://cocolux.com/dau-xa-selsun-duong-toc-ngan-ngua-gau-100ml-i.8935006535534",
+          "sku": "8935006535534"
+        },
+        {
+          "name": "Dầu Gội Selsun Chứa 1% Selenium Sulfide Ngăn Ngừa Gàu & Ngứa 50ml",
+          "price": 63000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/selsun-1-50ml-3-min-1.jpeg",
+          "url": "https://cocolux.com/dau-goi-selsun-chua-1-selenium-sulfide-ngan-ngua-gau-ngua-50ml-i.8935006533370",
+          "sku": "8935006533370"
+        }
+      ]
+    },
+    "Nivea": {
+      "brand_id": 54,
+      "brand_url": "https://cocolux.com/thuong-hieu/nivea-i.54",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 33,
+      "products": [
+        {
+          "name": "Sữa Dưỡng Thể Nivea Dưỡng Sáng Da Vitamin C & E 180ml",
+          "price": 129000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621320463712-duong-the-nivea-duong-trang-c-e-vitamin-180ml.jpeg",
+          "url": "https://cocolux.com/sua-duong-the-nivea-duong-sang-da-vitamin-c-e-180ml-i.8850029028507",
+          "sku": "8850029028507"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Tinh Chất Ngọc Trai Sáng Da 200ml",
+          "price": 87000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631093301169-nuoc-tay-trang-nivea-tinh-chat-ngoc-trai-sang-da-200ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-tinh-chat-ngoc-trai-sang-da-200ml-i.8850029010656",
+          "sku": "8850029010656"
+        },
+        {
+          "name": "Son Dưỡng Nivea Dưỡng Ẩm Hương Đào 4.8g",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/10/images/products/1635559637444-son-duong-am-nivea-huong-dao.jpeg",
+          "url": "https://cocolux.com/son-duong-am-nivea-huong-dao-i.8850029006437",
+          "sku": "8850029006437"
+        },
+        {
+          "name": "​​Lăn Khử Mùi Nivea Extra Brightening Dưỡng Trắng, Mờ Thâm 50ml",
+          "price": 92000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/04/images/products/1680331111240-lan-khu-mui-nivea-brightening-duong-trang-mo-tham-(1).jpeg",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-brightening-duong-trang-mo-tham-50ml-i.4005808837472",
+          "sku": "4005808837472"
+        },
+        {
+          "name": "Sữa Dưỡng Thể Nivea Sáng Da Ban Đêm 180ml",
+          "price": 139000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621311508128-serum-duong-the-nivea-trang-da-ban-dem-200ml-2.jpeg",
+          "url": "https://cocolux.com/serum-duong-the-nivea-trang-da-ban-dem-200ml-i.4005808829071",
+          "sku": "4005808829071"
+        },
+        {
+          "name": "Sữa Dưỡng Thể Nivea Extra White Radiant & Smooth UV Filter 350ml",
+          "price": 147000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-duong-the-nivea-extra-white-radiant-smooth-uv-filter-350ml.jpg",
+          "url": "https://cocolux.com/sua-duong-the-nivea-extra-white-radiant-smooth-uv-filter-350ml-i.4005900928962",
+          "sku": "4005900928962"
+        },
+        {
+          "name": "Kem Chống Nắng Nivea Triple Protect 40ml dưỡng sáng mịn",
+          "price": 172000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621657360417-kem-chong-nang-nivea-duong-sang-min-hoa-hong-hokkaido-40ml.jpeg",
+          "url": "https://cocolux.com/kem-chong-nang-nivea-duong-sang-min-hoa-hong-hokkaido-40ml-i.42389187",
+          "sku": "42389187"
+        },
+        {
+          "name": "Lăn Khử Mùi Nivea Brightening & Smooth Dưỡng Sáng & Se Lỗ Chân Lông 50ml",
+          "price": 92000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/04/images/products/1680329441391-lan-khu-mui-nivea-brightening-smooth-duong-sang-se-lo-chan-long.jpeg",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-brightening-smooth-duong-sang-se-lo-chan-long-50ml-i.8850029816449",
+          "sku": "8850029816449"
+        },
+        {
+          "name": "Lăn ngăn mùi NIVEA Brightening Happy Shave 8 Superfood 50ml",
+          "price": 92000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1678842793196-lan-ngan-mui-nivea-whitening-happy-shave-roll-on-50ml4.jpeg",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-brightening-happy-shave-8-superfood-50ml-i.4005808703326",
+          "sku": "4005808703326"
+        },
+        {
+          "name": "Dưỡng Thể Nivea Extra Bright Repair & Protect Vitamin C SPF30 PA++ 200ml",
+          "price": 99000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/duong-the-nivea-extra-bright-repair-protect-vitamin-c-spf30-pa-200ml.png",
+          "url": "https://cocolux.com/duong-the-nivea-extra-bright-repair-protect-vitamin-c-spf30-pa-200ml-i.4005900438928",
+          "sku": "4005900438928"
+        },
+        {
+          "name": "Xịt Ngăn Mùi Nivea Men Black & White Invisible 72h Active",
+          "price": 125000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/xit-ngan-mui-nivea-men-black-white-invisible-72h-active-1.jpg",
+          "url": "https://cocolux.com/xit-ngan-mui-nivea-men-black-white-invisible-72h-active-i.4005900731418",
+          "sku": "4005900731418"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Ngăn Ngừa Mụn 125ml",
+          "price": 74000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621305528781-nuoc-tay-trang-nivea-ngua-mun-125ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-ngua-mun-125ml-i.8850029017730",
+          "sku": "8850029017730"
+        },
+        {
+          "name": "Sữa Dưỡng Thể Nivea Sáng Da Ban Đêm 350ml",
+          "price": 128000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/02/images/products/1676355881435-sua-duong-the-nivea-duong-sang-da-ban-dem-4.jpeg",
+          "url": "https://cocolux.com/sua-duong-the-nivea-duong-trang-chuyen-sau-ban-dem-400ml-i.4005808355754",
+          "sku": "4005808355754"
+        },
+        {
+          "name": "Lăn Khử Mùi Nivea Men Mát Lạnh 50ml",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630924240150-lan-ngan-mui-nivea-nam-mat-lanh-50ml.jpeg",
+          "url": "https://cocolux.com/lan-ngan-mui-nivea-men-50ml-mat-lanh-i.4005808330430",
+          "sku": "4005808330430"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Sáng Da Giúp Sạch Nhờn 125ml",
+          "price": 74000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621304540824-nuoc-tay-trang-nivea-sang-da-sach-nhon-125ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-sang-da-giup-sach-nhon-125ml-i.8850029015200",
+          "sku": "8850029015200"
+        },
+        {
+          "name": "Lăn Khử Mùi Nivea Black & White 50ml Invisible Pure New",
+          "price": 92000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/lan-khu-mui-nivea-black-white-50ml-invisible-pure-new-1.jpg",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-black-white-50ml-invisible-pure-new-i.4005900036377",
+          "sku": "4005900036377"
+        },
+        {
+          "name": "Xịt Ngăn Mùi Nivea Men Than Đen Hương Rừng Amazon 150ML",
+          "price": 125000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1678844307761-xit-ngan-mui-nivea-than-den-huong-rung-amazon-150ml.jpeg",
+          "url": "https://cocolux.com/xit-ngan-mui-nivea-men-than-den-huong-rung-amazon-150ml-i.8850029029795",
+          "sku": "8850029029795"
+        },
+        {
+          "name": "Kem Chống Nắng Nivea Dưỡng Trắng Và kiểm Soát Nhờn SPF50 PA+++ 30ml",
+          "price": 115000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/09/images/products/1662602740069-tinh-chat-chong-nang-nivea-kiem-soat-dau-30ml.jpeg",
+          "url": "https://cocolux.com/tinh-chat-chong-nang-nivea-kiem-soat-dau-30ml-i.8850029018256",
+          "sku": "8850029018256"
+        },
+        {
+          "name": "Lăn Ngăn Mùi Nivea Ngọc Trai 25ml",
+          "price": 47000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630995492493-lan-ngan-mui-nivea-ngoc-trai-25ml.jpeg",
+          "url": "https://cocolux.com/lan-ngan-mui-nivea-ngoc-trai-25ml-i.42126706",
+          "sku": "42126706"
+        },
+        {
+          "name": "Xịt Khử Mùi Nivea Men - Ngăn Ố Vàng 150ml MC",
+          "price": 125000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630992025447-xit-ngan-mui-nivea-nam-ngan-o-vang-150ml.jpeg",
+          "url": "https://cocolux.com/xit-ngan-mui-nivea-men-ngan-o-vang-150ml-i.4005900740304",
+          "sku": "4005900740304"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Sáng Da Giúp Sạch Nhờn 200ml",
+          "price": 109000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631093944624-nuoc-tay-trang-nivea-sang-da-sach-nhon-200ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-sang-da-giup-sach-nhon-200ml-i.8850029015194",
+          "sku": "8850029015194"
+        },
+        {
+          "name": "Xịt Khử Mùi Nivea Men - Phân Tử Bạc 150ml",
+          "price": 115000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630991848524-xit-ngan-mui-nivea-nam-phan-tu-bac-150ml.jpeg",
+          "url": "https://cocolux.com/xit-ngan-mui-nivea-men-phan-tu-bac-150ml-i.4005808305773",
+          "sku": "4005808305773"
+        },
+        {
+          "name": "Lăn Ngăn Mùi Nivea Nữ Khô Thoáng 25ml",
+          "price": 46000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/02/images/products/1675742412159-lan-khu-mui-nivea-dry-comfort-kho-thoang-25ml.jpeg",
+          "url": "https://cocolux.com/lan-ngan-mui-nivea-nu-kho-thoang-25ml-i.40066653",
+          "sku": "40066653"
+        },
+        {
+          "name": "Lăn Khử Mùi Nivea Extra Whiteing Trắng Da, Ngừa Thâm 25ml",
+          "price": 47000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/nivea-lan-nu-trang-da-ngua-tham-25ml.jpg",
+          "url": "https://cocolux.com/nivea-lan-nu-trang-da-ngua-tham-25ml-i.42131946",
+          "sku": "42131946"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Ngăn Ngừa Mụn 200ml",
+          "price": 87000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631093700327-nuoc-tay-trang-nivea-ngua-mun-200ml-2.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-ngua-mun-200ml-i.8850029017747",
+          "sku": "8850029017747"
+        },
+        {
+          "name": "Xịt Khử Mùi Nivea Trắng Mịn 150ml",
+          "price": 108000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630992515660-xit-ngan-mui-nivea-nu-trang-min-mo-vet-tham-150ml.jpeg",
+          "url": "https://cocolux.com/xit-ngan-mui-nivea-nu-trang-min-mo-vet-tham-150ml-i.4005808829675",
+          "sku": "4005808829675"
+        },
+        {
+          "name": "Nước Tẩy Trang Nivea Tinh Chất Ngọc Trai Sáng Da 125ml",
+          "price": 74000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/05/products/1621303045975-nuoc-tay-trang-nivea-tinh-chat-ngoc-trai-sang-da-125ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-nivea-tinh-chat-ngoc-trai-sang-da-125ml-i.4005900437907",
+          "sku": "4005900437907"
+        },
+        {
+          "name": "Lăn Ngăn Mùi Nivea 50ml - Kiểm Soát, Khử Mùi Vượt Trội Nam Thái Lan",
+          "price": 75000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/08/images/products/1692688918885-74.jpeg",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-nam-thai-lan-50ml-i.4005808837489",
+          "sku": "4005808837489"
+        },
+        {
+          "name": "Sữa Dưỡng Thể Nivea Sáng Da Ban Đêm 200ml",
+          "price": 89000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/fs-test-image/1631001761029-duong-the-nivea-duong-trang-chuyen-sau-ban-dem-removebg-preview.png",
+          "url": "https://cocolux.com/sua-duong-the-nivea-duong-trang-chuyen-sau-ban-dem-200ml-i.4005900926081",
+          "sku": "4005900926081"
+        },
+        {
+          "name": "Lăn Khử Mùi Nivea Men Khô Thoáng 50ml",
+          "price": 72000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630923854699--lan-ngan-mui-nivea-nam-kho-thoang-50ml.png",
+          "url": "https://cocolux.com/lan-ngan-mui-nivea-men-50ml-kho-thoang-i.4005808321667",
+          "sku": "4005808321667"
+        },
+        {
+          "name": "Son Dưỡng Nivea Dưỡng Ẩm Hương Dâu Tây 4.8g",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/02/images/products/1676015877366-son-duong-am-nivea-huong-dau-tay.jpeg",
+          "url": "https://cocolux.com/son-duong-nivea-duong-am-huong-dau-tay-4-8g-i.8850029850726",
+          "sku": "8850029850726"
+        },
+        {
+          "name": "Son Dưỡng Nivea Dưỡng Ẩm Chuyên Sâu Cho Môi Original 4.8g",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/10/images/products/1635559651225-son-duong-am-nivea-original.jpeg",
+          "url": "https://cocolux.com/son-duong-am-nivea-original-i.8850029850009",
+          "sku": "8850029850009"
+        },
+        {
+          "name": "Lăn Ngăn Mùi Nivea 50ml - Kiểm Soát, Khử Mùi Vượt Trội Chống Vệt Ố Vàng MC",
+          "price": 92000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1630994292890-lan-ngan-mui-nivea-nu-chong-vet-o-vang-50ml.png",
+          "url": "https://cocolux.com/lan-khu-mui-nivea-nu-chong-vet-o-vang-50ml-i.4005808663019",
+          "sku": "4005808663019"
+        }
+      ]
+    },
+    "Sunplay": {
+      "brand_id": 202,
+      "brand_url": "https://cocolux.com/thuong-hieu/sunplay-i.202",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 20,
+      "products": [
+        {
+          "name": "Tinh Chất Chống Nắng Sunplay Skin Aqua Tone Up UV Essence SPF50+/PA++++ Hiệu Chỉnh Sắc Da 50g",
+          "price": 1790002,
+          "original_price": 2000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/8935006539273.jpg",
+          "url": "https://cocolux.com/tinh-chat-chong-nang-sunplay-hieu-chinh-sac-da-tone-up-uv-50g-i.8935006539273",
+          "sku": "8935006539273"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Bảo Vệ Vượt Trội SPF50 PA++++ 70g",
+          "price": 192000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-ngan-sam-da-bao-ve-vuot-troi-70g-i.8935006537873",
+          "sku": "8935006537873"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Bảo Vệ Vượt Trội SPF50 PA++++ 30g",
+          "price": 108000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-ngan-sam-da-bao-ve-vuot-troi-30g-i.8935006532687",
+          "sku": "8935006532687"
+        },
+        {
+          "name": "Kem Chống Nắng Sunplay Skin Aqua Tone Up UV Essence Mint Green Hiệu Chỉnh Tông Da 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168425605-skin-aqua-tone-up-uv-essence-mint-green-50g-(3)-min.jpeg",
+          "url": "https://cocolux.com/kem-chong-nang-skin-aqua-tone-up-uv-essence-mint-green-50g-i.8935006539754",
+          "sku": "8935006539754"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Skin Aqua Dưỡng Da Sáng Mịn 25g",
+          "price": 134000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/sua-chong-nang-sunplay-duong-da-trang-min-25g.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-skin-aqua-clear-white-spf50-pa-duong-da-trang-min-25g-i.8935006533288",
+          "sku": "8935006533288"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Skin Aqua Clear White SPF50+ PA++++ Dưỡng Da Trắng Mịn 55g",
+          "price": 234000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/sua-chong-nang-sunplay-duong-da-trang-min-55g.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-duong-da-trang-min-55g-i.8935006538283",
+          "sku": "8935006538283"
+        },
+        {
+          "name": "Tinh Chất Chống Nắng Sunplay Skin Aqua Tone Up UV Essence Happiness Aura Rose Color SPF50+ PA++++ 50g",
+          "price": 149000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168563159-tinh-chat-chong-nang-hieu-chinh-sac-da-sunplay-skin-aqua-tone-up-(3)-min.jpeg",
+          "url": "https://cocolux.com/tinh-chat-chong-nang-sunplay-skin-aqua-rose-50g-i.8935006541672",
+          "sku": "8935006541672"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Baby Mild Cho Bé Và Da Nhạy Cảm 30g",
+          "price": 51000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1609121325706-19-sua-chong-nang-sunplay-30g-baby-mild-spf35-qua-1.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-30g-baby-mild-i.8935006532700",
+          "sku": "8935006532700"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Skin Aqua Hiệu Chỉnh Màu Da Blue 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/8935006547957.jpg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-skin-aqua-hieu-chinh-mau-da-blue-50g-i.8935006547957",
+          "sku": "8935006547957"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Skin Aqua Tone Up UV Milk Hiệu Chỉnh Sắc Da 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/04/images/products/1682042899908-sua-chong-nang-skin-aqua-phien-ban-meow.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-skin-aqua-tone-up-uv-hieu-chinh-sac-da-50g-i.8935006539303",
+          "sku": "8935006539303"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Hiệu Chỉnh Sắc Da 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168008100-skin-aqua-tone-up-uv-milk-mint-green-50g-(3)-min.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-hieu-chinh-sac-da-50g-i.8935006539747",
+          "sku": "8935006539747"
+        },
+        {
+          "name": "Kem Chống Nắng Serum Skin Aqua UV Defense Duo Dưỡng Da Chuyên Sâu 30g",
+          "price": 219000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-chong-nang-serum-skin-aqua-uv-defense-duo-duong-da-chuyen-sau-30g-i.8935006547971",
+          "sku": "8935006547971"
+        },
+        {
+          "name": "Tinh Chất Chống Nắng Sunplay Skin Aqua Hiệu Chỉnh Màu Da Blue 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/8935006547940.jpg",
+          "url": "https://cocolux.com/tinh-chat-chong-nang-sunplay-skin-aqua-hieu-chinh-mau-da-blue-50g-i.8935006547940",
+          "sku": "8935006547940"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Hiệu Chỉnh Sắc Da SPF50+ PA++++ Hồng 50g",
+          "price": 202000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/04/products/1619404238872-sua-chong-nang-sunplay-skin-aqua-rose.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-skin-aqua-rose-50g-i.8935006541689",
+          "sku": "8935006541689"
+        },
+        {
+          "name": "Tinh Chất Chống Nắng Sunplay Skin Aqua Tone Up UV Essence SPF50+/PA++++ Hiệu Chỉnh Sắc Da 80g",
+          "price": 245000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1668759590552-tinh-chat-chong-nang-sunplay-hieu-chinh-sac-da-66.jpeg",
+          "url": "https://cocolux.com/tinh-chat-chong-nang-sunplay-hieu-chinh-sac-da-tone-up-uv-80g-i.4987241157754",
+          "sku": "4987241157754"
+        },
+        {
+          "name": "Kem Chống Nắng Sunplay Skin Aqua UV Body Cooling Lotion Dưỡng Thể Mát Lạnh 150g",
+          "price": 219000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657169197630-sunplay-skin-aqua-uv-body-cooling-lotion-150g-(3)-min.jpeg",
+          "url": "https://cocolux.com/kem-chong-nang-duong-the-mat-lanh-sunplay-i.8935006539518",
+          "sku": "8935006539518"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Skin Aqua Mineral Defense Oil Clear Milk SPF50+ PA++++ Vật Lý Bảo Vệ Da Giảm Dầu 25g",
+          "price": 139000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/09/images/products/1664338298100-sua-chong-nang-vat-ly-bao-ve-da-giam-dau-skin-aqua.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-vat-ly-bao-ve-da-giam-dau-skin-aqua-i.8935006543164",
+          "sku": "8935006543164"
+        },
+        {
+          "name": "Sữa Chống Nắng Sunplay Dưỡng Da Sáng Đẹp 30g",
+          "price": 102000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1609143358730-sua-chong-nang-duong-sang-da-sunplay-30g.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-duong-sang-da-sunplay-30g-i.8935006532717",
+          "sku": "8935006532717"
+        },
+        {
+          "name": "Sữa Chống Nắng Skin Aqua Tone Up UV SPF50+ PA++++ 40ml",
+          "price": 230000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2020/12/products/1608781141936-sua-chong-nang-skin-aqua-1.jpeg",
+          "url": "https://cocolux.com/sua-chong-nang-skin-aqua-tone-up-uv-spf50-i.4987241164905",
+          "sku": "4987241164905"
+        },
+        {
+          "name": "Serum Chống Nắng Sunplay Nexta Ngừa Sạm Nám Dạng Sữa 50g + Tặng Tẩy Trang Hada Labo 40ml",
+          "price": 350000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/05/images/products/1685439898160-serum-chong-nang-sunplay-ngua-sam-nam-dang-sua-50g-tang-tay-trang-hada-labo-40ml-4-(2).jpeg",
+          "url": "https://cocolux.com/serum-chong-nang-dang-sua-sunplay-nexta-ngua-sam-nam-50g-tang-tay-trang-hada-labo-40ml-i.8935006545243",
+          "sku": "8935006545243"
+        }
+      ]
+    },
+    "Rohto": {
+      "brand_id": 264,
+      "brand_url": "https://cocolux.com/thuong-hieu/rohto-i.264",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 24,
+      "products": [
+        {
+          "name": "Sữa Rửa Mặt Hada Labo Advanced Nourish Dưỡng Ẩm 80g",
+          "price": 91500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168995621-sua-rua-mat-duong-am-hada-labo-advanced-nourish-80g.jpeg",
+          "url": "https://cocolux.com/sua-rua-mat-hada-labo-advanced-nourish-duong-am-80g-i.8935006537675",
+          "sku": "8935006537675"
+        },
+        {
+          "name": "Sữa Rửa Mặt Oxy Oil Acne Wash Cho Da Dầu Mụn Nhạy Cảm 100g",
+          "price": 48000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-rua-mat-oxy-oil-acne-wash-cho-da-dau-mun-nhay-cam-100g.png",
+          "url": "https://cocolux.com/sua-rua-mat-oxy-oil-acne-wash-cho-da-dau-mun-nhay-cam-100g-i.8935006547643",
+          "sku": "8935006547643"
+        },
+        {
+          "name": "Gel Rửa Mặt Acnes Kiểm Soát Nhờn 100g",
+          "price": 77000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657166570745-gel-rua-mat-kiem-soat-nhon-acnes-100g-1.jpeg",
+          "url": "https://cocolux.com/gel-rua-mat-kiem-soat-nhon-acnes-100g-i.8935006533837",
+          "sku": "8935006533837"
+        },
+        {
+          "name": "Dung Dịch Nhỏ Mắt V.Rohto DryEye Bổ Sung Nước Mắt Nhân Tạo 13ml",
+          "price": 67000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1678262410252-dung-dich-nho-mat-vrohto-bo-sung-nuoc-mat-nhan-tao-13ml-ava.jpeg",
+          "url": "https://cocolux.com/dung-dich-nho-mat-vrohto-dryeye-bo-sung-nuoc-mat-nhan-tao-13ml-i.8935006544796",
+          "sku": "8935006544796"
+        },
+        {
+          "name": "Sữa Rửa Mặt Oxy Oil Hydrating Wash Cho Da Thuờng, Khô Nhạy Cảm 100g",
+          "price": 57000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-rua-mat-oxy-oil-hydrating-wash-cho-da-thuong-kho-nhay-cam-100g.jpg",
+          "url": "https://cocolux.com/sua-rua-mat-oxy-oil-hydrating-wash-cho-da-thuong-kho-nhay-cam-100g-i.8935006547650",
+          "sku": "8935006547650"
+        },
+        {
+          "name": "Dung Dịch Nhỏ Mắt V.Rohto Giữ Ẩm & Bổ Sung Khoáng Chất 13ml",
+          "price": 67000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1678239740611-dung-dich-nho-mat-v-rohto-giu-am-bo-sung-khoang-chat-13ml-01.jpeg",
+          "url": "https://cocolux.com/dung-dich-nho-mat-v-rohto-giu-am-bo-sung-khoang-chat-13ml-i.8935006538986",
+          "sku": "8935006538986"
+        },
+        {
+          "name": "Son Dưỡng Líp Pure Hương Chanh Mơ 4g",
+          "price": 98000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669359774082-son-duong-lip-pure-mui-4g-15.jpeg",
+          "url": "https://cocolux.com/son-duong-lip-pure-4g-huong-chanh-mo-i.8935006541078",
+          "sku": "8935006541078"
+        },
+        {
+          "name": "Sữa chống nắng Sunplay 25g Skin Aqua Acne Clear Milk",
+          "price": 134000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/sua-chong-nang-sunplay-skin-aqua-acne-clear-milk-25g(2).jpg",
+          "url": "https://cocolux.com/sua-chong-nang-sunplay-25g-skin-aqua-acne-clear-milk-i.8935006533806",
+          "sku": "8935006533806"
+        },
+        {
+          "name": "Dung Dịch Hada Labo Advanced Nourish Hyaluron Lotion Dưỡng Ẩm Tối Ưu Da Thường 170ml",
+          "price": 208000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657175967198-dung-dich-hada-labo-duong-am-toi-uu-da-thuong-170m.jpeg",
+          "url": "https://cocolux.com/dung-dich-hada-labo-duong-am-toi-uu-da-thuong-kho-170ml-i.8935006537699",
+          "sku": "8935006537699"
+        },
+        {
+          "name": "Sữa Rửa Mặt Oxy Deep Wash Có Hạt 100g",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/kem-rua-mat-co-hat-oxy-deep-wash-100g.jpg",
+          "url": "https://cocolux.com/kem-rua-mat-oxy-co-hat-sach-sau-deep-wash-100g-i.8935006531956",
+          "sku": "8935006531956"
+        },
+        {
+          "name": "Kem Dưỡng Hada Labo Advanced Nourish Cấp Ẩm Tối Đa 50g",
+          "price": 220000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657166828818-kem-duong-am-toi-da-hada-labo-advanced-nourish-50g-3.jpeg",
+          "url": "https://cocolux.com/kem-duong-am-toi-da-hada-labo-advanced-nourish-50g-i.8935006537729",
+          "sku": "8935006537729"
+        },
+        {
+          "name": "Son Dưỡng Líp Pure Đỏ Anh Đào",
+          "price": 109000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669359685793-son-duong-lip-pure-mui-4g-10.jpeg",
+          "url": "https://cocolux.com/son-duong-lip-pure-4g-do-anh-dao-i.8935006541030",
+          "sku": "8935006541030"
+        },
+        {
+          "name": "Son Dưỡng Líp Pure Cam Cháy",
+          "price": 105000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669359741612-son-duong-lip-pure-mui-4g-14.jpeg",
+          "url": "https://cocolux.com/son-duong-lip-pure-4g-cam-chay-i.8935006541047",
+          "sku": "8935006541047"
+        },
+        {
+          "name": "Bọt Kem Rửa Mặt Dưỡng Ẩm Hada Labo Advanced Nourish Supreme 100g",
+          "price": 149000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/bot-kem-rua-mat-duong-am-hada-labo-advanced-nourish-supreme-100g.jpg",
+          "url": "https://cocolux.com/bot-kem-rua-mat-duong-am-hada-labo-advanced-nourish-supreme-100g-i.8935006539211",
+          "sku": "8935006539211"
+        },
+        {
+          "name": "Dung Dịch Dưỡng Ẩm Hada Labo Advanced Nourish Hyaluron Da Thường Da Khô 100ml",
+          "price": 146000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1668826879613-dung-dich-hada-labo-duong-am-toi-uu-da-thuong-kho-170ml-8.jpeg",
+          "url": "https://cocolux.com/dung-dich-hada-labo-duong-am-toi-uu-da-thuong-kho-100ml-i.8935006537682",
+          "sku": "8935006537682"
+        },
+        {
+          "name": "Tinh Chất Melano CC Mờ Thâm Nám Tàn Nhang 20ml",
+          "price": 320000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/tinh-chat-mo-tham-nam-tan-nhang-melano-cc-20ml-i.4987241160037",
+          "sku": "4987241160037"
+        },
+        {
+          "name": "Khăn Giấy Tẩy Trang & Lau Mặt Acnes 20 PCS",
+          "price": 70000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657167859091-khan-tay-trang-va-lau-mat-acnes-20-mieng.jpeg",
+          "url": "https://cocolux.com/khan-tay-trang-va-lau-mat-acnes-20-mieng-i.8935006531680",
+          "sku": "8935006531680"
+        },
+        {
+          "name": "Son Dưỡng Líp Pure Không Mùi 4g",
+          "price": 94000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657169587376-son-duong-lip-pure-khong-mui-4g.jpeg",
+          "url": "https://cocolux.com/son-duong-lip-pure-4g-khong-mui-i.8935006541061",
+          "sku": "8935006541061"
+        },
+        {
+          "name": "Kem Rửa Mặt Oxy Perfect Wash 100g",
+          "price": 82000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657164535856-oxy-perfect-wash-100g-04.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-oxy-perfect-wash-100g-i.8935006531581",
+          "sku": "8935006531581"
+        },
+        {
+          "name": "Son Dưỡng Líp Pure Hồng Đỏ",
+          "price": 109000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669359703797-son-duong-lip-pure-mui-4g-12.jpeg",
+          "url": "https://cocolux.com/son-duong-lip-pure-4g-hong-do-i.8935006541054",
+          "sku": "8935006541054"
+        },
+        {
+          "name": "Son dưỡng Melty Cream Lip 2.4g Hương Mật Ong",
+          "price": 145000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/02/products/1612864180858-son-duong-melty-cream-lip-huong-mat-ong.jpeg",
+          "url": "https://cocolux.com/son-duong-melty-cream-lip-24g-huong-mat-ong-i.4987241156351",
+          "sku": "4987241156351"
+        },
+        {
+          "name": "Kem Rửa Mặt OXY Sạch Khuẩn Mụn, Kiểm Soát Nhờn 100g",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657166034018-kem-rua-mat-sach-khuan-mun-oxy-total-anti-acne-100g-02.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-oxy-sach-khuan-mun-kiem-soat-nhon-100g-i.8935006537330",
+          "sku": "8935006537330"
+        },
+        {
+          "name": "Kem Rửa Mặt OXY Giảm Mụn Đầu Đen 100g",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/10/images/products/1665816498679-kem-rua-mat-oxy-giam-mun-dau-den-100g-01.jpeg",
+          "url": "https://cocolux.com/kem-rua-mat-oxy-giam-mun-dau-den-100g-i.8935006544642",
+          "sku": "8935006544642"
+        },
+        {
+          "name": "Bộ Sản Phẩm Son Dưỡng Rohto Chuyên Biêt Cho Môi Khô, Nứt Nẻ 4.3gx2",
+          "price": 108000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657171205781-cap-son-duong-medi-lip-stick-1.jpeg",
+          "url": "https://cocolux.com/combo-son-duong-rohto-chuyen-biet-cho-moi-kho-nut-ne-i.8935006540910",
+          "sku": "8935006540910"
+        }
+      ]
+    },
+    "Lipice": {
+      "brand_id": 203,
+      "brand_url": "https://cocolux.com/thuong-hieu/lipice-i.203",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 11,
+      "products": [
+        {
+          "name": "Son Dưỡng Môi Lipice Sheer Color Q Oolong Jasmine Tea 2.4g",
+          "price": 89000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/son-duong-moi-lipice-sheer-color-q-oolong-jasmine-tea-24g-i.8935006548558",
+          "sku": "8935006548558"
+        },
+        {
+          "name": "Son Dưỡng LipIce Sheer Color #Q Strawberry Tea Đỏ Cam 2.4g",
+          "price": 86500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/google-shopping-son-duong-lipice-huong-tra-dau-mau-do-cam-24g-2.jpg",
+          "url": "https://cocolux.com/son-duong-lipice-sheer-color-q-strawberry-tea-do-cam-24g-i.8935006545991",
+          "sku": "8935006545991"
+        },
+        {
+          "name": "Son Dưỡng LipIce Sheer Color Q Thỏ Bảy Màu 2.4g",
+          "price": 86500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/06/images/products/1657168178471-lipice-tho-bay-mau.jpeg",
+          "url": "https://cocolux.com/son-sheer-color-q-24g-tho-bay-mau-i.8935006538535",
+          "sku": "8935006538535"
+        },
+        {
+          "name": "Son Dưỡng Lipice Sheer Color Fruit Juice Cam Tươi Tắn 4g",
+          "price": 86000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669358021807-son-lipice-sheer-color-fruit-juice-4g-cam.jpeg",
+          "url": "https://cocolux.com/son-lipice-sheer-color-fruit-juice-cam-tuoi-tan-4g-i.8935006539068",
+          "sku": "8935006539068"
+        },
+        {
+          "name": "Son Dưỡng LipIce Sheer Color #Q Milk Tea Hồng Cam Đất 2.4g",
+          "price": 86500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/son-duong-chuyen-mau-lipice-sheer-color-q-milk-tea-hong-cam-dat-2.jpg",
+          "url": "https://cocolux.com/son-duong-lipice-sheer-color-q-milk-tea-hong-cam-dat-24g-i.8935006546028",
+          "sku": "8935006546028"
+        },
+        {
+          "name": "Son Dưỡng Môi Lipice Sheer Color Q Fruity Tea 2.4g",
+          "price": 89000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/son-duong-moi-lipice-sheer-color-q-fruity-tea-24g-i.8935006548541",
+          "sku": "8935006548541"
+        },
+        {
+          "name": "Son Dưỡng Chuyển Màu LipIce Choco Mint Socola Bạc Hà 2.4g",
+          "price": 86500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669273202218-son-lipice-sheer-color-choco-mint-socola-bac-ha.jpeg",
+          "url": "https://cocolux.com/son-duong-chuyen-mau-lipice-choco-mint-socola-bac-ha-2-4g-i.8935006537767",
+          "sku": "8935006537767"
+        },
+        {
+          "name": "Son Dưỡng LipIce Sheer Color #Brick Red Đỏ Gạch 2.4g",
+          "price": 81000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/son-duong-lipice-sheer-color-brick-red-do-gach-24g-1.jpg",
+          "url": "https://cocolux.com/son-duong-lipice-sheer-color-brick-red-do-gach-24g-i.8935006546011",
+          "sku": "8935006546011"
+        },
+        {
+          "name": "Son Dưỡng Lipice Sheer Color Fruit Juice Hồng Dâu Dịu Ngọt 4g",
+          "price": 108000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669358050946-son-lipice-sheer-color-fruit-juice-4g-hong.jpeg",
+          "url": "https://cocolux.com/son-lipice-sheer-color-fruit-juice-hong-dau-diu-ngot-4g-i.8935006539075",
+          "sku": "8935006539075"
+        },
+        {
+          "name": "Son Dưỡng Lipice Sheer Color Fruit Juice Berry Đỏ Mọng 4g",
+          "price": 108000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669357989013-son-lipice-sheer-color-fruit-juice-4g-berry.jpeg",
+          "url": "https://cocolux.com/son-lipice-sheer-color-fruit-juice-bery-do-mong-4g-i.8935006539099",
+          "sku": "8935006539099"
+        },
+        {
+          "name": "Son Dưỡng LipIce Sheer Color Q Matcha 2.4g",
+          "price": 86500,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/11/images/products/1669273350425-son-lipice-sheer-color-matcha-tra-xanh.jpeg",
+          "url": "https://cocolux.com/son-duong-chuyen-mau-lipice-sheer-color-matcha-i.8935006537774",
+          "sku": "8935006537774"
+        }
+      ]
+    },
+    "Tsubaki": {
+      "brand_id": 621,
+      "brand_url": "https://cocolux.com/thuong-hieu/tsubaki-i.621",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 11,
+      "products": [
+        {
+          "name": "Dầu Xả Tsubaki Premium Conditioner Ngăn Ngừa Rụng Tóc 490ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-xa-tsubaki-premium-conditioner-ngan-ngua-rung-toc-490ml-1.jpg",
+          "url": "https://cocolux.com/dau-xa-tsubaki-premium-conditioner-ngan-ngua-rung-toc-490ml-i.4901872466238",
+          "sku": "4901872466238"
+        },
+        {
+          "name": "Dầu Gội TSUBAKI Premium Ngăn Ngừa Rụng Tóc 490ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-goi-tsubaki-premium-ngan-ngua-rung-toc-490ml-1.jpg",
+          "url": "https://cocolux.com/dau-goi-tsubaki-premium-ngan-ngua-rung-toc-490ml-i.4901872466146",
+          "sku": "4901872466146"
+        },
+        {
+          "name": "Dầu Xả Tsubaki Premium Cool & Repair Conditioner Sạch Dầu Mát Lạnh 490ml",
+          "price": 151000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/dau-xa-tsubaki-premium-cool-repair-conditioner-sach-dau-mat-lanh-490ml.jpg",
+          "url": "https://cocolux.com/dau-xa-tsubaki-premium-cool-repair-conditioner-sach-dau-mat-lanh-490ml-i.4550516708182",
+          "sku": "4550516708182"
+        },
+        {
+          "name": "Mặt Nạ Tóc TSUBAKI Phục Hồi Hư Tổn 180g",
+          "price": 295000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/08/images/products/1691463557783-mat-na-toc-tsubaki.jpeg",
+          "url": "https://cocolux.com/mat-na-toc-tsubaki-phuc-hoi-hu-ton-180g-i.4901872459957",
+          "sku": "4901872459957"
+        },
+        {
+          "name": "Dầu Xả Tsubaki Premium Conditioner Dưỡng Tóc Bóng Mượt 490ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-xa-tsubaki-premium-conditioner-duong-toc-bong-muot-490ml.jpg",
+          "url": "https://cocolux.com/dau-xa-tsubaki-premium-conditioner-duong-toc-bong-muot-490ml-i.4901872466061",
+          "sku": "4901872466061"
+        },
+        {
+          "name": "Mặt Nạ Tóc TSUBAKI Premium EX Repair Phục Hồi Hư Tổn 180g (Mã Mới)",
+          "price": 295000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/mat-na-toc-tsubaki-premium-ex-repair-phuc-hoi-hu-ton-180g-ma-moi-i.4550516491190",
+          "sku": "4550516491190"
+        },
+        {
+          "name": "Dầu Gội TSUBAKI Premium Dưỡng Tóc Bóng Mượt 490ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/dau-goi-tsubaki-premium-duong-toc-bong-muot-490ml-i.4901872466023",
+          "sku": "4901872466023"
+        },
+        {
+          "name": "Dầu Xả Tsubaki Phục Hồi Hư Tổn Nặng & Giảm Gãy Rụng 490ml",
+          "price": 249000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/4550516474155.jpg",
+          "url": "https://cocolux.com/dau-xa-tsubaki-phuc-hoi-hu-ton-nang-giam-gay-rung-490ml-i.4550516474155",
+          "sku": "4550516474155"
+        },
+        {
+          "name": "Dầu Gội Tsubaki Premium Cool & Repair Shampoo Sạch Dầu Mát Lạnh 490ml",
+          "price": 215000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/dau-goi-tsubaki-premium-cool-repair-shampoo-sach-dau-mat-lanh-490ml.jpg",
+          "url": "https://cocolux.com/dau-goi-tsubaki-premium-cool-repair-shampoo-sach-dau-mat-lanh-490ml-i.4550516708175",
+          "sku": "4550516708175"
+        },
+        {
+          "name": "Bộ Gội Xả Tsubaki Premium Cool Set Sạch Dầu Mát Lạnh (Xanh) New 490ml",
+          "price": 418000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/05/images/products/1652410504979-tsubaki-bo-dau-goi-xa.jpeg",
+          "url": "https://cocolux.com/bo-goi-xa-tsubaki-sach-dau-mat-lanh-xanh-i.4901872472963",
+          "sku": "4901872472963"
+        },
+        {
+          "name": "Dầu Gội Tsubaki Phục Hồi Hư Tổn Nặng & Giảm Gãy Rụng 490ml",
+          "price": 249000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/4550516474087.jpg",
+          "url": "https://cocolux.com/dau-goi-tsubaki-phuc-hoi-hu-ton-nang-giam-gay-rung-490ml-i.4550516474087",
+          "sku": "4550516474087"
+        }
+      ]
+    },
+    "L'Oreal": {
+      "brand_id": 276,
+      "brand_url": "https://cocolux.com/thuong-hieu/loreal-i.276",
+      "crawled_at": "2026-05-04T20:39:42.548Z",
+      "total_products": 41,
+      "products": [
+        {
+          "name": "Kem Chống Nắng Loreal UV Defender Bright & Clear Nâng Tông Giảm Thâm 50ml",
+          "price": 3490004,
+          "original_price": 9000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-chong-nang-loreal-nang-tong-giam-tham-50ml.png",
+          "url": "https://cocolux.com/kem-chong-nang-loreal-nang-tong-giam-tham-50ml-i.8994993014668",
+          "sku": "8994993014668"
+        },
+        {
+          "name": "Kem Dưỡng Loreal Glycolic - Bright Matte Luminizing Cream Sáng Da 30ml",
+          "price": 279000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/kem-duong-loreal-glycolic-bright-matte-luminizing-cream-sang-da-30ml-i.8994993032853",
+          "sku": "8994993032853"
+        },
+        {
+          "name": "Kem Dưỡng Loreal Glycolic - Bright Glowing Cream Sáng Da Ban Đêm 50ml",
+          "price": 3790004,
+          "original_price": 19000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/03/images/products/1646705094534-kem-duong-sang-da-loreal-ban-dem.jpeg",
+          "url": "https://cocolux.com/kem-duong-loreal-glycolic-bright-glowing-cream-sang-da-ban-dem-50ml-i.8994993016563",
+          "sku": "8994993016563"
+        },
+        {
+          "name": "Serum L'Oréal Glycolic-Bright 8% Glycolic Acid Dưỡng Sáng Và Mờ Thâm Nám 30ml",
+          "price": 4500005,
+          "original_price": 19000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/duong-chat-trang-da-tuc-thi-loreal-8-glycolic-acid.jpg",
+          "url": "https://cocolux.com/duong-chat-trang-da-tuc-thi-loreal-1-0-glycolic-acid-i.8994993016587",
+          "sku": "8994993016587"
+        },
+        {
+          "name": "Kem Chống Nắng Loreal Paris UV Defender Serum Invisible Fluid Mỏng Nhẹ 50ml",
+          "price": 399000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-chong-nang-loreal-paris-uv-defender-serum-invisible-fluid-mong-nhe-50ml.png",
+          "url": "https://cocolux.com/kem-chong-nang-loreal-paris-uv-defender-serum-invisible-fluid-mong-nhe-50ml-i.8994993018086",
+          "sku": "8994993018086"
+        },
+        {
+          "name": "Nước Tẩy Trang Loreal Micellar Water Tươi Mát Cho Da Dầu Hỗn Hợp 400ml",
+          "price": 1990002,
+          "original_price": 49000,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-loreal-tuoi-mat-cho-da-dau-hon-hop-400ml-i.6928820030226",
+          "sku": "6928820030226"
+        },
+        {
+          "name": "Nước Tẩy Trang Loreal Micellar Water Làm Sạch Sâu Trang Điểm 400ml",
+          "price": 2290002,
+          "original_price": 89000,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-loreal-lam-sach-sau-trang-diem-400ml-i.6902395498919",
+          "sku": "6902395498919"
+        },
+        {
+          "name": "Dầu Dưỡng Tóc Loreal Chiết Xuất Tinh Dầu Hoa Tự Nhiên 100ml",
+          "price": 2490002,
+          "original_price": 99000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/01/products/1610599609617-dau-duong-toc-loreal-chiet-xuat-tinh-dau-hoa-tu-nhien.jpeg",
+          "url": "https://cocolux.com/dau-duong-toc-loreal-chiet-xuat-tinh-dau-hoa-tu-nhien-100ml-i.4992944111576",
+          "sku": "4992944111576"
+        },
+        {
+          "name": "Serum L'Oreal Revitalift Hyaluronic Acid Oil Control Niacinamide 2% Kiềm Dầu Ban Đêm 30ml",
+          "price": 559000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/serum-loreal-revitalift-hyaluronic-acid-oil-control-niacinamide-2-kiem-dau-ban-dem-30ml-i.8994993022823",
+          "sku": "8994993022823"
+        },
+        {
+          "name": "Kem Nền Loreal True Match - Màu: G2",
+          "price": 247000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/4935421255899.jpg",
+          "url": "https://cocolux.com/kem-nen-true-match-loreal-g2-i.4935421255899",
+          "sku": "4935421255899"
+        },
+        {
+          "name": "Dầu Gội Loreal Paris Full Resist Purifying Shampo Giảm Rụng tóc 440ml",
+          "price": 289000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/dau-goi-loreal-paris-full-resist-purifying-shampoo-giam-rung-toc-440ml.jpg",
+          "url": "https://cocolux.com/dau-goi-loreal-paris-elseve-full-resist-purifying-shampoo-i.6923700980288",
+          "sku": "6923700980288"
+        },
+        {
+          "name": "Kem Dưỡng Loreal Paris Revitalift Hyaluronic Acid Plumping Cream Day Siêu Cấp Ẩm Căng Mịn Da 50ml",
+          "price": 419000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/06/products/1624847173829-kem-duong-loreal-ban-ngay-revitalift-cap-am-50ml.png",
+          "url": "https://cocolux.com/kem-duong-sieu-cap-am-cang-min-da-loreal-paris-revitalift-hyaluronic-acid-50ml-i.6923700981209",
+          "sku": "6923700981209"
+        },
+        {
+          "name": "Nước Tẩy Trang L'Oréal Revitalift Crystal Purifying Micellar Water Làm Sạch Sâu Cho Da Dầu 95ml",
+          "price": 79000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/08/images/products/1691563228317-nuoc-tay-trang-loreal-95ml.jpeg",
+          "url": "https://cocolux.com/nuoc-tay-trang-loreal-lam-sach-sau-cho-da-dau-95ml-revitalift-crystal-micellar-water-i.8935274642606",
+          "sku": "8935274642606"
+        },
+        {
+          "name": "Dầu Gội Loreal Extraordinary Oil Sleek Silicone-free Shampoo 440ml",
+          "price": 289000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/dau-goi-loreal-extraordinary-oil-440ml-1.jpg",
+          "url": "https://cocolux.com/dau-goi-loreal-extraordinary-oil-440ml-i.6923700914047",
+          "sku": "6923700914047"
+        },
+        {
+          "name": "Kem Dưỡng Loreal Glycolic - Bright Glowing Cream Sáng Da Ban Ngày 50ml",
+          "price": 3790004,
+          "original_price": 19000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/03/images/products/1646705519600-kem-duong-sang-da-loreal-ban-ngay.png",
+          "url": "https://cocolux.com/kem-duong-loreal-glycolic-bright-glowing-cream-sang-da-ban-ngay-50ml-i.8994993016525",
+          "sku": "8994993016525"
+        },
+        {
+          "name": "Nước Tẩy Trang Loreal Micellar Water Dưỡng Ẩm Cho Da Thường Khô 400ml",
+          "price": 1990002,
+          "original_price": 49000,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-loreal-duong-am-cho-da-thuong-kho-400ml-i.6928820030240",
+          "sku": "6928820030240"
+        },
+        {
+          "name": "Kem Nền Loreal True Match - Màu: G1",
+          "price": 379000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/4935421255882.jpg",
+          "url": "https://cocolux.com/kem-nen-true-match-loreal-g1-i.4935421255882",
+          "sku": "4935421255882"
+        },
+        {
+          "name": "Nước Tẩy Trang Loreal Revitalift Hyaluronic Acid Micellar Water Căng Mịn Da 400ml",
+          "price": 289000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-loreal-revitalift-hyaluronic-acid-micellar-water-cang-min-da-i.6923700987782",
+          "sku": "6923700987782"
+        },
+        {
+          "name": "Nước Tẩy Trang Giúp Căng Mịn Da L'Oreal Paris Revitalift Hyaluronic Acid Micellar Water 95ml",
+          "price": 85000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/nuoc-tay-trang-giup-cang-min-da-loreal-paris-revitalift-hyaluronic-acid-micellar-water-95ml-i.8935274645577",
+          "sku": "8935274645577"
+        },
+        {
+          "name": "Tinh Chất L'Oreal Revitalift 1.5% Hyaluronic Acid Cấp Ẩm Sáng Da 30ml",
+          "price": 519000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2023/03/images/products/1679283453477-duong-chat-cap-am-lam-da-sang-min-loreal.jpeg",
+          "url": "https://cocolux.com/duong-chat-cap-am-lam-da-sang-min-loreal-i.6923700966701",
+          "sku": "6923700966701"
+        },
+        {
+          "name": "Kem Nền L'Oreal Paris Infallible 24H Tinted Serum - Rosy Light",
+          "price": 3890004,
+          "original_price": 39000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/kem-nen-loreal-paris-infallible-24h-tinted-serum-1-rosy.jpg",
+          "url": "https://cocolux.com/kem-nen-loreal-paris-infallible-24h-tinted-serum-rosy-light-i.3600524190514",
+          "sku": "3600524190514"
+        },
+        {
+          "name": "Nước Hoa Hồng L'Oreal Glycolic Bright Peeling Toner Dưỡng Sáng Da 128ml",
+          "price": 489000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/nuoc-hoa-hong-loreal-glycolic-bright-peeling-toner-duong-sang-da-128ml.jpg",
+          "url": "https://cocolux.com/nuoc-hoa-hong-loreal-glycolic-bright-peeling-toner-duong-sang-da-128ml-i.6941594509156",
+          "sku": "6941594509156"
+        },
+        {
+          "name": "Kem Nền L'Oreal Paris Infallible 24H Tinted Serum - Very Light",
+          "price": 3890004,
+          "original_price": 39000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/kem-nen-loreal-paris-infallible-24h-tinted-serum-0-5(1).jpg",
+          "url": "https://cocolux.com/kem-nen-loreal-paris-infallible-24h-tinted-serum-very-light-i.3600524190507",
+          "sku": "3600524190507"
+        },
+        {
+          "name": "Sữa Rửa Mặt Loreal Revitalift Hyaluronic Acid Cấp Ẩm, Căng Mịn Da",
+          "price": 159000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/11/images/products/1637633776033-sua-rua-mat-loreal-da-sang-min-100ml.jpeg",
+          "url": "https://cocolux.com/sua-rua-mat-loreal-da-sang-min-100ml-i.8994993016013",
+          "sku": "8994993016013"
+        },
+        {
+          "name": "Kem Chống Nắng L'Oreal Paris Glycolic-Bright Anti-Dark Spot Daily UV Fluid 50ml",
+          "price": 3490004,
+          "original_price": 9000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-chong-nang-loreal-paris-glycolic-bright-anti-dark-spot-daily-uv-fluid-50ml.png",
+          "url": "https://cocolux.com/kem-chong-nang-loreal-paris-glycolic-bright-anti-dark-spot-daily-uv-fluid-50ml-i.8994993026913",
+          "sku": "8994993026913"
+        },
+        {
+          "name": "Gel Chống Nắng L'Oreal Watergel Thế Hệ Mới 50ml",
+          "price": 409000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/gel-chong-nang-loreal-watergel-the-he-moi-50ml-i.8994993027965",
+          "sku": "8994993027965"
+        },
+        {
+          "name": "Kem Chống Nắng Loreal UV Defender Matte & Fresh Kiềm Dầu Thoáng Mịn 50ml",
+          "price": 3490004,
+          "original_price": 9000,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/kem-chong-nang-loreal-kiem-dau-thoang-min-50ml.jpg",
+          "url": "https://cocolux.com/kem-chong-nang-loreal-uv-defender-matte-fresh-kiem-dau-thoang-min-50ml-i.8994993014705",
+          "sku": "8994993014705"
+        },
+        {
+          "name": "Thuốc Nhuộm Tóc LOREAL 5 Nâu Hạt Dẻ",
+          "price": 249000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631696603204-thuoc-nhuom-toc-loreal-5-1.jpeg",
+          "url": "https://cocolux.com/thuoc-nhuom-toc-loreal-5-nau-hat-de-i.8850434200260",
+          "sku": "8850434200260"
+        },
+        {
+          "name": "Dầu Gội L'oréal Giúp Tóc Bồng Bềnh 620ml",
+          "price": 199000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/CCL/SP/8994993027392.jpg",
+          "url": "https://cocolux.com/dau-goi-loreal-giup-toc-bong-benh-620ml-i.8994993027392",
+          "sku": "8994993027392"
+        },
+        {
+          "name": "Dầu Xả Loreal Extraordinary Oil Sleek Conditioner 100ml",
+          "price": 78000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/dau-xa-loreal-extraordinary-oil-sleek-conditioner-100ml-i.6923700973402",
+          "sku": "6923700973402"
+        },
+        {
+          "name": "Dầu Xả Loreal Paris Full Resist Detangling Conditioner Giảm Rụng Tóc 440ml",
+          "price": 289000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/dau-xa-loreal-paris-full-resist-detangling-conditioner-giam-rung-toc-440ml.jpg",
+          "url": "https://cocolux.com/dau-xa-loreal-paris-full-resist-detangling-conditioner-giam-rung-toc-440ml-i.6923700980271",
+          "sku": "6923700980271"
+        },
+        {
+          "name": "Kem Nền L'Oreal Paris Infallible 24H Tinted Serum - Light",
+          "price": 279000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/files/kem-nen-loreal-paris-infallible-24h-tinted-serum-2-light.jpg",
+          "url": "https://cocolux.com/kem-nen-loreal-paris-infallible-24h-tinted-serum-light-i.3600524190521",
+          "sku": "3600524190521"
+        },
+        {
+          "name": "Kem Nền Loreal True Match - Màu: N1",
+          "price": 379000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/Bao_bi_moi/Thay-sp/4935421255820.jpg",
+          "url": "https://cocolux.com/kem-nen-true-match-loreal-n1-i.4935421255820",
+          "sku": "4935421255820"
+        },
+        {
+          "name": "Dầu Gội Loreal Extraordinary Oil Sleek Silicone-free Shampoo 100ml",
+          "price": 78000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/dau-goi-loreal-extraordinary-oil-sleek-siliconefree-shampoo-100ml-i.6923700978865",
+          "sku": "6923700978865"
+        },
+        {
+          "name": "Sữa Rửa Mặt L'Oreal Paris Glycolic Bright Sáng Da 100ml",
+          "price": 159000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/03/images/products/1646708605651-sua-rua-mat-sang-da-loreal-100ml.png",
+          "url": "https://cocolux.com/sua-rua-mat-sang-da-loreal-100ml-i.8994993016532",
+          "sku": "8994993016532"
+        },
+        {
+          "name": "Thuốc Nhuộm Tóc LOREAL 3 Nâu Đen Tự Nhiên",
+          "price": 249000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631697094861-thuoc-nhuom-toc-loreal-3.jpeg",
+          "url": "https://cocolux.com/thuoc-nhuom-toc-loreal-3-nau-den-tu-nhien-i.8850434200178",
+          "sku": "8850434200178"
+        },
+        {
+          "name": "Thuốc Nhuộm Tóc LOREAL 4 Nâu Tự Nhiên",
+          "price": 149000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2021/09/images/products/1631696323523-thuoc-nhuom-toc-loreal-4.jpeg",
+          "url": "https://cocolux.com/thuoc-nhuom-toc-loreal-4-nau-tu-nhien-i.8850434200215",
+          "sku": "8850434200215"
+        },
+        {
+          "name": "Kem Dưỡng Da HA Căng Mượt Ban Ngày L'oréal Paris Revitalift Hyaluronic Acid 50ml",
+          "price": 419000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/san-pham/kem-duong-da-loreal-paris-revitalift-hyaluronic-acid-8h-oil-control-gel-cream-cap-am-giam-bong-nhon-50ml-4.jpg",
+          "url": "https://cocolux.com/kem-duong-da-loreal-paris-revitalift-hyaluronic-acid-8h-oil-control-gel-cream-cap-am-giam-bong-nhon-50ml-i.8994993022885",
+          "sku": "8994993022885"
+        },
+        {
+          "name": "Son Kem Lì Loreal Infallible Matte Resistance #150 Lazy Sunday",
+          "price": 287000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/son-kem-li-loreal-infallible-matte-resistance-150-lazy-sunday-i.6902395853299",
+          "sku": "6902395853299"
+        },
+        {
+          "name": "Son Kem Lì Loreal Infallible Matte Resistance #420 Le Rouge Pasris",
+          "price": 369000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "",
+          "url": "https://cocolux.com/son-kem-li-loreal-infallible-matte-resistance-420-le-rouge-pasris-i.6902395853367",
+          "sku": "6902395853367"
+        },
+        {
+          "name": "Kem Ủ Tóc Loreal Paris Hỗ Trợ Phục Hồi Tóc Hư Tổn 200ml",
+          "price": 169000,
+          "original_price": null,
+          "discount_percent": null,
+          "image": "https://cocolux.com/storage/upload_image/images/cdn_images/2022/08/images/products/1660901269952-kem-u-phuc-hoi-toc-total-repair-5-200ml.jpeg",
+          "url": "https://cocolux.com/kem-u-phuc-hoi-toc-total-repair-5-200ml-i.8991380038108",
+          "sku": "8991380038108"
+        }
+      ]
+    }
+  }
+}

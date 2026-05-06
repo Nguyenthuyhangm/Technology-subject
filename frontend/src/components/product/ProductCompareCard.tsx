@@ -46,7 +46,7 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
   const bestOffer = sorted[0];
   const worstOffer = sorted[sorted.length - 1];
   const spread = worstOffer && bestOffer ? worstOffer.finalPrice - bestOffer.finalPrice : 0;
-  const coverSrc = product.images[0] ?? product.imageUrl ?? '';
+const coverSrc = product.images?.[0] ?? product.imageUrl ?? 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80';
 
   return (
     <article
@@ -75,8 +75,13 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
               alt={product.name}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               onError={(e) => {
-                e.currentTarget.src = '/fallback-product.jpg';
-              }}
+  const platformImg = product.platforms?.[0]?.platformImageUrl;
+  if (platformImg && e.currentTarget.src !== platformImg) {
+    e.currentTarget.src = platformImg;
+  } else {
+    e.currentTarget.src = '/fallback-product.jpg';
+  }
+}}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10" />
           </div>
