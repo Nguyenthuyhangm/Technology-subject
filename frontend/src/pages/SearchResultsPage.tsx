@@ -31,212 +31,207 @@ function formatPlatformLabel(name: string): string {
 }
 
 export default function SearchResultsPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get('q') ?? '';
+  const initialPlatforms = searchParams.getAll('platform') as PlatformName[];
 
-  // --- 1. Derived State từ URL (Single Source of Truth) ---
-  const query = searchParams.get('q') ?? '';
-  const selectedPlatformsArr = useMemo(() => searchParams.getAll('platform') as PlatformName[], [searchParams]);
-  const selectedCategory = searchParams.get('category') ?? (slug ?? 'all');
-  const selectedPromo = searchParams.get('promo') ?? 'all';
-  const onlyOfficial = searchParams.get('official') === 'true';
-  const sortBy = (searchParams.get('sort') as 'best-price' | 'rating' | 'reviews') ?? 'best-price';
-
-  // State cục bộ cho input để gõ mượt
-  const [queryDraft, setQueryDraft] = useState(query);
+  const [query, setQuery] = useState(initialQuery);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<Set<PlatformName>>(
+    () => new Set(initialPlatforms),
+  );
+  const [onlyOfficial, setOnlyOfficial] = useState(false);
+  const [sortBy, setSortBy] = useState<'best-price' | 'rating' | 'reviews'>('best-price');
   const [products, setProducts] = useState<ProductSearch[]>([]);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<CategoryItem[]>([]);
 
-  // --- 2. HÀM CẬP NHẬT URL (Dùng chung) ---
-  const updateFilters = useCallback((updates: Record<string, string | string[] | boolean | undefined>) => {
-    const next = new URLSearchParams(searchParams);
-    
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === undefined || value === 'all' || value === false || value === '') {
-        next.delete(key);
-      } else if (Array.isArray(value)) {
-        next.delete(key);
-        value.forEach(v => next.append(key, v));
-      } else {
-        next.set(key, String(value));
-      }
-    });
+  // Chuẩn hoá mảng platform: sort + dedup để key ổn định giữa các render.
+  const selectedPlatformsArr = useMemo(
+    () => Array.from(selectedPlatforms).sort(),
+    [selectedPlatforms],
+  );
+  const platformsKey = selectedPlatformsArr.join(',');
 
-    setSearchParams(next, { replace: true });
-  }, [searchParams, setSearchParams]);
-
-  // --- 3. EFFECTS ---
-
-  // Đồng bộ queryDraft khi query từ URL thay đổi (nhấn Back/Forward)
+  // Re-fetch mỗi khi query hoặc selection platform đổi.
+  // Ưu tiên làm cho filter hoạt động ngay (không cần bấm "Tìm kiếm" lại).
   useEffect(() => {
-    setQueryDraft(query);
-  }, [query]);
-
-  // Debounce tìm kiếm
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (queryDraft.trim() !== query) {
-        updateFilters({ q: queryDraft.trim() });
-      }
-    }, 400);
-    return () => clearTimeout(timer);
-  }, [queryDraft, query, updateFilters]);
-
-  // Load categories (1 lần duy nhất)
-  useEffect(() => {
-    fetch('http://localhost:8080/api/categories/all')
-      .then(res => res.json())
-      .then((data) => setCategories(Array.isArray(data) ? data : []))
-      .catch(() => setCategories([]));
-  }, []);
-
-  // FETCH DỮ LIỆU CHÍNH: Chỉ chạy khi URL Params thay đổi
-  useEffect(() => {
+    if (!query) {
+      setProducts([]);
+      return;
+    }
     let cancelled = false;
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        let data: ProductSearch[] = [];
-        const effectiveCategory = selectedCategory !== 'all' ? selectedCategory : slug;
-
-        if (query) {
-          data = await searchProducts(query, {
-            platforms: selectedPlatformsArr,
-            category: effectiveCategory,
-            promotion: selectedPromo !== 'all' ? selectedPromo : undefined,
-            officialOnly: onlyOfficial,
-            sortBy,
-          } as any);
-        } else if (effectiveCategory) {
-          data = await getProductsByCategory(effectiveCategory);
-        }
-
+    setLoading(true);
+    searchProducts(query, { platforms: selectedPlatformsArr })
+      .then((data) => {
         if (cancelled) return;
-
-        // FE Filter Fallback
-        let filtered = Array.isArray(data) ? [...data] : [];
-
-        if (selectedPlatformsArr.length > 0) {
-          filtered = filtered.filter((p: any) => 
-            selectedPlatformsArr.includes(p.platform?.name ?? p.platform)
-          );
-        }
-
-        if (selectedPromo !== 'all') {
-          filtered = filtered.filter((p: any) => {
-            if (selectedPromo === 'sale') return p.discountPercent > 0 || p.salePrice < p.originalPrice;
-            if (selectedPromo === 'flash_sale') return !!p.isFlashSale;
-            return true;
-          });
-        }
-
-        if (onlyOfficial) {
-          filtered = filtered.filter((p: any) => p.isOfficial || p.shop?.isOfficial);
-        }
-
-        // Sorting
-        filtered.sort((a: any, b: any) => {
-          if (sortBy === 'best-price') return (a.price ?? 0) - (b.price ?? 0);
-          if (sortBy === 'rating') return (b.rating ?? 0) - (a.rating ?? 0);
-          return (b.reviewCount ?? 0) - (a.reviewCount ?? 0);
-        });
-
-        setProducts(filtered);
-      } catch (err) {
-        if (!cancelled) setProducts([]);
-      } finally {
+        setProducts(data);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error('[SearchResultsPage] searchProducts failed:', err);
+        setProducts([]);
+      })
+      .finally(() => {
         if (!cancelled) setLoading(false);
-      }
+      });
+    return () => {
+      cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, platformsKey]);
 
-    fetchData();
-    return () => { cancelled = true; };
-  }, [query, selectedCategory, selectedPromo, onlyOfficial, sortBy, selectedPlatformsArr, slug]);
+  // Đồng bộ filter lên URL để giữ deep-link khi user share/reload.
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (query) next.set('q', query);
+    for (const p of selectedPlatformsArr) next.append('platform', p);
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, platformsKey]);
 
-  // --- 4. EVENT HANDLERS ---
-  const togglePlatform = (name: PlatformName) => {
-    const next = new Set(selectedPlatformsArr);
-    if (next.has(name)) next.delete(name);
-    else next.add(name);
-    updateFilters({ platform: Array.from(next) });
+  const onSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Submit form chỉ dùng để chốt keyword; useEffect trên sẽ tự fetch lại.
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (query) next.set('q', query);
+      else next.delete('q');
+      return next;
+    });
   };
 
-  const groupedCategories = useMemo(() => ({
-    skincare: categories.filter(c => SKINCARE_SLUGS.includes(c.slug as any)),
-    makeup: categories.filter(c => MAKEUP_SLUGS.includes(c.slug as any)),
-    haircare: categories.filter(c => HAIRCARE_SLUGS.includes(c.slug as any)),
-    other: categories.filter(c => ![...SKINCARE_SLUGS, ...MAKEUP_SLUGS, ...HAIRCARE_SLUGS].includes(c.slug as any)),
-  }), [categories]);
+  const togglePlatform = (name: PlatformName) => {
+    setSelectedPlatforms((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
 
-  const summaryText = `${products.length} kết quả · ${sortBy === 'best-price' ? 'Giá tốt nhất' : sortBy === 'rating' ? 'Đánh giá cao' : 'Nhiều review'}`;
+  const clearPlatforms = () => setSelectedPlatforms(new Set());
+
+  const isAllSelected = selectedPlatforms.size === 0;
+
+  const summaryText = useMemo(() => {
+    const parts: string[] = [];
+    parts.push(`${products.length} kết quả`);
+    if (!isAllSelected) {
+      parts.push(`trên ${selectedPlatformsArr.map(formatPlatformLabel).join(', ')}`);
+    }
+    if (onlyOfficial) parts.push('ưu tiên gian hàng chính hãng');
+    if (sortBy === 'best-price') parts.push('sắp theo giá tốt nhất');
+    else if (sortBy === 'rating') parts.push('sắp theo đánh giá cao');
+    else parts.push('sắp theo nhiều review');
+    return parts.join(' · ');
+  }, [products.length, onlyOfficial, selectedPlatformsArr, isAllSelected, sortBy]);
 
   return (
-    <div className="min-h-screen bg-[#FCF8F4] text-stone-900" style={{ fontFamily: FONT_STACK.sans }}>
+    <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
+      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-30 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
+
       <AppHeader currentPage="search" />
+
       <main className="mx-auto max-w-7xl px-6 pb-20 pt-36 lg:px-12">
         <section className="mb-10">
-          <h1 className="mt-3 text-4xl leading-[1.12] text-stone-900 md:text-5xl" style={{ fontFamily: FONT_STACK.serif }}>
-            Tìm một món bạn đang cân nhắc,<br className="hidden md:block" /> so sánh theo cách nhẹ nhàng hơn.
-          </h1>
+          <div className="max-w-3xl">
+            <h1
+              className="mt-3 text-4xl leading-[1.12] text-stone-900 md:text-5xl"
+              style={{ fontFamily: FONT_STACK.serif }}
+            >
+              Tìm một món bạn đang cân nhắc,
+              <br className="hidden md:block" />
+              so sánh theo cách nhẹ nhàng hơn.
+            </h1>
+          </div>
 
-          <form onSubmit={(e) => e.preventDefault()} className="mt-8 rounded-[32px] border border-stone-200/60 bg-[#FBF8F3] p-4 shadow-sm">
+          <form
+            onSubmit={onSubmitSearch}
+            className="mt-8 rounded-[32px] border border-stone-200/60 dark:border-stone-700/40 bg-[#FBF8F3] dark:bg-[#1A1614] p-4 shadow-[0_10px_30px_rgba(28,24,20,0.04)]"
+          >
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-              <div className="flex flex-1 items-center rounded-full bg-white px-5 py-3.5 ring-1 ring-stone-200/60">
+              <div className="flex flex-1 items-center rounded-full bg-white dark:bg-stone-800/60 px-5 py-3.5 ring-1 ring-stone-200/60 dark:ring-stone-700/40">
                 <Search className="h-4 w-4 text-stone-400" />
                 <input
-                  value={queryDraft}
-                  onChange={(e) => setQueryDraft(e.target.value)}
-                  placeholder="Tìm theo tên sản phẩm..."
-                  className="ml-3 w-full bg-transparent outline-none"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Tìm theo tên sản phẩm, thương hiệu hoặc model"
+                  className="ml-3 w-full bg-transparent text-[15px] text-stone-900 dark:text-stone-100 outline-none placeholder:text-stone-400 dark:placeholder:text-stone-600"
                 />
               </div>
+              <button
+                type="submit"
+                className="rounded-full bg-[#1F1A17] px-6 py-3.5 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Tìm kiếm
+              </button>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => updateFilters({ platform: [] })}
-                className={`rounded-full px-4 py-2 text-[11px] font-medium ring-1 ${selectedPlatformsArr.length === 0 ? 'bg-[#F3EDE5] ring-[#DED3C7]' : 'ring-stone-200/70'}`}
-              >
-                Tất cả sàn
-              </button>
-              {PLATFORM_OPTIONS.map((p) => (
+            <div className="mt-4 flex flex-col gap-4 pt-2 xl:flex-row xl:items-center xl:justify-between">
+              <div className="flex flex-wrap gap-2">
+                {/* "Tất cả sàn" = clear filter. Active khi không chip nào được chọn. */}
                 <button
-                  key={p}
                   type="button"
-                  onClick={() => togglePlatform(p)}
-                  className={`rounded-full px-4 py-2 text-[11px] font-medium ring-1 ${selectedPlatformsArr.includes(p) ? 'bg-[#F3EDE5] ring-[#DED3C7]' : 'ring-stone-200/70'}`}
+                  onClick={clearPlatforms}
+                  aria-pressed={isAllSelected}
+                  className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${isAllSelected
+                    ? 'bg-[#F3EDE5] dark:bg-[#2A221A] text-[#2C241F] dark:text-[#E8D5B8] ring-1 ring-[#DED3C7] dark:ring-[#4A3A2A]'
+                    : 'bg-transparent text-stone-500 dark:text-stone-400 ring-1 ring-stone-200/70 dark:ring-stone-700/50 hover:text-stone-900 dark:hover:text-stone-100'
+                    }`}
                 >
-                  {formatPlatformLabel(p)}
+                  Tất cả sàn
                 </button>
-              ))}
-              <select
-                value={selectedCategory}
-                onChange={(e) => updateFilters({ category: e.target.value })}
-                className="rounded-full bg-white px-4 py-2 text-sm ring-1 ring-stone-200/70 outline-none"
-              >
-                <option value="all">Tất cả danh mục</option>
-                {Object.entries(groupedCategories).map(([label, list]) => (
-                  <optgroup key={label} label={label}>
-                    {list.map(c => <option key={c.id} value={c.slug}>{c.name}</option>)}
-                  </optgroup>
-                ))}
-              </select>
 
-              <select
-                value={sortBy}
-                onChange={(e) => updateFilters({ sort: e.target.value })}
-                className="rounded-full bg-white px-4 py-2 text-sm ring-1 ring-stone-200/70 outline-none"
-              >
-                <option value="best-price">Giá tốt nhất</option>
-                <option value="rating">Đánh giá cao</option>
-                <option value="reviews">Nhiều review</option>
-              </select>
+                {PLATFORM_OPTIONS.map((item) => {
+                  const active = selectedPlatforms.has(item);
+                  return (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => togglePlatform(item)}
+                      aria-pressed={active}
+                      className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${active
+                        ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
+                        : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
+                        }`}
+                    >
+                      {formatPlatformLabel(item)}
+                    </button>
+                  );
+                })}
+
+                <button
+                  type="button"
+                  onClick={() => setOnlyOfficial((prev) => !prev)}
+                  className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.04em] transition ${onlyOfficial
+                    ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
+                    : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
+                    }`}
+                >
+                  Official
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className={`text-sm text-stone-400 dark:text-stone-500`}>Sắp xếp theo</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as 'best-price' | 'rating' | 'reviews')}
+                  className="rounded-full bg-white dark:bg-stone-800/60 px-4 py-2.5 text-sm text-stone-700 dark:text-stone-300 outline-none ring-1 ring-stone-200/70 dark:ring-stone-700/40 transition focus:ring-stone-300"
+                >
+                  <option value="best-price">Giá tốt nhất</option>
+                  <option value="rating">Đánh giá cao</option>
+                  <option value="reviews">Nhiều review</option>
+                </select>
+              </div>
             </div>
           </form>
-          <p className="mt-5 text-sm text-stone-500">{loading ? 'Đang tải...' : summaryText}</p>
+
+          <div className="mt-5">
+            <p className="text-sm leading-7 text-stone-500">
+              {loading ? 'Đang tải kết quả…' : summaryText}
+            </p>
+          </div>
         </section>
 
         <section className="space-y-6">

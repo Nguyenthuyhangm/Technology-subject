@@ -64,7 +64,7 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
 
   return (
     <article
-      className="group relative rounded-[34px] border border-[#DDD2C6] bg-[#F8F4EE] p-7 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
+      className="group relative rounded-[34px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F8F4EE] dark:bg-[#1A1614] p-7 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
       style={{ fontFamily: FONT_STACK.sans }}
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -83,14 +83,19 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
         </button>
 
         <Link to={`/product/${product.id}`} className="flex min-w-0 gap-5 lg:flex-1">
-          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA]">
+          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA] dark:bg-stone-800">
             <img
               src={coverSrc}
               alt={product.name}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               onError={(e) => {
-                e.currentTarget.src = '/fallback-product.jpg';
-              }}
+  const platformImg = product.platforms?.[0]?.platformImageUrl;
+  if (platformImg && e.currentTarget.src !== platformImg) {
+    e.currentTarget.src = platformImg;
+  } else {
+    e.currentTarget.src = '/fallback-product.jpg';
+  }
+}}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10" />
           </div>
@@ -99,7 +104,7 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
             <p className="text-[10px] uppercase tracking-[0.16em] text-[#8D7663]">{product.brandName}</p>
 
             <h3
-              className="mt-3 line-clamp-2 text-[1.72rem] leading-[1.12] tracking-[-0.025em] text-[#241B17] transition-colors duration-300 group-hover:text-[#3A2B23]"
+              className="mt-3 line-clamp-2 text-[1.72rem] leading-[1.12] tracking-[-0.025em] text-[#241B17] dark:text-stone-100 transition-colors duration-300 group-hover:text-[#3A2B23] dark:group-hover:text-stone-200"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               {product.name}
@@ -119,7 +124,7 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
 
           {bestOffer && (
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
-              <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17]">
+              <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17] dark:text-stone-100">
                 {formatPrice(bestOffer.finalPrice)}
               </span>
               <PlatformPill platform={bestOffer.platform} />

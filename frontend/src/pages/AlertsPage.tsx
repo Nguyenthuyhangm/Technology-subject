@@ -81,11 +81,11 @@ export default function AlertsPage() {
 
   return (
     <div
-      className="min-h-screen bg-[#FCF8F4] text-[#241B17]"
+      className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-[#241B17] dark:text-stone-100"
       style={{ fontFamily: FONT_STACK.sans }}
     >
-      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#E9DED1] opacity-45 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#EDE3D8] opacity-90 blur-[120px]" />
+      <div className="pointer-events-none fixed left-[-10%] top-[-12%] h-[40vw] w-[40vw] rounded-full bg-[#E9DED1] dark:bg-[#2A1F1A] opacity-45 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[30vw] w-[30vw] rounded-full bg-[#EDE3D8] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
       <AppHeader currentPage="alerts" />
 
@@ -117,11 +117,11 @@ export default function AlertsPage() {
             return (
               <article
                 key={alert.id}
-                className="rounded-[34px] border border-[#DDD2C6] bg-[#F8F4EE] p-6 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
+                className="rounded-[34px] border border-[#DDD2C6] dark:border-stone-700/40 bg-[#F8F4EE] dark:bg-[#1A1614] p-6 shadow-[0_10px_30px_rgba(33,24,19,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)]"
               >
                 <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_320px] xl:items-start">
                   <div className="flex min-w-0 gap-5">
-                    <div className="h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA]">
+                    <div className="h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA] dark:bg-stone-800">
                       <img
                         src={product.images[0]}
                         alt={product.name}
@@ -145,7 +145,7 @@ export default function AlertsPage() {
                       </p>
 
                       <h2
-                        className="mt-3 line-clamp-2 text-[1.68rem] leading-[1.1] tracking-[-0.025em] text-[#241B17]"
+                        className="mt-3 line-clamp-2 text-[1.68rem] leading-[1.1] tracking-[-0.025em] text-[#241B17] dark:text-stone-100"
                         style={{ fontFamily: FONT_STACK.serif }}
                       >
                         {product.name}
@@ -174,23 +174,23 @@ export default function AlertsPage() {
 
                       <div className="mt-5 space-y-4">
                         <div className="flex items-baseline justify-between gap-4">
-                          <span className="text-sm text-[#7B6E64]">Mục tiêu</span>
-                          <span className="text-[1.05rem] font-medium tracking-[-0.01em] text-[#2C241F]">
+                          <span className="text-sm text-[#7B6E64] dark:text-stone-400">Mục tiêu</span>
+                          <span className="text-[1.05rem] font-medium tracking-[-0.01em] text-[#2C241F] dark:text-stone-100">
                             {formatPrice(alert.targetPrice)}
                           </span>
                         </div>
 
                         <div className="flex items-end justify-between gap-4">
-                          <span className="text-sm text-[#7B6E64]">Hiện tại</span>
-                          <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17]">
+                          <span className="text-sm text-[#7B6E64] dark:text-stone-400">Hiện tại</span>
+                          <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17] dark:text-stone-100">
                             {formatPrice(bestOffer.finalPrice)}
                           </span>
                         </div>
 
-                        <div className="border-t border-[#E3D8CC] pt-4">
+                        <div className="border-t border-[#E3D8CC] dark:border-stone-700/40 pt-4">
                           <div className="flex items-center justify-between gap-4">
-                            <span className="text-sm text-[#7B6E64]">Trạng thái</span>
-                            <span className="text-sm font-medium text-[#6C5647]">
+                            <span className="text-sm text-[#7B6E64] dark:text-stone-400">Trạng thái</span>
+                            <span className="text-sm font-medium text-[#6C5647] dark:text-stone-300">
                               {hasReachedTarget ? 'Đã chạm ngưỡng' : formatPrice(diff)}
                             </span>
                           </div>

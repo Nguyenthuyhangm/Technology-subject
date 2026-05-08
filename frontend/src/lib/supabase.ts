@@ -8,6 +8,7 @@ if (!supabaseUrl || !supabaseKey) {
 }
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
+export const BACKEND_URL = 'http://localhost:8080'
 
 export interface UserProfile {
     id: string
@@ -15,5 +16,8 @@ export interface UserProfile {
     name: string
     plan: string
     phone: string | null
+    theme: string
+    language: string
     created_at: string
+    updated_at: string | null
 }

@@ -31,7 +31,7 @@ export default function ProductGallery({
   };
 
   return (
-    <div className="rounded-[38px] border border-stone-200/70 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.04)]">
+    <div className="rounded-[38px] border border-stone-200/70 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-6 shadow-[0_18px_45px_rgba(15,23,42,0.04)]">
       <div className="mb-5 flex items-center justify-between">
         {showLowestBadge && <Badge variant="warning">Giá đẹp 90 ngày</Badge>}
       </div>
@@ -43,10 +43,10 @@ export default function ProductGallery({
               key={`${image}-${index}`}
               type="button"
               onClick={() => setActiveIndex(index)}
-              className={`overflow-hidden rounded-[22px] border bg-white transition ${
+              className={`overflow-hidden rounded-[22px] border bg-white dark:bg-stone-800 transition ${
                 activeIndex === index
-                  ? 'border-[#D8C1C6] shadow-sm'
-                  : 'border-stone-200/80'
+                  ? 'border-[#D8C1C6] dark:border-[#8E6A72] shadow-sm'
+                  : 'border-stone-200/80 dark:border-stone-700/60'
               }`}
             >
               <img
@@ -59,7 +59,7 @@ export default function ProductGallery({
           ))}
         </div>
 
-        <div className="order-1 rounded-[32px] bg-[#F6F1EB] p-6 md:order-2">
+        <div className="order-1 rounded-[32px] bg-[#F6F1EB] dark:bg-stone-800/50 p-6 md:order-2">
           <div className="aspect-square overflow-hidden rounded-[30px]">
             <img
              src={images?.[activeIndex] || ''}
