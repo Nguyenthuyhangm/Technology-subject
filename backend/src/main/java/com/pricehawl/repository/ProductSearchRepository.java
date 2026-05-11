@@ -18,7 +18,7 @@ public interface ProductSearchRepository
     {
       "multi_match": {
         "query": "?0",
-        "fields": ["name^3", "categoryName", "brandName"],
+        "fields": ["name", "categoryName", "brandName"],
         "fuzziness": "AUTO",
         "operator": "and"
       }
