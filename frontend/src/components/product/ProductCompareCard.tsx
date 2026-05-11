@@ -35,6 +35,20 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
 
   const isSaved = isInWishlist(String(product.id));
 
+
+  const finalPrice = product.bestPrice ?? 0;
+  const originalPrice =
+      product.originalPrice ?? finalPrice;
+
+  const discountPct = product.discountPct ?? 0;
+
+  const showSale =
+      originalPrice > finalPrice &&
+      discountPct > 0;
+
+  const imageSrc =
+      product.imageUrl || '/fallback-product.jpg';
+
   const handleWishlistClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -49,18 +63,6 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
       console.error('Lỗi thao tác wishlist:', error);
     }
   };
-
-  // Null-safe sau khi merge: API có thể không trả về `images`/`platforms`,
-  // hoặc trả 500 → các field này có thể undefined. Luôn ép về mảng trước khi
-  // sort/truy cập index để tránh "Cannot read properties of undefined".
-  const platforms = Array.isArray(product?.platforms) ? product.platforms : [];
-  const sorted = [...platforms].sort((a, b) => (a?.finalPrice ?? 0) - (b?.finalPrice ?? 0));
-  const bestOffer = sorted[0];
-  const worstOffer = sorted[sorted.length - 1];
-  const spread =
-    worstOffer && bestOffer ? (worstOffer.finalPrice ?? 0) - (bestOffer.finalPrice ?? 0) : 0;
-  const coverSrc =
-    product?.images?.[0] ?? product?.imageUrl ?? '/fallback-product.jpg';
 
   return (
     <article
@@ -85,16 +87,13 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
         <Link to={`/product/${product.id}`} className="flex min-w-0 gap-5 lg:flex-1">
           <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[26px] bg-[#ECE4DA] dark:bg-stone-800">
             <img
-              src={coverSrc}
+              src={imageSrc}
               alt={product.name}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               onError={(e) => {
-  const platformImg = product.platforms?.[0]?.platformImageUrl;
-  if (platformImg && e.currentTarget.src !== platformImg) {
-    e.currentTarget.src = platformImg;
-  } else {
-    e.currentTarget.src = '/fallback-product.jpg';
-  }
+
+                e.currentTarget.src =
+                    '/fallback-product.jpg';
 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/10" />
@@ -114,7 +113,7 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
 
             <div className="mt-4 flex flex-wrap gap-2">
               {(product?.score ?? 0) >= 0.8 && <Badge variant="brand">Phù hợp cao</Badge>}
-              {platforms.some((p) => p?.isOfficial) && <Badge variant="soft">Official</Badge>}
+
             </div>
           </div>
         </Link>
@@ -122,18 +121,18 @@ export default function ProductCompareCard({ product }: ProductCompareCardProps)
         <div className="z-20 flex shrink-0 flex-col gap-3 lg:items-end">
           <p className="text-sm tracking-[0.01em] text-[#9A8A7A]">Giá tốt nhất hiện tại</p>
 
-          {bestOffer && (
+
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
               <span className="text-[2.15rem] font-semibold leading-none tracking-[-0.045em] text-[#241B17] dark:text-stone-100">
-                {formatPrice(bestOffer.finalPrice)}
+                {formatPrice(finalPrice)}
               </span>
-              <PlatformPill platform={bestOffer.platform} />
+              <PlatformPill platform={product.bestPlatform} />
             </div>
-          )}
 
-          {spread > 0 && (
+
+          {showSale && (
             <p className="text-sm text-[#7A5D49] lg:text-right">
-              Tiết kiệm {formatPrice(spread)} so với nơi đắt nhất
+              Tiết kiệm {originalPrice-finalPrice} vnd
             </p>
           )}
 

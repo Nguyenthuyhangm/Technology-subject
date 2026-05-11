@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import ProductCompareCard from '../components/product/ProductCompareCard';
 import { searchProducts, getProductsByCategory } from '../service/ProductService';
-import type { ProductSearch, PlatformName } from '../types/product';
+import type { ProductSearch } from '../types/product';
 import AppHeader from '../components/layout/AppHeader';
 
 const FONT_STACK = {
@@ -11,7 +11,6 @@ const FONT_STACK = {
   sans: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 } as const;
 
-const PLATFORM_OPTIONS: PlatformName[] = ['Cocolux', 'guardian', 'Hasaki'];
 
 const promotionOptions = [
   { id: 'all', name: 'Tất cả' },
@@ -33,23 +32,16 @@ function formatPlatformLabel(name: string): string {
 export default function SearchResultsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') ?? '';
-  const initialPlatforms = searchParams.getAll('platform') as PlatformName[];
+
 
   const [query, setQuery] = useState(initialQuery);
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Set<PlatformName>>(
-    () => new Set(initialPlatforms),
-  );
+
   const [onlyOfficial, setOnlyOfficial] = useState(false);
   const [sortBy, setSortBy] = useState<'best-price' | 'rating' | 'reviews'>('best-price');
   const [products, setProducts] = useState<ProductSearch[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Chuẩn hoá mảng platform: sort + dedup để key ổn định giữa các render.
-  const selectedPlatformsArr = useMemo(
-    () => Array.from(selectedPlatforms).sort(),
-    [selectedPlatforms],
-  );
-  const platformsKey = selectedPlatformsArr.join(',');
+
 
   // Re-fetch mỗi khi query hoặc selection platform đổi.
   // Ưu tiên làm cho filter hoạt động ngay (không cần bấm "Tìm kiếm" lại).
@@ -60,7 +52,7 @@ export default function SearchResultsPage() {
     }
     let cancelled = false;
     setLoading(true);
-    searchProducts(query, { platforms: selectedPlatformsArr })
+    searchProducts(query)
       .then((data) => {
         if (cancelled) return;
         setProducts(data);
@@ -77,16 +69,16 @@ export default function SearchResultsPage() {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, platformsKey]);
+  }, [query]);
 
   // Đồng bộ filter lên URL để giữ deep-link khi user share/reload.
   useEffect(() => {
     const next = new URLSearchParams();
     if (query) next.set('q', query);
-    for (const p of selectedPlatformsArr) next.append('platform', p);
+
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, platformsKey]);
+  }, [query]);
 
   const onSubmitSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -99,31 +91,19 @@ export default function SearchResultsPage() {
     });
   };
 
-  const togglePlatform = (name: PlatformName) => {
-    setSelectedPlatforms((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
-      return next;
-    });
-  };
 
-  const clearPlatforms = () => setSelectedPlatforms(new Set());
 
-  const isAllSelected = selectedPlatforms.size === 0;
 
   const summaryText = useMemo(() => {
     const parts: string[] = [];
     parts.push(`${products.length} kết quả`);
-    if (!isAllSelected) {
-      parts.push(`trên ${selectedPlatformsArr.map(formatPlatformLabel).join(', ')}`);
-    }
+
     if (onlyOfficial) parts.push('ưu tiên gian hàng chính hãng');
     if (sortBy === 'best-price') parts.push('sắp theo giá tốt nhất');
     else if (sortBy === 'rating') parts.push('sắp theo đánh giá cao');
     else parts.push('sắp theo nhiều review');
     return parts.join(' · ');
-  }, [products.length, onlyOfficial, selectedPlatformsArr, isAllSelected, sortBy]);
+  }, [products.length, onlyOfficial, sortBy]);
 
   return (
     <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
@@ -168,49 +148,7 @@ export default function SearchResultsPage() {
             </div>
 
             <div className="mt-4 flex flex-col gap-4 pt-2 xl:flex-row xl:items-center xl:justify-between">
-              <div className="flex flex-wrap gap-2">
-                {/* "Tất cả sàn" = clear filter. Active khi không chip nào được chọn. */}
-                <button
-                  type="button"
-                  onClick={clearPlatforms}
-                  aria-pressed={isAllSelected}
-                  className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${isAllSelected
-                    ? 'bg-[#F3EDE5] dark:bg-[#2A221A] text-[#2C241F] dark:text-[#E8D5B8] ring-1 ring-[#DED3C7] dark:ring-[#4A3A2A]'
-                    : 'bg-transparent text-stone-500 dark:text-stone-400 ring-1 ring-stone-200/70 dark:ring-stone-700/50 hover:text-stone-900 dark:hover:text-stone-100'
-                    }`}
-                >
-                  Tất cả sàn
-                </button>
 
-                {PLATFORM_OPTIONS.map((item) => {
-                  const active = selectedPlatforms.has(item);
-                  return (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => togglePlatform(item)}
-                      aria-pressed={active}
-                      className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.06em] transition ${active
-                        ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
-                        : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
-                        }`}
-                    >
-                      {formatPlatformLabel(item)}
-                    </button>
-                  );
-                })}
-
-                <button
-                  type="button"
-                  onClick={() => setOnlyOfficial((prev) => !prev)}
-                  className={`rounded-full px-4 py-2 text-[11px] font-medium tracking-[0.04em] transition ${onlyOfficial
-                    ? 'bg-[#F3EDE5] text-[#2C241F] ring-1 ring-[#DED3C7]'
-                    : 'bg-transparent text-stone-500 ring-1 ring-stone-200/70 hover:text-stone-900'
-                    }`}
-                >
-                  Official
-                </button>
-              </div>
 
               <div className="flex items-center gap-3">
                 <span className={`text-sm text-stone-400 dark:text-stone-500`}>Sắp xếp theo</span>
