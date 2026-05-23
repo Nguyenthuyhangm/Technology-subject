@@ -56,4 +56,11 @@ public class ProductController {
             return Collections.emptyList();
         }
     }
+    @GetMapping("/sync")
+    public String syncSearchIndex() {
+
+        service.syncAll();
+
+        return "SYNC OK";
+    }
 }

@@ -1,19 +1,15 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
+import apiClient from '../api/apiClient';
 
-const API_URL = 'http://localhost:8080/api/wishlist';
-
-// Chuẩn hoá log lỗi axios: in cả status + response.data để biết chính xác
-// backend trả gì (message, code, timestamp...) thay vì chỉ "Request failed".
 function logAxiosError(context: string, error: unknown) {
-  if (axios.isAxiosError(error)) {
-    const ax = error as AxiosError;
+  if (error instanceof AxiosError) {
     console.error(`[wishlistApi] ${context}`, {
-      message: ax.message,
-      status: ax.response?.status,
-      statusText: ax.response?.statusText,
-      url: ax.config?.url,
-      method: ax.config?.method,
-      data: ax.response?.data,
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      url: error.config?.url,
+      method: error.config?.method,
+      data: error.response?.data,
     });
   } else {
     console.error(`[wishlistApi] ${context}`, error);
@@ -23,7 +19,7 @@ function logAxiosError(context: string, error: unknown) {
 export const wishlistService = {
   getWishlist: async (userId: string) => {
     try {
-      const response = await axios.get(`${API_URL}/${String(userId)}`);
+      const response = await apiClient.get(`/wishlist/${userId}`);
       return response.data;
     } catch (error) {
       logAxiosError('Error fetching wishlist', error);
@@ -33,7 +29,7 @@ export const wishlistService = {
 
   add: async (userId: string, productId: string) => {
     try {
-      const response = await axios.post(`${API_URL}/add`, {
+      const response = await apiClient.post('/wishlist/add', {
         userId: String(userId),
         productId: String(productId),
       });
@@ -44,17 +40,9 @@ export const wishlistService = {
     }
   },
 
-  /**
-   * Xóa wishlist theo productId.
-   *
-   * Backend endpoint chính:
-   * DELETE /api/wishlist/{productId}?userId=xxx
-   *
-   * Giữ cách gọi này để khớp với WishlistController hiện tại.
-   */
   remove: async (productId: string, userId: string) => {
     try {
-      const response = await axios.delete(`${API_URL}/${String(productId)}`, {
+      const response = await apiClient.delete(`/wishlist/${productId}`, {
         params: { userId: String(userId) },
       });
       return response.data;

@@ -9,52 +9,71 @@ import type {
   WishlistDisplayItem,
 } from '../types/wishlist';
 
-function isPriceComparisonRow(
-  row:
-    | Product['platforms'][number]
-    | PriceComparisonItem
-    | ProductSearch['platforms'][number],
-): row is PriceComparisonItem {
-  return 'listingId' in row && typeof (row as PriceComparisonItem).listingId === 'string';
+function isProductSearch(p: WishlistAddPayload): p is ProductSearch {
+  return 'bestPrice' in p && 'bestPlatform' in p;
 }
 
-function isWishlistComparisonStubPayload(
-  p: WishlistAddPayload,
-): p is WishlistComparisonStub {
-  if ('specs' in p && p.specs) return false;
-  if (!p.platforms.length) return false;
-  return isPriceComparisonRow(p.platforms[0]);
+function isProduct(p: WishlistAddPayload): p is Product {
+  return 'specs' in p && !!(p as Product).specs;
+}
+
+function isPriceComparisonRow(
+  row: unknown,
+): row is PriceComparisonItem {
+  return typeof row === 'object' && row !== null && 'listingId' in row;
+}
+
+function isWishlistComparisonStub(p: WishlistAddPayload): p is WishlistComparisonStub {
+  if (isProduct(p) || isProductSearch(p)) return false;
+  const platforms = (p as any).platforms;
+  return Array.isArray(platforms) && platforms.length > 0 && isPriceComparisonRow(platforms[0]);
 }
 
 export function wishlistDisplayFromPayload(payload: WishlistAddPayload): WishlistDisplayItem {
   const productId = String(payload.id);
 
-  if ('specs' in payload && payload.specs) {
-    const prod = payload as Product;
-    const best = [...prod.platforms].sort((a, b) => a.finalPrice - b.finalPrice)[0];
+  // ProductSearch (từ search results) — không có platforms
+  if (isProductSearch(payload)) {
     return {
       productId,
-      id: prod.id,
-      name: prod.name,
-      productName: prod.name,
-      images: prod.images,
-      imageUrl: prod.images[0],
-      brandName: prod.brand,
-      minPrice: best?.finalPrice,
-      platformName: best?.platform,
-      nearTarget: prod.insight?.isLowest30Days ?? false,
-      priceChanged7dPercent: prod.insight?.lowerThanAvg30dPercent ?? 0,
+      id: payload.id,
+      name: payload.name,
+      productName: payload.name,
+      imageUrl: payload.imageUrl,
+      brandName: payload.brandName,
+      minPrice: payload.bestPrice,
+      platformName: payload.bestPlatform,
+      nearTarget: false,
+      priceChanged7dPercent: 0,
     };
   }
 
-  if (isWishlistComparisonStubPayload(payload)) {
-    const stub = payload;
-    const best = [...stub.platforms].sort((a, b) => a.price - b.price)[0];
+  // Product đầy đủ (từ mock/detail)
+  if (isProduct(payload)) {
+    const best = [...payload.platforms].sort((a, b) => a.finalPrice - b.finalPrice)[0];
     return {
       productId,
-      id: stub.id,
-      name: stub.name,
-      productName: stub.name,
+      id: payload.id,
+      name: payload.name,
+      productName: payload.name,
+      images: payload.images,
+      imageUrl: payload.images?.[0],
+      brandName: payload.brand,
+      minPrice: best?.finalPrice,
+      platformName: best?.platform,
+      nearTarget: payload.insight?.isLowest30Days ?? false,
+      priceChanged7dPercent: payload.insight?.lowerThanAvg30dPercent ?? 0,
+    };
+  }
+
+  // WishlistComparisonStub (từ product detail page)
+  if (isWishlistComparisonStub(payload)) {
+    const best = [...payload.platforms].sort((a, b) => a.price - b.price)[0];
+    return {
+      productId,
+      id: payload.id,
+      name: payload.name,
+      productName: payload.name,
       minPrice: best?.price,
       platformName: best?.platformName,
       images: [],
@@ -63,19 +82,6 @@ export function wishlistDisplayFromPayload(payload: WishlistAddPayload): Wishlis
     };
   }
 
-  const ps = payload as ProductSearch;
-  const best = [...ps.platforms].sort((a, b) => a.finalPrice - b.finalPrice)[0];
-  return {
-    productId,
-    id: ps.id,
-    name: ps.name,
-    productName: ps.name,
-    images: ps.images,
-    imageUrl: ps.imageUrl,
-    brandName: ps.brandName,
-    minPrice: best?.finalPrice,
-    platformName: best?.platform,
-    nearTarget: false,
-    priceChanged7dPercent: 0,
-  };
+  // Fallback
+  return { productId, id: String(payload.id), name: (payload as any).name ?? '' };
 }

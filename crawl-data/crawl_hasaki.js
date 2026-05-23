@@ -1,19 +1,15 @@
 /**
- * Hasaki Product Crawler - Optimised
+ * Hasaki Product Crawler - Optimised v5
  * Usage: node crawl_hasaki.js
  * Requirements: npm install puppeteer
  *
- * Tối ưu so với bản cũ:
- *  - Bỏ việc crawl chi tiết từng sản phẩm (vòng lặp chậm nhất)
- *  - Crawl nhiều brand song song (CONCURRENCY)
- *  - Giảm delay, dùng waitForSelector thay networkidle2
- *  - Ghi file theo batch thay vì từng sản phẩm
- *
- * FIX v3 (root cause fix):
- *  - Hasaki dùng native browser lazy loading (loading="lazy"), KHÔNG dùng data-src
- *  - Puppeteer headless không tự trigger native lazy load khi scroll bằng JS
- *  - Fix: sau khi scroll xong, force tất cả img[loading="lazy"] thành eager
- *    rồi đợi chúng load xong trước khi extract → src sẽ là URL thật
+ * Fix v5 (root cause fix cho ảnh):
+ *  - Thêm --disable-features=LazyImageLoading vào Chrome args
+ *    → Chrome không lazy load ảnh nữa, mọi img load ngay khi parse HTML
+ *  - Thêm --blink-settings=imagesEnabled=true để chắc chắn ảnh được bật
+ *  - scrollAndLoadImages vẫn giữ để force img[loading=lazy] còn sót
+ *  - Fix race condition onload v4 vẫn giữ nguyên
+ *  - Fix waitForFunction dùng domCountBefore thay seenUrls.size
  */
 
 const puppeteer = require("puppeteer");
@@ -42,10 +38,10 @@ const BRANDS = [
 ];
 
 // ── Tuỳ chỉnh tốc độ ──────────────────────────────────────────────────────
-const CONCURRENCY   = 3;    // số brand crawl đồng thời
-const PAGE_DELAY_MS = 800;  // delay giữa các lần click "Xem thêm" / next page
-const SCROLL_STEP   = 400;  // px mỗi bước scroll
-const SCROLL_DELAY  = 100;  // ms giữa mỗi bước scroll
+const CONCURRENCY   = 3;
+const PAGE_DELAY_MS = 800;
+const SCROLL_STEP   = 400;
+const SCROLL_DELAY  = 100;
 const HEADLESS      = true;
 
 // ─── HELPERS ───────────────────────────────────────────────────────────────
@@ -56,19 +52,12 @@ function log(brand, msg) {
   console.log(`[${new Date().toLocaleTimeString("vi-VN")}] [${brand}] ${msg}`);
 }
 
-function parsePrice(str) {
-  if (!str) return null;
-  const num = str.replace(/[^\d]/g, "");
-  return num ? parseInt(num, 10) : null;
-}
-
 // ─── SCROLL + FORCE LOAD ẢNH ──────────────────────────────────────────────
-// Hasaki dùng loading="lazy" (native browser lazy load)
-// Puppeteer headless không tự trigger khi scroll bằng JS
-// → Phải force tất cả img lazy thành eager rồi đợi load xong
+// v5: --disable-features=LazyImageLoading đã tắt lazy load ở tầng Chrome
+// Hàm này giữ lại như lớp bảo vệ thứ 2 cho các img còn sót
 
 async function scrollAndLoadImages(page) {
-  // Bước 1: Scroll xuống hết trang để browser biết vị trí các element
+  // Scroll xuống hết trang
   await page.evaluate(async (step, delay) => {
     await new Promise((resolve) => {
       let pos = 0;
@@ -83,33 +72,29 @@ async function scrollAndLoadImages(page) {
     });
   }, SCROLL_STEP, SCROLL_DELAY);
 
-  // Bước 2: Force tất cả img[loading="lazy"] load ngay lập tức
-  // Đây là fix chính — Hasaki không dùng data-src mà dùng native lazy loading
+  // Force bất kỳ img[loading=lazy] còn sót nào (phòng thủ thêm)
   await page.evaluate(async () => {
+    const IMAGE_LOAD_TIMEOUT = 8000;
     const lazyImgs = [...document.querySelectorAll('img[loading="lazy"]')];
+    lazyImgs.forEach(img => { img.loading = "eager"; });
 
-    // Đổi tất cả sang eager để browser load ngay
-    lazyImgs.forEach(img => {
-      img.loading = "eager";
-      // Gán lại src để trigger load
-      const currentSrc = img.getAttribute("src");
-      if (currentSrc) img.src = currentSrc;
+    const loadPromises = lazyImgs.map(img => {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+      return new Promise(resolve => {
+        // ✅ Gắn listener TRƯỚC rồi mới reassign src
+        img.onload  = resolve;
+        img.onerror = resolve;
+        const s = img.getAttribute("src");
+        if (s) img.src = s;
+        else resolve();
+      });
     });
 
-    // Đợi tất cả ảnh load xong
-    await Promise.all(
-      lazyImgs.map(img => {
-        if (img.complete && img.naturalWidth > 0) return Promise.resolve();
-        return new Promise(resolve => {
-          img.onload  = resolve;
-          img.onerror = resolve; // resolve cả khi lỗi, không block
-        });
-      })
-    );
+    const timeout = new Promise(r => setTimeout(r, IMAGE_LOAD_TIMEOUT));
+    await Promise.race([Promise.all(loadPromises), timeout]);
   });
 
-  // Buffer nhỏ để DOM ổn định
-  await sleep(500);
+  await sleep(1500);
 }
 
 // ─── EXTRACT products từ DOM hiện tại ─────────────────────────────────────
@@ -118,10 +103,8 @@ async function extractProducts(page) {
   return page.evaluate(() => {
     const results = [];
 
-    // ── Selector ưu tiên: card dạng Hasaki mới (Tailwind classes) ─────────
     let cards = [...document.querySelectorAll("div.rounded-xl.bg-card")];
 
-    // ── Fallback: các dạng card khác ──────────────────────────────────────
     if (cards.length === 0) {
       cards = [
         ...document.querySelectorAll(
@@ -132,7 +115,6 @@ async function extractProducts(page) {
       ];
     }
 
-    // ── Fallback cuối: anchor → /san-pham/ ────────────────────────────────
     if (cards.length === 0) {
       const anchors = [...document.querySelectorAll("a[href*='/san-pham/']")];
       const seen = new Set();
@@ -148,7 +130,6 @@ async function extractProducts(page) {
 
     cards.forEach((card) => {
       try {
-        // URL
         const linkEl =
           card.querySelector("a[href*='/san-pham/']") ||
           (card.tagName === "A" && card.href.includes("/san-pham/") ? card : null);
@@ -157,29 +138,30 @@ async function extractProducts(page) {
           ? href.startsWith("http") ? href : `https://hasaki.vn${href}`
           : "";
 
-        // SKU từ URL
         const skuMatch = url.match(/san-pham\/(.+?)\.html/);
         const sku = skuMatch ? skuMatch[1] : "";
 
-        // Tên
         const nameEl = card.querySelector("h2, h3, [class*='name'], [class*='title'], a[title]");
         const name = nameEl
           ? (nameEl.getAttribute("title") || nameEl.innerText || "").trim()
           : "";
 
-        // ✅ FIX v3: Hasaki dùng loading="lazy" (native), KHÔNG có data-src
-        // Sau khi force load ở scrollAndLoadImages(), img.src đã là URL thật
+        // ✅ Lấy ảnh với đầy đủ fallback
         const imgEl = card.querySelector("img");
-        const rawSrc = imgEl?.src || imgEl?.getAttribute("src") || "";
+        const rawSrc = imgEl?.currentSrc           // URL thực tế browser chọn (srcset aware)
+          || imgEl?.src                             // src đã resolve
+          || imgEl?.getAttribute("src")             // src attribute raw
+          || imgEl?.getAttribute("data-src")        // lazy load kiểu cũ
+          || imgEl?.getAttribute("data-lazy-src")   // lazy load kiểu khác
+          || imgEl?.getAttribute("data-original")   // một số lib dùng tên này
+          || "";
         const imageUrl = rawSrc.startsWith("http") ? rawSrc : "";
 
-        // Giá hiện tại
         const priceEl =
           card.querySelector("span.text-orange.font-bold") ||
           card.querySelector("[class*='price-now'], [class*='current-price'], .box_price_price");
         const price = parsePrice(priceEl?.innerText);
 
-        // Giá gốc
         const oldPriceEl =
           card.querySelector("span.line-through") ||
           card.querySelector("del, s, [class*='original'], [class*='old-price']");
@@ -190,7 +172,6 @@ async function extractProducts(page) {
             ? Math.round(((originalPrice - price) / originalPrice) * 100)
             : null;
 
-        // Rating
         let rating = null;
         const ratingEl = card.querySelector(
           "[class*='rating'], .rate_average, [data-score], [class*='star']"
@@ -215,7 +196,6 @@ async function extractProducts(page) {
           }
         }
 
-        // Số lượt đánh giá
         let reviewCount = null;
         const reviewEl = card.querySelector(
           "[class*='review'], [class*='count_gg'], [class*='rating-count']"
@@ -231,7 +211,6 @@ async function extractProducts(page) {
           }
         }
 
-        // Badge khuyến mãi
         const badgeEl = card.querySelector(
           "[class*='badge'], [class*='label'], [class*='tag'], [class*='promo']"
         );
@@ -260,13 +239,12 @@ async function extractProducts(page) {
   });
 }
 
-// ─── CRAWL 1 brand (tất cả trang) ─────────────────────────────────────────
+// ─── CRAWL 1 brand ─────────────────────────────────────────────────────────
 
 async function crawlBrand(browser, brand) {
   log(brand.name, "Bắt đầu...");
   const page = await browser.newPage();
 
-  // Block font/media để tăng tốc — KHÔNG block image vì cần load ảnh thật
   await page.setRequestInterception(true);
   page.on("request", (req) => {
     if (["font", "media"].includes(req.resourceType())) req.abort();
@@ -279,7 +257,6 @@ async function crawlBrand(browser, brand) {
   );
   await page.setViewport({ width: 1366, height: 768 });
 
-  // Stealth nhẹ
   await page.evaluateOnNewDocument(() => {
     Object.defineProperty(navigator, "webdriver", { get: () => false });
     window.chrome = { runtime: {} };
@@ -312,10 +289,8 @@ async function crawlBrand(browser, brand) {
       )
       .catch(() => log(brand.name, "⚠ Không tìm thấy selector chuẩn, thử fallback"));
 
-    // Scroll + force load tất cả ảnh lazy
     await scrollAndLoadImages(page);
 
-    // Đọc tổng số sản phẩm
     totalDeclared = await page.evaluate(() => {
       const text = document.body.innerText;
       const m = text.match(/(\d+)\s+(?:sản phẩm|kết quả)/i);
@@ -327,7 +302,6 @@ async function crawlBrand(browser, brand) {
     const added = addNew(first);
     log(brand.name, `Trang 1: +${added} SP (tổng: ${allProducts.length})`);
 
-    // ── Phân trang / Load more ─────────────────────────────────────────────
     let noNewStreak = 0;
     let pageNum = 2;
 
@@ -336,6 +310,11 @@ async function crawlBrand(browser, brand) {
         log(brand.name, `Đủ ${totalDeclared} SP — dừng.`);
         break;
       }
+
+      // ✅ Lấy domCount thực tế TRƯỚC khi click
+      const domCountBefore = await page.evaluate(
+        () => document.querySelectorAll("a[href*='/san-pham/']").length
+      );
 
       const clicked = await page.evaluate(() => {
         const btn = [...document.querySelectorAll("button, a")]
@@ -355,15 +334,15 @@ async function crawlBrand(browser, brand) {
       }
 
       await sleep(PAGE_DELAY_MS);
+
       await page
         .waitForFunction(
           (prevCount) => document.querySelectorAll("a[href*='/san-pham/']").length > prevCount,
           { timeout: 8000 },
-          seenUrls.size
+          domCountBefore
         )
-        .catch(() => {});
+        .catch(() => log(brand.name, "⚠ waitForFunction timeout, tiếp tục..."));
 
-      // Scroll + force load ảnh trang mới
       await scrollAndLoadImages(page);
 
       const batch = await extractProducts(page);
@@ -397,10 +376,10 @@ async function crawlBrand(browser, brand) {
   };
 }
 
-// ─── MAIN với concurrency ──────────────────────────────────────────────────
+// ─── MAIN ──────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("🚀 Khởi động Hasaki crawler (v3 - native lazy load fix)...");
+  console.log("🚀 Khởi động Hasaki crawler (v5 - disable native lazy load)...");
   console.log(`⚡ Concurrency: ${CONCURRENCY} brand đồng thời`);
 
   const browser = await puppeteer.launch({
@@ -411,6 +390,10 @@ async function main() {
       "--disable-dev-shm-usage",
       "--disable-gpu",
       "--disable-blink-features=AutomationControlled",
+      // ✅ FIX CHÍNH v5: tắt hẳn lazy loading ở tầng Chrome
+      // Mọi img sẽ load ngay khi parse HTML, không cần scroll trigger
+      "--disable-features=LazyImageLoading",
+      "--blink-settings=imagesEnabled=true",
     ],
     defaultViewport: { width: 1366, height: 768 },
   });

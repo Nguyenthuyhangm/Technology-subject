@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { WishlistProvider } from './context/WishlistProvider'
 import { ProtectedRoute, GuestRoute } from './components/Auth/RouteGuards'
 
 import HomePage from './pages/HomePage'
@@ -15,34 +16,35 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 
 export default function App(): JSX.Element {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <BrowserRouter>
+      <AuthProvider>
+        <WishlistProvider>
+          <Routes>
 
-          {/* Guest */}
-          <Route element={<GuestRoute />}>
-            <Route path="/login" element={<AuthPage />} />
-          </Route>
+            {/* Guest */}
+            <Route element={<GuestRoute />}>
+              <Route path="/login" element={<AuthPage />} />
+            </Route>
 
-          {/* Unprotected Reset Password Route - Supabase handles token login */}
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-          {/* Protected */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<SearchResultsPage />} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-            <Route path="/alerts" element={<AlertsPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            <Route path="/deals" element={<DealsPage />} />
-            <Route path="/trending-deals" element={<TrendingDealsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Route>
+            {/* Protected */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/alerts" element={<AlertsPage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
+              <Route path="/deals" element={<DealsPage />} />
+              <Route path="/trending-deals" element={<TrendingDealsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
 
-          <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/" />} />
 
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+          </Routes>
+        </WishlistProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }

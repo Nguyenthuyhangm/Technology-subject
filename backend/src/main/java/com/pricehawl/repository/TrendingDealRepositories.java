@@ -1,6 +1,5 @@
 package com.pricehawl.repository;
 
-import com.pricehawl.entity.PriceAlert;
 import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
@@ -114,8 +113,5 @@ public final class TrendingDealRepositories {
                 @Param("capPerListing") int capPerListing);
     }
 
-    public interface PriceAlertRepository extends JpaRepository<PriceAlert, UUID> {
-
-        List<PriceAlert> findByUser_IdAndIsActiveTrue(UUID userId);
-    }
+    
 }

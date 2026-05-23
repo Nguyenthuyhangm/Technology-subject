@@ -2,48 +2,53 @@ package com.pricehawl.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "price_alert", indexes = {
-        @Index(name = "idx_price_alert_active", columnList = "product_id, target_price")
-})
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "price_alert")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class PriceAlert {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Column(name = "product_id", nullable = false)
+    private UUID productId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "platform_id")
-    private Platform platform;
+    @Column(name = "platform_id")
+    private Integer platformId;
 
-    @Column(nullable = false)
+    @Column(name = "target_price", nullable = false)
     private Integer targetPrice;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Boolean isActive = true;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
 
-    @Column
+    @Column(name = "channel", nullable = false)
+    private String channel = "email";
+
+    @Column(name = "notified_at")
     private LocalDateTime notifiedAt;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

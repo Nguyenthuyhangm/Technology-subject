@@ -105,4 +105,90 @@ public interface ProductListingRepository
     WHERE p.id IN :productIds
 """)
     List<ProductListing> findByProductIds(@Param("productIds") List<UUID> productIds);
+
+    // ===================================================
+// THÊM VÀO ProductListingRepository.java
+// (thêm vào cuối, sau các method hiện có)
+// ===================================================
+
+    // =========================
+    // AUTO CRAWL - PRIORITY QUERIES
+    // =========================
+
+    /**
+     * HIGH priority: listing có price_alert active, đến hạn refresh (mỗi 1h).
+     */
+    @Query("""
+        SELECT DISTINCT pl
+        FROM ProductListing pl
+        JOIN FETCH pl.product p
+        JOIN FETCH pl.platform pf
+        WHERE EXISTS (
+            SELECT 1 FROM PriceAlert a
+            WHERE a.productId = p.id
+              AND a.isActive = true
+        )
+        AND (
+            pl.crawlTime IS NULL
+            OR pl.crawlTime <= :thresholdTime
+        )
+        ORDER BY pl.crawlTime ASC NULLS FIRST
+    """)
+    List<ProductListing> findHighPriorityListings(
+            @Param("thresholdTime") LocalDateTime thresholdTime
+    );
+
+    /**
+     * MEDIUM priority: listing trong wishlist (nhưng KHÔNG có alert), mỗi 6h.
+     */
+    @Query("""
+        SELECT DISTINCT pl
+        FROM ProductListing pl
+        JOIN FETCH pl.product p
+        JOIN FETCH pl.platform pf
+        WHERE EXISTS (
+            SELECT 1 FROM Wishlist w
+            WHERE w.productId = p.id
+        )
+        AND NOT EXISTS (
+            SELECT 1 FROM PriceAlert a
+            WHERE a.productId = p.id
+              AND a.isActive = true
+        )
+        AND (
+            pl.crawlTime IS NULL
+            OR pl.crawlTime <= :thresholdTime
+        )
+        ORDER BY pl.crawlTime ASC NULLS FIRST
+    """)
+    List<ProductListing> findMediumPriorityListings(
+            @Param("thresholdTime") LocalDateTime thresholdTime
+    );
+
+    /**
+     * LOW priority: listing thường (không wishlist, không alert), mỗi 24h.
+     */
+    @Query("""
+        SELECT DISTINCT pl
+        FROM ProductListing pl
+        JOIN FETCH pl.product p
+        JOIN FETCH pl.platform pf
+        WHERE NOT EXISTS (
+            SELECT 1 FROM Wishlist w
+            WHERE w.productId = p.id
+        )
+        AND NOT EXISTS (
+            SELECT 1 FROM PriceAlert a
+            WHERE a.productId = p.id
+              AND a.isActive = true
+        )
+        AND (
+            pl.crawlTime IS NULL
+            OR pl.crawlTime <= :thresholdTime
+        )
+        ORDER BY pl.crawlTime ASC NULLS FIRST
+    """)
+    List<ProductListing> findLowPriorityListings(
+            @Param("thresholdTime") LocalDateTime thresholdTime
+    );
 }

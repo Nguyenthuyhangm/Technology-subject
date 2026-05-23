@@ -54,7 +54,6 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
-        configure: attachProxyLogger('/api'),
         // Chỉ phòng hờ response 500 từ backend vẫn trả body rõ ràng,
         // không cần rewrite path (backend đã có `/api/**`).
       },
@@ -67,7 +66,6 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
-        configure: attachProxyLogger('/products'),
       },
     },
   },

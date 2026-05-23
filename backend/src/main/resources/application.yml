@@ -20,8 +20,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
+
   elasticsearch:
     uris: http://localhost:9200
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   flyway:
     enabled: true
@@ -38,32 +43,26 @@ supabase:
 
 logging:
   level:
-    root: DEBUG
-    org.springframework.security: TRACE
-    com.pricehawl.service.CocoluxPriceCrawlerService: DEBUG
-    com.pricehawl.service.PriceRefreshScheduler: INFO
-    com.pricehawl.service.PriceRefreshServiceImpl: DEBUG
-  file:
-    name: logs/app.log
-  pattern:
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  logback:
-    rollingpolicy:
-      max-file-size: 10MB
-      max-history: 30
+    root: WARN
+    org.springframework.security: WARN
+    # com.pricehawl.service.PriceRefreshScheduler: INFO
+    # com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
+    # com.pricehawl.service.crawler: DEBUG
+    # com.pricehawl.service.AlertQueueConsumer: DEBUG
+
 
 pricehawk:
-  crawler:
-    node-binary: npx.cmd
-    cocolux-refresh-script: D:/project/pricehawk/Chuy-n-Nh-t-B-n---5-/cocolux-crawler/src/main/refresh-price-once.ts
-    timeout-seconds: 90
-
   debug:
-    price-refresh-dir: D:/project/pricehawk/Chuy-n-Nh-t-B-n---5-/backend/debug/price-refresh
+    price-refresh-dir: "./debug/price-refresh"
 
   scheduler:
     price-refresh:
       enabled: true
-      cron: "0 */30 * * * *"
+      cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
+      max-items-per-run: 50
+  crawler:
+    watsons-script: "backend/watsons-price.js"
+
+resend:
+  api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE

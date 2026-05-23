@@ -2,6 +2,7 @@ import Badge from '../common/Badge';
 import PlatformPill from '../common/PlatformPill';
 import { MoveUpRight } from 'lucide-react';
 import type { PriceComparisonItem } from '../../types/product';
+import { toAffiliateLink } from '../../util/affiliateLink';
 
 type QuickCompareStripProps = {
     items: PriceComparisonItem[];
@@ -15,7 +16,6 @@ const formatPrice = (price: number): string =>
     }).format(price);
 
 export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
-    // Sắp xếp theo price tăng dần (API dùng price thay vì finalPrice)
     const sorted = [...items].sort((a, b) => a.price - b.price);
     const best = sorted[0];
 
@@ -43,6 +43,7 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                 <div className="flex min-w-max gap-3 snap-x snap-mandatory">
                     {sorted.map((item, index) => {
                         const isBest = index === 0;
+                        const itemUrl = toAffiliateLink(item.url, item.platformName);
 
                         return (
                             <article
@@ -55,7 +56,6 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                             >
                                 <div className="flex items-start justify-between gap-3">
                                     <div className="min-w-0">
-                                        {/* platformName thay vì platform */}
                                         <PlatformPill platform={item.platformName} compact />
                                         {item.promotionLabel && (
                                             <p className="mt-2 truncate text-xs text-stone-500">
@@ -63,35 +63,28 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                             </p>
                                         )}
                                     </div>
-
                                     {isBest && (
                                         <span className="rounded-full bg-[#E9DED1] px-2.5 py-1 text-[10px] font-medium text-[#5B4A3E]">
-                      Tốt nhất
-                    </span>
+                                            Tốt nhất
+                                        </span>
                                     )}
                                 </div>
 
                                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                                    {item.isFlashSale && (
-                                        <Badge variant="danger">Flash Sale</Badge>
-                                    )}
-                                    {item.inStock ? (
-                                        <Badge variant="success">Còn hàng</Badge>
-                                    ) : (
-                                        <Badge variant="soft">Hết hàng</Badge>
-                                    )}
+                                    {item.isFlashSale && <Badge variant="danger">Flash Sale</Badge>}
+                                    {item.inStock
+                                        ? <Badge variant="success">Còn hàng</Badge>
+                                        : <Badge variant="soft">Hết hàng</Badge>
+                                    }
                                 </div>
 
                                 <div className="mt-4">
                                     <p className="text-[1.35rem] font-semibold leading-none tracking-[-0.03em] text-stone-900 dark:text-stone-100">
                                         {formatPrice(item.price)}
                                     </p>
-
                                     <div className="mt-2 space-y-1 text-[12px] leading-5 text-stone-500">
                                         {item.originalPrice > item.price && (
-                                            <p className="line-through">
-                                                Gốc {formatPrice(item.originalPrice)}
-                                            </p>
+                                            <p className="line-through">Gốc {formatPrice(item.originalPrice)}</p>
                                         )}
                                         {item.discountPct > 0 && (
                                             <p>Giảm {item.discountPct}%</p>
@@ -99,14 +92,9 @@ export default function QuickCompareStrip({ items }: QuickCompareStripProps) {
                                     </div>
                                 </div>
 
-                                <a
-                                    href={item.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-stone-200 dark:border-stone-700 px-3 py-2 text-[12px] font-medium text-stone-700 dark:text-stone-300 transition hover:text-stone-900 dark:hover:text-stone-100"
-                                >
-                                    Xem nơi bán
-                                    <MoveUpRight size={12} />
+                                <a href={itemUrl} target="_blank" rel="noreferrer"
+                                    className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-stone-200 dark:border-stone-700 px-3 py-2 text-[12px] font-medium text-stone-700 dark:text-stone-300 transition hover:text-stone-900 dark:hover:text-stone-100">
+                                    Xem nơi bán <MoveUpRight size={12} />
                                 </a>
                             </article>
                         );

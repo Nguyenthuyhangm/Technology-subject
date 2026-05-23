@@ -28,24 +28,26 @@ export interface Platform {
   discountPct?: number;
   isOfficial: boolean;
 }
-
 export interface ProductSearch {
   id: string;
+
   name: string;
-  brand: string;
-  model: string;
-  category: string;
-  subcategory?: string;
-  // Backend chỉ trả `imageUrl` (string), `images` có thể không có hoặc rỗng.
-  // Để optional để FE buộc phải null-check khi truy cập images[0].
-  images?: string[];
-  description: string;
-  categoryName: string;
+
   brandName: string;
-  score: number;
+
+  categoryName: string;
+
   imageUrl: string;
-  // Có thể undefined khi API lỗi / chưa có dữ liệu.
-  platforms: Platform[];
+
+  bestPrice: number;
+
+  originalPrice: number;
+
+  discountPct: number;
+
+  bestPlatform: string;
+
+  score: number;
 }
 
 // Map từ PriceComparisonResponse

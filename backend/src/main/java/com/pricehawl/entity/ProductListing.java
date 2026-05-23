@@ -13,7 +13,8 @@ import java.util.UUID;
 @Table(name = "product_listing", indexes = {
         @Index(name = "idx_product_listing_product_id", columnList = "product_id")
 })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,7 +42,8 @@ public class ProductListing {
     private String platformImageUrl;
 
     /**
-     * Điểm tin cậy listing (0.0–1.0). Dùng cho Trending Deals & dedup.
+     * Điểm tin cậy listing (0.0–1.0).
+     * Dùng cho Trending Deals & dedup.
      */
     @Column(name = "trust_score", nullable = false)
     @Builder.Default
@@ -55,15 +57,58 @@ public class ProductListing {
     private Boolean isPinned = false;
 
     /**
-     * Thời điểm lần cuối auto-crawl giá thành công.
-     * Map với cột crawl_time trong DB.
+     * Thời điểm crawl thành công gần nhất.
      */
     @Column(name = "crawl_time")
     private LocalDateTime crawlTime;
 
-    // Map quan hệ 1-Nhiều tới bảng price_record
-    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @OrderBy("crawledAt DESC") // Luôn lấy record mới nhất lên đầu
+    /**
+     * ===== SNAPSHOT CURRENT STATE =====
+     * Các field này dùng cho:
+     * - search
+     * - compare page
+     * - product card
+     * - elasticsearch indexing
+     *
+     * KHÔNG cần query latest price_record nữa.
+     */
+
+    @Column(name = "current_price")
+    private Integer currentPrice;
+
+    @Column(name = "original_price")
+    private Integer originalPrice;
+
+    @Column(name = "discount_pct")
+    private Double discountPct;
+
+    @Column(name = "in_stock")
+    private Boolean inStock;
+
+    @Column(name = "promotion_label")
+    private String promotionLabel;
+
+    @Column(name = "is_flash_sale")
+    private Boolean isFlashSale;
+
+    /**
+     * History records.
+     *
+     * Chỉ dùng cho:
+     * - detail page
+     * - chart
+     * - analytics
+     * - timeline/history
+     *
+     * KHÔNG dùng cho search page nữa.
+     */
+    @OneToMany(
+            mappedBy = "productListing",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @OrderBy("crawledAt DESC")
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
 
@@ -71,36 +116,48 @@ public class ProductListing {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    // Helper để lấy promotion label cho ProductService gọi
-    public String getPromotionLabel() {
-        if (this.priceRecords != null && !this.priceRecords.isEmpty()) {
-            return this.priceRecords.get(0).getPromotionLabel();
-        }
-        return null;
-    }
+    /**
+     * ===== BACKWARD COMPATIBILITY HELPERS =====
+     *
+     * Giữ logic cũ để:
+     * - service cũ không bị crash
+     * - mapper cũ chưa cần sửa ngay
+     * - FE cũ vẫn hoạt động tạm thời
+     *
+     * Nhưng giờ ưu tiên dùng snapshot fields:
+     * - currentPrice
+     * - originalPrice
+     * - discountPct
+     */
 
     @Transient
     public Integer getFinalPrice() {
-        if (priceRecords == null || priceRecords.isEmpty()) return null;
-        return priceRecords.get(0).getPrice(); // record mới nhất
+        return currentPrice;
     }
 
     @Transient
-    public Integer getOriginalPrice() {
-        if (priceRecords == null || priceRecords.isEmpty()) return null;
-        return priceRecords.get(0).getOriginalPrice();
+    public Integer getComputedOriginalPrice() {
+        return originalPrice;
     }
 
     @Transient
-    public Integer getDiscountPct() {
-        if (priceRecords == null || priceRecords.isEmpty()) return null;
+    public Integer getComputedDiscountPct() {
+        if (discountPct == null) {
+            return null;
+        }
 
-        Integer price = priceRecords.get(0).getPrice();
-        Integer original = priceRecords.get(0).getOriginalPrice();
-
-        if (price == null || original == null || original <= price) return null;
-
-        return (int) Math.round(((original - price) / original) * 100);
+        return discountPct.intValue();
     }
 
+    /**
+     * Optional fallback helper.
+     */
+    @Transient
+    public PriceRecord getLatestPriceRecord() {
+        if (priceRecords == null || priceRecords.isEmpty()) {
+            return null;
+        }
+
+        return priceRecords.get(0);
+    }
 }

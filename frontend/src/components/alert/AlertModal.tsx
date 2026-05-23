@@ -1,281 +1,228 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCheck, X } from 'lucide-react';
-import Badge from '../common/Badge';
+import { CheckCheck, X, Bell, Mail, BellRing } from 'lucide-react';
 import type { PlatformName } from '../../types/product';
 import type { AlertChannel } from '../../types/alert';
+import { alertService } from '../../service/alertApi';
+
+const platformOptions: Array<{ value: PlatformName | 'all'; label: string }> = [
+  { value: 'all', label: 'Tất cả sàn' },
+  { value: 'Cocolux', label: 'Cocolux' },
+  { value: 'guardian', label: 'Guardian' },
+  { value: 'Hasaki', label: 'Hasaki' },
+  { value: 'Tiki', label: 'Tiki' },
+];
 
 type AlertModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  productId: string;
   productName?: string;
   defaultPrice?: number;
   defaultPlatform?: PlatformName | 'all';
 };
 
-const platformOptions: Array<PlatformName | 'all'> = [
-  'all',
-  'Cocolux',
-  'guardian',
-  'Hasaki',
-  'Shopee',
-  'Lazada',
-  'Tiki',
-  'Sendo',
-];
-
-const channelOptions: AlertChannel[] = ['email', 'push', 'zalo'];
-
 const formatPrice = (price: number): string =>
   new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-    maximumFractionDigits: 0,
+    style: 'currency', currency: 'VND', maximumFractionDigits: 0,
   }).format(price);
 
 export default function AlertModal({
   isOpen,
   onClose,
+  productId,
   productName,
   defaultPrice = 0,
-  defaultPlatform = 'all',
 }: AlertModalProps) {
-  const [targetPrice, setTargetPrice] = useState(
-    defaultPrice ? String(defaultPrice) : '',
-  );
-  const [platform, setPlatform] = useState<PlatformName | 'all'>(defaultPlatform);
-  const [channel, setChannel] = useState<AlertChannel>('email');
-  const [frequency, setFrequency] = useState('Ngay khi chạm ngưỡng');
-  const [note, setNote] = useState('');
+  const [targetPrice, setTargetPrice] = useState(defaultPrice ? String(defaultPrice) : '');
+  const [platform, setPlatform] = useState<PlatformName | 'all'>('all');
+  const [channels, setChannels] = useState<Set<AlertChannel>>(new Set(['email']));
   const [isCreated, setIsCreated] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  /* Đồng bộ form khi mở modal — reset có chủ đích, không phụ thuộc external subscription */
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!isOpen) return;
     setTargetPrice(defaultPrice ? String(defaultPrice) : '');
-    setPlatform(defaultPlatform);
-    setChannel('email');
-    setFrequency('Ngay khi chạm ngưỡng');
-    setNote('');
+    setPlatform('all');
+    setChannels(new Set(['email']));
     setIsCreated(false);
-  }, [defaultPlatform, defaultPrice, isOpen]);
-  /* eslint-enable react-hooks/set-state-in-effect */
+    setError('');
+  }, [defaultPrice, isOpen]);
 
   if (!isOpen) return null;
 
   const parsedPrice = Number(targetPrice.replace(/[^\d]/g, '') || 0);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsCreated(true);
+  const toggleChannel = (ch: AlertChannel) => {
+    setChannels((prev) => {
+      const next = new Set(prev);
+      if (next.has(ch)) {
+        if (next.size === 1) return prev; // phải giữ ít nhất 1
+        next.delete(ch);
+      } else {
+        next.add(ch);
+      }
+      return next;
+    });
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+  if (parsedPrice <= 0) { setError('Vui lòng nhập giá mục tiêu hợp lệ'); return; }
+  setLoading(true);
+  setError('');
+  try {
+    // Nếu tick cả 2 → channel = "all", nếu 1 → lấy cái đó
+    const channel = channels.size === 2 ? 'all' : Array.from(channels)[0];
+    await alertService.createAlert({ productId, targetPrice: parsedPrice, channel });
+    setIsCreated(true);
+  } catch (e: any) {
+    setError(e?.response?.data?.message ?? 'Không thể tạo alert. Vui lòng thử lại.');
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const channelLabel = Array.from(channels)
+    .map(c => c === 'email' ? 'Email' : 'Thông báo')
+    .join(' & ');
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/35 p-4 backdrop-blur-md">
-      <div className="glass w-full max-w-2xl rounded-[32px] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.18)] md:p-8">
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div>
-            <div className="mb-3 flex flex-wrap gap-2">
-              <Badge variant="brand">Price alert</Badge>
-              <Badge variant="soft">Mock flow</Badge>
-            </div>
-
-            <h2 className="text-2xl font-semibold tracking-[-0.02em] text-stone-900">
-              Đặt cảnh báo giá
-            </h2>
-
-            <p className="mt-2 text-sm leading-7 text-stone-500">
-              {productName
-                ? `Theo dõi giá cho ${productName} và nhận thông báo khi sản phẩm chạm ngưỡng bạn mong muốn.`
-                : 'Theo dõi giá và nhận thông báo khi chạm ngưỡng mong muốn.'}
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-full border border-white/50 bg-white/60 p-3 text-stone-500 shadow-[0_8px_20px_rgba(15,23,42,0.06)] backdrop-blur-md transition hover:text-stone-900"
-          >
-            <X size={18} />
-          </button>
-        </div>
-
+    <div className="fixed inset-0 z-[100] flex items-end justify-center p-4 backdrop-blur-sm bg-stone-950/20 sm:items-center">
+      <div
+        className="w-full max-w-md rounded-[32px] border border-stone-200/60 dark:border-stone-700/40 bg-[#FDFAF7] dark:bg-[#1A1614] shadow-[0_32px_80px_rgba(15,10,8,0.18)] overflow-hidden"
+        style={{ fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}
+      >
         {isCreated ? (
-          <div className="scale-100 animate-[pop_0.3s_ease] rounded-[28px] border border-[#D7E8C7] bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(243,250,223,0.92))] p-6 shadow-[0_18px_40px_rgba(94,122,47,0.10)]">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/60 bg-white/75 text-[#5E7A2F] shadow-[0_10px_24px_rgba(94,122,47,0.12)] backdrop-blur-md">
-                <CheckCheck size={18} />
+          <div className="p-8">
+            <div className="flex flex-col items-center text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F0F7E8] dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+                <CheckCheck size={26} strokeWidth={1.5} />
               </div>
-
-              <div>
-                <h3 className="text-lg font-semibold tracking-[-0.01em] text-stone-900">
-                  Alert đã được tạo
-                </h3>
-
-                <p className="mt-1 text-sm text-stone-600">
-                  Mức giá mục tiêu:{' '}
-                  <span className="font-medium text-stone-900">
-                    {formatPrice(parsedPrice)}
-                  </span>{' '}
-                  · Kênh nhận:{' '}
-                  <span className="font-medium text-stone-900">{channel}</span>
-                </p>
+              <h3 className="mt-5 text-2xl tracking-[-0.02em] text-stone-900 dark:text-stone-100"
+                style={{ fontFamily: '"Times New Roman", Georgia, serif' }}>
+                Alert đã được tạo
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-500 dark:text-stone-400">
+                Thông báo khi{' '}
+                <span className="font-medium text-stone-700 dark:text-stone-300">{productName ?? 'sản phẩm'}</span>{' '}
+                xuống còn{' '}
+                <span className="font-medium text-stone-900 dark:text-stone-100">{formatPrice(parsedPrice)}</span>
+              </p>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                {Array.from(channels).map((ch) => (
+                  <span key={ch} className="inline-flex items-center gap-1.5 rounded-2xl border border-stone-100 dark:border-stone-700 bg-white dark:bg-stone-800/40 px-3 py-1.5 text-xs text-stone-500 dark:text-stone-400">
+                    {ch === 'email' ? <Mail size={11} /> : <BellRing size={11} />}
+                    {ch === 'email' ? 'Email' : 'Thông báo'}
+                  </span>
+                ))}
               </div>
-            </div>
-
-            <div className="mt-5 rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 backdrop-blur-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-500">
-                Thiết lập đã lưu
-              </p>
-              <p className="mt-2 text-sm leading-7 text-stone-700">
-                Hệ thống sẽ theo dõi mức giá trên{' '}
-                <span className="font-medium text-stone-900">
-                  {platform === 'all' ? 'mọi sàn phù hợp' : platform}
-                </span>{' '}
-                và gửi thông báo theo tần suất{' '}
-                <span className="font-medium text-stone-900">{frequency}</span>.
-              </p>
-            </div>
-
-            <div className="mt-5 flex justify-end">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
-              >
-                Đóng
+              <button type="button" onClick={onClose}
+                className="mt-6 w-full rounded-full bg-[#1F1A17] dark:bg-stone-100 py-3.5 text-sm font-medium text-white dark:text-stone-900 transition hover:opacity-90">
+                Xong
               </button>
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid gap-5 md:grid-cols-2">
+          <>
+            {/* Header */}
+            <div className="flex items-start justify-between border-b border-stone-100 dark:border-stone-700/40 px-7 py-5">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F8F1F3] dark:bg-[#2A1A1D]/60 text-[#B7848C]">
+                  <Bell size={16} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h2 className="text-base font-semibold tracking-[-0.01em] text-stone-900 dark:text-stone-100">
+                    Đặt cảnh báo giá
+                  </h2>
+                  {productName && (
+                    <p className="mt-0.5 line-clamp-1 text-[11px] text-stone-400 dark:text-stone-500">{productName}</p>
+                  )}
+                </div>
+              </div>
+              <button type="button" onClick={onClose}
+                className="rounded-full p-1.5 text-stone-400 transition hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-700">
+                <X size={16} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="px-7 py-6 space-y-5">
+              {/* Giá mục tiêu */}
               <div>
-                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400">
-                  Giá mong muốn
+                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-400">
+                  Giá mục tiêu
                 </label>
-                <input
-                  value={targetPrice}
-                  onChange={(e) => setTargetPrice(e.target.value)}
-                  placeholder="Ví dụ: 6500000"
-                  className="w-full rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 text-sm text-stone-900 outline-none backdrop-blur-sm transition focus:border-[#D7B6BA]"
-                />
+                <div className="relative">
+                  <input
+                    value={targetPrice}
+                    onChange={(e) => setTargetPrice(e.target.value)}
+                    placeholder="0"
+                    className="w-full rounded-2xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800/60 px-4 py-3.5 pr-14 text-sm text-stone-900 dark:text-stone-100 outline-none transition placeholder:text-stone-300 dark:placeholder:text-stone-600 focus:border-[#B7848C] focus:ring-2 focus:ring-[#B7848C]/10"
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-stone-400">VNĐ</span>
+                </div>
+                {parsedPrice > 0 && (
+                  <p className="mt-1.5 text-xs text-stone-400 dark:text-stone-500">= {formatPrice(parsedPrice)}</p>
+                )}
               </div>
 
+              {/* Theo dõi sàn */}
               <div>
-                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400">
-                  Theo dõi nền tảng
+                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-400">
+                  Theo dõi sàn
                 </label>
-                <select
-                  value={platform}
-                  onChange={(e) =>
-                    setPlatform(e.target.value as PlatformName | 'all')
-                  }
-                  className="w-full rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 text-sm text-stone-900 outline-none backdrop-blur-sm transition focus:border-[#D7B6BA]"
-                >
-                  {platformOptions.map((item) => (
-                    <option key={item} value={item}>
-                      {item === 'all'
-                        ? 'Tất cả sàn'
-                        // Value khớp DB (ví dụ 'guardian' lowercase) → capitalize
-                        // khi hiển thị để UI đẹp mà vẫn giữ value gốc gửi API.
-                        : item.charAt(0).toUpperCase() + item.slice(1)}
-                    </option>
+                <select value={platform} onChange={(e) => setPlatform(e.target.value as PlatformName | 'all')}
+                  className="w-full rounded-2xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800/60 px-4 py-3.5 text-sm text-stone-900 dark:text-stone-100 outline-none transition focus:border-[#B7848C] focus:ring-2 focus:ring-[#B7848C]/10">
+                  {platformOptions.map((p) => (
+                    <option key={p.value} value={p.value}>{p.label}</option>
                   ))}
                 </select>
               </div>
 
+              {/* Kênh nhận — tick được cả 2 */}
               <div>
-                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400">
-                  Kênh nhận thông báo
+                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-400">
+                  Nhận thông báo qua
                 </label>
-
-                <div className="flex flex-wrap gap-2">
-                  {channelOptions.map((item) => {
-                    const isActive = channel === item;
-
+                <div className="grid grid-cols-2 gap-2">
+                  {([
+                    { value: 'email' as AlertChannel, icon: Mail, label: 'Email' },
+                    { value: 'push' as AlertChannel, icon: BellRing, label: 'Thông báo' },
+                  ]).map(({ value, icon: Icon, label }) => {
+                    const active = channels.has(value);
                     return (
-                      <button
-                        key={item}
-                        type="button"
-                        onClick={() => setChannel(item)}
-                        className={`rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 ${
-                          isActive
-                            ? 'border-white/60 bg-gradient-to-br from-white to-[#F8F1F3] text-[#A06F73] shadow-[0_10px_24px_rgba(160,111,115,0.10)]'
-                            : 'border-white/50 bg-white/45 text-stone-500 hover:bg-white/65 hover:text-stone-900'
-                        }`}
-                      >
-                        {item}
+                      <button key={value} type="button" onClick={() => toggleChannel(value)}
+                        className={`flex items-center gap-2.5 rounded-2xl border px-4 py-3 text-left transition ${
+                          active
+                            ? 'border-[#B7848C] bg-[#FBF3F4] dark:bg-[#2A1A1D]/60 text-[#B7848C]'
+                            : 'border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+                        }`}>
+                        <Icon size={15} strokeWidth={1.5} />
+                        <span className="text-sm font-medium">{label}</span>
+                        {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#B7848C]" />}
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              <div>
-                <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400">
-                  Tần suất
-                </label>
-                <select
-                  value={frequency}
-                  onChange={(e) => setFrequency(e.target.value)}
-                  className="w-full rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 text-sm text-stone-900 outline-none backdrop-blur-sm transition focus:border-[#D7B6BA]"
-                >
-                  <option>Ngay khi chạm ngưỡng</option>
-                  <option>Tóm tắt mỗi ngày</option>
-                  <option>Tóm tắt mỗi tuần</option>
-                </select>
+              {error && (
+                <p className="rounded-xl bg-red-50 dark:bg-red-950/30 px-3 py-2 text-xs text-red-500">{error}</p>
+              )}
+
+              {/* Actions */}
+              <div className="flex gap-2.5 pt-1">
+                <button type="button" onClick={onClose}
+                  className="flex-1 rounded-full border border-stone-200 dark:border-stone-700 py-3 text-sm font-medium text-stone-600 dark:text-stone-400 transition hover:bg-stone-50 dark:hover:bg-stone-800">
+                  Hủy
+                </button>
+                <button type="submit" disabled={loading}
+                  className="flex-[2] rounded-full bg-[#1F1A17] dark:bg-stone-100 py-3 text-sm font-semibold text-white dark:text-stone-900 transition hover:opacity-90 disabled:opacity-50">
+                  {loading ? 'Đang tạo...' : 'Tạo alert'}
+                </button>
               </div>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400">
-                Ghi chú
-              </label>
-              <textarea
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                rows={4}
-                placeholder="Ví dụ: ưu tiên official store hoặc free ship"
-                className="w-full rounded-[22px] border border-white/50 bg-white/60 px-4 py-4 text-sm text-stone-900 outline-none backdrop-blur-sm transition focus:border-[#D7B6BA]"
-              />
-            </div>
-
-            <div className="rounded-[24px] border border-[#E2D38A] bg-[linear-gradient(135deg,rgba(255,255,255,0.7),rgba(248,241,201,0.92))] p-4 shadow-[0_10px_28px_rgba(226,211,138,0.10)]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-600">
-                Preview
-              </p>
-
-              <p className="mt-2 text-sm leading-7 text-stone-700">
-                Bạn sẽ nhận cảnh báo khi giá xuống còn{' '}
-                <span className="font-medium text-stone-900">
-                  {parsedPrice > 0 ? formatPrice(parsedPrice) : '—'}
-                </span>{' '}
-                trên{' '}
-                <span className="font-medium text-stone-900">
-                  {platform === 'all' ? 'mọi sàn' : platform}
-                </span>{' '}
-                qua <span className="font-medium text-stone-900">{channel}</span>.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full border border-white/50 bg-white/60 px-5 py-3 text-sm font-medium text-stone-700 backdrop-blur-sm transition hover:text-stone-900"
-              >
-                Hủy
-              </button>
-
-              <button
-                type="submit"
-                className="rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
-              >
-                Tạo alert
-              </button>
-            </div>
-          </form>
+            </form>
+          </>
         )}
       </div>
     </div>

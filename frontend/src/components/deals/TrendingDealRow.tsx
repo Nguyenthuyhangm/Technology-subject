@@ -13,7 +13,6 @@ function addUnsplashDefaults(url: string): string {
   try {
     const u = new URL(url)
     if (u.hostname !== 'images.unsplash.com') return url
-    // Nếu DB chỉ lưu URL gốc không có query, thêm params để Unsplash trả ảnh ổn định.
     if (!u.searchParams.has('auto')) u.searchParams.set('auto', 'format')
     if (!u.searchParams.has('fit')) u.searchParams.set('fit', 'crop')
     if (!u.searchParams.has('w')) u.searchParams.set('w', '600')
@@ -31,9 +30,6 @@ function resolveDealImageSrc(imageUrl: string | null): string | null {
   if (raw.startsWith('http://') || raw.startsWith('https://'))
     return addUnsplashDefaults(raw)
   if (raw.startsWith('//')) return `https:${raw}`
-  // ProductDetails đang dùng trực tiếp URL từ backend. Với Trending Deals,
-  // đôi khi DB lưu path tương đối (vd `/images/...` hoặc `uploads/...`),
-  // nên cần prefix base backend để ảnh hiển thị đúng trên :5173.
   const base = getApiBaseUrl()
   const abs = raw.startsWith('/') ? `${base}${raw}` : `${base}/${raw}`
   return addUnsplashDefaults(abs)
@@ -65,88 +61,103 @@ export function TrendingDealRow({
     rowListPrice != null && rowListPrice > 0 && rowListPrice > rowBestPrice
   const rowDiscountPct =
     rowShowOrigStrike && rowListPrice != null
-      ? Math.min(
-          100,
-          Math.max(
-            0,
-            Math.round(((rowListPrice - rowBestPrice) / rowListPrice) * 100),
-          ),
-        )
+      ? Math.min(100, Math.max(0, Math.round(((rowListPrice - rowBestPrice) / rowListPrice) * 100)))
       : 0
+
+  const dealScorePct = Math.round(Math.min(1, Math.max(0, d.dealScore)) * 100)
 
   return (
     <div className={nested ? 'max-w-full' : ''}>
       <Link
         to={`/product/${d.productId}`}
-        className={`group flex flex-col gap-4 rounded-2xl border border-stone-200/90 bg-[#FCF8F4] p-5 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#C9A9B0] hover:bg-[#FFFCF8] hover:shadow-[0_22px_48px_rgba(44,36,31,0.12)] hover:ring-2 hover:ring-[#E5CCD2]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8E6A72] sm:flex-row sm:items-stretch ${
-          nested
-            ? 'shadow-[0_1px_8px_rgba(44,36,31,0.04)] hover:translate-y-0 hover:shadow-md'
-            : 'shadow-[0_2px_12px_rgba(44,36,31,0.04)]'
+        className={`group flex flex-col gap-5 rounded-[28px] border border-stone-200/80 dark:border-stone-700/40 bg-white/80 dark:bg-[#1A1614]/80 p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(33,24,19,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8E6A72] sm:flex-row sm:items-stretch ${
+          nested ? 'shadow-sm' : 'shadow-[0_10px_30px_rgba(33,24,19,0.05)]'
         }`}
       >
-        <div className="flex min-w-0 flex-1 gap-4 sm:items-center">
-          <div
-            className={`flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white ring-1 ring-stone-200/80 transition-[box-shadow] duration-300 group-hover:ring-[#D4A5AA]/70 ${
-              nested ? 'h-20 w-20' : 'h-24 w-24'
-            }`}
-          >
-            {showImage ? (
-              <img
-                src={imgSrc}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                onError={() => {
-                  if (!imgBroken) {
-                    setImgBroken(true)
-                    onImageError?.(d.listingId)
-                  }
-                }}
-                className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.03]"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center px-2 text-center text-[11px] font-medium text-stone-500">
-                Lỗi hiển thị
-              </div>
-            )}
-          </div>
-          <div className="min-w-0 flex-1">
-            <span
-              className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${trendingDealBadgeClass(d.badge)}`}
-            >
+        {/* Image */}
+        <div className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[20px] bg-[#F5EEE8] dark:bg-stone-800 transition-all duration-500 ${
+          nested ? 'h-20 w-20' : 'h-28 w-28'
+        }`}>
+          {showImage ? (
+            <img
+              src={imgSrc}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onError={() => {
+                if (!imgBroken) {
+                  setImgBroken(true)
+                  onImageError?.(d.listingId)
+                }
+              }}
+              className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.04]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center px-2 text-center text-[10px] text-stone-400">
+              Không có ảnh
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${trendingDealBadgeClass(d.badge)}`}>
               {d.badge}
             </span>
-            <h3
-              className="mt-2 line-clamp-2 text-lg text-stone-900 transition-colors group-hover:text-[#5C3D45]"
-              style={{ fontFamily: TRENDING_DEAL_FONT_STACK.serif }}
-            >
-              {d.productName}
-            </h3>
-            <p className="mt-1 text-xs text-stone-500">{d.platformName}</p>
-            <p className="mt-2 whitespace-pre-line text-xs text-stone-600">
+            <span className="text-[10px] text-stone-400 dark:text-stone-500">{d.platformName}</span>
+          </div>
+
+          <h3
+            className="line-clamp-2 text-[1.35rem] leading-[1.2] tracking-[-0.02em] text-stone-900 dark:text-stone-100 transition-colors group-hover:text-[#5C3D45]"
+            style={{ fontFamily: TRENDING_DEAL_FONT_STACK.serif }}
+          >
+            {d.productName}
+          </h3>
+
+          {d.explanation && (
+            <p className="line-clamp-2 text-xs leading-relaxed text-stone-500 dark:text-stone-400">
               {d.explanation}
             </p>
-            <TrendingDealScoreBreakdown d={d} />
-          </div>
+          )}
+
+          <TrendingDealScoreBreakdown d={d} />
         </div>
-        <div className="shrink-0 text-right sm:flex sm:min-w-[156px] sm:flex-col sm:justify-center sm:border-l sm:border-stone-200/60 sm:pl-5">
-          <div>
-            <p className="text-xs text-stone-500">Giá tốt nhất</p>
-            <p className="text-[10px] text-stone-400">Đã gồm voucher và phí ship</p>
-            <p className="mt-1 text-lg font-semibold text-stone-900">
-              {formatTrendingDealVnd(rowBestPrice)}
+
+        {/* Price */}
+        <div className="shrink-0 sm:flex sm:min-w-[148px] sm:flex-col sm:justify-center sm:border-l sm:border-stone-200/60 dark:sm:border-stone-700/40 sm:pl-6">
+          <p className="text-[10px] uppercase tracking-[0.08em] text-stone-400 dark:text-stone-500">
+            Giá tốt nhất
+          </p>
+          <p className="mt-1.5 text-2xl font-semibold tracking-[-0.03em] text-stone-900 dark:text-stone-100">
+            {formatTrendingDealVnd(rowBestPrice)}
+          </p>
+
+          {rowShowOrigStrike && rowListPrice != null && (
+            <p className="mt-0.5 text-xs text-stone-400 line-through">
+              {formatTrendingDealVnd(rowListPrice)}
             </p>
-            {rowShowOrigStrike && rowListPrice != null && (
-              <p className="text-xs text-stone-400 line-through">
-                {formatTrendingDealVnd(rowListPrice)}
-              </p>
-            )}
-            <p className="mt-1 text-[11px] text-stone-500">
-              Deal score:{' '}
-              {Math.round(Math.min(1, Math.max(0, d.dealScore)) * 100)}%
-              {rowDiscountPct > 0 && <> · Giảm ~{rowDiscountPct}%</>}
-            </p>
+          )}
+
+          {rowDiscountPct > 0 && (
+            <span className="mt-2 inline-flex w-fit items-center rounded-full bg-[#FBF3F4] dark:bg-[#2A1A1D]/60 px-2.5 py-0.5 text-[11px] font-semibold text-[#B7848C]">
+              -{rowDiscountPct}%
+            </span>
+          )}
+
+          {/* Deal score pill */}
+          <div className="mt-3 flex items-center gap-2">
+            <div className="h-1 flex-1 overflow-hidden rounded-full bg-stone-200/80 dark:bg-stone-700/60">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#C9A9B0] to-[#8E6A72]"
+                style={{ width: `${dealScorePct}%` }}
+              />
+            </div>
+            <span className="text-[10px] tabular-nums text-stone-400 dark:text-stone-500">
+              {dealScorePct}%
+            </span>
           </div>
+          <p className="mt-0.5 text-[10px] text-stone-400 dark:text-stone-500">Deal score</p>
         </div>
       </Link>
     </div>

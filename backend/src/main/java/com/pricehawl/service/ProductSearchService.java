@@ -29,13 +29,15 @@ public class ProductSearchService {
     @Transactional
     public void syncAll() {
 
-
+        searchRepository.deleteAll();
         List<ProductDocument> docs = productRepository.findAll()
                 .stream()
                 .map(documentMapper::toDocument)
                 .toList();
 
         searchRepository.saveAll(docs);
+
+        System.out.println("SYNCED DOCS = " + docs.size());
     }
 
     // =========================
@@ -44,73 +46,65 @@ public class ProductSearchService {
     @Transactional
     public List<ProductSearchDTO> search(String keyword) {
 
-        // 🔹 1. search từ Elasticsearch
-        List<ProductDocument> docs = searchRepository.search(keyword);
+        // 1. Search Elasticsearch
+        List<ProductDocument> docs =
+                searchRepository.search(keyword);
 
-        if (docs.isEmpty()) return List.of();
+        System.out.println("===== ELASTICSEARCH RESULT =====");
 
-        // 🔹 2. lấy danh sách id
-        List<UUID> ids = docs.stream()
-                .map(d -> UUID.fromString(d.getId()))
-                .toList();
+        for (ProductDocument d : docs) {
 
-        // 🔹 3. lấy tất cả listing (1 query duy nhất)
-        List<ProductListing> listings = listingRepository.findByProductIds(ids);
-
-        // 🔹 4. tìm best price
-        Map<UUID, ProductListing> bestMap = new HashMap<>();
-
-        for (ProductListing pl : listings) {
-            UUID pid = pl.getProduct().getId();
-
-            if (!bestMap.containsKey(pid) ||
-                    pl.getFinalPrice() < bestMap.get(pid).getFinalPrice()) {
-
-                bestMap.put(pid, pl);
-            }
+            System.out.println(
+                    "id=" + d.getId()
+                            + ", name=" + d.getName()
+                            + ", brand=" + d.getBrandName()
+                            + ", category=" + d.getCategoryName()
+                            + ", bestPrice=" + d.getBestPrice()
+            );
         }
 
-        // 🔹 5. map sang DTO
-        return docs.stream().map(doc -> {
+        if (docs.isEmpty()) {
 
-            UUID id = UUID.fromString(doc.getId());
-            ProductListing best = bestMap.get(id);
+            System.out.println("KHONG TIM THAY DOCUMENT");
 
-            Integer bestPrice = null;
-            Integer originalPrice = null;
-            Integer discountPct = null;
-            String bestPlatform = null;
+            return List.of();
+        }
 
-            if (best != null) {
-                bestPrice = best.getFinalPrice();
-                originalPrice = best.getOriginalPrice();
-                bestPlatform = best.getPlatform().getName();
+        // 2. Map DTO trực tiếp từ ES document
+        List<ProductSearchDTO> result = docs.stream()
 
-                if (originalPrice != null && originalPrice > bestPrice) {
-                    discountPct = (int) Math.round(
-                            ((originalPrice - bestPrice) / originalPrice) * 100
-                    );
-                }
-            }
+                .map(doc -> ProductSearchDTO.builder()
 
-            return ProductSearchDTO.builder()
-                    .id(id)
-                    .name(doc.getName())
-                    .brandName(doc.getBrandName())
-                    .categoryName(doc.getCategoryName())
-                    .imageUrl(doc.getImageUrl())
+                        .id(UUID.fromString(doc.getId()))
 
-                    .bestPrice(bestPrice)
-                    .originalPrice(originalPrice)
-                    .discountPct(discountPct)
-                    .bestPlatform(bestPlatform)
+                        .name(doc.getName())
 
-                    .score(null)
-                    .build();
+                        .brandName(doc.getBrandName())
 
-        }).toList();
+                        .categoryName(doc.getCategoryName())
+
+                        .imageUrl(doc.getImageUrl())
+
+                        .bestPrice(doc.getBestPrice())
+
+                        .originalPrice(doc.getOriginalPrice())
+
+                        .discountPct(doc.getDiscountPct())
+
+                        .bestPlatform(doc.getBestPlatform())
+
+                        .score(doc.getScore())
+
+                        .build())
+
+                .toList();
+
+        System.out.println(
+                "TOTAL RESULT: " + result.size()
+        );
+
+        return result;
     }
-
     // =========================
     // 🛟 3. FALLBACK (nếu ES lỗi)
     // =========================

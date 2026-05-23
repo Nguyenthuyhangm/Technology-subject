@@ -1,8 +1,8 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import type { Product, ProductSearch } from '../../types/product';
-import { useWishlist } from '../../context/useWishlist'; 
+import type { ProductSearch } from '../../types/product';
+import { useWishlist } from '../../context/useWishlist';
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
@@ -10,7 +10,7 @@ const FONT_STACK = {
 } as const;
 
 type ProductCardProps = {
-  product: Product | ProductSearch;
+  product: ProductSearch;
 };
 
 const formatPrice = (price: number): string =>
@@ -22,43 +22,23 @@ const formatPrice = (price: number): string =>
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  
+
   // So sánh ID dạng String để khớp với UUID
   const isSaved = isInWishlist(String(product.id));
 
-  const bestOffer = [...product.platforms].sort(
-    (a, b) => a.finalPrice - b.finalPrice,
-  )[0];
+  const finalPrice = product.bestPrice ?? 0;
+  const originalPrice = product.originalPrice ?? finalPrice
+  const discountPct = product.discountPct ?? 0;
 
-  const finalRounded = Math.round(bestOffer.finalPrice);
-  const originalRounded = Math.round(
-    bestOffer.originalPrice ?? bestOffer.finalPrice,
-  );
   const showSale =
-    originalRounded > finalRounded &&
-    originalRounded > 0 &&
-    Number.isFinite(originalRounded);
-  const discountPct =
-    typeof bestOffer.discountPct === 'number'
-      ? bestOffer.discountPct
-      : showSale
-        ? Math.min(
-            100,
-            Math.max(
-              0,
-              Math.round(
-                ((originalRounded - finalRounded) / originalRounded) * 100,
-              ),
-            ),
-          )
-        : 0;
+      originalPrice > finalPrice && discountPct > 0;
 
-  const imageSrc = product.images?.[0] || '/fallback-product.jpg';
+  const imageSrc = 	product.imageUrl || '/fallback-product.jpg';
 
   const handleWishlistClick = (e: React.MouseEvent) => {
-    e.preventDefault(); 
-    e.stopPropagation(); 
-    
+    e.preventDefault();
+    e.stopPropagation();
+
     if (isSaved) {
       removeFromWishlist(String(product.id));
     } else {
@@ -80,9 +60,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         style={{ pointerEvents: 'auto' }}
         aria-label={isSaved ? "Xóa khỏi wishlist" : "Lưu sản phẩm"}
       >
-        <Heart 
-          size={18} 
-          fill={isSaved ? "currentColor" : "none"} 
+        <Heart
+          size={18}
+          fill={isSaved ? "currentColor" : "none"}
           strokeWidth={isSaved ? 0 : 2}
         />
       </button>
@@ -105,10 +85,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-6">
             <div className="flex items-center justify-between gap-3">
               <span className="caption-soft text-[10px] font-medium uppercase text-[#8E6A72]">
-                {product.brand}
+                {product.brandName}
               </span>
               <span className="text-xs text-stone-400">
-                {product.category}
+                {product.categoryName}
               </span>
             </div>
 
@@ -121,12 +101,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             <div className="mt-5 flex flex-wrap items-baseline gap-3">
               <span className="text-[1.4rem] font-semibold tracking-tight text-stone-900 dark:text-stone-100">
-                {formatPrice(finalRounded)}
+                {formatPrice(finalPrice)}
               </span>
               {showSale && (
                 <>
                   <span className="text-sm text-stone-300 line-through">
-                    {formatPrice(originalRounded)}
+                    {formatPrice(originalPrice)}
                   </span>
                   {discountPct > 0 && (
                     <span className="text-sm font-medium text-[#8E6A72]">
