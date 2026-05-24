@@ -4,15 +4,23 @@ import type { AxiosResponse } from 'axios'
 
 /**
  * Base URL API:
- * - Dev (khuyến nghị): để trống → dùng `/api` + proxy Vite → localhost:8080
- * - Hoặc set VITE_API_BASE_URL=http://localhost:8080 (cần CORS trên backend)
+ * - Nếu VITE_API_BASE_URL=http://localhost:8080      → dùng http://localhost:8080
+ * - Nếu VITE_API_BASE_URL=http://localhost:8080/api  → tự bỏ /api để tránh /api/api
+ * - Nếu không set env → dùng http://localhost:8080
  */
 export function getApiBaseUrl(): string {
   const v = import.meta.env.VITE_API_BASE_URL as string | undefined
   const normalized = v != null ? String(v).trim().replace(/\/$/, '') : ''
-  // Nếu không dùng proxy Vite (/api → :8080), hãy set VITE_API_BASE_URL=http://localhost:8080.
-  // Fallback dev: cho phép gọi thẳng backend khi chạy ở :5173 và không cấu hình proxy.
-  return normalized || 'http://localhost:8080'
+
+  if (!normalized) {
+    return 'http://localhost:8080'
+  }
+
+  if (normalized.endsWith('/api')) {
+    return normalized.slice(0, -4)
+  }
+
+  return normalized
 }
 
 /**
@@ -133,6 +141,7 @@ export async function fetchTrendingDeals(
 ): Promise<TrendingDealsFetchResult> {
   const base = getApiBaseUrl()
   const url = `${base}/api/trending-deals`
+
   try {
     const res = await axios.get<unknown>(url, {
       params: {
