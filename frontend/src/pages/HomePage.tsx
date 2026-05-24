@@ -6,12 +6,12 @@ import Badge from '../components/common/Badge';
 import ProductCard from '../components/product/ProductCard';
 import { mockProducts } from '../data/mockProducts';
 import AppHeader from '../components/layout/AppHeader';
+import RecommendationSection from '../components/RecommendationSection';
 import { useTrendingDeals } from '../util/useTrendingDeals';
 import {
   sortByDealScoreDesc,
   trendingDealToProductSearch,
 } from '../util/trendingDealSelectors';
-
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
@@ -49,8 +49,10 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
-  const { deals, loading } = useTrendingDeals();
+  const currentUserId =
+    localStorage.getItem('userId') ?? '11111111-1111-1111-1111-111111111111';
 
+  const { deals, loading } = useTrendingDeals();
 
 
   const curatedProducts = useMemo(() => {
@@ -300,7 +302,7 @@ export default function HomePage() {
               ))}
             </div>
           </section>
-
+          <RecommendationSection userId={currentUserId} />
           <section className="mt-20 rounded-[38px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-8 shadow-[0_18px_45px_rgba(15,23,42,0.04)] md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
