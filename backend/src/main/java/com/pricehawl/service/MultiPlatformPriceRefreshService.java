@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -33,6 +34,7 @@ public class MultiPlatformPriceRefreshService {
     private final AlertQueuePublisher alertQueuePublisher;
     private final TransactionTemplate transactionTemplate;
     private final Map<String, PlatformPriceCrawler> crawlerMap;
+    private final ProductSearchService productSearchService;
 
     @Value("${pricehawk.scheduler.price-refresh.max-items-per-run:50}")
     private int maxItemsPerRun;
@@ -43,13 +45,15 @@ public class MultiPlatformPriceRefreshService {
             PriceRefreshDecisionService decisionService,
             AlertQueuePublisher alertQueuePublisher,
             PlatformTransactionManager transactionManager,
-            List<PlatformPriceCrawler> crawlers
+            List<PlatformPriceCrawler> crawlers,
+            ProductSearchService productSearchService
     ) {
         this.productListingRepository = productListingRepository;
         this.priceRecordRepository = priceRecordRepository;
         this.decisionService = decisionService;
         this.alertQueuePublisher = alertQueuePublisher;
         this.transactionTemplate = new TransactionTemplate(transactionManager);
+        this.productSearchService = productSearchService;
 
         Map<String, PlatformPriceCrawler> map = new HashMap<>();
         for (PlatformPriceCrawler crawler : crawlers) {
@@ -70,6 +74,42 @@ public class MultiPlatformPriceRefreshService {
         batch.mediumResults = runMediumPriority();
         batch.lowResults    = runLowPriority();
         return batch;
+    }
+
+    private void refreshBestPriceForProduct(UUID productId) {
+
+        List<ProductListing> listings =
+                productListingRepository.findByProductId(productId);
+
+        Integer bestPrice = null;
+        String bestPlatform = null;
+
+        for (ProductListing listing : listings) {
+
+            Integer currentPrice = listing.getCurrentPrice();
+
+            if (currentPrice == null) {
+                continue;
+            }
+
+            if (bestPrice == null || currentPrice < bestPrice) {
+                bestPrice = currentPrice;
+                bestPlatform = listing.getPlatformName();
+            }
+        }
+
+        if (bestPrice == null) {
+            return;
+        }
+
+        productSearchService.updateBestPriceOnly(productId, bestPrice,  bestPlatform);
+
+        log.info(
+                "Elastic best price refreshed | productId={} | bestPrice={} | bestPlatform={}",
+                productId,
+                bestPrice,
+                bestPlatform
+        );
     }
 
     public List<PriceRefreshResultDTO> runHighPriority() {
@@ -133,7 +173,11 @@ public class MultiPlatformPriceRefreshService {
             PriceRefreshResultDTO result = decisionService.decide(job, snapshot, latestRecord);
 
             persistInTransaction(listing, snapshot, result);
-
+            if (result.isInsertedNewPriceRecord()) {
+                refreshBestPriceForProduct(
+                        listing.getProduct().getId()
+                );
+            }
             // Đẩy vào Redis queue thay vì gọi trực tiếp — crawler không bị chờ
             if (result.isInsertedNewPriceRecord() && snapshot.getPrice() != null) {
                 try {
