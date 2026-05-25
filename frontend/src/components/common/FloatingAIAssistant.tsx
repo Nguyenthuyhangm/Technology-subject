@@ -21,9 +21,17 @@ const quickQuestions = [
 
 const formatAssistantContent = (content: string) => {
   return content
-    .replace(/Gợi ý nhanh:\s*-/g, 'Gợi ý nhanh:\n-')
-    .replace(/Kết luận:/g, '\nKết luận:')
-    .replace(/\s+-\s+/g, '\n- ')
+    // Cho tiêu đề xuống dòng
+    .replace(/Trả lời ngắn:\s*/g, 'Trả lời ngắn:\n')
+    .replace(/Gợi ý nhanh:\s*/g, 'Gợi ý nhanh:\n')
+
+    // Mỗi dấu "-" thành một dòng bullet riêng
+    .replace(/\s*-\s*/g, '\n- ')
+
+    // Kết luận tách riêng ra
+    .replace(/\s*Kết luận:\s*/g, '\n\nKết luận: ')
+
+    // Xóa dòng trống thừa
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 };
