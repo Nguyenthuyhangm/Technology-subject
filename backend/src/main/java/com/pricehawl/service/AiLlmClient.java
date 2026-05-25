@@ -39,6 +39,7 @@ public class AiLlmClient {
             Map<String, Object> body = Map.of(
                     "model", model,
                     "temperature", 0.2,
+                    "max_tokens", 300,
                     "messages", List.of(
                             Map.of(
                                     "role", "system",
@@ -56,7 +57,7 @@ public class AiLlmClient {
                     .bodyValue(body)
                     .retrieve()
                     .bodyToMono(JsonNode.class)
-                    .timeout(Duration.ofSeconds(10))
+                    .timeout(Duration.ofSeconds(20))
                     .block();
 
             if (response == null) {

@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Bot, Loader2, Send, Sparkles, Wand2, X } from 'lucide-react';
 import { streamAiChat } from '../../api/aiChatApi';
+import jellyfishAi from '../../assets/jellyfish-ai.png';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -17,6 +18,7 @@ const quickQuestions = [
   'Hôm nay có sản phẩm nào đáng mua không?',
   'Mình nên mua ngay hay chờ giảm giá?',
 ];
+
 const formatAssistantContent = (content: string) => {
   return content
     .replace(/Gợi ý nhanh:\s*-/g, 'Gợi ý nhanh:\n-')
@@ -160,23 +162,45 @@ export default function FloatingAIAssistant({
     <>
       <style>
         {`
-          @keyframes floatAI {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+          @keyframes jellyFloat {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+            100% { transform: translateY(0px) scale(1); }
           }
 
-          @keyframes glowAI {
-            0% { box-shadow: 0 10px 30px rgba(183,132,140,0.20); }
-            50% { box-shadow: 0 14px 40px rgba(183,132,140,0.38); }
-            100% { box-shadow: 0 10px 30px rgba(183,132,140,0.20); }
+          @keyframes jellyGlow {
+            0% {
+              box-shadow:
+                0 14px 30px rgba(183,132,140,0.22),
+                0 0 0 rgba(183,132,140,0.0);
+            }
+            50% {
+              box-shadow:
+                0 22px 44px rgba(183,132,140,0.30),
+                0 0 28px rgba(215, 190, 196, 0.42);
+            }
+            100% {
+              box-shadow:
+                0 14px 30px rgba(183,132,140,0.22),
+                0 0 0 rgba(183,132,140,0.0);
+            }
+          }
+
+          @keyframes sparkleTwinkle {
+            0%, 100% { transform: scale(0.9); opacity: 0.55; }
+            50% { transform: scale(1.2); opacity: 1; }
+          }
+
+          @keyframes sparkleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
           }
         `}
       </style>
 
-      <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-3">
+      <div className="fixed bottom-8 right-8 z-[9999] flex flex-col items-end gap-4">
         {open && (
-          <div className="flex h-[560px] w-[370px] flex-col overflow-hidden rounded-[30px] border border-stone-200/80 bg-white/95 shadow-[0_24px_70px_rgba(15,23,42,0.16)] backdrop-blur-xl dark:border-stone-700/50 dark:bg-[#1A1614]/95">
+          <div className="mb-1 flex h-[560px] w-[390px] flex-col overflow-hidden rounded-[32px] border border-stone-200/80 bg-white/95 shadow-[0_24px_70px_rgba(15,23,42,0.16)] backdrop-blur-xl dark:border-stone-700/50 dark:bg-[#1A1614]/95">
             <div className="flex items-center justify-between border-b border-stone-200/70 px-5 py-4 dark:border-stone-700/50">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F6E8EB] text-[#8E6A72]">
@@ -212,16 +236,16 @@ export default function FloatingAIAssistant({
                       : 'mr-auto max-w-[92%] whitespace-pre-line rounded-3xl bg-[#FCF6F7] px-4 py-3 text-sm leading-6 text-stone-700 dark:bg-stone-800 dark:text-stone-200'
                   }
                 >
-                {message.content ? (
+                  {message.content ? (
                     message.role === 'assistant'
-                        ? formatAssistantContent(message.content)
-                        : message.content
-                ) : (
+                      ? formatAssistantContent(message.content)
+                      : message.content
+                  ) : (
                     <span className="inline-flex items-center gap-2 text-stone-400">
-                        <Loader2 size={14} className="animate-spin" />
-                        Đang phân tích...
+                      <Loader2 size={14} className="animate-spin" />
+                      Đang phân tích...
                     </span>
-                )}
+                  )}
                 </div>
               ))}
 
@@ -279,17 +303,33 @@ export default function FloatingAIAssistant({
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="group relative flex h-16 w-16 items-center justify-center rounded-full bg-[#B7848C] text-white shadow-lg transition hover:scale-105"
+          className="group relative flex h-28 w-28 items-center justify-center rounded-full border border-white/70 bg-gradient-to-br from-[#F8EFF2] via-[#F5E7EB] to-[#E9D8DE] transition duration-300 hover:scale-105"
           style={{
-            animation:
-              'floatAI 3s ease-in-out infinite, glowAI 2.8s ease-in-out infinite',
+            animation: 'jellyFloat 3.4s ease-in-out infinite, jellyGlow 3s ease-in-out infinite',
           }}
         >
-          <span className="absolute inset-0 rounded-full bg-[#B7848C]/30 blur-xl group-hover:bg-[#B7848C]/40" />
-          <Bot size={28} className="relative z-10" />
+          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.9),rgba(255,255,255,0.18),transparent_70%)]" />
 
-          <span className="absolute -right-1 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[#B7848C] shadow">
-            <Sparkles size={12} />
+          <span className="absolute -left-1 top-4 text-[#D9AEB8]" style={{ animation: 'sparkleTwinkle 2.2s ease-in-out infinite, sparkleFloat 2.2s ease-in-out infinite' }}>
+            <Sparkles size={15} fill="currentColor" />
+          </span>
+
+          <span className="absolute right-3 top-2 text-[#E7C7CF]" style={{ animation: 'sparkleTwinkle 1.8s ease-in-out infinite, sparkleFloat 2.4s ease-in-out infinite' }}>
+            <Sparkles size={13} fill="currentColor" />
+          </span>
+
+          <span className="absolute bottom-3 left-2 text-[#CFA6B1]" style={{ animation: 'sparkleTwinkle 2.5s ease-in-out infinite, sparkleFloat 2s ease-in-out infinite' }}>
+            <Sparkles size={11} fill="currentColor" />
+          </span>
+
+          <img
+            src={jellyfishAi}
+            alt="PriceHawk AI Jellyfish"
+            className="relative z-10 h-24 w-24 scale-125 object-contain drop-shadow-[0_10px_18px_rgba(142,106,114,0.18)]"
+          />
+
+          <span className="pointer-events-none absolute -right-1 -top-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/80 bg-white text-[#B7848C] shadow-md">
+            <Sparkles size={13} />
           </span>
         </button>
       </div>
