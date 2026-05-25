@@ -4,6 +4,7 @@ import { useAuth, applyTheme } from '../context/AuthContext'
 import { BACKEND_URL } from '../lib/supabase'
 import type { UserProfile } from '../lib/supabase'
 import AppHeader from '../components/layout/AppHeader'
+import PaymentMethodModal from "../components/premium/PaymentMethodModal";
 
 const FONT_STACK = {
     serif: '"Times New Roman", Georgia, serif',
@@ -20,6 +21,10 @@ function formatDate(iso?: string | null): string {
     return new Date(iso).toLocaleDateString('vi-VN', {
         day: '2-digit', month: '2-digit', year: 'numeric',
     })
+}
+function isPremiumActive(expire?: string | null): boolean {
+    if (!expire) return false
+    return new Date(expire) > new Date()
 }
 
 function Toast({ message, type }: { message: string; type: 'success' | 'error' }) {
@@ -88,7 +93,12 @@ function ProfileSkeleton() {
 export default function ProfilePage() {
     const { user, session, refreshProfile } = useAuth()
     const navigate = useNavigate()
-
+    const [paymentOpen, setPaymentOpen] = useState(false);
+    const [selectedPlan, setSelectedPlan] =
+        useState<"MONTHLY" | "QUARTERLY" | "YEARLY">(
+            "MONTHLY"
+        );
+    const [paymentStep, setPaymentStep] = useState<1 | 2>(1);
     const [apiProfile, setApiProfile] = useState<UserProfile | null>(null)
     const [fetchLoading, setFetchLoading] = useState(true)
     const [fetchError, setFetchError] = useState('')
@@ -265,7 +275,58 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
+                {/* Premium Plan */}
+                <section className="mb-6 rounded-[28px] border border-stone-200/80 dark:border-stone-700/40 bg-white/80 dark:bg-[#1A1614]/80 p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)] backdrop-blur-sm">
+                    <h2 className="mb-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-400 dark:text-stone-500">
+                        Subscription Plan
+                    </h2>
 
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                            <p className="text-base font-semibold text-stone-900 dark:text-stone-100">
+                                {apiProfile?.plan === 'premium'
+                                    ? '👑 Premium Plan'
+                                    : 'Free Plan'}
+                            </p>
+
+                            <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+                                {apiProfile?.plan === 'premium'
+                                    ? `Hết hạn: ${formatDate((apiProfile as any)?.premium_expires_at)}`
+                                    : 'Nâng cấp để mở khóa unlimited alerts, wishlist và priority crawl'}
+                            </p>
+
+                            {apiProfile?.plan === 'premium' && (
+                                <p
+                                    className={`mt-2 text-xs font-medium ${
+                                        isPremiumActive((apiProfile as any)?.premium_expires_at)
+                                            ? 'text-emerald-600 dark:text-emerald-400'
+                                            : 'text-red-500 dark:text-red-400'
+                                    }`}
+                                >
+                                    {isPremiumActive((apiProfile as any)?.premium_expires_at)
+                                        ? 'Đang hoạt động'
+                                        : 'Đã hết hạn'}
+                                </p>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={() => {
+                                setPaymentOpen(true);
+                                setPaymentStep(1);
+                            }}
+                            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                                apiProfile?.plan === 'premium'
+                                    ? 'border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
+                                    : 'bg-[#B7848C] text-white hover:opacity-90'
+                            }`}
+                        >
+                            {apiProfile?.plan === 'premium'
+                                ? 'Renew Plan'
+                                : 'Upgrade'}
+                        </button>
+                    </div>
+                </section>
                 {/* Toast */}
                 {success && <Toast message={success} type="success" />}
                 {error && <Toast message={error} type="error" />}
@@ -442,6 +503,20 @@ export default function ProfilePage() {
                 </div>
 
             </main>
+            <PaymentMethodModal
+                open={paymentOpen}
+                onClose={() =>
+                    setPaymentOpen(false)
+                }
+                onConfirm={(method) => {
+                    console.log("PAY:", method);
+                    setPaymentOpen(false);
+                    navigate("/payment/qr");
+                    return;
+                    // bước sau gọi backend
+                    // handleUpgradePlan(method)
+                }}
+            />
         </div>
     )
 }

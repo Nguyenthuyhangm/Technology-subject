@@ -67,4 +67,5 @@ public interface WishlistRepository extends JpaRepository<Wishlist, UUID> {
     @Transactional
     @Query("DELETE FROM Wishlist w WHERE w.userId = :userId AND w.productId = :productId")
     int deleteByUserIdAndProductId(@Param("userId") UUID userId, @Param("productId") UUID productId);
+    long countByUserId(UUID userId);
 }
