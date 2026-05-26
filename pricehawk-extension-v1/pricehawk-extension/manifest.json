@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "PriceHawk ✨",
+  "version": "1.0.0",
+  "description": "So sánh giá thông minh trên Shopee, Lazada, Tiki, Hasaki, Watsons, Guardian, Cocolux",
+  "permissions": ["activeTab", "storage", "scripting", "tabs"],
+  "host_permissions": [
+    "*://*.shopee.vn/*",
+    "*://*.lazada.vn/*",
+    "*://*.tiki.vn/*",
+    "*://*.hasaki.vn/*",
+    "*://watsons.com.vn/*",
+    "*://*.watsons.com.vn/*",
+    "*://guardian.com.vn/*",
+    "*://*.guardian.com.vn/*",
+    "*://*.cocolux.com/*",
+    "http://localhost:8080/*",
+    "http://localhost:5173/*"
+  ],
+  "background": {
+    "service_worker": "background/worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.shopee.vn/*",
+        "*://*.lazada.vn/*",
+        "*://*.tiki.vn/*",
+        "*://*.hasaki.vn/*",
+        "*://watsons.com.vn/*",
+        "*://*.watsons.com.vn/*",
+        "*://guardian.com.vn/*",
+        "*://*.guardian.com.vn/*",
+        "*://*.cocolux.com/*"
+      ],
+      "js": ["config.js", "content/overlay/overlay.js", "utils/normalizer.js", "content/main.js"],
+      "css": ["content/overlay/overlay.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://localhost:5173/*"],
+      "js": ["content/auth-bridge.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/icons/jellyfish-ai.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  }
+}

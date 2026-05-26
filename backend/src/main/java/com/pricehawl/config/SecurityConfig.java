@@ -7,14 +7,34 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.*;
+import org.springframework.web.cors.*;
+
+import java.util.List;
+
 
 @Configuration
 public class SecurityConfig {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        // Dùng setAllowedOrigins("*") thay vì setAllowedOriginPatterns
+        // OK vì allowCredentials = false
+        config.setAllowedOrigins(List.of("*"));
+
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(false);
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            JwtAuthFilter jwtFilter) throws Exception {
-
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
@@ -24,13 +44,14 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ← thêm dòng này
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers(HttpMethod.GET, 
-                                "/products/**", 
-                                "/api/products/**", 
-                                "/api/trending-deals/**", 
-                                "/api/v1/price-history/**", 
+                        .requestMatchers(HttpMethod.GET,
+                                "/products/**",
+                                "/api/products/**",
+                                "/api/trending-deals/**",
+                                "/api/v1/price-history/**",
                                 "/api/compare/**"
                         ).permitAll()
                         .anyRequest().authenticated()
@@ -40,4 +61,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }
