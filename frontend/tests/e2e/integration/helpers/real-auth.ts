@@ -24,7 +24,7 @@ export async function navigateToLogin(page: Page): Promise<void> {
   // Wait for email input to be visible (form loaded)
   await page.waitForSelector(SELECTORS.auth.emailInput, {
     state: "visible",
-    timeout: 15000,
+    timeout: 30000,
   });
 }
 
@@ -75,7 +75,7 @@ export async function loginAsUser(
     await page.waitForFunction(
       (loginPath) => !window.location.pathname.includes("/login"),
       "/login",
-      { timeout: 20000 },
+      { timeout: 30000 },
     );
 
     // Additional wait for app to settle

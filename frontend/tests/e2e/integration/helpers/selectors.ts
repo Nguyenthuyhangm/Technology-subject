@@ -104,8 +104,12 @@ export const SELECTORS = {
     productName: 'h2, h3',
     priceText: '[class*="price"]',
 
+    // Product links
+    productDetailLink: 'a[href^="/product/"]',
+    viewDetailButton: 'a:has-text("Xem chi tiết")',
+
     // States
-    emptyState: 'text=Không có kết quả, text=Chưa có lựa chọn',
+    emptyState: 'text=Không có kết quả, text=Chưa có lựa chọn, text=Không có kết quả phù hợp',
     loadingState: 'text=Đang tải',
     noResultsState: 'text=Không tìm thấy',
 
@@ -129,11 +133,21 @@ export const SELECTORS = {
     categoryLinks: 'a[href*="/search?q="]',
 
     // Featured deals/trending
-    trendingSection: 'text=Chọn lọc hôm nay, text=Hot deal',
-    dealCards: '[class*="deal"], [class*="trending"]',
+    trendingSection: 'text=Chọn lọc hôm nay, text=Những món đang ở vùng giá đẹp',
+    dealCards: 'article',
+    productCard: 'article',
+
+    // Deal section on homepage (Những món đang ở vùng giá đẹp)
+    dealSection: 'h2:has-text("Những món đang ở vùng giá đẹp")',
+    dealSectionLink: 'article >> a[href^="/product/"]',
+
+    // Product links on home page
+    featuredProductLink: 'a:has-text("Xem chi tiết")',
+    productDetailLink: 'a[href^="/product/"]',
 
     // CTA
     ctaSection: 'text=Mua sắm',
+    wishlistCtaButton: 'a:has-text("Mở Wishlist")',
   },
 
   // ==========================================================================
@@ -186,10 +200,36 @@ export const SELECTORS = {
   // DEALS PAGE - DealsPage.tsx
   // ==========================================================================
   deals: {
-    heading: 'text=Chọn lọc hôm nay',
-    dealCard: '[class*="deal"]',
+    heading: 'text=Những lựa chọn đáng cân nhắc',
+    dealCard: 'article',
     flashSaleBadge: 'text=Flash Sale',
     topDealBadge: 'text=Top Deal',
+    productDetailLink: 'a:has-text("Xem chi tiết")',
+  },
+
+  // ==========================================================================
+  // PRODUCT DETAIL PAGE - ProductDetailPage.tsx
+  // ==========================================================================
+  productDetail: {
+    backButton: 'a:has-text("Quay lại")',
+    productTitle: 'h1',
+    wishlistButton: 'button:has-text("wishlist"), button:has-text("Wishlist"), button:has-text("Lưu wishlist")',
+    wishlistSavedButton: 'button:has-text("Đã lưu wishlist")',
+    alertButton: 'button:has-text("Đặt alert")',
+    buyButton: 'a:has-text("Mua tại")',
+    priceText: '[class*="text-[2.8rem]"]',
+  },
+
+  // ==========================================================================
+  // WISHLIST PAGE - WishlistPage.tsx
+  // ==========================================================================
+  wishlist: {
+    heading: 'h1:has-text("Yêu thích"), h1:has-text("Những món bạn")',
+    emptyState: 'text=Danh sách wishlist của bạn đang trống',
+    productCard: 'article',
+    productName: 'h2',
+    removeButton: 'button:has-text("Xóa")',
+    viewDetailButton: 'a:has-text("Xem chi tiết")',
   },
 } as const;
 

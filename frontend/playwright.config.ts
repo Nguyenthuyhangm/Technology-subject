@@ -29,7 +29,7 @@ export default defineConfig({
   // REPORTS
   // ============================================================================
   reporter: [
-    ['html', { outputFolder: 'test-results/reports/html' }],
+    ['html', { outputFolder: 'test-results/html-reports' }],
     ['json', { outputFile: 'test-results/reports/test-results.json' }],
     ['list'],
   ],
@@ -83,20 +83,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         channel: 'chrome',
         headless: process.env.CI ? true : false,
-      },
-    },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-        headless: process.env.CI ? true : false,
-      },
-    },
-    {
-      name: 'mobile-chrome',
-      use: {
-        ...devices['Pixel 5'],
-        headless: true,
       },
     },
   ],

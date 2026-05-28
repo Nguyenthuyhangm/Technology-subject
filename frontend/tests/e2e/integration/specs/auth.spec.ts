@@ -73,4 +73,14 @@ test.describe("Authentication", () => {
     await page.waitForTimeout(2000);
     expect(await isUserLoggedIn(page)).toBe(true);
   });
+
+  test("05 — Wrong password shows error", async ({ page }) => {
+    await navigateToLogin(page);
+    await page.fill(SELECTORS.auth.emailInput, VALID_USER.email);
+    await page.fill(SELECTORS.auth.passwordInput, "wrongpassword123");
+    await page.click(SELECTORS.auth.submitButton);
+
+    await page.waitForSelector(SELECTORS.auth.errorMessage, { timeout: 10000 });
+    await expect(page.locator(SELECTORS.auth.errorMessage)).toBeVisible();
+  });
 });

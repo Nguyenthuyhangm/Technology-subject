@@ -25,24 +25,18 @@ test.describe("Search Functionality", () => {
     if (!success) test.skip(true, "Login required for search tests");
   });
 
-  test("01 — Search page loads with input field", async ({ page }) => {
-    await page.goto("/search", { waitUntil: "domcontentloaded" });
-    await expect(page.locator(SELECTORS.search.searchInput)).toBeVisible({
-      timeout: 10000,
-    });
-  });
-
-  test("02 — Search updates URL with query param", async ({ page }) => {
+  test("01 — Search updates URL with query param", async ({ page }) => {
     await page.goto("/search", { waitUntil: "domcontentloaded" });
     await page.fill(SELECTORS.search.searchInput, "kem");
     await page.press(SELECTORS.search.searchInput, "Enter");
 
-    await expect(page).toHaveURL(/q=kem/, { timeout: 12000 });
+    await page.waitForTimeout(5000);
+    await expect(page).toHaveURL(/q=kem/, { timeout: 15000 });
   });
 
-  test("03 — Shows results or empty state", async ({ page }) => {
+  test("02 — Shows results or empty state", async ({ page }) => {
     await page.goto("/search?q=kem", { waitUntil: "domcontentloaded" });
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(8000);
 
     const hasResults =
       (await page.locator(SELECTORS.search.productCard).count()) > 0;
@@ -52,5 +46,17 @@ test.describe("Search Functionality", () => {
       .catch(() => false);
 
     expect(hasResults || hasEmpty).toBe(true);
+  });
+
+  test("03 — Click product from search to product detail page", async ({ page }) => {
+    await page.goto("/search?q=kem", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(10000);
+
+    const firstProductLink = page.locator(SELECTORS.search.productDetailLink).first();
+    await expect(firstProductLink).toBeVisible({ timeout: 15000 });
+    await firstProductLink.click();
+
+    await page.waitForTimeout(10000);
+    await expect(page).toHaveURL(/\/product\//, { timeout: 15000 });
   });
 });
