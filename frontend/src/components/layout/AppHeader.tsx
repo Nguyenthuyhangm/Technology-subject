@@ -9,6 +9,8 @@ const FONT_STACK = {
     'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 } as const
 
+const ADMIN_EMAILS = ['lethituphuong151020055@gmail.com']
+
 export type AppHeaderPage =
   | 'home'
   | 'search'
@@ -60,6 +62,8 @@ export default function AppHeader({
   const { user, profile, signOut } = useAuth()
   const navigate = useNavigate()
 
+  const isAdmin = ADMIN_EMAILS.includes(user?.email ?? '')
+
   useEffect(() => {
     const handleScroll = (): void => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
@@ -80,7 +84,6 @@ export default function AppHeader({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Fetch unread count mỗi 30 giây
   const fetchUnreadCount = useCallback(async () => {
     if (!user) return
     try {
@@ -215,21 +218,16 @@ export default function AppHeader({
                   )}
                 </button>
 
-                {/* Notification dropdown */}
                 {notifOpen && (
                   <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-stone-100 dark:border-stone-700/60 bg-white dark:bg-[#1E1916] shadow-lg overflow-hidden">
                     <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-700/60 px-4 py-3">
                       <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">Thông báo</p>
                       {unreadCount > 0 && (
-                        <button
-                          onClick={handleMarkAllRead}
-                          className="text-[11px] text-[#B7848C] hover:underline"
-                        >
+                        <button onClick={handleMarkAllRead} className="text-[11px] text-[#B7848C] hover:underline">
                           Đánh dấu tất cả đã đọc
                         </button>
                       )}
                     </div>
-
                     <div className="max-h-80 overflow-y-auto">
                       {notifications.length === 0 ? (
                         <div className="px-4 py-8 text-center">
@@ -240,11 +238,8 @@ export default function AppHeader({
                         </div>
                       ) : (
                         notifications.map((n) => (
-                          <button
-                            key={n.id}
-                            onClick={() => handleNotifClick(n.productId)}
-                            className={`flex w-full gap-3 px-4 py-3 text-left transition hover:bg-stone-50 dark:hover:bg-stone-800/50 ${!n.isRead ? 'bg-[#FBF3F4] dark:bg-[#2A1A1D]/30' : ''}`}
-                          >
+                          <button key={n.id} onClick={() => handleNotifClick(n.productId)}
+                            className={`flex w-full gap-3 px-4 py-3 text-left transition hover:bg-stone-50 dark:hover:bg-stone-800/50 ${!n.isRead ? 'bg-[#FBF3F4] dark:bg-[#2A1A1D]/30' : ''}`}>
                             <div className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${!n.isRead ? 'bg-[#B7848C]' : 'bg-transparent'}`} />
                             <div className="min-w-0 flex-1">
                               <p className="text-xs font-semibold text-stone-900 dark:text-stone-100">{n.title}</p>
@@ -271,6 +266,11 @@ export default function AppHeader({
                   <span className="hidden text-sm text-stone-700 dark:text-stone-300 sm:block">
                     {profile?.name ?? user.email}
                   </span>
+                  {isAdmin && (
+                    <span className="hidden rounded-full bg-[#FBF3F4] px-1.5 py-0.5 text-[9px] font-bold uppercase text-[#B7848C] sm:block">
+                      Admin
+                    </span>
+                  )}
                   <svg
                     className={`h-3 w-3 text-stone-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -295,6 +295,23 @@ export default function AppHeader({
                       </svg>
                       Hồ sơ cá nhân
                     </button>
+
+                    {/* ← Link Admin — chỉ hiện với admin email */}
+                    {isAdmin && (
+                      <>
+                        <div className="my-1 border-t border-stone-100 dark:border-stone-700/60" />
+                        <button
+                          onClick={() => { setDropdownOpen(false); navigate('/admin') }}
+                          className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-[#B7848C] hover:bg-[#FBF3F4] dark:hover:bg-[#2A1A1D]/40"
+                        >
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3" />
+                          </svg>
+                          Admin Dashboard
+                        </button>
+                        <div className="my-1 border-t border-stone-100 dark:border-stone-700/60" />
+                      </>
+                    )}
 
                     <button
                       onClick={handleLogout}

@@ -26,12 +26,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers(HttpMethod.GET, 
-                                "/products/**", 
-                                "/api/products/**", 
-                                "/api/trending-deals/**", 
-                                "/api/v1/price-history/**", 
-                                "/api/compare/**"
+                        .requestMatchers(HttpMethod.GET,
+                                "/products/**",
+                                "/api/products/**",
+                                "/api/trending-deals/**",
+                                "/api/v1/price-history/**",
+                                "/api/compare/**",
+                                "/api/go/**"          // ← affiliate redirect
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

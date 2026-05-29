@@ -15,7 +15,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -46,10 +46,10 @@ logging:
     root: WARN
     org.springframework.security: WARN
     # com.pricehawl.service.PriceRefreshScheduler: INFO
-    # com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
-    # com.pricehawl.service.crawler: DEBUG
+    com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
+    # com.pricehawl.service.crawler.CrawlerRateLimiter: DEBUG
+    com.pricehawl.service.crawler: DEBUG
     # com.pricehawl.service.AlertQueueConsumer: DEBUG
-
 
 pricehawk:
   debug:
@@ -57,12 +57,17 @@ pricehawk:
 
   scheduler:
     price-refresh:
-      enabled: true
+      enabled: false
       cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
       max-items-per-run: 50
+
   crawler:
     watsons-script: "backend/watsons-price.js"
+    cocolux-script: "backend/cocolux-price.js"
+    thread-pool-size: 5
 
 resend:
   api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+accesstrade:
+  api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04

@@ -34,7 +34,11 @@ public class PriceComparisonServiceImpl implements PriceComparisonService {
                         new ResourceNotFoundException("Product not found with id: " + productId));
 
         // 2. Lấy danh sách listing theo productId
-        List<ProductListing> listings = productListingRepository.findByProductId(productId);
+        List<ProductListing> listings = productListingRepository.findByProductId(productId)
+    .stream()
+    .filter(l -> !"hidden".equals(l.getStatus()))
+    .collect(Collectors.toList());
+
 
         // 3. Với mỗi listing, lấy giá mới nhất rồi map sang DTO
         List<PriceComparisonItemResponse> comparisons = listings.stream()

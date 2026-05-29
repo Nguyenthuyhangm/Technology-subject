@@ -13,6 +13,7 @@ import TrendingDealsPage from './pages/TrendingDealsPage'
 import AuthPage from './pages/AuthPage'
 import ProfilePage from './pages/ProfilePage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import AdminPage from './pages/AdminPage'
 
 export default function App(): JSX.Element {
   return (
@@ -38,6 +39,9 @@ export default function App(): JSX.Element {
               <Route path="/deals" element={<DealsPage />} />
               <Route path="/trending-deals" element={<TrendingDealsPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/admin" element={<AdminPage />} />
+
+
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />
