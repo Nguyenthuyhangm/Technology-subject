@@ -15,17 +15,21 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AiLlmClient {
 
-    @Value("${ai.base-url}")
+    // Thêm : đằng sau để nếu không tìm thấy key trong yml/env, Spring sẽ gán chuỗi rỗng thay vì báo lỗi sập app
+    @Value("${ai.base-url:}")
     private String baseUrl;
 
-    @Value("${ai.api-key}")
+    @Value("${ai.api-key:}")
     private String apiKey;
 
-    @Value("${ai.model}")
+    // Thiết lập model mặc định nếu không có cấu hình
+    @Value("${ai.model:gpt-3.5-turbo}")
     private String model;
 
     public String generateAnswer(String systemPrompt, String userPrompt) {
-        if (apiKey == null || apiKey.isBlank()) {
+        // Đoạn check này của bạn bây giờ sẽ hoạt động an toàn khi thiếu API Key ở môi trường dev
+        if (apiKey == null || apiKey.isBlank() || baseUrl.isBlank()) {
+            System.err.println("AI features are disabled: Missing API Key or Base URL.");
             return null;
         }
 

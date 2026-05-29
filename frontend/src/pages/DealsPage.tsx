@@ -6,7 +6,6 @@ import TrendingDealsSection from '../components/deals/TrendingDealsSection';
 import AppHeader from '../components/layout/AppHeader';
 import { useTrendingDeals } from '../util/useTrendingDeals';
 import {
-  isDealOlderThanDays,
   sortByDealScoreDesc,
   sortByDiscountPercentDesc,
   trendingDealToProductSearch,
@@ -33,25 +32,38 @@ export default function DealsPage() {
     const list = deals ?? [];
     if (list.length === 0) return [];
 
-    const byDealScore = [...list].sort(sortByDealScoreDesc);
-    const byDiscount = [...list].sort(sortByDiscountPercentDesc);
-    const stale = byDealScore.find((d) => isDealOlderThanDays(d, 7)) ?? null;
+    // "Những món đang được quan tâm": dealScore cao nhất, KHÔNG phải fake promo
+    const trendingList = [...list]
+      .filter((d) => !d.isFakePromo)
+      .sort(sortByDealScoreDesc);
+    const trendingTop = trendingList.slice(0, 3);
+    const trendingIds = new Set(trendingTop.map((d) => d.productId));
+
+    // "Đang ở vùng giá đẹp": discount cao, KHÔNG phải fake promo, KHÔNG trùng với trending
+    const goodPriceList = [...list]
+      .filter((d) => !d.isFakePromo && !trendingIds.has(d.productId))
+      .sort(sortByDiscountPercentDesc);
+
+    // "Cần quan sát kỹ hơn": isFakePromo từ backend, hoặc fallback: discountPercent > 50% (giảm quá sâu, đáng ngờ)
+    const fakePromoList = list.filter(
+      (d) => d.isFakePromo === true || (d.isFakePromo == null && (d.discountPercent ?? 0) > 50),
+    );
 
     const sections = [
       {
         id: 'trending-dealscore-top',
         type: 'trending',
-        products: byDealScore.slice(0, 1).map(trendingDealToProductSearch),
+        products: trendingTop.map(trendingDealToProductSearch),
       },
       {
         id: 'deal-discount-top',
         type: 'real-discount',
-        products: byDiscount.slice(0, 1).map(trendingDealToProductSearch),
+        products: goodPriceList.slice(0, 3).map(trendingDealToProductSearch),
       },
       {
         id: 'deal-stale-observe',
         type: 'suspicious-discount',
-        products: (stale ? [stale] : byDealScore.slice(0, 1)).map(trendingDealToProductSearch),
+        products: fakePromoList.slice(0, 3).map(trendingDealToProductSearch),
       },
     ];
 

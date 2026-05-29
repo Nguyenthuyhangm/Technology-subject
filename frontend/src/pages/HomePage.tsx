@@ -1,19 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowRight, Loader2, Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
 import FloatingAIAssistant from '../components/common/FloatingAIAssistant';
 import Badge from '../components/common/Badge';
-import ProductCard from '../components/product/ProductCard';
 import { mockProducts } from '../data/mockProducts';
 import AppHeader from '../components/layout/AppHeader';
 import RecommendationSection from '../components/RecommendationSection';
-import { useTrendingDeals } from '../util/useTrendingDeals';
-import {
-  sortByDealScoreDesc,
-  trendingDealToProductSearch,
-} from '../util/trendingDealSelectors';
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
@@ -74,7 +68,6 @@ export default function HomePage() {
     localStorage.getItem('userId') ??
     null;
 
-  const { deals, loading } = useTrendingDeals();
 
   const curatedProducts = useMemo(() => {
     return mockProducts.filter(
@@ -90,13 +83,7 @@ export default function HomePage() {
     return curatedProducts[0] ?? mockProducts[0];
   }, [curatedProducts]);
 
-  const homeHighlights = useMemo(() => {
-    const list = deals ?? [];
-    if (list.length === 0) return [];
-
-    const sorted = [...list].sort(sortByDealScoreDesc);
-    return sorted.slice(0, 3).map(trendingDealToProductSearch);
-  }, [deals]);
+ 
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -224,65 +211,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mt-24">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-[#8E6A72]">
-                Bắt đầu từ đây
-              </p>
-
-              <h2
-                className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 md:text-4xl"
-                style={{ fontFamily: FONT_STACK.serif }}
-              >
-                Những món đang ở vùng giá đẹp
-              </h2>
-
-              <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-500">
-                Đây là những lựa chọn nổi bật nhất lúc này — phù hợp để xem nhanh,
-                so sánh và quyết định dễ hơn.
-              </p>
-            </div>
-
-            <Link
-              to="/deals"
-              className="inline-flex items-center gap-2 text-sm text-stone-500 transition hover:text-stone-900"
-            >
-              Xem tất cả deal
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          {loading && homeHighlights.length === 0 && (
-            <div
-              className="flex min-h-[200px] flex-col items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-14 text-sm text-stone-500 dark:border-stone-700/40 dark:bg-[#1A1614]/50 dark:text-stone-400"
-              aria-busy="true"
-              aria-live="polite"
-            >
-              <p className="flex items-center gap-2">
-                <Loader2
-                  className="h-5 w-5 shrink-0 animate-spin text-[#8E6A72]"
-                  aria-hidden
-                />
-                Đang tải
-              </p>
-            </div>
-          )}
-
-          {!loading && homeHighlights.length === 0 && (
-            <div className="flex min-h-[160px] items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-12 text-sm text-stone-500 dark:border-stone-700/40 dark:bg-[#1A1614]/50 dark:text-stone-400">
-              Không tìm thấy sản phẩm phù hợp
-            </div>
-          )}
-
-          {homeHighlights.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {homeHighlights.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </section>
+      
 
         <section className="mt-20">
           <div className="mb-8">

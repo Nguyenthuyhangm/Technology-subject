@@ -71,3 +71,7 @@ resend:
   api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
 accesstrade:
   api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
+ai:
+  base-url: https://generativelanguage.googleapis.com/v1beta/openai
+  api-key: AIzaSyDhLUm3It4-aZFKuyP5abPt1Xo9cYnvM58
+  model: gemini-2.0-flash

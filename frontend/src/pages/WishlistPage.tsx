@@ -78,10 +78,7 @@ export default function WishlistPage() {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-                          {item.nearTarget && <Badge variant="warning">Giá tốt</Badge>}
-                          <Badge variant="soft">Đã chuẩn hóa</Badge>
-                        </div>
+                        
 
                         <p className="mt-4 text-[10px] uppercase tracking-widest text-[#8D7663]">
                             {item.brandName || item.brand || 'Thương hiệu'}

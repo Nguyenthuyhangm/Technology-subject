@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { PauseCircle, Pencil, Play, Trash2, Mail, BellRing } from 'lucide-react';
+import { PauseCircle, Pencil, Play, Trash2, Mail, BellRing, MoveUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AppHeader from '../components/layout/AppHeader';
 import { alertService, type AlertResponse } from '../service/alertApi';
 
@@ -229,8 +230,14 @@ export default function AlertsPage() {
                   )}
 
                   <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[#DED3C7] dark:border-stone-700/40 pt-4">
+                    <Link
+                      to={`/product/${alert.productId}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[#2A211D] bg-[#2A211D] px-3.5 py-2.5 text-xs font-medium text-[#F6F1EA] transition hover:opacity-90"
+                    >
+                      <MoveUpRight size={13} /> Xem chi tiết
+                    </Link>
                     <button onClick={() => { setEditingId(alert.id); setEditPrice(String(alert.targetPrice)); }}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-[#2A211D] bg-[#2A211D] px-3.5 py-2.5 text-xs font-medium text-[#F6F1EA] transition hover:opacity-90">
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[#D1C3B4] dark:border-stone-600 px-3.5 py-2.5 text-xs font-medium text-[#584B43] dark:text-stone-400 transition hover:border-[#2A211D] hover:text-[#201915]">
                       <Pencil size={13} /> Chỉnh giá
                     </button>
                     <button onClick={() => handleToggle(alert.id)}
