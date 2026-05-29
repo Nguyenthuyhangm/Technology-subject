@@ -1,5 +1,6 @@
 package com.pricehawl.service;
 
+import com.pricehawl.dto.AiChatHistoryMessage;
 import com.pricehawl.dto.AiChatRequest;
 import com.pricehawl.dto.AiProductContextDTO;
 import com.pricehawl.dto.AiRecommendationDTO;
@@ -26,37 +27,32 @@ public class AiChatService {
         List<AiRecommendationDTO> recommendations = List.of();
 
         boolean wishlistQuestion = isWishlistQuestion(message);
-        boolean productShoppingQuestion = isProductShoppingQuestion(message);
-        boolean generalKnowledgeQuestion =
-                request.productId() == null && !wishlistQuestion && !productShoppingQuestion;
+
+        /*
+         * Controller đã tìm sản phẩm trong backend trước.
+         * Nếu backend có sản phẩm thì Controller tự trả lời + gửi products cho frontend.
+         * Nếu không có sản phẩm thì mới gọi vào AiChatService.
+         *
+         * Vì vậy:
+         * - productId != null: phân tích sản phẩm đang xem.
+         * - wishlist: thử lấy wishlist recommendation.
+         * - còn lại: coi là câu hỏi ngoài và hỏi Gemini.
+         */
+        boolean generalKnowledgeQuestion = request.productId() == null && !wishlistQuestion;
 
         if (request.productId() != null) {
             productContext = aiChatRepository.findProductContext(request.productId());
         }
 
-        /*
-         * Chỉ query database PriceHawk khi:
-         * - User đang hỏi wishlist
-         * - User hỏi mua hàng / giá / deal / gợi ý sản phẩm
-         *
-         * Nếu là câu hỏi kiến thức chung như:
-         * - La Roche-Posay là hãng của nước nào?
-         * - Retinol dùng thế nào?
-         * - Niacinamide có tác dụng gì?
-         * thì KHÔNG query DB, mà hỏi thẳng Gemini.
-         */
-        if (request.productId() == null && !generalKnowledgeQuestion) {
-            if (request.userId() != null && wishlistQuestion) {
-                recommendations = aiChatRepository.findWishlistRecommendations(request.userId(), 5);
-            } else {
-                String keyword = extractSearchKeyword(message);
-                recommendations = aiChatRepository.searchProductsForAi(keyword, 8);
+        if (request.productId() == null && wishlistQuestion && request.userId() != null) {
+            recommendations = aiChatRepository.findWishlistRecommendations(request.userId(), 5);
+
+            if (recommendations != null && recommendations.size() > 3) {
+                recommendations = recommendations.subList(0, 3);
             }
 
-            recommendations = filterRecommendationsByQuestion(message, recommendations);
-
-            if (recommendations.size() > 3) {
-                recommendations = recommendations.subList(0, 3);
+            if (recommendations == null || recommendations.isEmpty()) {
+                generalKnowledgeQuestion = true;
             }
         }
 
@@ -65,7 +61,8 @@ public class AiChatService {
                 message,
                 productContext,
                 recommendations,
-                generalKnowledgeQuestion
+                generalKnowledgeQuestion,
+                request.conversationHistory()
         );
 
         String aiAnswer = aiLlmClient.generateAnswer(systemPrompt, userPrompt);
@@ -100,6 +97,7 @@ public class AiChatService {
             - Chỉ gợi ý tối đa 3 ý hoặc 3 sản phẩm.
             - Với sản phẩm có dữ liệu: ghi tên ngắn + giá + lý do ngắn.
             - Với câu hỏi chung: trả lời đúng trọng tâm, dễ hiểu.
+            - Nếu có lịch sử hội thoại, hãy dùng nó để hiểu các từ như "nó", "sản phẩm đó", "vậy", "cái này".
             - BẮT BUỘC xuống dòng rõ ràng.
             - Trả lời bằng tiếng Việt tự nhiên.
             """;
@@ -109,16 +107,40 @@ public class AiChatService {
             String message,
             AiProductContextDTO product,
             List<AiRecommendationDTO> recommendations,
-            boolean generalKnowledgeQuestion
+            boolean generalKnowledgeQuestion,
+            List<AiChatHistoryMessage> conversationHistory
     ) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Câu hỏi: ").append(message).append("\n\n");
+        if (conversationHistory != null && !conversationHistory.isEmpty()) {
+            sb.append("Lịch sử hội thoại gần đây:\n");
+
+            for (AiChatHistoryMessage h : conversationHistory) {
+                if (h == null || h.content() == null || h.content().isBlank()) {
+                    continue;
+                }
+
+                String roleName = "user".equalsIgnoreCase(h.role())
+                        ? "Người dùng"
+                        : "AI";
+
+                sb.append("- ")
+                        .append(roleName)
+                        .append(": ")
+                        .append(h.content())
+                        .append("\n");
+            }
+
+            sb.append("\n");
+        }
+
+        sb.append("Câu hỏi hiện tại: ").append(message).append("\n\n");
 
         if (generalKnowledgeQuestion && product == null) {
             sb.append("""
-                Đây là câu hỏi kiến thức chung / ngoài dữ liệu sản phẩm PriceHawk.
-                Hãy hỏi bằng kiến thức của Gemini và trả lời trực tiếp.
+                Đây là câu hỏi ngoài dữ liệu sản phẩm PriceHawk hiện tại.
+                Hãy trả lời bằng kiến thức chung của bạn và trả lời trực tiếp.
+                Nếu user hỏi giá/deal hiện tại mà PriceHawk không có dữ liệu, hãy nói không có giá chính xác trong hệ thống.
                 Không cần tìm sản phẩm trong hệ thống.
                 Không cần nói "hệ thống chưa có sản phẩm phù hợp".
                 Không bịa giá, voucher hoặc dữ liệu bán hàng.
@@ -257,63 +279,13 @@ public class AiChatService {
     }
 
     private String generalKnowledgeFallbackAnswer(String message) {
-        String q = message == null ? "" : message.toLowerCase(Locale.ROOT);
-
-        if (q.contains("laroche") || q.contains("la roche") || q.contains("la roche-posay")) {
-            return """
-                Trả lời ngắn:
-                - La Roche-Posay là thương hiệu dược mỹ phẩm của Pháp.
-                - Hãng nổi tiếng với các sản phẩm cho da nhạy cảm, da mụn và phục hồi da.
-
-                Kết luận: Đây là thương hiệu Pháp, thường thuộc nhóm dược mỹ phẩm.
-                """;
-        }
-
-        if (q.contains("cerave")) {
-            return """
-                Trả lời ngắn:
-                - CeraVe là thương hiệu chăm sóc da của Mỹ.
-                - Hãng nổi bật với các sản phẩm chứa ceramide, phù hợp phục hồi hàng rào bảo vệ da.
-
-                Kết luận: CeraVe thường được chọn cho da khô, nhạy cảm hoặc cần phục hồi.
-                """;
-        }
-
-        if (q.contains("anessa")) {
-            return """
-                Trả lời ngắn:
-                - Anessa là thương hiệu chống nắng của Nhật Bản.
-                - Hãng thuộc Shiseido và nổi tiếng với các sản phẩm kem chống nắng.
-
-                Kết luận: Đây là thương hiệu Nhật, mạnh về chống nắng.
-                """;
-        }
-
-        if (q.contains("retinol")) {
-            return """
-                Trả lời ngắn:
-                - Retinol hỗ trợ cải thiện mụn, lão hóa và kết cấu da.
-                - Nên dùng buổi tối, bắt đầu tần suất thấp và chống nắng kỹ ban ngày.
-
-                Kết luận: Retinol hiệu quả nhưng cần dùng từ từ để tránh kích ứng.
-                """;
-        }
-
-        if (q.contains("niacinamide")) {
-            return """
-                Trả lời ngắn:
-                - Niacinamide hỗ trợ giảm dầu, làm dịu da và cải thiện hàng rào bảo vệ da.
-                - Thường phù hợp với nhiều loại da, kể cả da dầu và da mụn.
-
-                Kết luận: Đây là thành phần dễ dùng nếu chọn nồng độ phù hợp.
-                """;
-        }
-
         return """
             Trả lời ngắn:
-            - Với giá, deal hoặc sản phẩm cụ thể, mình sẽ cần dữ liệu từ PriceHawk.
+            - Mình chưa có dữ liệu chính xác từ PriceHawk cho câu hỏi này.
+            - Bạn có thể hỏi thông tin chung như xuất xứ, công dụng, thành phần hoặc cách dùng.
+            - Nếu hỏi giá/deal hiện tại thì cần có dữ liệu sản phẩm trong hệ thống.
 
-            Hãy hỏi kèm tên thương hiệu, thành phần hoặc nhu cầu cụ thể.
+            Kết luận: Nếu sản phẩm chưa có trong PriceHawk, mình sẽ chỉ tư vấn được theo kiến thức chung.
             """;
     }
 

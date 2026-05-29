@@ -95,7 +95,7 @@ export default function HomePage() {
     if (list.length === 0) return [];
 
     const sorted = [...list].sort(sortByDealScoreDesc);
-    return sorted.slice(0, 3).map(trendingDealToProductSearch);
+    return sorted.slice(0, 12).map(trendingDealToProductSearch);
   }, [deals]);
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -152,7 +152,7 @@ export default function HomePage() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Tìm một món bạn đang cân nhắc..."
-                    className="w-full rounded-full border border-white/50 bg-white/80 py-4 pl-12 pr-5 text-sm text-stone-900 outline-none backdrop-blur-md transition focus:border-[#D8C1C6]"
+                    className="w-full rounded-full border border-white/50 bg-white/80 py-4 pl-12 pr-5 text-sm text-stone-900 outline-none backdrop-blur-md transition focus:border-[#D8C1C6] dark:border-stone-700/40 dark:bg-stone-900/70 dark:text-stone-100"
                   />
                 </div>
 
@@ -203,13 +203,13 @@ export default function HomePage() {
               </p>
 
               <h2
-                className="mt-3 text-3xl leading-[1.14] tracking-[-0.02em] text-stone-900"
+                className="mt-3 text-3xl leading-[1.14] tracking-[-0.02em] text-stone-900 dark:text-stone-100"
                 style={{ fontFamily: FONT_STACK.serif }}
               >
                 {featuredProduct.name}
               </h2>
 
-              <p className="mt-4 text-sm leading-7 text-stone-500">
+              <p className="mt-4 text-sm leading-7 text-stone-500 dark:text-stone-400">
                 {featuredProduct.insight.summary}
               </p>
 
@@ -232,13 +232,13 @@ export default function HomePage() {
               </p>
 
               <h2
-                className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 md:text-4xl"
+                className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-4xl"
                 style={{ fontFamily: FONT_STACK.serif }}
               >
                 Những món đang ở vùng giá đẹp
               </h2>
 
-              <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-500">
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-500 dark:text-stone-400">
                 Đây là những lựa chọn nổi bật nhất lúc này — phù hợp để xem nhanh,
                 so sánh và quyết định dễ hơn.
               </p>
@@ -246,7 +246,7 @@ export default function HomePage() {
 
             <Link
               to="/deals"
-              className="inline-flex items-center gap-2 text-sm text-stone-500 transition hover:text-stone-900"
+              className="inline-flex items-center gap-2 text-sm text-stone-500 transition hover:text-stone-900 dark:hover:text-stone-100"
             >
               Xem tất cả deal
               <ArrowRight size={16} />
@@ -276,10 +276,17 @@ export default function HomePage() {
           )}
 
           {homeHighlights.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {homeHighlights.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+            <div className="-mx-6 overflow-x-auto px-6 pb-4 lg:-mx-12 lg:px-12">
+              <div className="flex w-max gap-6">
+                {homeHighlights.map((product) => (
+                  <div
+                    key={product.id}
+                    className="w-[280px] shrink-0 sm:w-[300px] lg:w-[320px]"
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </section>
@@ -291,7 +298,7 @@ export default function HomePage() {
             </p>
 
             <h2
-              className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 md:text-4xl"
+              className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-4xl"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               Mua sắm theo nhóm bạn quan tâm
@@ -339,7 +346,7 @@ export default function HomePage() {
               </p>
 
               <h2
-                className="mt-2 text-3xl leading-[1.16] tracking-[-0.02em] text-stone-900 md:text-4xl"
+                className="mt-2 text-3xl leading-[1.16] tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-4xl"
                 style={{ fontFamily: FONT_STACK.serif }}
               >
                 Lưu wishlist, đặt alert,
@@ -347,7 +354,7 @@ export default function HomePage() {
                 quay lại đúng lúc.
               </h2>
 
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-500">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-500 dark:text-stone-400">
                 Khi chưa muốn mua ngay, bạn có thể lưu lại sản phẩm đang cân nhắc
                 hoặc đặt cảnh báo để không bỏ lỡ mức giá đẹp hơn.
               </p>
@@ -363,7 +370,7 @@ export default function HomePage() {
 
               <Link
                 to="/alerts"
-                className="inline-flex items-center justify-center rounded-full border border-stone-200 bg-[#F8F3EE] px-6 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]"
+                className="inline-flex items-center justify-center rounded-full border border-stone-200 bg-[#F8F3EE] px-6 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200"
               >
                 Mở Alerts
               </Link>
@@ -376,13 +383,13 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-3 lg:px-12">
           <div className="space-y-4">
             <div
-              className="text-[2rem] text-stone-900"
+              className="text-[2rem] text-stone-900 dark:text-stone-100"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               Price<span className="text-[#B7848C]">Hawk</span>
             </div>
 
-            <p className="max-w-xs text-sm leading-7 text-stone-500">
+            <p className="max-w-xs text-sm leading-7 text-stone-500 dark:text-stone-400">
               So sánh giá theo cách tinh tế hơn, rõ ràng hơn và phù hợp với quyết
               định mua sắm hằng ngày.
             </p>
@@ -390,23 +397,25 @@ export default function HomePage() {
 
           <div className="col-span-1 grid grid-cols-2 gap-10 md:col-span-2 md:grid-cols-3">
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">Khám phá</h5>
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                Khám phá
+              </h5>
 
-              <ul className="space-y-3 text-sm text-stone-500">
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
                 <li>
-                  <Link to="/search" className="hover:text-stone-900">
+                  <Link to="/search" className="hover:text-stone-900 dark:hover:text-stone-100">
                     So sánh giá
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="/deals" className="hover:text-stone-900">
+                  <Link to="/deals" className="hover:text-stone-900 dark:hover:text-stone-100">
                     Chọn lọc hôm nay
                   </Link>
                 </li>
 
                 <li>
-                  <Link to="/wishlist" className="hover:text-stone-900">
+                  <Link to="/wishlist" className="hover:text-stone-900 dark:hover:text-stone-100">
                     Wishlist
                   </Link>
                 </li>
@@ -414,24 +423,38 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">PriceHawk</h5>
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                PriceHawk
+              </h5>
 
-              <ul className="space-y-3 text-sm text-stone-500">
-                <li className="cursor-pointer hover:text-stone-900">
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
                   Về chúng tôi
                 </li>
-                <li className="cursor-pointer hover:text-stone-900">Bảo mật</li>
-                <li className="cursor-pointer hover:text-stone-900">Liên hệ</li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Bảo mật
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Liên hệ
+                </li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">Danh mục</h5>
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                Danh mục
+              </h5>
 
-              <ul className="space-y-3 text-sm text-stone-500">
-                <li className="cursor-pointer hover:text-stone-900">Mỹ phẩm</li>
-                <li className="cursor-pointer hover:text-stone-900">Chăm sóc da</li>
-                <li className="cursor-pointer hover:text-stone-900">Chăm sóc tóc</li>
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Mỹ phẩm
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Chăm sóc da
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Chăm sóc tóc
+                </li>
               </ul>
             </div>
           </div>

@@ -101,6 +101,7 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
             p.name AS "productName",
             b.name AS "brandName",
             c.name AS "categoryName",
+            p.image_url AS "imageUrl",
             lp.price AS "lowestPrice",
 
             (
@@ -191,6 +192,7 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
             p.name AS "productName",
             b.name AS "brandName",
             c.name AS "categoryName",
+            p.image_url AS "imageUrl",
             lp.price AS "lowestPrice",
             0 AS "score",
             'Phù hợp với câu hỏi tìm kiếm.' AS "reason"

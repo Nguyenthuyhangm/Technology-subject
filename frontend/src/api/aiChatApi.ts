@@ -1,14 +1,33 @@
 import { API_BASE_URL } from './apiClient';
 
+export interface AiChatHistoryMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export interface AiChatRequest {
   message: string;
   userId?: string;
   productId?: string;
+  conversationHistory?: AiChatHistoryMessage[];
+}
+
+export interface AiProduct {
+  id: string;
+  name: string;
+  imageUrl?: string;
+  bestPrice?: number;
+  originalPrice?: number;
+  discountPct?: number;
+  brandName?: string;
+  categoryName?: string;
+  bestPlatform?: string;
 }
 
 export const streamAiChat = async (
   payload: AiChatRequest,
   onChunk: (chunk: string) => void,
+  onProducts?: (products: AiProduct[]) => void,
   onDone?: () => void,
   onError?: (message: string) => void,
 ) => {
@@ -45,19 +64,42 @@ export const streamAiChat = async (
 
     for (const event of events) {
       const lines = event.split('\n');
+
+      const eventNameLine = lines.find((line) => line.startsWith('event:'));
+      const eventName = eventNameLine
+        ? eventNameLine.replace(/^event:\s?/, '').trim()
+        : 'message';
+
       const dataLines = lines.filter((line) => line.startsWith('data:'));
+      const data = dataLines
+        .map((line) => line.replace(/^data:\s?/, ''))
+        .join('\n');
 
-      for (const line of dataLines) {
-        const data = line.replace(/^data:\s?/, '');
+      if (!data) continue;
 
-        if (data === '[DONE]') {
-          onDone?.();
-          return;
+      if (data === '[DONE]') {
+        onDone?.();
+        return;
+      }
+
+      if (eventName === 'chunk') {
+        onChunk(data);
+        continue;
+      }
+
+      if (eventName === 'products') {
+        try {
+          const products = JSON.parse(data) as AiProduct[];
+          onProducts?.(products);
+        } catch (error) {
+          console.error('Parse products failed:', error);
         }
+        continue;
+      }
 
-        if (data) {
-          onChunk(data);
-        }
+      if (eventName === 'error') {
+        onError?.(data);
+        return;
       }
     }
   }

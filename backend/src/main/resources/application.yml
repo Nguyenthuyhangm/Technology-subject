@@ -66,3 +66,9 @@ pricehawk:
 
 resend:
   api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+
+ai:
+  base-url: https://generativelanguage.googleapis.com
+  api-key: AIzaSyDPtoRBuHYLFfDmLSj9PvvcWuFXzlSnqZA
+  model: gemini-2.5-flash
+  enable-search: true
