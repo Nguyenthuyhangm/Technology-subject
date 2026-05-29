@@ -2,6 +2,7 @@ package com.pricehawl.service;
 
 import com.pricehawl.dto.PriceComparisonItemResponse;
 import com.pricehawl.dto.PriceComparisonResponse;
+import com.pricehawl.dto.SameBrandProductDTO;
 import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
@@ -12,11 +13,12 @@ import com.pricehawl.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class PriceComparisonServiceImpl implements PriceComparisonService {
@@ -67,27 +69,41 @@ public class PriceComparisonServiceImpl implements PriceComparisonService {
                 .sorted(Comparator.comparing(PriceComparisonItemResponse::getPrice))
                 .collect(Collectors.toList());
 
-       // 4. Tạo danh sách ảnh tổng hợp
-List<String> allImages = new ArrayList<>();
+        // 4. Tạo danh sách ảnh tổng hợp
+        List<String> allImages = new ArrayList<>();
 
-// Thêm ảnh gốc của sản phẩm nếu có
-if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-    allImages.add(product.getImageUrl());
-}
+        // Thêm ảnh gốc của sản phẩm nếu có
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            allImages.add(product.getImageUrl());
+        }
 
-// Thêm tất cả ảnh từ các sàn (listings)
-for (PriceComparisonItemResponse item : comparisons) {
-    if (item.getPlatformImageUrl() != null && !item.getPlatformImageUrl().isEmpty()) {
-        allImages.add(item.getPlatformImageUrl());
-    }
-}
+        // Thêm tất cả ảnh từ các sàn listings
+        for (PriceComparisonItemResponse item : comparisons) {
+            if (item.getPlatformImageUrl() != null && !item.getPlatformImageUrl().isEmpty()) {
+                allImages.add(item.getPlatformImageUrl());
+            }
+        }
 
-// 5. Trả về response
-return PriceComparisonResponse.builder()
-        .productId(product.getId())
-        .productName(product.getName())
-        .imageUrls(allImages) // Truyền danh sách ảnh vào đây
-        .comparisons(comparisons)
-        .build();
+        // 5. Lấy sản phẩm cùng hãng
+        List<SameBrandProductDTO> sameBrandProducts = productRepository
+                .findSameBrandProducts(productId, 12)
+                .stream()
+                .map(p -> SameBrandProductDTO.builder()
+                        .id(p.getId())
+                        .name(p.getName())
+                        .imageUrl(p.getImageUrl())
+                        .categoryName(p.getCategory() != null ? p.getCategory().getName() : null)
+                        .brandName(p.getBrand() != null ? p.getBrand().getName() : null)
+                        .build())
+                .toList();
+
+        // 6. Trả về response
+        return PriceComparisonResponse.builder()
+                .productId(product.getId())
+                .productName(product.getName())
+                .imageUrls(allImages)
+                .comparisons(comparisons)
+                .sameBrandProducts(sameBrandProducts)
+                .build();
     }
 }

@@ -28,6 +28,7 @@ export interface Platform {
   discountPct?: number;
   isOfficial: boolean;
 }
+
 export interface ProductSearch {
   id: string;
 
@@ -50,12 +51,21 @@ export interface ProductSearch {
   score: number;
 }
 
+export interface SameBrandProduct {
+  id: string;
+  name: string;
+  imageUrl: string | null;
+  categoryName: string | null;
+  brandName: string | null;
+}
+
 // Map từ PriceComparisonResponse
 export interface PriceComparison {
   productId: string;
   productName: string;
   imageUrls: string[];
   comparisons: PriceComparisonItem[];
+  sameBrandProducts?: SameBrandProduct[];
 }
 
 export interface PriceComparisonItem {

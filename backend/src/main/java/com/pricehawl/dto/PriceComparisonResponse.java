@@ -19,4 +19,5 @@ public class PriceComparisonResponse {
     private List<String> imageUrls;
 
     private List<PriceComparisonItemResponse> comparisons;
+    private List<SameBrandProductDTO> sameBrandProducts;
 }
