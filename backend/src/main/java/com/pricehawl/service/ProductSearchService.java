@@ -4,14 +4,17 @@ import com.pricehawl.document.ProductDocument;
 import com.pricehawl.dto.ProductSearchDTO;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
+import com.pricehawl.entity.SearchHistory;
 import com.pricehawl.mapper.ProductDocumentMapper;
 import com.pricehawl.repository.ProductRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.repository.ProductSearchRepository;
+import com.pricehawl.repository.SearchHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -22,6 +25,7 @@ public class ProductSearchService {
     private final ProductSearchRepository searchRepository;
     private final ProductListingRepository listingRepository;
     private final ProductDocumentMapper documentMapper;
+    private final SearchHistoryRepository searchHistoryRepository;
 
     // =========================
     // 🔄 1. SYNC DB → ELASTICSEARCH
@@ -30,6 +34,7 @@ public class ProductSearchService {
     public void syncAll() {
 
         searchRepository.deleteAll();
+
         List<ProductDocument> docs = productRepository.findAll()
                 .stream()
                 .map(documentMapper::toDocument)
@@ -41,19 +46,27 @@ public class ProductSearchService {
     }
 
     // =========================
-    // 🔍 2. SEARCH (🔥 BEST PRICE)
+    // 🔍 2. SEARCH CŨ - GIỮ NGUYÊN ĐỂ KHÔNG LỖI CODE CŨ
     // =========================
     @Transactional
     public List<ProductSearchDTO> search(String keyword) {
+        return search(keyword, null);
+    }
+
+    // =========================
+    // 🔍 3. SEARCH + LƯU LỊCH SỬ TÌM KIẾM
+    // =========================
+    @Transactional
+    public List<ProductSearchDTO> search(String keyword, String userId) {
+
+        saveSearchHistory(userId, keyword);
 
         // 1. Search Elasticsearch
-        List<ProductDocument> docs =
-                searchRepository.search(keyword);
+        List<ProductDocument> docs = searchRepository.search(keyword);
 
         System.out.println("===== ELASTICSEARCH RESULT =====");
 
         for (ProductDocument d : docs) {
-
             System.out.println(
                     "id=" + d.getId()
                             + ", name=" + d.getName()
@@ -64,49 +77,54 @@ public class ProductSearchService {
         }
 
         if (docs.isEmpty()) {
-
             System.out.println("KHONG TIM THAY DOCUMENT");
-
             return List.of();
         }
 
         // 2. Map DTO trực tiếp từ ES document
         List<ProductSearchDTO> result = docs.stream()
-
                 .map(doc -> ProductSearchDTO.builder()
-
                         .id(UUID.fromString(doc.getId()))
-
                         .name(doc.getName())
-
                         .brandName(doc.getBrandName())
-
                         .categoryName(doc.getCategoryName())
-
                         .imageUrl(doc.getImageUrl())
-
                         .bestPrice(doc.getBestPrice())
-
                         .originalPrice(doc.getOriginalPrice())
-
                         .discountPct(doc.getDiscountPct())
-
                         .bestPlatform(doc.getBestPlatform())
-
                         .score(doc.getScore())
-
                         .build())
-
                 .toList();
 
-        System.out.println(
-                "TOTAL RESULT: " + result.size()
-        );
+        System.out.println("TOTAL RESULT: " + result.size());
 
         return result;
     }
+
     // =========================
-    // 🛟 3. FALLBACK (nếu ES lỗi)
+    // 🧠 4. SAVE SEARCH HISTORY
+    // =========================
+    private void saveSearchHistory(String userId, String keyword) {
+
+        if (userId == null || userId.isBlank()) {
+            return;
+        }
+
+        if (keyword == null || keyword.isBlank()) {
+            return;
+        }
+
+        SearchHistory history = new SearchHistory();
+        history.setUserId(userId);
+        history.setKeyword(keyword.trim());
+        history.setSearchedAt(LocalDateTime.now());
+
+        searchHistoryRepository.save(history);
+    }
+
+    // =========================
+    // 🛟 5. FALLBACK nếu ES lỗi
     // =========================
     @Transactional
     public List<ProductSearchDTO> searchFallback(String keyword) {
@@ -126,7 +144,7 @@ public class ProductSearchService {
     }
 
     // =========================
-    // 🔄 4. SYNC 1 PRODUCT
+    // 🔄 6. SYNC 1 PRODUCT
     // =========================
     @Transactional
     public void syncOne(Product product) {

@@ -27,7 +27,8 @@ public class ProductController {
     // =========================
     @GetMapping("/search")
     public List<ProductSearchDTO> search(
-            @RequestParam(value = "q", required = false, defaultValue = "") String keyword
+            @RequestParam(value = "q", required = false, defaultValue = "") String keyword,
+            @RequestParam(value = "userId", required = false) String userId
     ) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
@@ -36,7 +37,7 @@ public class ProductController {
         }
 
         try {
-            List<ProductSearchDTO> result = service.search(keyword);
+            List<ProductSearchDTO> result = service.search(keyword, userId);
 
             if (result == null) {
                 log.warn("/products/search: service trả về null → []");
@@ -47,8 +48,9 @@ public class ProductController {
 
         } catch (Exception ex) {
             log.error(
-                    "/products/search FAILED - keyword='{}', exception={}, message={}",
+                    "/products/search FAILED - keyword='{}', userId='{}', exception={}, message={}",
                     keyword,
+                    userId,
                     ex.getClass().getSimpleName(),
                     ex.getMessage(),
                     ex
@@ -56,6 +58,7 @@ public class ProductController {
             return Collections.emptyList();
         }
     }
+
     @GetMapping("/sync")
     public String syncSearchIndex() {
 

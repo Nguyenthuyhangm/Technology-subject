@@ -103,4 +103,69 @@ public interface RecommendationRepository extends JpaRepository<Product, UUID> {
             @Param("userId") UUID userId,
             @Param("limit") int limit
     );
+
+    @Query(value = """
+        WITH latest_price AS (
+            SELECT DISTINCT ON (pl.product_id)
+                pl.product_id,
+                pr.price,
+                pl.platform_name,
+                pl.url
+            FROM product_listing pl
+            JOIN price_record pr ON pr.product_listing_id = pl.id
+            ORDER BY pl.product_id, pr.price ASC, pr.crawled_at DESC
+        )
+
+        SELECT
+            p.id AS id,
+            p.name AS name,
+            p.image_url AS "imageUrl",
+            p.skin_type AS "skinType",
+            c.name AS "categoryName",
+            b.name AS "brandName",
+
+            (
+                CASE 
+                    WHEN LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 5 ELSE 0 
+                END
+                +
+                CASE 
+                    WHEN LOWER(b.name) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 3 ELSE 0 
+                END
+                +
+                CASE 
+                    WHEN LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 2 ELSE 0 
+                END
+                +
+                CASE 
+                    WHEN p.skin_type IS NOT NULL 
+                    AND LOWER(p.skin_type) LIKE LOWER(CONCAT('%', :keyword, '%')) THEN 1 ELSE 0 
+                END
+            ) AS score,
+
+            lp.price AS "lowestPrice",
+            lp.platform_name AS "platformName",
+            lp.url AS "productUrl"
+
+        FROM product p
+        JOIN category c ON p.category_id = c.id
+        JOIN brand b ON p.brand_id = b.id
+        LEFT JOIN latest_price lp ON lp.product_id = p.id
+
+        WHERE
+            LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            OR LOWER(b.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            OR (
+                p.skin_type IS NOT NULL
+                AND LOWER(p.skin_type) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            )
+
+        ORDER BY score DESC, p.created_at DESC
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<RecommendationProductDTO> findRecommendationsByKeyword(
+            @Param("keyword") String keyword,
+            @Param("limit") int limit
+    );
 }
