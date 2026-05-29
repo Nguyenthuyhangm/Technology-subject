@@ -221,6 +221,34 @@ export const SELECTORS = {
   },
 
   // ==========================================================================
+  // ALERTS PAGE - AlertsPage.tsx
+  // ==========================================================================
+  alerts: {
+    heading: 'h1:has-text("Những mức giá")',
+    emptyState: 'text=Chưa có alert nào',
+    productCard: 'article',
+    productName: 'h2',
+    deleteButton: 'button:has-text("Xóa")',
+    confirmDeleteButton: 'button:has-text("Xóa alert")',
+    cancelDeleteButton: 'button:has-text("Hủy")',
+    targetPrice: 'p[class*="text-[2rem]"]',
+  },
+
+  // ==========================================================================
+  // ALERT MODAL - AlertModal.tsx
+  // ==========================================================================
+  alertModal: {
+    modalTitle: 'h2:has-text("Đặt cảnh báo giá")',
+    targetPriceInput: 'input[placeholder="0"]',
+    createAlertButton: 'button:has-text("Tạo alert")',
+    cancelButton: 'button:has-text("Hủy")',
+    closeButton: 'button >> .lucide-x',
+    successMessage: 'h3:has-text("Alert đã được tạo")',
+    doneButton: 'button:has-text("Xong")',
+    priceFormatted: 'p >> text=VNĐ',
+  },
+
+  // ==========================================================================
   // WISHLIST PAGE - WishlistPage.tsx
   // ==========================================================================
   wishlist: {

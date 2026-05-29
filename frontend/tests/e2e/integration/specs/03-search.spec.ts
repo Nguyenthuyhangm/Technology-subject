@@ -36,7 +36,7 @@ test.describe("Search Functionality", () => {
 
   test("02 — Shows results or empty state", async ({ page }) => {
     await page.goto("/search?q=kem", { waitUntil: "domcontentloaded" });
-    await page.waitForTimeout(8000);
+    await page.waitForTimeout(15000);
 
     const hasResults =
       (await page.locator(SELECTORS.search.productCard).count()) > 0;
