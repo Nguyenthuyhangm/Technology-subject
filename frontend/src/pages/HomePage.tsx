@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowRight, Loader2, Search } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../context/AuthContext';
 import Badge from '../components/common/Badge';
 import ProductCard from '../components/product/ProductCard';
 import { mockProducts } from '../data/mockProducts';
@@ -45,15 +46,32 @@ const categories = [
 
 ];
 
+type AuthUserLike = {
+  id?: string | null;
+};
+
+type AuthContextLike = {
+  user?: AuthUserLike | null;
+  profile?: AuthUserLike | null;
+  backendUser?: AuthUserLike | null;
+  userProfile?: AuthUserLike | null;
+};
+
 export default function HomePage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
+  const auth = useAuth() as AuthContextLike;
+
   const currentUserId =
-    localStorage.getItem('userId') ?? '11111111-1111-1111-1111-111111111111';
+    auth.backendUser?.id ??
+    auth.profile?.id ??
+    auth.userProfile?.id ??
+    localStorage.getItem('userId') ??
+    auth.user?.id ??
+    null;
 
   const { deals, loading } = useTrendingDeals();
-
 
   const curatedProducts = useMemo(() => {
     return mockProducts.filter(
@@ -302,7 +320,9 @@ export default function HomePage() {
               ))}
             </div>
           </section>
-          <RecommendationSection userId={currentUserId} />
+
+          {currentUserId && <RecommendationSection userId={currentUserId} />}
+
           <section className="mt-20 rounded-[38px] border border-stone-200/80 dark:border-stone-700/40 bg-white dark:bg-[#1A1614] p-8 shadow-[0_18px_45px_rgba(15,23,42,0.04)] md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
