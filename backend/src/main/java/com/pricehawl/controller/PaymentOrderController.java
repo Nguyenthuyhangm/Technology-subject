@@ -23,7 +23,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PaymentOrderController {
 
-    private static final Set<String> ADMIN_EMAILS = Set.of("lethituphuong151020055@gmail.com");
+    private static final Set<String> ADMIN_EMAILS = Set.of(
+        "lethituphuong151020055@gmail.com",
+        "trangdinhhuyen269@gmail.com",
+        "23020661@vnu.edu.vn",
+        "moimoicutenhut@gmail.com",
+        "dminhanh2810@gmail.com"
+    );
 
     private final PaymentOrderService paymentOrderService;
 
