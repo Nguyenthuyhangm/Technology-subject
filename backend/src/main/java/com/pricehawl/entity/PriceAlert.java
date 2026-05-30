@@ -6,7 +6,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "price_alert")
+@Table(name = "price_alert", indexes = {
+        @Index(name = "idx_price_alert_user_created", columnList = "user_id, created_at DESC"),
+        @Index(name = "idx_price_alert_product_active", columnList = "product_id, is_active")
+})
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class PriceAlert {
 

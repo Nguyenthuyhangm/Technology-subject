@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -40,12 +41,20 @@ public class PriceComparisonServiceImpl implements PriceComparisonService {
     .collect(Collectors.toList());
 
 
-        // 3. Với mỗi listing, lấy giá mới nhất rồi map sang DTO
+        // 3. Batch load giá mới nhất cho tất cả listings trong 1 query (tránh N+1)
+        List<UUID> listingIds = listings.stream().map(ProductListing::getId).toList();
+        Map<UUID, PriceRecord> latestPriceMap = priceRecordRepository
+                .findLatestByProductListingIdIn(listingIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        r -> r.getProductListing().getId(),
+                        r -> r,
+                        (a, b) -> a  // giữ record đầu tiên nếu trùng
+                ));
+
         List<PriceComparisonItemResponse> comparisons = listings.stream()
                 .map(listing -> {
-                    PriceRecord latestPrice = priceRecordRepository
-                            .findTopByProductListingIdOrderByCrawledAtDesc(listing.getId())
-                            .orElse(null);
+                    PriceRecord latestPrice = latestPriceMap.get(listing.getId());
 
                     // Nếu listing chưa có giá thì bỏ qua
                     if (latestPrice == null) {
