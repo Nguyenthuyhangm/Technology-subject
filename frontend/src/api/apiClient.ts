@@ -1,5 +1,7 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { supabase } from '../lib/supabaseClient';
+import { monitor } from '../util/monitoring';
+
 
 function resolveBaseUrl(): string {
   const raw = import.meta.env.VITE_API_BASE_URL as string | undefined;
@@ -23,5 +25,18 @@ apiClient.interceptors.request.use(async (config) => {
   }
   return config;
 });
+apiClient.interceptors.response.use(
+  (response) => {
+    monitor.recordApiRequest(false);
+    return response;
+  },
+  (error: AxiosError) => {
+    const url = error.config?.url ?? '';
+    if (!url.includes('/metrics/frontend')) {
+      monitor.recordApiRequest(true);
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;

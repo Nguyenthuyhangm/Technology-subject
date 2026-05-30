@@ -44,9 +44,10 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ← thêm dòng này
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/actuator/prometheus", "/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/products/**",
                                 "/api/products/**",
@@ -54,6 +55,7 @@ public class SecurityConfig {
                                 "/api/v1/price-history/**",
                                 "/api/compare/**"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/metrics/frontend").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter,

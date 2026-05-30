@@ -66,3 +66,18 @@ pricehawk:
 
 resend:
   api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true       # Bật histogram để tính p95
+        hikaricp.connections.usage: true # Bật histogram cho HikariCP

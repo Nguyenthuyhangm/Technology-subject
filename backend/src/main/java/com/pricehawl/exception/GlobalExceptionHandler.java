@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -32,12 +33,19 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), null);
     }
 
-    // 404: không có handler cho path (ví dụ gõ sai URL)
+    // 404: không có handler cho path (ví dụ gõ sai URL) — Spring < 6.1
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNoHandler(NoHandlerFoundException ex) {
         log.warn("No handler found: {} {}", ex.getHttpMethod(), ex.getRequestURL());
         return build(HttpStatus.NOT_FOUND,
                 "Không tìm thấy endpoint: " + ex.getHttpMethod() + " " + ex.getRequestURL(), null);
+    }
+
+    // 404: Spring 6.1+ (Boot 3.2+) dùng NoResourceFoundException thay NoHandlerFoundException
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNoResource(NoResourceFoundException ex) {
+        log.warn("No resource found: {}", ex.getMessage());
+        return build(HttpStatus.NOT_FOUND, ex.getMessage(), null);
     }
 
     // 405: đúng path nhưng sai method (ví dụ DELETE nhưng controller chỉ có GET)
