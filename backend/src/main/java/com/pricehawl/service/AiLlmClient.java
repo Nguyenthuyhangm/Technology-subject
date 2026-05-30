@@ -15,45 +15,53 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AiLlmClient {
 
-    @Value("${ai.base-url}")
+    // Thêm : đằng sau để nếu không tìm thấy key trong yml/env, Spring sẽ gán chuỗi rỗng thay vì báo lỗi sập app
+    @Value("${ai.base-url:}")
     private String baseUrl;
 
-    @Value("${ai.api-key}")
+    @Value("${ai.api-key:}")
     private String apiKey;
 
-    @Value("${ai.model}")
+    // Thiết lập model mặc định nếu không có cấu hình
+    @Value("${ai.model:gpt-3.5-turbo}")
     private String model;
 
     public String generateAnswer(String systemPrompt, String userPrompt) {
-        if (apiKey == null || apiKey.isBlank()) {
+        // Đoạn check này của bạn bây giờ sẽ hoạt động an toàn khi thiếu API Key ở môi trường dev
+        if (apiKey == null || apiKey.isBlank() || baseUrl.isBlank()) {
+            System.err.println("AI features are disabled: Missing API Key or Base URL.");
             return null;
         }
 
         try {
             WebClient client = WebClient.builder()
                     .baseUrl(baseUrl)
-                    .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                     .build();
 
             Map<String, Object> body = Map.of(
-                    "model", model,
-                    "temperature", 0.2,
-                    "max_tokens", 300,
-                    "messages", List.of(
-                            Map.of(
-                                    "role", "system",
-                                    "content", systemPrompt
-                            ),
+                    "contents", List.of(
                             Map.of(
                                     "role", "user",
-                                    "content", userPrompt
+                                    "parts", List.of(
+                                            Map.of(
+                                                    "text",
+                                                    systemPrompt + "\n\n" + userPrompt
+                                            )
+                                    )
                             )
+                    ),
+                    "generationConfig", Map.of(
+                            "temperature", 0.2,
+                            "maxOutputTokens", 300
                     )
             );
 
             JsonNode response = client.post()
-                    .uri("/chat/completions")
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/v1beta/models/" + model + ":generateContent")
+                            .queryParam("key", apiKey)
+                            .build())
                     .bodyValue(body)
                     .retrieve()
                     .bodyToMono(JsonNode.class)
@@ -64,7 +72,7 @@ public class AiLlmClient {
                 return null;
             }
 
-            JsonNode contentNode = response.at("/choices/0/message/content");
+            JsonNode contentNode = response.at("/candidates/0/content/parts/0/text");
             if (contentNode.isMissingNode()) {
                 return null;
             }

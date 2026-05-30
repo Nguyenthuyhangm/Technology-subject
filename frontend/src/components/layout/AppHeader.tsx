@@ -9,7 +9,13 @@ const FONT_STACK = {
     'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 } as const
 
-const ADMIN_EMAILS = ['lethituphuong151020055@gmail.com']
+const ADMIN_EMAILS = [
+  'lethituphuong151020055@gmail.com',
+  'trangdinhhuyen269@gmail.com',
+  '23020661@vnu.edu.vn',
+  'moimoicutenhut@gmail.com',
+  'dminhanh2810@gmail.com',
+]
 
 export type AppHeaderPage =
   | 'home'
@@ -96,7 +102,7 @@ export default function AppHeader({
 
   useEffect(() => {
     fetchUnreadCount()
-    const interval = setInterval(fetchUnreadCount, 30_000)
+    const interval = setInterval(fetchUnreadCount, 10_000)
     return () => clearInterval(interval)
   }, [fetchUnreadCount])
 

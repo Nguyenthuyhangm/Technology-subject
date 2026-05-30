@@ -219,6 +219,14 @@ public interface ProductListingRepository
 
     List<ProductListing> findByPlatformNameIgnoreCase(String platformName);
 
+    long countByPlatformNameIgnoreCase(String platformName);
+
+    @Query("SELECT COUNT(pl) FROM ProductListing pl WHERE LOWER(pl.platformName) = LOWER(:platform) AND pl.crawlTime > :since")
+    long countByPlatformNameIgnoreCaseAndCrawlTimeAfter(@Param("platform") String platform, @Param("since") LocalDateTime since);
+
+    @Query("SELECT MAX(pl.crawlTime) FROM ProductListing pl WHERE LOWER(pl.platformName) = LOWER(:platform)")
+    LocalDateTime findMaxCrawlTimeByPlatform(@Param("platform") String platform);
+
     List<ProductListing> findByInStockFalse();
 
     List<ProductListing> findByInStockFalseAndUpdatedAtBefore(LocalDateTime before);

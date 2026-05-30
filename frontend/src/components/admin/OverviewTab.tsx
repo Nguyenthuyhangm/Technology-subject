@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiClient from '../../api/apiClient';
-import { Users, Package, Bell, Heart, MousePointer, TrendingUp, ShoppingBag, Activity } from 'lucide-react';
+import { Users, Package, MousePointer, TrendingUp, ShoppingBag, CreditCard, Crown, Loader2 } from 'lucide-react';
 import StatCard from './StatCard';
 import { FONT_STACK, COLORS } from './adminConstants';
 import type { Metrics } from '../../types/admin';
@@ -8,15 +8,24 @@ import type { Metrics } from '../../types/admin';
 export default function OverviewTab() {
     const [metrics, setMetrics] = useState<Metrics | null>(null);
     const [metricsLoading, setMetricsLoading] = useState(true);
+    const [transactions, setTransactions] = useState<any>(null);
+    const [txLoading, setTxLoading] = useState(true);
 
     useEffect(() => {
+        // Metrics load ngay — không có AccessTrade, nhanh
         apiClient.get('/admin/metrics')
             .then(res => setMetrics(res.data))
             .catch(console.error)
             .finally(() => setMetricsLoading(false));
+
+        // Transactions load riêng — có thể chậm do AccessTrade API
+        apiClient.get('/admin/transactions')
+            .then(res => setTransactions(res.data))
+            .catch(() => setTransactions({ total: 0, data: [] }))
+            .finally(() => setTxLoading(false));
     }, []);
 
-    const totalCommission = metrics?.transactions?.data
+    const totalCommission = transactions?.data
         ?.reduce((sum: number, t: any) => sum + (t.commission ?? 0), 0) ?? 0;
 
     return (
@@ -39,13 +48,12 @@ export default function OverviewTab() {
                 <>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                         <StatCard icon={Users} label="Tổng Users" value={metrics.users.total} color={COLORS.slate} />
+                        <StatCard icon={Crown} label="Premium Users" value={metrics.users.premium ?? 0} sub="Đang hoạt động" color={COLORS.mauve} />
                         <StatCard icon={Package} label="Sản Phẩm" value={metrics.products.total} color={COLORS.sage} />
-                        <StatCard icon={Bell} label="Price Alerts" value={metrics.alerts.total} sub={`${metrics.alerts.active} đang hoạt động`} color={COLORS.mauve} />
-                        <StatCard icon={Heart} label="Wishlist" value={metrics.wishlists.total} color={COLORS.terracotta} />
+                        <StatCard icon={CreditCard} label="Thanh toán chờ" value={metrics.payments?.pending ?? 0} sub="Chờ xác nhận" color={COLORS.terracotta} />
                         <StatCard icon={MousePointer} label="Affiliate Clicks" value={metrics.affiliate.totalClicks} sub={`${metrics.affiliate.clicksLast30Days} trong 30 ngày`} color={COLORS.gold} />
-                        <StatCard icon={ShoppingBag} label="Đơn Hàng AT" value={metrics.transactions?.total ?? 0} sub="Qua AccessTrade" color={COLORS.forest} />
-                        <StatCard icon={TrendingUp} label="Hoa Hồng (30 Ngày)" value={`${totalCommission.toLocaleString('vi-VN')}₫`} sub="Dự kiến duyệt" color={COLORS.plum} />
-                        <StatCard icon={Activity} label="Thông Báo" value={metrics.notifications.total} color={COLORS.warmGrey} />
+                        <StatCard icon={ShoppingBag} label="Đơn Hàng AT" value={txLoading ? '...' : (transactions?.total ?? 0)} sub="Qua AccessTrade" color={COLORS.forest} />
+                        <StatCard icon={TrendingUp} label="Hoa Hồng (30 Ngày)" value={txLoading ? '...' : `${totalCommission.toLocaleString('vi-VN')}₫`} sub="Dự kiến duyệt" color={COLORS.plum} />
                     </div>
 
                     <div className="mt-12 rounded-2xl border border-black/[0.04] bg-white overflow-hidden dark:border-white/[0.04] dark:bg-[#121212]">
@@ -54,7 +62,11 @@ export default function OverviewTab() {
                                 Giao dịch AccessTrade gần đây
                             </h2>
                         </div>
-                        {!metrics.transactions?.data?.length ? (
+                        {txLoading ? (
+                            <div className="flex justify-center py-12">
+                                <Loader2 size={18} className="animate-spin text-stone-400" />
+                            </div>
+                        ) : !transactions?.data?.length ? (
                             <div className="flex flex-col items-center justify-center py-20">
                                 <div className="h-px w-8 bg-stone-200 dark:bg-stone-800 mb-6" />
                                 <p className="text-sm text-stone-500">Chưa có giao dịch nào trong 30 ngày</p>
@@ -72,7 +84,7 @@ export default function OverviewTab() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-black/[0.02] dark:divide-white/[0.02]">
-                                        {metrics.transactions.data.slice(0, 10).map((t: any) => (
+                                        {transactions.data.slice(0, 10).map((t: any) => (
                                             <tr key={t.id} className="group transition-colors hover:bg-black/[0.01] dark:hover:bg-white/[0.01]">
                                                 <td className="px-8 py-4 font-medium text-stone-900 dark:text-stone-100 capitalize">{t.merchant}</td>
                                                 <td className="px-8 py-4 font-mono text-xs text-stone-500">{t.transaction_id}</td>
@@ -81,8 +93,8 @@ export default function OverviewTab() {
                                                 <td className="px-8 py-4">
                                                     <div className="flex items-center gap-2">
                                                         <span className={`h-1.5 w-1.5 rounded-full ${
-                                                            t.status === 1 ? 'bg-green-500' 
-                                                            : t.status === 2 ? 'bg-red-500' 
+                                                            t.status === 1 ? 'bg-green-500'
+                                                            : t.status === 2 ? 'bg-red-500'
                                                             : 'bg-stone-300 dark:bg-stone-600'
                                                         }`} />
                                                         <span className="text-xs text-stone-600 dark:text-stone-400">

@@ -19,8 +19,9 @@ public class RecommendationController {
     @GetMapping("/{userId}")
     public List<RecommendationProductDTO> getRecommendations(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "12") int limit
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size
     ) {
-        return recommendationService.getRecommendations(userId, limit);
+        return recommendationService.getRecommendations(userId, page, size);
     }
 }

@@ -101,6 +101,7 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
             p.name AS "productName",
             b.name AS "brandName",
             c.name AS "categoryName",
+            p.image_url AS "imageUrl",
             lp.price AS "lowestPrice",
 
             (
@@ -191,6 +192,7 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
             p.name AS "productName",
             b.name AS "brandName",
             c.name AS "categoryName",
+            p.image_url AS "imageUrl",
             lp.price AS "lowestPrice",
             0 AS "score",
             'Phù hợp với câu hỏi tìm kiếm.' AS "reason"
@@ -211,6 +213,45 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
         """, nativeQuery = true)
     List<AiRecommendationDTO> searchProductsForAi(
             @Param("keyword") String keyword,
+            @Param("limit") int limit
+    );
+
+
+    @Query(value = """
+        WITH latest_price AS (
+            SELECT DISTINCT ON (pl.product_id)
+                pl.product_id,
+                pr.price
+            FROM product_listing pl
+            JOIN price_record pr ON pr.product_listing_id = pl.id
+            ORDER BY pl.product_id, pr.price ASC, pr.crawled_at DESC
+        )
+
+        SELECT
+            p.id AS "productId",
+            p.name AS "productName",
+            b.name AS "brandName",
+            c.name AS "categoryName",
+            p.image_url AS "imageUrl",
+            lp.price AS "lowestPrice",
+            0 AS "score",
+            'Cùng danh mục.' AS "reason"
+
+        FROM product p
+        JOIN brand b ON p.brand_id = b.id
+        JOIN category c ON p.category_id = c.id
+        LEFT JOIN latest_price lp ON lp.product_id = p.id
+
+        WHERE p.category_id = (
+            SELECT category_id FROM product WHERE id = :productId
+        )
+        AND p.id != :productId
+
+        ORDER BY lp.price ASC NULLS LAST, p.created_at DESC
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<AiRecommendationDTO> findSimilarByCategory(
+            @Param("productId") UUID productId,
             @Param("limit") int limit
     );
 }

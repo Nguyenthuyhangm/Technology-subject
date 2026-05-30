@@ -7,6 +7,7 @@ import ProductSummary from '../components/product/ProductSummary';
 import QuickCompareStrip from '../components/product/QuickCompareStrip';
 import PriceChart from '../components/product/PriceChart';
 import AlertModal from '../components/alert/AlertModal';
+import SimilarProductsSection from '../components/product/SimilarProductsSection';
 
 import { priceComparison, priceHistory } from '../service/ProductService';
 import type { PriceComparison, PriceHistory, ProductSearch } from '../types/product';
@@ -138,6 +139,8 @@ export default function ProductDetailPage() {
                 <section className="mt-16">
                     {history && <PriceChart platforms={history.platforms} title="Biến động giá gần đây" />}
                 </section>
+
+                {id && <SimilarProductsSection key={id} productId={id} />}
             </div>
 
             {id && (

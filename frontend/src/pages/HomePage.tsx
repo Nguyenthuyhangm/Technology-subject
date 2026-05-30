@@ -1,19 +1,14 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowRight, Loader2, Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react'; // Đã xóa Loader2 vì không dùng nữa
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
 import FloatingAIAssistant from '../components/common/FloatingAIAssistant';
 import Badge from '../components/common/Badge';
-import ProductCard from '../components/product/ProductCard';
 import { mockProducts } from '../data/mockProducts';
 import AppHeader from '../components/layout/AppHeader';
 import RecommendationSection from '../components/RecommendationSection';
-import { useTrendingDeals } from '../util/useTrendingDeals';
-import {
-  sortByDealScoreDesc,
-  trendingDealToProductSearch,
-} from '../util/trendingDealSelectors';
+// Đã xóa ProductCard và các selectors liên quan đến deals/highlights
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
@@ -74,8 +69,6 @@ export default function HomePage() {
     localStorage.getItem('userId') ??
     null;
 
-  const { deals, loading } = useTrendingDeals();
-
   const curatedProducts = useMemo(() => {
     return mockProducts.filter(
       (product) =>
@@ -90,20 +83,10 @@ export default function HomePage() {
     return curatedProducts[0] ?? mockProducts[0];
   }, [curatedProducts]);
 
-  const homeHighlights = useMemo(() => {
-    const list = deals ?? [];
-    if (list.length === 0) return [];
-
-    const sorted = [...list].sort(sortByDealScoreDesc);
-    return sorted.slice(0, 3).map(trendingDealToProductSearch);
-  }, [deals]);
-
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const normalized = query.trim();
     if (!normalized) return;
-
     navigate(`/search?q=${encodeURIComponent(normalized)}`);
   };
 
@@ -147,15 +130,13 @@ export default function HomePage() {
               <div className="flex flex-col gap-3 md:flex-row">
                 <div className="relative flex-1">
                   <Search className="absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
-
                   <input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Tìm một món bạn đang cân nhắc..."
-                    className="w-full rounded-full border border-white/50 bg-white/80 py-4 pl-12 pr-5 text-sm text-stone-900 outline-none backdrop-blur-md transition focus:border-[#D8C1C6]"
+                    className="w-full rounded-full border border-white/50 bg-white/80 py-4 pl-12 pr-5 text-sm text-stone-900 outline-none backdrop-blur-md transition focus:border-[#D8C1C6] dark:border-stone-700/40 dark:bg-stone-900/70 dark:text-stone-100"
                   />
                 </div>
-
                 <button
                   type="submit"
                   className="rounded-full bg-[#1F1A17] px-6 py-4 text-sm font-medium text-white transition hover:opacity-90"
@@ -192,27 +173,22 @@ export default function HomePage() {
             <div className="mt-6">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="brand">Lựa chọn nổi bật</Badge>
-
                 {!featuredProduct.insight.isFakeDiscountRisk && (
                   <Badge variant="soft">Đáng cân nhắc hôm nay</Badge>
                 )}
               </div>
-
               <p className="mt-4 text-[10px] uppercase tracking-[0.12em] text-[#8E6A72]">
                 {featuredProduct.brand}
               </p>
-
               <h2
-                className="mt-3 text-3xl leading-[1.14] tracking-[-0.02em] text-stone-900"
+                className="mt-3 text-3xl leading-[1.14] tracking-[-0.02em] text-stone-900 dark:text-stone-100"
                 style={{ fontFamily: FONT_STACK.serif }}
               >
                 {featuredProduct.name}
               </h2>
-
-              <p className="mt-4 text-sm leading-7 text-stone-500">
+              <p className="mt-4 text-sm leading-7 text-stone-500 dark:text-stone-400">
                 {featuredProduct.insight.summary}
               </p>
-
               <Link
                 to={`/product/${featuredProduct.id}`}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] dark:text-stone-300"
@@ -224,74 +200,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mt-24">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-[#8E6A72]">
-                Bắt đầu từ đây
-              </p>
-
-              <h2
-                className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 md:text-4xl"
-                style={{ fontFamily: FONT_STACK.serif }}
-              >
-                Những món đang ở vùng giá đẹp
-              </h2>
-
-              <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-500">
-                Đây là những lựa chọn nổi bật nhất lúc này — phù hợp để xem nhanh,
-                so sánh và quyết định dễ hơn.
-              </p>
-            </div>
-
-            <Link
-              to="/deals"
-              className="inline-flex items-center gap-2 text-sm text-stone-500 transition hover:text-stone-900"
-            >
-              Xem tất cả deal
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          {loading && homeHighlights.length === 0 && (
-            <div
-              className="flex min-h-[200px] flex-col items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-14 text-sm text-stone-500 dark:border-stone-700/40 dark:bg-[#1A1614]/50 dark:text-stone-400"
-              aria-busy="true"
-              aria-live="polite"
-            >
-              <p className="flex items-center gap-2">
-                <Loader2
-                  className="h-5 w-5 shrink-0 animate-spin text-[#8E6A72]"
-                  aria-hidden
-                />
-                Đang tải
-              </p>
-            </div>
-          )}
-
-          {!loading && homeHighlights.length === 0 && (
-            <div className="flex min-h-[160px] items-center justify-center rounded-[28px] border border-stone-200/60 bg-white/50 py-12 text-sm text-stone-500 dark:border-stone-700/40 dark:bg-[#1A1614]/50 dark:text-stone-400">
-              Không tìm thấy sản phẩm phù hợp
-            </div>
-          )}
-
-          {homeHighlights.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {homeHighlights.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </section>
+        {/* --- PHẦN GIÁ ĐẸP ĐÃ ĐƯỢC XÓA TẠI ĐÂY --- */}
 
         <section className="mt-20">
           <div className="mb-8">
             <p className="text-[11px] uppercase tracking-[0.12em] text-[#8E6A72]">
               Khám phá nhanh
             </p>
-
             <h2
-              className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 md:text-4xl"
+              className="mt-2 text-3xl tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-4xl"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               Mua sắm theo nhóm bạn quan tâm
@@ -308,18 +225,15 @@ export default function HomePage() {
                 <p className="text-[10px] uppercase tracking-[0.12em] text-[#8E6A72]">
                   Danh mục
                 </p>
-
                 <h3
                   className="mt-3 text-[1.7rem] leading-[1.12] tracking-[-0.02em] text-stone-900 dark:text-stone-100"
                   style={{ fontFamily: FONT_STACK.serif }}
                 >
                   {category.title}
                 </h3>
-
                 <p className="mt-3 text-sm leading-7 text-stone-500 dark:text-stone-400">
                   {category.subtitle}
                 </p>
-
                 <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] dark:text-stone-300">
                   Xem sản phẩm
                   <ArrowRight size={15} />
@@ -337,17 +251,15 @@ export default function HomePage() {
               <p className="text-[11px] uppercase tracking-[0.12em] text-[#8E6A72]">
                 Save for later
               </p>
-
               <h2
-                className="mt-2 text-3xl leading-[1.16] tracking-[-0.02em] text-stone-900 md:text-4xl"
+                className="mt-2 text-3xl leading-[1.16] tracking-[-0.02em] text-stone-900 dark:text-stone-100 md:text-4xl"
                 style={{ fontFamily: FONT_STACK.serif }}
               >
                 Lưu wishlist, đặt alert,
                 <br className="hidden md:block" />
                 quay lại đúng lúc.
               </h2>
-
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-500">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-500 dark:text-stone-400">
                 Khi chưa muốn mua ngay, bạn có thể lưu lại sản phẩm đang cân nhắc
                 hoặc đặt cảnh báo để không bỏ lỡ mức giá đẹp hơn.
               </p>
@@ -360,10 +272,9 @@ export default function HomePage() {
               >
                 Mở Wishlist
               </Link>
-
               <Link
                 to="/alerts"
-                className="inline-flex items-center justify-center rounded-full border border-stone-200 bg-[#F8F3EE] px-6 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72]"
+                className="inline-flex items-center justify-center rounded-full border border-stone-200 bg-[#F8F3EE] px-6 py-4 text-sm font-medium text-stone-700 transition hover:text-[#8E6A72] dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200"
               >
                 Mở Alerts
               </Link>
@@ -376,13 +287,12 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-3 lg:px-12">
           <div className="space-y-4">
             <div
-              className="text-[2rem] text-stone-900"
+              className="text-[2rem] text-stone-900 dark:text-stone-100"
               style={{ fontFamily: FONT_STACK.serif }}
             >
               Price<span className="text-[#B7848C]">Hawk</span>
             </div>
-
-            <p className="max-w-xs text-sm leading-7 text-stone-500">
+            <p className="max-w-xs text-sm leading-7 text-stone-500 dark:text-stone-400">
               So sánh giá theo cách tinh tế hơn, rõ ràng hơn và phù hợp với quyết
               định mua sắm hằng ngày.
             </p>
@@ -390,48 +300,57 @@ export default function HomePage() {
 
           <div className="col-span-1 grid grid-cols-2 gap-10 md:col-span-2 md:grid-cols-3">
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">Khám phá</h5>
-
-              <ul className="space-y-3 text-sm text-stone-500">
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                Khám phá
+              </h5>
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
                 <li>
-                  <Link to="/search" className="hover:text-stone-900">
+                  <Link to="/search" className="hover:text-stone-900 dark:hover:text-stone-100">
                     So sánh giá
                   </Link>
                 </li>
-
                 <li>
-                  <Link to="/deals" className="hover:text-stone-900">
+                  <Link to="/deals" className="hover:text-stone-900 dark:hover:text-stone-100">
                     Chọn lọc hôm nay
                   </Link>
                 </li>
-
                 <li>
-                  <Link to="/wishlist" className="hover:text-stone-900">
+                  <Link to="/wishlist" className="hover:text-stone-900 dark:hover:text-stone-100">
                     Wishlist
                   </Link>
                 </li>
               </ul>
             </div>
-
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">PriceHawk</h5>
-
-              <ul className="space-y-3 text-sm text-stone-500">
-                <li className="cursor-pointer hover:text-stone-900">
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                PriceHawk
+              </h5>
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
                   Về chúng tôi
                 </li>
-                <li className="cursor-pointer hover:text-stone-900">Bảo mật</li>
-                <li className="cursor-pointer hover:text-stone-900">Liên hệ</li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Bảo mật
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Liên hệ
+                </li>
               </ul>
             </div>
-
             <div className="space-y-4">
-              <h5 className="text-sm text-stone-900">Danh mục</h5>
-
-              <ul className="space-y-3 text-sm text-stone-500">
-                <li className="cursor-pointer hover:text-stone-900">Mỹ phẩm</li>
-                <li className="cursor-pointer hover:text-stone-900">Chăm sóc da</li>
-                <li className="cursor-pointer hover:text-stone-900">Chăm sóc tóc</li>
+              <h5 className="text-sm text-stone-900 dark:text-stone-100">
+                Danh mục
+              </h5>
+              <ul className="space-y-3 text-sm text-stone-500 dark:text-stone-400">
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Mỹ phẩm
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Chăm sóc da
+                </li>
+                <li className="cursor-pointer hover:text-stone-900 dark:hover:text-stone-100">
+                  Chăm sóc tóc
+                </li>
               </ul>
             </div>
           </div>
@@ -439,7 +358,6 @@ export default function HomePage() {
 
         <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-stone-200/70 px-6 pt-6 text-xs text-stone-400 md:flex-row lg:px-12">
           <span>© 2026 PriceHawk. Smart shopping, quietly curated.</span>
-
           <div className="flex gap-6">
             <span>Instagram</span>
             <span>Behance</span>

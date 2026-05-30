@@ -20,4 +20,5 @@ export interface UserProfile {
     language: string
     created_at: string
     updated_at: string | null
+    premium_expires_at: string | null
 }

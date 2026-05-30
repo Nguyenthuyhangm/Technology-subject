@@ -177,6 +177,10 @@ public class TrendingDealService {
     }
 
     private TrendingDealResponse mapToResponse(ProductListing l, DealScoreCalculation calc, PriceRecord latest) {
+        return mapToResponse(l, calc, latest, null);
+    }
+
+    private TrendingDealResponse mapToResponse(ProductListing l, DealScoreCalculation calc, PriceRecord latest, List<PriceRecord> priceRecordsDesc) {
         if (l == null) {
             return null;
         }
@@ -223,6 +227,7 @@ public class TrendingDealService {
                 .discountScore(safeCalc.discountScore())
                 .trustScore(safeCalc.trustScore())
                 .freshnessScore(safeCalc.freshnessScore())
+                .isFakePromo(priceRecordsDesc != null ? TrendingDealEngine.isLikelyFakePromo(priceRecordsDesc) : null)
                 .build();
     }
 
@@ -231,7 +236,7 @@ public class TrendingDealService {
             return null;
         }
         TrendingDealResponse res =
-                mapToResponse(dto.listing(), dto.score(), dto.latestPriceRecord());
+                mapToResponse(dto.listing(), dto.score(), dto.latestPriceRecord(), dto.priceRecordsDesc());
         if (res == null) {
             return null;
         }

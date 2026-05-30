@@ -3,7 +3,13 @@ export const FONT_STACK = {
     sans: '"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 } as const;
 
-export const ADMIN_EMAILS = ['lethituphuong151020055@gmail.com'];
+export const ADMIN_EMAILS = [
+    'lethituphuong151020055@gmail.com',
+    'trangdinhhuyen269@gmail.com',
+    '23020661@vnu.edu.vn',
+    'moimoicutenhut@gmail.com',
+    'dminhanh2810@gmail.com',
+];
 
 export const COLORS = {
     slate: '#64748b', sage: '#78909c', mauve: '#B7848C',

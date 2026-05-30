@@ -3,16 +3,12 @@ import type { RecommendationProduct } from "../types/recommendation";
 
 export const getRecommendations = async (
   userId: string,
-  limit: number = 12
+  page: number = 0,
+  size: number = 12
 ): Promise<RecommendationProduct[]> => {
   const response = await apiClient.get<RecommendationProduct[]>(
     `/recommendations/${userId}`,
-    {
-      params: {
-        limit,
-      },
-    }
+    { params: { page, size } }
   );
-
   return response.data;
 };

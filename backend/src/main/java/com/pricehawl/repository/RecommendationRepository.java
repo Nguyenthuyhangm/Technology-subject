@@ -97,10 +97,11 @@ public interface RecommendationRepository extends JpaRepository<Product, UUID> {
         )
 
         ORDER BY score DESC, p.created_at DESC
-        LIMIT :limit
+        LIMIT :limit OFFSET :offset
         """, nativeQuery = true)
     List<RecommendationProductDTO> findRecommendationsByUserId(
             @Param("userId") UUID userId,
-            @Param("limit") int limit
+            @Param("limit") int limit,
+            @Param("offset") int offset
     );
 }
