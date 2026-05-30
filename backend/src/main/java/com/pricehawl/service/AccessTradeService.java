@@ -3,6 +3,7 @@ package com.pricehawl.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,8 +19,11 @@ public class AccessTradeService {
     @Value("${accesstrade.api-key}")
     private String apiKey;
 
-    public AccessTradeService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public AccessTradeService() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3_000);
+        factory.setReadTimeout(5_000);
+        this.restTemplate = new RestTemplate(factory);
     }
 
     /**

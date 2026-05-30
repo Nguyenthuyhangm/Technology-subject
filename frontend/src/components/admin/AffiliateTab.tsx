@@ -1,7 +1,7 @@
 // components/admin/AffiliateTab.tsx
 import { useEffect, useState } from 'react';
 import apiClient from '../../api/apiClient';
-import { MousePointer, TrendingUp, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MousePointer, TrendingUp, ShoppingBag, ChevronLeft, ChevronRight, DollarSign } from 'lucide-react';
 import { FONT_STACK, COLORS } from './adminConstants';
 import StatCard from './StatCard';
 
@@ -44,6 +44,10 @@ export default function AffiliateTab() {
 
         apiClient.get(`/admin/affiliate-clicks?${params}`)
             .then(res => {
+                console.log('[AffiliateTab] byDay:', res.data.byDay);
+                if (res.data.byDay?.length > 0) {
+                    console.log('[AffiliateTab] byDay[0]:', JSON.stringify(res.data.byDay[0]));
+                }
                 setData(res.data);
                 setTotalCount(Number(res.headers['x-total-count'] ?? res.data.totalClicks ?? 0));
             })
@@ -67,11 +71,19 @@ export default function AffiliateTab() {
 
     const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
+    // Parse count an toàn — Java có thể trả về BigInteger dạng string hoặc object
+    const parseCount = (v: unknown): number => {
+        if (typeof v === 'number') return v;
+        if (typeof v === 'string') return parseInt(v, 10) || 0;
+        if (v && typeof v === 'object') return parseInt(String(v), 10) || 0;
+        return 0;
+    };
+
     // Tính tổng clicks 30 ngày từ byDay
-    const clicks30d = data?.byDay.reduce((s, d) => s + Number(d.count), 0) ?? 0;
+    const clicks30d = data?.byDay.reduce((s, d) => s + parseCount(d.count), 0) ?? 0;
 
     // Bar chart đơn giản bằng CSS
-    const maxDay = data ? Math.max(...data.byDay.map(d => Number(d.count)), 1) : 1;
+    const maxDay = data ? Math.max(...data.byDay.map(d => parseCount(d.count)), 1) : 1;
 
     return (
         <div className="animate-in fade-in duration-700">
@@ -87,10 +99,21 @@ export default function AffiliateTab() {
             </div>
 
             {/* Stat cards */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 mb-10">
-                <StatCard icon={MousePointer} label="Tổng clicks" value={data?.totalClicks ?? 0} color={COLORS.gold} />
-                <StatCard icon={TrendingUp} label="Clicks 30 ngày" value={clicks30d} color={COLORS.sage} />
-                <StatCard icon={ShoppingBag} label="Sàn có clicks" value={data?.byPlatform.length ?? 0} color={COLORS.mauve} />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+                <StatCard
+                    icon={MousePointer}
+                    label={platform === 'all' ? 'Tổng clicks' : `Tổng clicks (${platform})`}
+                    value={data?.totalClicks ?? 0}
+                    color={COLORS.gold}
+                />
+                <StatCard
+                    icon={TrendingUp}
+                    label={platform === 'all' ? 'Clicks 30 ngày' : `Clicks 30 ngày (${platform})`}
+                    value={clicks30d}
+                    color={COLORS.sage}
+                />
+                <StatCard icon={ShoppingBag} label="Đơn Hàng AT" value={0} sub="Qua AccessTrade" color={COLORS.slate} />
+                <StatCard icon={DollarSign} label="Hoa Hồng (30 Ngày)" value="0₫" sub="Dự kiến duyệt" color={COLORS.terracotta} />
             </div>
 
             {/* 2 cột: biểu đồ ngày + top sản phẩm */}
@@ -105,23 +128,26 @@ export default function AffiliateTab() {
                     </div>
                     <div className="px-6 py-5">
                         {!data || data.byDay.length === 0 ? (
-                            <p className="text-sm text-stone-400 text-center py-8">Chưa có dữ liệu</p>
+                            <p className="text-sm text-stone-400 text-center py-8">
+                                {data && data.totalClicks > 0
+                                    ? 'Đang tải biểu đồ...'
+                                    : 'Chưa có dữ liệu'}
+                            </p>
                         ) : (
-                            <div className="flex items-end gap-[3px] h-32">
-                                {data.byDay.map((d) => (
-                                    <div key={d.day} className="flex-1 flex flex-col items-center gap-1 group relative">
-                                        <div
-                                            className="w-full rounded-t bg-[#B7848C]/70 group-hover:bg-[#B7848C] transition-colors"
-                                            style={{ height: `${Math.max(4, (Number(d.count) / maxDay) * 100)}%` }}
-                                        />
-                                        {/* Tooltip */}
-                                        <div className="absolute bottom-full mb-1 hidden group-hover:flex flex-col items-center z-10">
-                                            <div className="bg-stone-900 text-white text-[10px] rounded px-2 py-1 whitespace-nowrap">
-                                                {d.day.slice(5)}: {d.count}
+                            <div className="flex items-end gap-[3px]" style={{ height: 128 }}>
+                                {data.byDay.map((d) => {
+                                    const barH = Math.max(4, (parseCount(d.count) / maxDay) * 128);
+                                    return (
+                                        <div key={d.day} className="flex-1 group relative" style={{ height: barH }}>
+                                            <div className="w-full h-full rounded-t bg-[#B7848C]/70 group-hover:bg-[#B7848C] transition-colors" />
+                                            <div className="absolute bottom-full mb-1 hidden group-hover:flex flex-col items-center z-10 left-1/2 -translate-x-1/2">
+                                                <div className="bg-stone-900 text-white text-[10px] rounded px-2 py-1 whitespace-nowrap">
+                                                    {d.day.slice(5)}: {d.count}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
@@ -177,6 +203,20 @@ export default function AffiliateTab() {
                             <span className="text-xs font-semibold text-[#B7848C]">{p.count} clicks</span>
                         </div>
                     ))}
+                </div>
+            </div>
+
+            {/* Bảng giao dịch AccessTrade */}
+            <div className="rounded-2xl border border-black/[0.04] bg-white dark:border-white/[0.04] dark:bg-[#121212] overflow-hidden mb-10">
+                <div className="border-b border-black/[0.04] dark:border-white/[0.04] px-6 py-4">
+                    <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-900 dark:text-white">
+                        Giao dịch AccessTrade
+                    </h2>
+                </div>
+                <div className="flex flex-col items-center justify-center py-16">
+                    <div className="h-px w-8 bg-stone-200 dark:bg-stone-800 mb-4" />
+                    <p className="text-sm text-stone-400">Chưa có giao dịch nào</p>
+                    <p className="mt-1 text-xs text-stone-300 dark:text-stone-600">Dữ liệu sẽ hiển thị khi có đơn hàng thành công qua AccessTrade</p>
                 </div>
             </div>
 

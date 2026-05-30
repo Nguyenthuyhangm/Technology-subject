@@ -36,28 +36,32 @@ public class AiLlmClient {
         try {
             WebClient client = WebClient.builder()
                     .baseUrl(baseUrl)
-                    .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                     .build();
 
             Map<String, Object> body = Map.of(
-                    "model", model,
-                    "temperature", 0.2,
-                    "max_tokens", 300,
-                    "messages", List.of(
-                            Map.of(
-                                    "role", "system",
-                                    "content", systemPrompt
-                            ),
+                    "contents", List.of(
                             Map.of(
                                     "role", "user",
-                                    "content", userPrompt
+                                    "parts", List.of(
+                                            Map.of(
+                                                    "text",
+                                                    systemPrompt + "\n\n" + userPrompt
+                                            )
+                                    )
                             )
+                    ),
+                    "generationConfig", Map.of(
+                            "temperature", 0.2,
+                            "maxOutputTokens", 300
                     )
             );
 
             JsonNode response = client.post()
-                    .uri("/chat/completions")
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/v1beta/models/" + model + ":generateContent")
+                            .queryParam("key", apiKey)
+                            .build())
                     .bodyValue(body)
                     .retrieve()
                     .bodyToMono(JsonNode.class)
@@ -68,7 +72,7 @@ public class AiLlmClient {
                 return null;
             }
 
-            JsonNode contentNode = response.at("/choices/0/message/content");
+            JsonNode contentNode = response.at("/candidates/0/content/parts/0/text");
             if (contentNode.isMissingNode()) {
                 return null;
             }

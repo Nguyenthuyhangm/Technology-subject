@@ -12,6 +12,8 @@ public interface AiRecommendationDTO {
 
     String getCategoryName();
 
+    String getImageUrl();
+    
     Integer getLowestPrice();
 
     Integer getScore();

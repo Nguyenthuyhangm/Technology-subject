@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PauseCircle, Pencil, Play, Trash2, Mail, BellRing, MoveUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppHeader from '../components/layout/AppHeader';
 import { alertService, type AlertResponse } from '../service/alertApi';
+import { useAuth } from '../context/AuthContext';
 
 const FONT_STACK = {
   serif: '"Times New Roman", Georgia, serif',
@@ -22,13 +23,21 @@ const renderChannels = (channel: string) => {
   ));
 };
 
+const FREE_LIMIT = 5;
+
 export default function AlertsPage() {
+  const { profile } = useAuth();
+  const navigate = useNavigate();
   const [alerts, setAlerts] = useState<AlertResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPrice, setEditPrice] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const isFree = profile?.plan !== 'premium';
+  const activeCount = alerts.filter((a) => a.active).length;
+  const atLimit = isFree && activeCount >= FREE_LIMIT;
 
   useEffect(() => {
     alertService.getAlerts()
@@ -140,6 +149,48 @@ export default function AlertsPage() {
             <p className="mt-5 text-sm leading-7 text-[#74685F] dark:text-stone-400">{summaryText}</p>
           </div>
         </section>
+
+        {/* Free plan quota banner */}
+        {!loading && isFree && (
+          <div className={`mb-8 rounded-[24px] border p-5 ${
+            atLimit
+              ? 'border-[#E2C9CC] bg-[#FBF3F4] dark:border-[#4A2D31] dark:bg-[#2A1A1D]/50'
+              : 'border-stone-200/80 dark:border-stone-700/40 bg-white/80 dark:bg-[#1A1614]/80'
+          }`}>
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">
+                    {atLimit ? '🔒 Đã đạt giới hạn alert' : `Alert đang dùng: ${activeCount}/${FREE_LIMIT}`}
+                  </p>
+                  {atLimit && (
+                    <span className="rounded-full bg-[#B7848C] px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                      Free
+                    </span>
+                  )}
+                </div>
+                {/* Progress bar */}
+                <div className="h-1.5 w-full rounded-full bg-stone-200 dark:bg-stone-700 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all ${atLimit ? 'bg-[#B7848C]' : 'bg-[#B7848C]/60'}`}
+                    style={{ width: `${Math.min((activeCount / FREE_LIMIT) * 100, 100)}%` }}
+                  />
+                </div>
+                <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
+                  {atLimit
+                    ? 'Nâng cấp Premium để tạo không giới hạn alert.'
+                    : `Còn ${FREE_LIMIT - activeCount} alert. Nâng cấp để không giới hạn.`}
+                </p>
+              </div>
+              <button
+                onClick={() => navigate('/profile')}
+                className="shrink-0 rounded-full bg-[#B7848C] px-4 py-2 text-xs font-semibold text-white hover:opacity-90 transition"
+              >
+                Upgrade
+              </button>
+            </div>
+          </div>
+        )}
 
         {loading && (
           <div className="flex items-center justify-center py-20">

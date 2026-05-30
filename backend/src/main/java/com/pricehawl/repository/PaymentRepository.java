@@ -10,7 +10,9 @@ import java.util.UUID;
 public interface PaymentRepository
         extends JpaRepository<PaymentOrder, UUID> {
 
-    List<PaymentOrder> findByStatus(
-            PaymentStatus status
-    );
+    List<PaymentOrder> findByStatus(PaymentStatus status);
+
+    boolean existsByUserIdAndStatusIn(UUID userId, List<PaymentStatus> statuses);
+
+    java.util.Optional<PaymentOrder> findTopByUserIdAndStatusInOrderByCreatedAtDesc(UUID userId, List<PaymentStatus> statuses);
 }

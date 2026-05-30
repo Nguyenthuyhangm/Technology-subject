@@ -41,6 +41,7 @@ public class AdminController {
     private final CrawlErrorRepository crawlErrorRepository;
     private final AccessTradeService accessTradeService;
     private final MultiPlatformPriceRefreshService refreshService;
+    private final com.pricehawl.repository.PaymentRepository paymentRepository;
 
     private final ExecutorService adminCrawlerPool = Executors.newSingleThreadExecutor();
     private volatile Future<?> currentCrawlerTask = null;
@@ -52,32 +53,26 @@ public class AdminController {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
 
         long totalUsers = userRepository.count();
+        long premiumUsers = userRepository.findAll().stream()
+            .filter(u -> "premium".equals(u.getPlan())
+                && u.getPremiumExpiresAt() != null
+                && u.getPremiumExpiresAt().isAfter(LocalDateTime.now()))
+            .count();
         long totalProducts = productRepository.count();
         long totalAlerts = priceAlertRepository.count();
         long activeAlerts = priceAlertRepository.countByIsActiveTrue();
-        long totalWishlists = wishlistRepository.count();
         long totalClicks = affiliateClickRepository.count();
         long clicksLast30Days = affiliateClickRepository.countByClickedAtAfter(thirtyDaysAgo);
-        long totalNotifications = notificationRepository.count();
+        long pendingPayments = paymentRepository.findByStatus(
+            com.pricehawl.entity.enums.PaymentStatus.PENDING_CONFIRM).size();
 
-        Object transactions = null;
-        try {
-            String since = thirtyDaysAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
-            String until = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59Z";
-            transactions = accessTradeService.getTransactions(since, until, null, null);
-        } catch (Exception e) {
-            transactions = Map.of("total", 0, "data", java.util.List.of());
-        }
-
-        return ResponseEntity.ok(Map.of(
-            "users", Map.of("total", totalUsers),
-            "products", Map.of("total", totalProducts),
-            "alerts", Map.of("total", totalAlerts, "active", activeAlerts),
-            "wishlists", Map.of("total", totalWishlists),
-            "affiliate", Map.of("totalClicks", totalClicks, "clicksLast30Days", clicksLast30Days),
-            "notifications", Map.of("total", totalNotifications),
-            "transactions", transactions
-        ));
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("users", Map.of("total", totalUsers, "premium", premiumUsers));
+        result.put("products", Map.of("total", totalProducts));
+        result.put("alerts", Map.of("total", totalAlerts, "active", activeAlerts));
+        result.put("affiliate", Map.of("totalClicks", totalClicks, "clicksLast30Days", clicksLast30Days));
+        result.put("payments", Map.of("pending", pendingPayments));
+        return ResponseEntity.ok(result);
     }
 
     // ── User Management ───────────────────────────────────────────────────────
@@ -108,6 +103,7 @@ public class AdminController {
             map.put("plan", u.getPlan());
             map.put("phone", u.getPhone());
             map.put("created_at", u.getCreatedAt());
+            map.put("premium_expires_at", u.getPremiumExpiresAt());
             map.put("alertCount", priceAlertRepository.countByUserIdAndIsActiveTrue(u.getId()));
             map.put("wishlistCount", wishlistRepository.countByUserId(u.getId()));
             return map;
@@ -124,7 +120,15 @@ public class AdminController {
         return userRepository.findById(id).map(user -> {
             if (body.containsKey("plan")) {
                 String p = body.get("plan");
-                if (p.equals("free") || p.equals("premium")) user.setPlan(p);
+                if (p.equals("free")) {
+                    user.setPlan("free");
+                    user.setPremiumExpiresAt(null);
+                } else if (p.equals("premium")) {
+                    user.setPlan("premium");
+                    int months = 1;
+                    try { months = Integer.parseInt(body.getOrDefault("months", "1")); } catch (Exception ignored) {}
+                    user.setPremiumExpiresAt(LocalDateTime.now().plusMonths(months));
+                }
             }
             if (body.containsKey("name")) user.setName(body.get("name"));
             return ResponseEntity.ok(userRepository.save(user));
@@ -338,7 +342,7 @@ public ResponseEntity<Map<String, Object>> getCrawlerStatus() {
     ));
 }
 
-// Tách riêng endpoint platformStats — chỉ gọi khi cần, không gọi liên tục
+// Tách riêng endpoint platformStats — dùng COUNT queries, không load hết listings
 @GetMapping("/crawler/platform-stats")
 public ResponseEntity<List<Map<String, Object>>> getCrawlerPlatformStats() {
     LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
@@ -347,24 +351,30 @@ public ResponseEntity<List<Map<String, Object>>> getCrawlerPlatformStats() {
     List<Map<String, Object>> platformStats = platforms.stream().map(p -> {
         Map<String, Object> stat = new LinkedHashMap<>();
         stat.put("platform", p);
-
-        List<ProductListing> listings = productListingRepository.findByPlatformNameIgnoreCase(p);
-        long recentlyCrawled = listings.stream()
-            .filter(l -> l.getCrawlTime() != null && l.getCrawlTime().isAfter(oneDayAgo))
-            .count();
-        Optional<LocalDateTime> lastCrawl = listings.stream()
-            .filter(l -> l.getCrawlTime() != null)
-            .map(ProductListing::getCrawlTime)
-            .max(LocalDateTime::compareTo);
-
-        stat.put("totalListings", listings.size());
-        stat.put("crawledLast24h", recentlyCrawled);
-        stat.put("lastCrawlTime", lastCrawl.orElse(null));
+        stat.put("totalListings", productListingRepository.countByPlatformNameIgnoreCase(p));
+        stat.put("crawledLast24h", productListingRepository.countByPlatformNameIgnoreCaseAndCrawlTimeAfter(p, oneDayAgo));
+        stat.put("lastCrawlTime", productListingRepository.findMaxCrawlTimeByPlatform(p));
         stat.put("errorCount", crawlErrorRepository.countByPlatformIgnoreCase(p));
         return stat;
     }).collect(Collectors.toList());
 
     return ResponseEntity.ok(platformStats);
+}
+
+// AccessTrade transactions — endpoint riêng, không block metrics
+@GetMapping("/transactions")
+public ResponseEntity<Object> getTransactions(
+    @RequestParam(required = false) String since,
+    @RequestParam(required = false) String until
+) {
+    try {
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+        String s = since != null ? since : thirtyDaysAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
+        String u = until != null ? until : LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59Z";
+        return ResponseEntity.ok(accessTradeService.getTransactions(s, u, null, null));
+    } catch (Exception e) {
+        return ResponseEntity.ok(Map.of("total", 0, "data", List.of(), "error", e.getMessage()));
+    }
 }
 
 @PostMapping("/crawler/trigger/{priority}")
@@ -448,60 +458,66 @@ public ResponseEntity<Map<String, Object>> getAffiliateClicks(
     @RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "20") int size
 ) {
-    // Danh sách clicks có phân trang
-    List<AffiliateClick> all;
-    if (platform != null && !platform.isBlank() && !platform.equals("all")) {
-        all = affiliateClickRepository.findByPlatformOrderByClickedAtDesc(platform);
-    } else {
-        all = affiliateClickRepository.findAllOrderByClickedAtDesc();
-    }
+    boolean hasPlatform = platform != null && !platform.isBlank() && !platform.equals("all");
+    org.springframework.data.domain.Pageable pageable =
+        org.springframework.data.domain.PageRequest.of(page, size);
 
-    int total = all.size();
-    int from = page * size;
-    int to = Math.min(from + size, total);
-    List<AffiliateClick> paged = from >= total ? List.of() : all.subList(from, to);
+    // Pagination thực sự — không load hết vào RAM
+    org.springframework.data.domain.Page<AffiliateClick> pagedResult = hasPlatform
+        ? affiliateClickRepository.findByPlatformIgnoreCaseOrderByClickedAtDesc(platform, pageable)
+        : affiliateClickRepository.findAllByOrderByClickedAtDesc(pageable);
 
-    // Enrich với tên sản phẩm
-    List<Map<String, Object>> rows = paged.stream().map(c -> {
+    long total = hasPlatform
+        ? affiliateClickRepository.countByPlatformIgnoreCase(platform)
+        : affiliateClickRepository.count();  // Fix #1: tổng clicks thực sự
+
+    // Batch enrich — tránh N+1 queries
+    List<AffiliateClick> content = pagedResult.getContent();
+    Set<UUID> productIds = content.stream()
+        .map(AffiliateClick::getProductId).filter(Objects::nonNull).collect(Collectors.toSet());
+    Set<UUID> userIds = content.stream()
+        .map(AffiliateClick::getUserId).filter(Objects::nonNull).collect(Collectors.toSet());
+
+    Map<UUID, String> productNames = productRepository.findAllById(productIds).stream()
+        .collect(Collectors.toMap(p -> p.getId(), p -> p.getName()));
+    Map<UUID, String> userEmails = userRepository.findAllById(userIds).stream()
+        .collect(Collectors.toMap(u -> u.getId(), u -> u.getEmail()));
+
+    List<Map<String, Object>> rows = content.stream().map(c -> {
         Map<String, Object> row = new LinkedHashMap<>();
         row.put("id", c.getId());
         row.put("clickedAt", c.getClickedAt());
         row.put("platform", c.getPlatform());
         row.put("userId", c.getUserId());
         row.put("productId", c.getProductId());
-        // Lấy tên sản phẩm nếu có
-        if (c.getProductId() != null) {
-            productRepository.findById(c.getProductId())
-                .ifPresent(p -> row.put("productName", p.getName()));
-        }
-        // Lấy email user nếu có
-        if (c.getUserId() != null) {
-            userRepository.findById(c.getUserId())
-                .ifPresent(u -> row.put("userEmail", u.getEmail()));
-        }
+        if (c.getProductId() != null) row.put("productName", productNames.get(c.getProductId()));
+        if (c.getUserId() != null) row.put("userEmail", userEmails.get(c.getUserId()));
         return row;
     }).collect(Collectors.toList());
 
-    // Thống kê theo sàn (30 ngày)
+    // Thống kê theo sàn — filter theo platform nếu có (Fix #2)
     LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-    List<Object[]> byPlatformRaw = affiliateClickRepository.countGroupByPlatformSince(thirtyDaysAgo);
+    List<Object[]> byPlatformRaw = hasPlatform
+        ? affiliateClickRepository.countGroupByPlatformSinceFiltered(thirtyDaysAgo, platform)
+        : affiliateClickRepository.countGroupByPlatformSince(thirtyDaysAgo);
     List<Map<String, Object>> byPlatform = byPlatformRaw.stream().map(r -> Map.of(
-        "platform", r[0],
-        "count", r[1]
+        "platform", r[0], "count", r[1]
     )).collect(Collectors.toList());
 
-    // Thống kê theo ngày (30 ngày)
-    List<Object[]> byDayRaw = affiliateClickRepository.countByDaySince(thirtyDaysAgo);
+    // Thống kê theo ngày — filter theo platform nếu có (Fix #2)
+    List<Object[]> byDayRaw = hasPlatform
+        ? affiliateClickRepository.countByDaySinceFiltered(platform)
+        : affiliateClickRepository.countByDaySince();
     List<Map<String, Object>> byDay = byDayRaw.stream().map(r -> Map.of(
-        "day", r[0].toString(),
-        "count", r[1]
+        "day", r[0].toString(), "count", r[1]
     )).collect(Collectors.toList());
 
-    // Top 5 sản phẩm
-    List<Object[]> topRaw = affiliateClickRepository.topProductsSince(
-        thirtyDaysAgo,
-        org.springframework.data.domain.PageRequest.of(0, 5)
-    );
+    // Top 5 sản phẩm — filter theo platform nếu có (Fix #3)
+    List<Object[]> topRaw = hasPlatform
+        ? affiliateClickRepository.topProductsSinceFiltered(thirtyDaysAgo, platform,
+            org.springframework.data.domain.PageRequest.of(0, 5))
+        : affiliateClickRepository.topProductsSince(thirtyDaysAgo,
+            org.springframework.data.domain.PageRequest.of(0, 5));
     List<Map<String, Object>> topProducts = topRaw.stream().map(r -> {
         Map<String, Object> item = new LinkedHashMap<>();
         item.put("productId", r[0]);
@@ -522,7 +538,7 @@ public ResponseEntity<Map<String, Object>> getAffiliateClicks(
             "byPlatform", byPlatform,
             "byDay", byDay,
             "topProducts", topProducts,
-            "totalClicks", total
+            "totalClicks", total  // Fix #1: luôn là tổng thực sự
         ));
 }
     

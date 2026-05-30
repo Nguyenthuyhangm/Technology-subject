@@ -14,12 +14,9 @@ public class RecommendationService {
 
     private final RecommendationRepository recommendationRepository;
 
-    public List<RecommendationProductDTO> getRecommendations(UUID userId) {
-        return recommendationRepository.findRecommendationsByUserId(userId, 12);
-    }
-
-    public List<RecommendationProductDTO> getRecommendations(UUID userId, int limit) {
-        int safeLimit = Math.min(Math.max(limit, 1), 30);
-        return recommendationRepository.findRecommendationsByUserId(userId, safeLimit);
+    public List<RecommendationProductDTO> getRecommendations(UUID userId, int page, int size) {
+        int safeSize = Math.min(Math.max(size, 1), 50);
+        int offset = Math.max(page, 0) * safeSize;
+        return recommendationRepository.findRecommendationsByUserId(userId, safeSize, offset);
     }
 }

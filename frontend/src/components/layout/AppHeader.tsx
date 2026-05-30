@@ -96,7 +96,7 @@ export default function AppHeader({
 
   useEffect(() => {
     fetchUnreadCount()
-    const interval = setInterval(fetchUnreadCount, 30_000)
+    const interval = setInterval(fetchUnreadCount, 10_000)
     return () => clearInterval(interval)
   }, [fetchUnreadCount])
 
