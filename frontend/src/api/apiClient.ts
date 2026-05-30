@@ -1,4 +1,5 @@
-import axios, { AxiosError, type AxiosInstance } from 'axios';
+//cái AxiosError không dùng thfi phuong xoa di 
+import axios, { type AxiosInstance } from 'axios';
 import { supabase } from '../lib/supabaseClient';
 
 function resolveBaseUrl(): string {
