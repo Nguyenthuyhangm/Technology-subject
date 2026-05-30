@@ -36,6 +36,18 @@ spring:
 server:
   port: 8080
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+  show-actuator: false
+
 supabase:
   url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:

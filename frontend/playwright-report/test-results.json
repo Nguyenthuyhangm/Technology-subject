@@ -100,7 +100,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3880,
+                      "duration": 4757,
                       "errors": [],
                       "stdout": [
                         {
@@ -109,7 +109,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:37.509Z",
+                      "startTime": "2026-05-30T11:05:26.330Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -138,7 +138,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3441,
+                      "duration": 3882,
                       "errors": [],
                       "stdout": [
                         {
@@ -147,7 +147,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:41.723Z",
+                      "startTime": "2026-05-30T11:05:32.051Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -176,7 +176,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3465,
+                      "duration": 3667,
                       "errors": [],
                       "stdout": [
                         {
@@ -185,7 +185,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:45.202Z",
+                      "startTime": "2026-05-30T11:05:35.992Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -214,7 +214,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3546,
+                      "duration": 3549,
                       "errors": [],
                       "stdout": [
                         {
@@ -223,7 +223,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:48.690Z",
+                      "startTime": "2026-05-30T11:05:39.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -269,7 +269,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3566,
+                      "duration": 3804,
                       "errors": [],
                       "stdout": [
                         {
@@ -278,7 +278,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:52.306Z",
+                      "startTime": "2026-05-30T11:05:43.332Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -307,7 +307,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3588,
+                      "duration": 3583,
                       "errors": [],
                       "stdout": [
                         {
@@ -316,7 +316,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:55.897Z",
+                      "startTime": "2026-05-30T11:05:47.158Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -362,12 +362,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 249,
+                      "duration": 390,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:59.543Z",
+                      "startTime": "2026-05-30T11:05:50.805Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -413,12 +413,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 215,
+                      "duration": 964,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:38:59.844Z",
+                      "startTime": "2026-05-30T11:05:51.249Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -447,12 +447,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 203,
+                      "duration": 250,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:39:00.072Z",
+                      "startTime": "2026-05-30T11:05:52.226Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -481,12 +481,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 218,
+                      "duration": 282,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:39:00.290Z",
+                      "startTime": "2026-05-30T11:05:52.496Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -532,7 +532,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4626,
+                      "duration": 3650,
                       "errors": [],
                       "stdout": [
                         {
@@ -541,7 +541,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:39:00.551Z",
+                      "startTime": "2026-05-30T11:05:52.834Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -570,7 +570,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3695,
+                      "duration": 6635,
                       "errors": [],
                       "stdout": [
                         {
@@ -579,7 +579,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T05:39:05.194Z",
+                      "startTime": "2026-05-30T11:05:56.506Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -595,13 +595,708 @@
           ]
         }
       ]
+    },
+    {
+      "title": "integration\\specs\\01-auth.spec.ts",
+      "file": "integration/specs/01-auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication",
+          "file": "integration/specs/01-auth.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "01 — Login page loads correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1076,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:03.229Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "13b9c334c5bb1fb1834f-86701b1ded4e237faa4e",
+              "file": "integration/specs/01-auth.spec.ts",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "02 — Invalid credentials shows error or stays on login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3256,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:04.333Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "13b9c334c5bb1fb1834f-2451a206bdb84452aa91",
+              "file": "integration/specs/01-auth.spec.ts",
+              "line": 39,
+              "column": 3
+            },
+            {
+              "title": "03 — Successful login with real account",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5801,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:07.606Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "13b9c334c5bb1fb1834f-cc2ffa9895f0a0f192ab",
+              "file": "integration/specs/01-auth.spec.ts",
+              "line": 56,
+              "column": 3
+            },
+            {
+              "title": "04 — User stays logged in after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7949,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:13.440Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "13b9c334c5bb1fb1834f-29e14ad2db34caffc609",
+              "file": "integration/specs/01-auth.spec.ts",
+              "line": 66,
+              "column": 3
+            },
+            {
+              "title": "05 — Wrong password shows error or stays on login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:21.423Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "13b9c334c5bb1fb1834f-d5ee76e4b300541dc782",
+              "file": "integration/specs/01-auth.spec.ts",
+              "line": 79,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\02-navigation.spec.ts",
+      "file": "integration/specs/02-navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation",
+          "file": "integration/specs/02-navigation.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "01 — Unauthenticated user sees login button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3250,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:24.628Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-5a63ca8001fa9b40f37b",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "03 — Can navigate to Search page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2974,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:27.897Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-609aa2989031319750a8",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 43,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\03-search.spec.ts",
+      "file": "integration/specs/03-search.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Search Functionality",
+          "file": "integration/specs/03-search.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "01 — Search updates URL with query param",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8402,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:30.933Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac336c95e9a9aa506acc-b02493edab9bf6aea090",
+              "file": "integration/specs/03-search.spec.ts",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "02 — Shows results or empty state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18063,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:39.351Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac336c95e9a9aa506acc-feedfaca92938b8dd15e",
+              "file": "integration/specs/03-search.spec.ts",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "03 — Click product from search to product detail page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 23420,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:06:57.433Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac336c95e9a9aa506acc-c21aeca12d5b9cbabf30",
+              "file": "integration/specs/03-search.spec.ts",
+              "line": 51,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\04-product-wishlist.spec.ts",
+      "file": "integration/specs/04-product-wishlist.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Wishlist - Clear existing items",
+          "file": "integration/specs/04-product-wishlist.spec.ts",
+          "line": 77,
+          "column": 6,
+          "specs": [
+            {
+              "title": "01 — Clear existing wishlist items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19201,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:07:20.904Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6042f08f84c7da2106a3-f4f32a7aba0532d30d58",
+              "file": "integration/specs/04-product-wishlist.spec.ts",
+              "line": 103,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Wishlist - Add items from search",
+          "file": "integration/specs/04-product-wishlist.spec.ts",
+          "line": 133,
+          "column": 6,
+          "specs": [
+            {
+              "title": "02 — Add 1 product to wishlist from search",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21502,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:07:40.116Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6042f08f84c7da2106a3-b86b7dc4b141139528df",
+              "file": "integration/specs/04-product-wishlist.spec.ts",
+              "line": 157,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Wishlist - Verify added items",
+          "file": "integration/specs/04-product-wishlist.spec.ts",
+          "line": 176,
+          "column": 6,
+          "specs": [
+            {
+              "title": "03 — Verify added products in wishlist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12943,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:08:01.634Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6042f08f84c7da2106a3-016eb9f1933598a6b24e",
+              "file": "integration/specs/04-product-wishlist.spec.ts",
+              "line": 200,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\05-product-alert.spec.ts",
+      "file": "integration/specs/05-product-alert.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Alert - Setup: Clear existing alerts",
+          "file": "integration/specs/05-product-alert.spec.ts",
+          "line": 173,
+          "column": 6,
+          "specs": [
+            {
+              "title": "01 — Clear existing alerts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9044,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:08:14.627Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0069594ebe4b11422918-18c9b239763b692c8152",
+              "file": "integration/specs/05-product-alert.spec.ts",
+              "line": 197,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Alert - Create alert from product detail",
+          "file": "integration/specs/05-product-alert.spec.ts",
+          "line": 211,
+          "column": 6,
+          "specs": [
+            {
+              "title": "02 — Search kem and set alert on first product",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26195,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:08:23.687Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0069594ebe4b11422918-afa53ec0c6d3b1ba4585",
+              "file": "integration/specs/05-product-alert.spec.ts",
+              "line": 236,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Alert - Verify and delete alert",
+          "file": "integration/specs/05-product-alert.spec.ts",
+          "line": 261,
+          "column": 6,
+          "specs": [
+            {
+              "title": "03 — Verify alert appears in alerts page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13008,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:08:49.900Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0069594ebe4b11422918-73808ee853c7a4328a98",
+              "file": "integration/specs/05-product-alert.spec.ts",
+              "line": 286,
+              "column": 3
+            },
+            {
+              "title": "04 — Delete alert from alerts page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16376,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T11:09:02.922Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0069594ebe4b11422918-060f99c65dbf76dec77b",
+              "file": "integration/specs/05-product-alert.spec.ts",
+              "line": 310,
+              "column": 3
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-30T05:38:35.555Z",
-    "duration": 33911.532999999996,
-    "expected": 12,
+    "startTime": "2026-05-30T11:05:23.232Z",
+    "duration": 236696.099,
+    "expected": 29,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
