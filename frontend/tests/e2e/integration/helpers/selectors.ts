@@ -1,0 +1,125 @@
+/**
+ * Real Selectors - Dựa trên UI thật của PriceHawk
+ */
+export const SELECTORS = {
+  auth: {
+    emailInput: 'input[name="email"]',
+    passwordInput: 'input[name="password"]',
+    nameInput: 'input[name="name"]',
+    phoneInput: 'input[name="phone"]',
+    submitButton: 'button[type="submit"]',
+    googleButton: 'button:has-text("Tiếp tục với Google")',
+    registerLink: 'button:has-text("Đăng ký ngay")',
+    loginLink: 'button:has-text("Đăng nhập ngay")',
+    forgotPasswordButton: 'button:has-text("Quên mật khẩu?")',
+    errorMessage: 'p:text-matches("lỗi|không đúng|không hợp lệ", "i")',
+  },
+
+  header: {
+    logo: 'header a:has-text("PriceHawk"), header a:has-text("Price"), header a:has-text("Hawk"), header [class*="logo"]',
+    navLinks: 'header nav a',
+    homeLink: 'header a[href="/"]',
+    searchLink: 'header a[href="/search"]',
+    dealsLink: 'header a[href="/deals"]',
+    wishlistLink: 'header a[href="/wishlist"]',
+    alertsLink: 'header a[href="/alerts"]',
+    loginButton: 'button:has-text("Đăng nhập")',
+    userAvatar: 'header button >> nth=0',
+    userDropdown: 'header >> text=Hồ sơ cá nhân',
+    profileMenuItem: 'button:has-text("Hồ sơ cá nhân")',
+    logoutButton: 'button:has-text("Đăng xuất")',
+  },
+
+  search: {
+    searchForm: 'form',
+    searchInput: 'input[placeholder*="Tìm"], input[placeholder*="tìm"]',
+    searchButton: 'button:has-text("Tìm"), button:has-text("Tìm và so sánh")',
+    clearButton: 'button:has-text("Xóa")',
+    sortSelect: 'select',
+    resultsContainer: 'section',
+    productCard: 'article',
+    productName: 'h2, h3',
+    priceText: '[class*="price"]',
+    productDetailLink: 'a[href^="/product/"]',
+    viewDetailButton: 'a:has-text("Xem chi tiết")',
+    emptyState: 'text=Không có kết quả, text=Chưa có lựa chọn, text=Không có kết quả phù hợp',
+    loadingState: 'text=Đang tải',
+    noResultsState: 'text=Không tìm thấy',
+  },
+
+  home: {
+    homeSearchInput: 'input[placeholder*="Tìm"], input[placeholder*="tìm"]',
+    homeSearchButton: 'button:has-text("Tìm và so sánh")',
+    categorySection: 'text=Danh mục',
+    categoryLinks: 'a[href*="/search?q="]',
+    trendingSection: 'text=Chọn lọc hôm nay, text=Những món đang ở vùng giá đẹp',
+    dealCards: 'article',
+    productCard: 'article',
+    dealSection: 'h2:has-text("Những món đang ở vùng giá đẹp")',
+    dealSectionLink: 'article >> a[href^="/product/"]',
+    featuredProductLink: 'a:has-text("Xem chi tiết")',
+    productDetailLink: 'a[href^="/product/"]',
+  },
+
+  common: {
+    header: 'header',
+    footer: 'footer',
+    main: 'main',
+    h1: 'h1',
+    h2: 'h2',
+    link: 'a',
+    button: 'button',
+    form: 'form',
+    errorText: '[class*="error"], [class*="red"]',
+    successText: '[class*="success"], [class*="green"]',
+  },
+
+  deals: {
+    heading: 'text=Những lựa chọn đáng cân nhắc',
+    dealCard: 'article',
+    flashSaleBadge: 'text=Flash Sale',
+    topDealBadge: 'text=Top Deal',
+    productDetailLink: 'a:has-text("Xem chi tiết")',
+  },
+
+  productDetail: {
+    backButton: 'a:has-text("Quay lại")',
+    productTitle: 'h1',
+    wishlistButton: 'button:has-text("wishlist"), button:has-text("Wishlist"), button:has-text("Lưu wishlist")',
+    wishlistSavedButton: 'button:has-text("Đã lưu wishlist")',
+    alertButton: 'button:has-text("Đặt alert")',
+    buyButton: 'a:has-text("Mua tại")',
+    priceText: '[class*="text-[2.8rem]"]',
+  },
+
+  alerts: {
+    heading: 'h1:has-text("Những mức giá")',
+    emptyState: 'text=Chưa có alert nào',
+    productCard: 'article',
+    productName: 'h2',
+    deleteButton: 'button:has-text("Xóa")',
+    confirmDeleteButton: 'button:has-text("Xóa alert")',
+    cancelDeleteButton: 'button:has-text("Hủy")',
+    targetPrice: 'p[class*="text-[2rem]"]',
+  },
+
+  alertModal: {
+    modalTitle: 'h2:has-text("Đặt cảnh báo giá")',
+    targetPriceInput: 'input[placeholder="0"]',
+    createAlertButton: 'button:has-text("Tạo alert")',
+    cancelButton: 'button:has-text("Hủy")',
+    closeButton: 'button >> .lucide-x',
+    successMessage: 'h3:has-text("Alert đã được tạo")',
+    doneButton: 'button:has-text("Xong")',
+    priceFormatted: 'p >> text=VNĐ',
+  },
+
+  wishlist: {
+    heading: 'h1:has-text("Yêu thích"), h1:has-text("Những món bạn")',
+    emptyState: 'text=Danh sách wishlist của bạn đang trống',
+    productCard: 'article',
+    productName: 'h2',
+    removeButton: 'button:has-text("Xóa")',
+    viewDetailButton: 'a:has-text("Xem chi tiết")',
+  },
+} as const;
