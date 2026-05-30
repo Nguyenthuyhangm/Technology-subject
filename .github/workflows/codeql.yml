@@ -1,0 +1,38 @@
+name: CodeQL SAST
+
+on:
+  push:
+    branches: [ "main", "master", "v3" ]
+  pull_request:
+    branches: [ "main", "master", "v3" ]
+
+jobs:
+  analyze:
+    name: Analyze CodeQL
+    runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ "java-kotlin", "javascript-typescript" ]
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
