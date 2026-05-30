@@ -105,19 +105,21 @@ export async function loginAsTestUser(page: Page): Promise<boolean> {
 }
 
 /**
- * Perform logout - click logout button in dropdown
+ * Perform logout - click user name button on header to open dropdown, then click logout
+ * User button contains avatar (rounded-full div) and user name in header
  */
 export async function logout(page: Page): Promise<void> {
-  // Try to find and click avatar/user button
-  const userButton = page.locator(SELECTORS.header.userAvatar);
+  // Click on user button - contains avatar div with rounded-full class
+  // This avoids clicking the notification bell button
+  const userButton = page.locator('header button:has(div[class*="rounded-full"])').first();
   const isUserButtonVisible = await userButton.isVisible().catch(() => false);
 
   if (isUserButtonVisible) {
     await userButton.click();
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
 
-    // Click logout
-    const logoutButton = page.locator(SELECTORS.header.logoutButton);
+    // Click "Đăng xuất" button in dropdown (below user profile info)
+    const logoutButton = page.locator('button:has-text("Đăng xuất")');
     const isLogoutVisible = await logoutButton.isVisible().catch(() => false);
 
     if (isLogoutVisible) {

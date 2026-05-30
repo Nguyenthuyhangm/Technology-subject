@@ -1,0 +1,91 @@
+name: Bug Report
+description: Báo cáo lỗi cho PriceHawk
+title: "[BUG] "
+labels: ["bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report Template
+        Vui lòng điền đầy đủ thông tin bên dưới.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả
+      description: Mô tả ngắn gọn về lỗi
+      placeholder: "[BUG] Mô tả ngắn gọn về vấn đề"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Bước tái hiện
+      description: Liệt kê các bước để tái hiện lỗi
+      placeholder: |
+        1. Đăng nhập vào hệ thống
+        2. Điều hướng đến trang sản phẩm
+        3. Click vào nút "Thêm vào wishlist"
+        4. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Kết quả mong đợi
+      description: Hành vi nên xảy ra
+      placeholder: "Sản phẩm được thêm vào wishlist thành công"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Kết quả thực tế
+      description: Hành vi thực tế xảy ra
+      placeholder: "Hiển thị thông báo lỗi 'Network Error'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Đính kèm ảnh chụp màn hình lỗi
+      placeholder: "Đính kèm ảnh chụp màn hình tại đây"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Mức độ ưu tiên
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Môi trường
+      options:
+        - Local Development
+        - Production
+        - Staging
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: "Chrome 125, Firefox 126, Edge 125..."
+    validations:
+      required: false

@@ -72,531 +72,6 @@
   },
   "suites": [
     {
-      "title": "integration\\api\\alert.api.spec.ts",
-      "file": "integration/api/alert.api.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Alert API Tests",
-          "file": "integration/api/alert.api.spec.ts",
-          "line": 61,
-          "column": 6,
-          "specs": [
-            {
-              "title": "01 — GET /api/alerts returns user alerts",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 4757,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:26.330Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "87b8eedd1b4cd0bd15b3-131eae6f0f7a0807917e",
-              "file": "integration/api/alert.api.spec.ts",
-              "line": 62,
-              "column": 3
-            },
-            {
-              "title": "02 — Alert response contains required fields",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3882,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:32.051Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "87b8eedd1b4cd0bd15b3-95573014df845b7dafda",
-              "file": "integration/api/alert.api.spec.ts",
-              "line": 69,
-              "column": 3
-            },
-            {
-              "title": "03 — GET /api/notifications returns notifications",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3667,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:35.992Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "87b8eedd1b4cd0bd15b3-1cb1cbaff5d713e46420",
-              "file": "integration/api/alert.api.spec.ts",
-              "line": 84,
-              "column": 3
-            },
-            {
-              "title": "04 — GET /api/notifications/unread-count returns count",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3549,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:39.696Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "87b8eedd1b4cd0bd15b3-a1b636a95b584c9cec46",
-              "file": "integration/api/alert.api.spec.ts",
-              "line": 91,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "integration\\api\\auth.api.spec.ts",
-      "file": "integration/api/auth.api.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Auth API Tests",
-          "file": "integration/api/auth.api.spec.ts",
-          "line": 45,
-          "column": 6,
-          "specs": [
-            {
-              "title": "03 — Authenticated user can access /api/alerts",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3804,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:43.332Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "f5470f7d69adaeead101-1bdf70dc969d3684fdb8",
-              "file": "integration/api/auth.api.spec.ts",
-              "line": 46,
-              "column": 3
-            },
-            {
-              "title": "04 — Authenticated user can access /api/notifications",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3583,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:47.158Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "f5470f7d69adaeead101-86a45455a0025567312e",
-              "file": "integration/api/auth.api.spec.ts",
-              "line": 53,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "integration\\api\\price-history.api.spec.ts",
-      "file": "integration/api/price-history.api.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Price History API Tests",
-          "file": "integration/api/price-history.api.spec.ts",
-          "line": 4,
-          "column": 6,
-          "specs": [
-            {
-              "title": "01 — GET /api/v1/price-history returns error for invalid UUID",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 390,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:50.805Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "60188da2e82041ad80c5-c6774605398db4d5beab",
-              "file": "integration/api/price-history.api.spec.ts",
-              "line": 5,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "integration\\api\\search.api.spec.ts",
-      "file": "integration/api/search.api.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Search API Tests",
-          "file": "integration/api/search.api.spec.ts",
-          "line": 6,
-          "column": 6,
-          "specs": [
-            {
-              "title": "01 — GET /products/search returns results for valid keyword",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 964,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:51.249Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "3cd86437d103ed7f4d75-843b894960628c450e0c",
-              "file": "integration/api/search.api.spec.ts",
-              "line": 7,
-              "column": 3
-            },
-            {
-              "title": "02 — GET /products/search returns empty for empty keyword",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 250,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:52.226Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "3cd86437d103ed7f4d75-4cd3aac33cfed7da2868",
-              "file": "integration/api/search.api.spec.ts",
-              "line": 17,
-              "column": 3
-            },
-            {
-              "title": "03 — Search response contains required product fields",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 282,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:52.496Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "3cd86437d103ed7f4d75-e4f5fc900867d928c47b",
-              "file": "integration/api/search.api.spec.ts",
-              "line": 28,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "integration\\api\\wishlist.api.spec.ts",
-      "file": "integration/api/wishlist.api.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Wishlist API Tests",
-          "file": "integration/api/wishlist.api.spec.ts",
-          "line": 45,
-          "column": 6,
-          "specs": [
-            {
-              "title": "01 — GET /api/wishlist/{userId} returns user wishlist",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3650,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:52.834Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "fe1495fefaeaff13ccea-73cdf294378f06abb9fe",
-              "file": "integration/api/wishlist.api.spec.ts",
-              "line": 55,
-              "column": 3
-            },
-            {
-              "title": "02 — GET /api/wishlist/{userId} returns 400 for invalid UUID",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6635,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Login successful\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:05:56.506Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "fe1495fefaeaff13ccea-0b232501b3bba8700644",
-              "file": "integration/api/wishlist.api.spec.ts",
-              "line": 62,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
       "title": "integration\\specs\\01-auth.spec.ts",
       "file": "integration/specs/01-auth.spec.ts",
       "column": 0,
@@ -604,13 +79,13 @@
       "specs": [],
       "suites": [
         {
-          "title": "Authentication",
+          "title": "Luồng Đăng nhập / Đăng xuất",
           "file": "integration/specs/01-auth.spec.ts",
-          "line": 12,
+          "line": 37,
           "column": 6,
           "specs": [
             {
-              "title": "01 — Login page loads correctly",
+              "title": "Mở trang đăng nhập - Form đăng nhập hiển thị đầy đủ",
               "ok": true,
               "tags": [],
               "tests": [
@@ -625,12 +100,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1076,
+                      "duration": 1962,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:03.229Z",
+                      "startTime": "2026-05-30T14:00:32.194Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -638,13 +113,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "13b9c334c5bb1fb1834f-86701b1ded4e237faa4e",
+              "id": "13b9c334c5bb1fb1834f-863e4ebf25105ff8f18d",
               "file": "integration/specs/01-auth.spec.ts",
-              "line": 26,
+              "line": 46,
               "column": 3
             },
             {
-              "title": "02 — Invalid credentials shows error or stays on login",
+              "title": "Đăng nhập thất bại - Thông báo lỗi khi nhập sai",
               "ok": true,
               "tags": [],
               "tests": [
@@ -659,12 +134,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3256,
+                      "duration": 4250,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:04.333Z",
+                      "startTime": "2026-05-30T14:00:34.439Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -672,13 +147,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "13b9c334c5bb1fb1834f-2451a206bdb84452aa91",
+              "id": "13b9c334c5bb1fb1834f-9e4c68af88a4e3ddf8d0",
               "file": "integration/specs/01-auth.spec.ts",
-              "line": 39,
+              "line": 58,
               "column": 3
             },
             {
-              "title": "03 — Successful login with real account",
+              "title": "Đăng nhập thành công - Chuyển hướng về trang chủ",
               "ok": true,
               "tags": [],
               "tests": [
@@ -693,12 +168,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5801,
+                      "duration": 3976,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:07.606Z",
+                      "startTime": "2026-05-30T14:00:38.709Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -706,13 +181,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "13b9c334c5bb1fb1834f-cc2ffa9895f0a0f192ab",
+              "id": "13b9c334c5bb1fb1834f-b535b82913d834069c2d",
               "file": "integration/specs/01-auth.spec.ts",
-              "line": 56,
+              "line": 76,
               "column": 3
             },
             {
-              "title": "04 — User stays logged in after reload",
+              "title": "Đăng nhập bền vững - Giữ trạng thái sau khi reload",
               "ok": true,
               "tags": [],
               "tests": [
@@ -727,12 +202,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7949,
+                      "duration": 5928,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:13.440Z",
+                      "startTime": "2026-05-30T14:00:42.719Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -740,13 +215,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "13b9c334c5bb1fb1834f-29e14ad2db34caffc609",
+              "id": "13b9c334c5bb1fb1834f-bf9d135ef318b501254a",
               "file": "integration/specs/01-auth.spec.ts",
-              "line": 66,
+              "line": 85,
               "column": 3
             },
             {
-              "title": "05 — Wrong password shows error or stays on login",
+              "title": "Đăng xuất - Quay về trạng thái chưa đăng nhập",
               "ok": true,
               "tags": [],
               "tests": [
@@ -761,12 +236,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3148,
+                      "duration": 7332,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:21.423Z",
+                      "startTime": "2026-05-30T14:00:48.683Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -774,9 +249,9 @@
                   "status": "expected"
                 }
               ],
-              "id": "13b9c334c5bb1fb1834f-d5ee76e4b300541dc782",
+              "id": "13b9c334c5bb1fb1834f-26b55c9360421241f0af",
               "file": "integration/specs/01-auth.spec.ts",
-              "line": 79,
+              "line": 97,
               "column": 3
             }
           ]
@@ -791,13 +266,13 @@
       "specs": [],
       "suites": [
         {
-          "title": "Navigation",
+          "title": "Luồng Navigation - Người chưa đăng nhập",
           "file": "integration/specs/02-navigation.spec.ts",
-          "line": 7,
+          "line": 37,
           "column": 6,
           "specs": [
             {
-              "title": "01 — Unauthenticated user sees login button",
+              "title": "Chưa đăng nhập - Hiển thị nút Đăng nhập",
               "ok": true,
               "tags": [],
               "tests": [
@@ -812,12 +287,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3250,
+                      "duration": 1791,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:24.628Z",
+                      "startTime": "2026-05-30T14:00:56.088Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -825,13 +300,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "161c5f841308693896ce-5a63ca8001fa9b40f37b",
+              "id": "161c5f841308693896ce-bbe5d96ea19dae24539a",
               "file": "integration/specs/02-navigation.spec.ts",
-              "line": 28,
+              "line": 46,
               "column": 3
             },
             {
-              "title": "03 — Can navigate to Search page",
+              "title": "Navigation - Trang đăng nhập accessible mà không cần auth",
               "ok": true,
               "tags": [],
               "tests": [
@@ -846,12 +321,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2974,
+                      "duration": 1836,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:27.897Z",
+                      "startTime": "2026-05-30T14:00:57.900Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -859,9 +334,221 @@
                   "status": "expected"
                 }
               ],
-              "id": "161c5f841308693896ce-609aa2989031319750a8",
+              "id": "161c5f841308693896ce-cc516decd3d3fab3271e",
               "file": "integration/specs/02-navigation.spec.ts",
-              "line": 43,
+              "line": 53,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Navigation - Người đã đăng nhập",
+          "file": "integration/specs/02-navigation.spec.ts",
+          "line": 60,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Đã đăng nhập - Hiển thị avatar người dùng ở header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3780,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:00:59.753Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-d33d860388de42a23f7e",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 70,
+              "column": 3
+            },
+            {
+              "title": "Navigation - Link So sánh giá trong header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3603,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:01:03.565Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-490c6638d16ba515518e",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 78,
+              "column": 3
+            },
+            {
+              "title": "Navigation - Link Chọn lọc hôm nay trong header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3654,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:01:07.205Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-dbb3648b6ef6f2126e3d",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "Navigation - Link Yêu thích trong header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3626,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:01:10.897Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-0413c7bd25418d1a6a02",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 94,
+              "column": 3
+            },
+            {
+              "title": "Navigation - Link Theo dõi giá trong header",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3578,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:01:14.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-5bb7b4f98ac01694c8ca",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 102,
+              "column": 3
+            },
+            {
+              "title": "Navigation - Tất cả trang protected accessible khi đã đăng nhập",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10050,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:01:18.160Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "161c5f841308693896ce-01c0f4d5049bf9782579",
+              "file": "integration/specs/02-navigation.spec.ts",
+              "line": 110,
               "column": 3
             }
           ]
@@ -869,20 +556,20 @@
       ]
     },
     {
-      "title": "integration\\specs\\03-search.spec.ts",
-      "file": "integration/specs/03-search.spec.ts",
+      "title": "integration\\specs\\03-deals.spec.ts",
+      "file": "integration/specs/03-deals.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Search Functionality",
-          "file": "integration/specs/03-search.spec.ts",
-          "line": 7,
+          "title": "Luồng Deals - Trang Chọn lọc hôm nay",
+          "file": "integration/specs/03-deals.spec.ts",
+          "line": 34,
           "column": 6,
           "specs": [
             {
-              "title": "01 — Search updates URL with query param",
+              "title": "Vào trang Deals - Trang load thành công",
               "ok": true,
               "tags": [],
               "tests": [
@@ -897,12 +584,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8402,
+                      "duration": 8631,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:30.933Z",
+                      "startTime": "2026-05-30T14:01:28.296Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -910,13 +597,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "ac336c95e9a9aa506acc-b02493edab9bf6aea090",
-              "file": "integration/specs/03-search.spec.ts",
-              "line": 28,
+              "id": "e867bbaf24434609f0f0-bb9af2e6957769b4f64c",
+              "file": "integration/specs/03-deals.spec.ts",
+              "line": 44,
               "column": 3
             },
             {
-              "title": "02 — Shows results or empty state",
+              "title": "Tab filter - Chuyển đổi tab Đáng mua và Theo dõi thêm",
               "ok": true,
               "tags": [],
               "tests": [
@@ -931,12 +618,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 18063,
+                      "duration": 15095,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:39.351Z",
+                      "startTime": "2026-05-30T14:01:36.950Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -944,13 +631,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "ac336c95e9a9aa506acc-feedfaca92938b8dd15e",
-              "file": "integration/specs/03-search.spec.ts",
-              "line": 37,
+              "id": "e867bbaf24434609f0f0-9cfc411dc287afd4b4d1",
+              "file": "integration/specs/03-deals.spec.ts",
+              "line": 58,
               "column": 3
             },
             {
-              "title": "03 — Click product from search to product detail page",
+              "title": "Click sản phẩm - Chuyển từ trang Deals sang trang chi tiết sản phẩm",
               "ok": true,
               "tags": [],
               "tests": [
@@ -965,12 +652,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 23420,
+                      "duration": 14800,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:06:57.433Z",
+                      "startTime": "2026-05-30T14:01:52.060Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -978,9 +665,43 @@
                   "status": "expected"
                 }
               ],
-              "id": "ac336c95e9a9aa506acc-c21aeca12d5b9cbabf30",
-              "file": "integration/specs/03-search.spec.ts",
-              "line": 51,
+              "id": "e867bbaf24434609f0f0-0aa52b4cd265f8825b11",
+              "file": "integration/specs/03-deals.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "Trending deals section - Các deal nổi bật có thể click vào chi tiết",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13822,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:02:06.876Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e867bbaf24434609f0f0-5dc5f4965659e2bb8741",
+              "file": "integration/specs/03-deals.spec.ts",
+              "line": 109,
               "column": 3
             }
           ]
@@ -988,20 +709,20 @@
       ]
     },
     {
-      "title": "integration\\specs\\04-product-wishlist.spec.ts",
-      "file": "integration/specs/04-product-wishlist.spec.ts",
+      "title": "integration\\specs\\04-product-detail.spec.ts",
+      "file": "integration/specs/04-product-detail.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Wishlist - Clear existing items",
-          "file": "integration/specs/04-product-wishlist.spec.ts",
-          "line": 77,
+          "title": "Luồng Chi tiết sản phẩm - Kiểm tra các thành phần",
+          "file": "integration/specs/04-product-detail.spec.ts",
+          "line": 55,
           "column": 6,
           "specs": [
             {
-              "title": "01 — Clear existing wishlist items",
+              "title": "Vào trang sản phẩm - Trang load thành công",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1016,12 +737,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 19201,
+                      "duration": 21827,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:07:20.904Z",
+                      "startTime": "2026-05-30T14:02:20.748Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1029,21 +750,81 @@
                   "status": "expected"
                 }
               ],
-              "id": "6042f08f84c7da2106a3-f4f32a7aba0532d30d58",
-              "file": "integration/specs/04-product-wishlist.spec.ts",
+              "id": "389b847dff78397ac49f-94d52ffa222cb1647656",
+              "file": "integration/specs/04-product-detail.spec.ts",
+              "line": 65,
+              "column": 3
+            },
+            {
+              "title": "Biểu đồ giá - Biểu đồ lịch sử giá hiển thị",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 28879,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:02:42.594Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "389b847dff78397ac49f-09eaec7512dfa460d83c",
+              "file": "integration/specs/04-product-detail.spec.ts",
+              "line": 78,
+              "column": 3
+            },
+            {
+              "title": "Phân tích giá - Kiểm tra cảnh báo giá ảo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 28848,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:03:11.484Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "389b847dff78397ac49f-c0333fbb433b537821ba",
+              "file": "integration/specs/04-product-detail.spec.ts",
               "line": 103,
               "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Wishlist - Add items from search",
-          "file": "integration/specs/04-product-wishlist.spec.ts",
-          "line": 133,
-          "column": 6,
-          "specs": [
+            },
             {
-              "title": "02 — Add 1 product to wishlist from search",
+              "title": "Affiliate link - Nút 'Xem nơi bán' có link hợp lệ",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1058,12 +839,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 21502,
+                      "duration": 28599,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:07:40.116Z",
+                      "startTime": "2026-05-30T14:03:40.352Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1071,21 +852,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "6042f08f84c7da2106a3-b86b7dc4b141139528df",
-              "file": "integration/specs/04-product-wishlist.spec.ts",
-              "line": 157,
+              "id": "389b847dff78397ac49f-29f1a8af6ba4efc86708",
+              "file": "integration/specs/04-product-detail.spec.ts",
+              "line": 135,
               "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Wishlist - Verify added items",
-          "file": "integration/specs/04-product-wishlist.spec.ts",
-          "line": 176,
-          "column": 6,
-          "specs": [
+            },
             {
-              "title": "03 — Verify added products in wishlist",
+              "title": "Mua sản phẩm - Nút 'Mua tại' mở trang bán",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1100,12 +873,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 12943,
+                      "duration": 28568,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:08:01.634Z",
+                      "startTime": "2026-05-30T14:04:08.974Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1113,9 +886,43 @@
                   "status": "expected"
                 }
               ],
-              "id": "6042f08f84c7da2106a3-016eb9f1933598a6b24e",
-              "file": "integration/specs/04-product-wishlist.spec.ts",
-              "line": 200,
+              "id": "389b847dff78397ac49f-80634f22561e135ab37a",
+              "file": "integration/specs/04-product-detail.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "Quay lại - Nút Back hoạt động",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 28236,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:04:37.563Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "389b847dff78397ac49f-d501ab773976e92f1956",
+              "file": "integration/specs/04-product-detail.spec.ts",
+              "line": 180,
               "column": 3
             }
           ]
@@ -1123,20 +930,20 @@
       ]
     },
     {
-      "title": "integration\\specs\\05-product-alert.spec.ts",
-      "file": "integration/specs/05-product-alert.spec.ts",
+      "title": "integration\\specs\\05-search.spec.ts",
+      "file": "integration/specs/05-search.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Alert - Setup: Clear existing alerts",
-          "file": "integration/specs/05-product-alert.spec.ts",
-          "line": 173,
+          "title": "Luồng Tìm kiếm - Tìm và so sánh giá",
+          "file": "integration/specs/05-search.spec.ts",
+          "line": 34,
           "column": 6,
           "specs": [
             {
-              "title": "01 — Clear existing alerts",
+              "title": "Vào trang search - Trang load thành công",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1151,12 +958,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 9044,
+                      "duration": 3906,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:08:14.627Z",
+                      "startTime": "2026-05-30T14:05:05.856Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1164,97 +971,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "0069594ebe4b11422918-18c9b239763b692c8152",
-              "file": "integration/specs/05-product-alert.spec.ts",
-              "line": 197,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Alert - Create alert from product detail",
-          "file": "integration/specs/05-product-alert.spec.ts",
-          "line": 211,
-          "column": 6,
-          "specs": [
-            {
-              "title": "02 — Search kem and set alert on first product",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 26195,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:08:23.687Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0069594ebe4b11422918-afa53ec0c6d3b1ba4585",
-              "file": "integration/specs/05-product-alert.spec.ts",
-              "line": 236,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Alert - Verify and delete alert",
-          "file": "integration/specs/05-product-alert.spec.ts",
-          "line": 261,
-          "column": 6,
-          "specs": [
-            {
-              "title": "03 — Verify alert appears in alerts page",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 13008,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-30T11:08:49.900Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0069594ebe4b11422918-73808ee853c7a4328a98",
-              "file": "integration/specs/05-product-alert.spec.ts",
-              "line": 286,
+              "id": "b5982aed2176c9049f53-be08340cf283ba61df80",
+              "file": "integration/specs/05-search.spec.ts",
+              "line": 44,
               "column": 3
             },
             {
-              "title": "04 — Delete alert from alerts page",
+              "title": "Tìm kiếm - Nhập từ khóa và nhấn Enter",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1269,12 +992,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 16376,
+                      "duration": 9273,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-30T11:09:02.922Z",
+                      "startTime": "2026-05-30T14:05:09.780Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1282,9 +1005,559 @@
                   "status": "expected"
                 }
               ],
-              "id": "0069594ebe4b11422918-060f99c65dbf76dec77b",
-              "file": "integration/specs/05-product-alert.spec.ts",
-              "line": 310,
+              "id": "b5982aed2176c9049f53-e6b0228f9f9edc053785",
+              "file": "integration/specs/05-search.spec.ts",
+              "line": 54,
+              "column": 3
+            },
+            {
+              "title": "Kết quả tìm kiếm - Hiển thị sản phẩm hoặc trạng thái trống",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13932,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:05:19.079Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b5982aed2176c9049f53-ad4ef92eddd7c4e7f14c",
+              "file": "integration/specs/05-search.spec.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "Click sản phẩm - Chuyển từ search sang trang chi tiết sản phẩm",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19291,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:05:33.030Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b5982aed2176c9049f53-a928866c11814ca08d3a",
+              "file": "integration/specs/05-search.spec.ts",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "Tìm kiếm từ trang chủ - Chuyển sang trang kết quả",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:05:52.345Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b5982aed2176c9049f53-678ec67e8e3973c12ff9",
+              "file": "integration/specs/05-search.spec.ts",
+              "line": 106,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\06-wishlist.spec.ts",
+      "file": "integration/specs/06-wishlist.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Luồng Wishlist - Chuẩn bị dữ liệu",
+          "file": "integration/specs/06-wishlist.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Chuẩn bị - Xóa các sản phẩm wishlist hiện có",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13160,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:06:01.782Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-48ce4de8b11d95ae65eb",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 78,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Wishlist - Thêm sản phẩm vào wishlist",
+          "file": "integration/specs/06-wishlist.spec.ts",
+          "line": 91,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Thêm vào wishlist - Thêm 1 sản phẩm từ trang search",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17003,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:06:14.967Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-d4e3eaaf2a65b315efea",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 101,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Wishlist - Kiểm tra sản phẩm đã thêm",
+          "file": "integration/specs/06-wishlist.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Kiểm tra wishlist - Sản phẩm đã thêm hiển thị trong wishlist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8711,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:06:31.986Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-ed79c23d16c57d86a132",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 125,
+              "column": 3
+            },
+            {
+              "title": "Xóa khỏi wishlist - Xóa sản phẩm khỏi wishlist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11033,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:06:40.714Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-68aa201fb1d83f261b5a",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 140,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Wishlist - Thêm từ trang chi tiết sản phẩm",
+          "file": "integration/specs/06-wishlist.spec.ts",
+          "line": 161,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Thêm từ trang product - Thêm sản phẩm từ trang chi tiết",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22238,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:06:51.767Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-36760c20d099ee58bd5b",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 171,
+              "column": 3
+            },
+            {
+              "title": "Kiểm tra trạng thái - Nút wishlist hiển thị trạng thái đã lưu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19355,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:07:14.020Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "30eef90497017ee08fab-b0255fe39c55a7c07038",
+              "file": "integration/specs/06-wishlist.spec.ts",
+              "line": 193,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "integration\\specs\\07-alert.spec.ts",
+      "file": "integration/specs/07-alert.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Luồng Alert - Chuẩn bị dữ liệu",
+          "file": "integration/specs/07-alert.spec.ts",
+          "line": 83,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Chuẩn bị - Xóa các alert hiện có",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8944,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:07:33.422Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b82fd732f13892459baf-3f22571a29375ae3a55f",
+              "file": "integration/specs/07-alert.spec.ts",
+              "line": 93,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Alert - Tạo alert từ trang sản phẩm",
+          "file": "integration/specs/07-alert.spec.ts",
+          "line": 105,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Tạo alert - Mở modal và nhập giá mục tiêu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20818,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:07:42.378Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b82fd732f13892459baf-f363babb95d8081d3501",
+              "file": "integration/specs/07-alert.spec.ts",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "Đóng modal - Bấm nút Xong để đóng modal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21013,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:08:03.212Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b82fd732f13892459baf-cc26113da683e61b92e5",
+              "file": "integration/specs/07-alert.spec.ts",
+              "line": 147,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Luồng Alert - Kiểm tra và xóa alert",
+          "file": "integration/specs/07-alert.spec.ts",
+          "line": 186,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Kiểm tra alert - Alert vừa tạo hiển thị trong trang alerts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8853,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:08:24.246Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b82fd732f13892459baf-f52e6c0daaa4d35b9bb2",
+              "file": "integration/specs/07-alert.spec.ts",
+              "line": 196,
+              "column": 3
+            },
+            {
+              "title": "Xóa alert - Xóa alert khỏi trang alerts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11156,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-30T14:08:33.117Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b82fd732f13892459baf-3b554e4fecfe1b20263d",
+              "file": "integration/specs/07-alert.spec.ts",
+              "line": 215,
               "column": 3
             }
           ]
@@ -1294,9 +1567,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-30T11:05:23.232Z",
-    "duration": 236696.099,
-    "expected": 29,
+    "startTime": "2026-05-30T14:00:29.839Z",
+    "duration": 495027.52900000004,
+    "expected": 39,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
