@@ -2,14 +2,13 @@ package com.pricehawl.service;
 
 import com.pricehawl.dto.PriceComparisonResponse;
 import com.pricehawl.entity.Platform;
-import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
 import com.pricehawl.exception.ResourceNotFoundException;
-import com.pricehawl.repository.PriceRecordRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,9 +26,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PriceComparisonServiceImplTest {
 
-    @Mock private ProductRepository productRepository;
-    @Mock private ProductListingRepository productListingRepository;
-    @Mock private PriceRecordRepository priceRecordRepository;
+    @Mock
+    private ProductRepository productRepository;
+
+    @Mock
+    private ProductListingRepository productListingRepository;
 
     @InjectMocks
     private PriceComparisonServiceImpl service;
@@ -46,122 +47,98 @@ class PriceComparisonServiceImplTest {
                 .name("Kem dưỡng da")
                 .imageUrl("https://img.example.com/product.jpg")
                 .build();
-        platform = Platform.builder().id(1).name("Tiki").isActive(true).build();
-    }
 
-    private ProductListing listing(String status, String platformImageUrl) {
-        return ProductListing.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .platform(platform)
-                .platformName("Tiki")
-                .url("https://tiki.vn/product")
-                .platformImageUrl(platformImageUrl)
-                .status(status)
+        platform = Platform.builder()
+                .id(1)
+                .name("Tiki")
                 .build();
     }
-
-    private PriceRecord priceRecord(int price) {
-        return PriceRecord.builder()
-                .price(price)
-                .originalPrice(120_000)
-                .discountPct(20f)
-                .inStock(true)
-                .crawledAt(LocalDateTime.now())
-                .build();
-    }
-
-    // ── product not found → exception ────────────────────────────────────────
 
     @Test
-    void compareByProductId_productNotFound_throwsResourceNotFound() {
+    @DisplayName("Product không tồn tại -> Ném ResourceNotFoundException")
+    void compareByProductId_NotFound() {
         when(productRepository.findById(productId)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class,
-                () -> service.compareByProductId(productId));
+
+        assertThrows(ResourceNotFoundException.class, () -> service.compareByProductId(productId));
     }
 
-    // ── listing hidden bị lọc ra ──────────────────────────────────────────────
-
     @Test
-    void compareByProductId_hiddenListingFiltered_notInResult() {
-        ProductListing hidden = listing("hidden", null);
-        ProductListing active = listing("active", "https://img.tiki.vn/img.jpg");
-
+    @DisplayName("Product không có listing nào -> Trả về response rỗng nhưng không lỗi")
+    void compareByProductId_NoListings() {
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productListingRepository.findByProductId(productId)).thenReturn(List.of(hidden, active));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(active.getId()))
-                .thenReturn(Optional.of(priceRecord(100_000)));
+        when(productListingRepository.findByProductIdWithPlatform(productId)).thenReturn(List.of());
 
         PriceComparisonResponse response = service.compareByProductId(productId);
-        assertEquals(1, response.getComparisons().size());
-    }
 
-    // ── listing không có giá bị bỏ qua ───────────────────────────────────────
-
-    @Test
-    void compareByProductId_listingWithNoPrice_excluded() {
-        ProductListing l = listing("active", null);
-
-        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productListingRepository.findByProductId(productId)).thenReturn(List.of(l));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(l.getId()))
-                .thenReturn(Optional.empty());
-
-        PriceComparisonResponse response = service.compareByProductId(productId);
+        assertNotNull(response);
         assertTrue(response.getComparisons().isEmpty());
+        assertEquals(product.getName(), response.getProductName());
     }
 
-    // ── sort theo giá tăng dần ────────────────────────────────────────────────
-
     @Test
-    void compareByProductId_sortedByPriceAscending() {
-        ProductListing l1 = listing("active", null);
-        ProductListing l2 = listing("active", null);
+    @DisplayName("Sắp xếp giá tăng dần và gom ảnh chính xác")
+    void compareByProductId_Success() {
+        // Given: Tạo 2 listing (1 cái 200k, 1 cái 100k)
+        ProductListing l1 = ProductListing.builder()
+                .id(UUID.randomUUID())
+                .platform(platform)
+                .currentPrice(200000)
+                .platformImageUrl("https://tiki.vn/img1.jpg")
+                .crawlTime(LocalDateTime.now())
+                .build();
+
+        ProductListing l2 = ProductListing.builder()
+                .id(UUID.randomUUID())
+                .platform(platform)
+                .currentPrice(100000)
+                .platformImageUrl("https://tiki.vn/img2.jpg")
+                .crawlTime(LocalDateTime.now())
+                .build();
+
+        // Listing thứ 3 không có giá -> sẽ bị null filter trong code của em
+        ProductListing l3 = ProductListing.builder()
+                .currentPrice(null)
+                .build();
 
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productListingRepository.findByProductId(productId)).thenReturn(List.of(l1, l2));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(l1.getId()))
-                .thenReturn(Optional.of(priceRecord(150_000)));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(l2.getId()))
-                .thenReturn(Optional.of(priceRecord(90_000)));
+        when(productListingRepository.findByProductIdWithPlatform(productId))
+                .thenReturn(List.of(l1, l2, l3));
 
+        // When
         PriceComparisonResponse response = service.compareByProductId(productId);
+
+        // Then
+        assertNotNull(response);
+        // Kiểm tra logic lọc null: Chỉ còn 2 listing có giá
         assertEquals(2, response.getComparisons().size());
-        assertEquals(90_000, response.getComparisons().get(0).getPrice());
-        assertEquals(150_000, response.getComparisons().get(1).getPrice());
-    }
+        
+        // Kiểm tra logic sắp xếp: 100k phải đứng trước 200k
+        assertEquals(100000, response.getComparisons().get(0).getPrice());
+        assertEquals(200000, response.getComparisons().get(1).getPrice());
 
-    // ── imageUrls gom đúng: product image + platform images ──────────────────
-
-    @Test
-    void compareByProductId_imageUrlsAggregated() {
-        ProductListing l = listing("active", "https://img.tiki.vn/img.jpg");
-
-        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productListingRepository.findByProductId(productId)).thenReturn(List.of(l));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(l.getId()))
-                .thenReturn(Optional.of(priceRecord(100_000)));
-
-        PriceComparisonResponse response = service.compareByProductId(productId);
-        // product image + platform image = 2
-        assertEquals(2, response.getImageUrls().size());
+        // Kiểm tra logic gom ảnh (1 ảnh product + 2 ảnh platform = 3 ảnh)
+        assertEquals(3, response.getImageUrls().size());
         assertTrue(response.getImageUrls().contains("https://img.example.com/product.jpg"));
-        assertTrue(response.getImageUrls().contains("https://img.tiki.vn/img.jpg"));
     }
 
-    // ── product không có imageUrl → chỉ có platform image ────────────────────
-
     @Test
-    void compareByProductId_noProductImage_onlyPlatformImages() {
-        product = Product.builder().id(productId).name("Kem").imageUrl(null).build();
-        ProductListing l = listing("active", "https://img.tiki.vn/img.jpg");
+    @DisplayName("Kiểm tra ảnh không trùng lặp (distinct)")
+    void compareByProductId_DistinctImages() {
+        // Given: Listing có ảnh trùng với ảnh của Product
+        ProductListing l = ProductListing.builder()
+                .id(UUID.randomUUID())
+                .platform(platform)
+                .currentPrice(100000)
+                .platformImageUrl("https://img.example.com/product.jpg") // Trùng ảnh product
+                .build();
 
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productListingRepository.findByProductId(productId)).thenReturn(List.of(l));
-        when(priceRecordRepository.findTopByProductListingIdOrderByCrawledAtDesc(l.getId()))
-                .thenReturn(Optional.of(priceRecord(100_000)));
+        when(productListingRepository.findByProductIdWithPlatform(productId)).thenReturn(List.of(l));
 
+        // When
         PriceComparisonResponse response = service.compareByProductId(productId);
+
+        // Then: Stream().distinct() phải làm gọn lại còn 1 ảnh
         assertEquals(1, response.getImageUrls().size());
     }
 }

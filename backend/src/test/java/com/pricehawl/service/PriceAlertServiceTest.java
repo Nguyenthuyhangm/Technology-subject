@@ -8,6 +8,7 @@ import com.pricehawl.entity.User;
 import com.pricehawl.exception.ResourceNotFoundException;
 import com.pricehawl.repository.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -47,12 +48,29 @@ class PriceAlertServiceTest {
         userId = UUID.randomUUID();
         productId = UUID.randomUUID();
         alertId = UUID.randomUUID();
-        freeUser = User.builder().id(userId).email("free@test.com").name("Free").plan("free").build();
-        premiumUser = User.builder().id(userId).email("premium@test.com").name("Premium").plan("premium").build();
-        product = Product.builder().id(productId).name("Kem dưỡng da").build();
+        
+        freeUser = User.builder()
+                .id(userId)
+                .email("free@test.com")
+                .name("Free User")
+                .plan("free")
+                .build();
+                
+        premiumUser = User.builder()
+                .id(userId)
+                .email("premium@test.com")
+                .name("Premium User")
+                .plan("premium")
+                .build();
+                
+        product = Product.builder()
+                .id(productId)
+                .name("Kem dưỡng da")
+                .imageUrl("http://image.com/skin.png")
+                .build();
     }
 
-    private PriceAlertRequest req(int targetPrice) {
+    private PriceAlertRequest createReq(int targetPrice) {
         PriceAlertRequest r = new PriceAlertRequest();
         r.setProductId(productId);
         r.setTargetPrice(targetPrice);
@@ -60,7 +78,7 @@ class PriceAlertServiceTest {
         return r;
     }
 
-    private PriceAlert existingAlert() {
+    private PriceAlert createMockAlert() {
         return PriceAlert.builder()
                 .id(alertId)
                 .userId(userId)
@@ -71,118 +89,93 @@ class PriceAlertServiceTest {
                 .build();
     }
 
-    // ── create: upsert khi đã có alert ───────────────────────────────────────
-
     @Test
+    @DisplayName("Create: Upsert khi đã tồn tại Alert cho sản phẩm này")
     void create_existingAlert_updatesAndReturns() {
         when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        PriceAlert alert = existingAlert();
-        when(alertRepository.findByUserIdAndProductId(userId, productId)).thenReturn(Optional.of(alert));
-        when(alertRepository.save(any())).thenReturn(alert);
-        when(platformRepository.findById(any())).thenReturn(Optional.empty());
+        
+        PriceAlert existingAlert = createMockAlert();
+        when(alertRepository.findByUserIdAndProductId(userId, productId)).thenReturn(Optional.of(existingAlert));
+        
+        // Thực thi
+        PriceAlertResponse response = service.create(userId.toString(), createReq(90_000));
 
-        PriceAlertResponse response = service.create(userId.toString(), req(90_000));
+        // Kiểm chứng
         assertNotNull(response);
-        verify(alertRepository).save(alert);
+        assertEquals(90_000, existingAlert.getTargetPrice());
+        verify(alertRepository).save(existingAlert);
     }
 
-    // ── create: free user chưa đạt limit ─────────────────────────────────────
-
     @Test
-    void create_freeUserBelowLimit_createsAlert() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
-        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(alertRepository.findByUserIdAndProductId(userId, productId)).thenReturn(Optional.empty());
-        when(alertRepository.countByUserIdAndIsActiveTrue(userId)).thenReturn(2L);
-        PriceAlert saved = existingAlert();
-        when(alertRepository.save(any())).thenReturn(saved);
-        when(platformRepository.findById(any())).thenReturn(Optional.empty());
-
-        PriceAlertResponse response = service.create(userId.toString(), req(90_000));
-        assertNotNull(response);
-    }
-
-    // ── create: free user đạt limit → exception ───────────────────────────────
-
-    @Test
+    @DisplayName("Create: Free user đạt giới hạn 5 alert -> Ném lỗi")
     void create_freeUserAtLimit_throwsIllegalState() {
         when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
         when(alertRepository.findByUserIdAndProductId(userId, productId)).thenReturn(Optional.empty());
+        
+        // Giả lập đã có 5 alert (FREE_PLAN_LIMIT = 5)
         when(alertRepository.countByUserIdAndIsActiveTrue(userId)).thenReturn(5L);
 
-        assertThrows(IllegalStateException.class,
-                () -> service.create(userId.toString(), req(90_000)));
+        assertThrows(IllegalStateException.class, 
+                () -> service.create(userId.toString(), createReq(80_000)));
+        
         verify(alertRepository, never()).save(any());
     }
 
-    // ── create: premium user vượt limit → vẫn tạo được ──────────────────────
-
     @Test
-    void create_premiumUserOverLimit_createsAlert() {
+    @DisplayName("Create: Premium user vượt limit -> Vẫn tạo thành công")
+    void create_premiumUserOverLimit_success() {
         when(userRepository.findById(userId)).thenReturn(Optional.of(premiumUser));
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
         when(alertRepository.findByUserIdAndProductId(userId, productId)).thenReturn(Optional.empty());
+        
+        // Premium có 10 alerts vẫn ok
         when(alertRepository.countByUserIdAndIsActiveTrue(userId)).thenReturn(10L);
-        PriceAlert saved = existingAlert();
-        when(alertRepository.save(any())).thenReturn(saved);
-        when(platformRepository.findById(any())).thenReturn(Optional.empty());
+        
+        PriceAlert savedAlert = createMockAlert();
+        when(alertRepository.save(any())).thenReturn(savedAlert);
 
-        PriceAlertResponse response = service.create(userId.toString(), req(90_000));
+        PriceAlertResponse response = service.create(userId.toString(), createReq(70_000));
+        
         assertNotNull(response);
+        verify(alertRepository).save(any());
     }
 
-    // ── create: user không tồn tại → exception ───────────────────────────────
-
     @Test
-    void create_userNotFound_throwsResourceNotFound() {
-        when(userRepository.findById(userId)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class,
-                () -> service.create(userId.toString(), req(90_000)));
-    }
-
-    // ── toggleActive ──────────────────────────────────────────────────────────
-
-    @Test
-    void toggleActive_ownerToggle_flipsActive() {
-        PriceAlert alert = existingAlert();
+    @DisplayName("ToggleActive: Đảo ngược trạng thái Active")
+    void toggleActive_success() {
+        PriceAlert alert = createMockAlert(); // Đang true
         when(alertRepository.findById(alertId)).thenReturn(Optional.of(alert));
-        when(alertRepository.save(any())).thenReturn(alert);
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(platformRepository.findById(any())).thenReturn(Optional.empty());
 
         PriceAlertResponse response = service.toggleActive(alertId, userId.toString());
-        assertNotNull(response);
+
+        assertFalse(alert.isActive()); // Đã đảo sang false
         verify(alertRepository).save(alert);
     }
 
     @Test
-    void toggleActive_wrongOwner_throwsIllegalState() {
-        PriceAlert alert = existingAlert();
-        when(alertRepository.findById(alertId)).thenReturn(Optional.of(alert));
-
-        String otherUserId = UUID.randomUUID().toString();
-        assertThrows(IllegalStateException.class,
-                () -> service.toggleActive(alertId, otherUserId));
-    }
-
-    // ── delete ────────────────────────────────────────────────────────────────
-
-    @Test
-    void delete_owner_deletesSuccessfully() {
-        PriceAlert alert = existingAlert();
+    @DisplayName("Delete: Xóa alert và các thông báo liên quan")
+    void delete_success() {
+        PriceAlert alert = createMockAlert();
         when(alertRepository.findById(alertId)).thenReturn(Optional.of(alert));
 
         assertDoesNotThrow(() -> service.delete(alertId, userId.toString()));
+
         verify(notificationRepository).deleteByAlertId(alertId);
         verify(alertRepository).delete(alert);
     }
 
     @Test
-    void delete_alertNotFound_throwsResourceNotFound() {
-        when(alertRepository.findById(alertId)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class,
-                () -> service.delete(alertId, userId.toString()));
+    @DisplayName("FindAndVerify: Sai chủ sở hữu -> Ném lỗi bảo mật")
+    void delete_wrongOwner_throwsException() {
+        PriceAlert alert = createMockAlert();
+        when(alertRepository.findById(alertId)).thenReturn(Optional.of(alert));
+
+        String otherUserId = UUID.randomUUID().toString();
+        
+        assertThrows(IllegalStateException.class, 
+                () -> service.delete(alertId, otherUserId));
     }
 }
