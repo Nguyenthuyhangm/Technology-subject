@@ -7,12 +7,12 @@
 ## 📌 Thông tin chung
 
 * **Tính năng cần test:**
-* **Môi trường test:** Local / Staging / Production
+* **Môi trường test:** Local 
 * **Vai trò test:** User / Admin
 * **Người kiểm thử: Dinh Huyen Trang
 * **Ngày test:30/5/2026
-* **Trình duyệt / Thiết bị:** Chrome / Edge / Mobile / Desktop
-* **Kết quả chung:** Pass / Fail / Pending
+* **Trình duyệt / Thiết bị:** Chrome / Desktop
+* **Kết quả chung:** Pass 
 
 ---
 
