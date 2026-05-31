@@ -8,9 +8,8 @@ import { monitor } from './util/monitoring';
 monitor.init();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+    // Bỏ thẻ <React.StrictMode> đi
     <WishlistProvider>
       <App />
     </WishlistProvider>
-  </React.StrictMode>
 );

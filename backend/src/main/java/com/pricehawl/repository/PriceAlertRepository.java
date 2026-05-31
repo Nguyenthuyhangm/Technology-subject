@@ -15,6 +15,8 @@ public interface PriceAlertRepository extends JpaRepository<PriceAlert, UUID> {
     
     long countByUserIdAndIsActiveTrue(UUID userId);
 
+    long countByIsActiveTrue(); // ← thêm dòng này
+
     @Query("""
         SELECT a FROM PriceAlert a
         WHERE a.productId = :productId

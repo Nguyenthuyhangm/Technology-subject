@@ -5,6 +5,7 @@ import com.pricehawl.dto.PriceAlertResponse;
 import com.pricehawl.entity.Notification;
 import com.pricehawl.entity.PriceAlert;
 import com.pricehawl.entity.Product;
+import com.pricehawl.entity.User;
 import com.pricehawl.exception.ResourceNotFoundException;
 import com.pricehawl.repository.NotificationRepository;
 import com.pricehawl.repository.PlatformRepository;
@@ -23,6 +24,7 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -49,7 +51,13 @@ public class PriceAlertService {
     @Transactional
     public PriceAlertResponse create(String userId, PriceAlertRequest req) {
         UUID userUuid = UUID.fromString(userId);
-
+        User user = userRepository
+                .findById(userUuid)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "Không tìm thấy user"
+                        )
+                );
         Product product = productRepository.findById(req.getProductId())
             .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sản phẩm"));
 
@@ -67,9 +75,16 @@ public class PriceAlertService {
 
         // Chưa có → check limit rồi tạo mới
         long count = alertRepository.countByUserIdAndIsActiveTrue(userUuid);
-        if (count >= FREE_PLAN_LIMIT) {
+        boolean isPremium =
+                "premium".equalsIgnoreCase(
+                        user.getPlan()
+                );
+        if (!isPremium &&
+                count >= FREE_PLAN_LIMIT) {
             throw new IllegalStateException(
-                "Bạn đã đạt giới hạn " + FREE_PLAN_LIMIT + " alert cho tài khoản free."
+                    "Bạn đã đạt giới hạn "
+                            + FREE_PLAN_LIMIT
+                            + " alert cho tài khoản free."
             );
         }
 
@@ -88,13 +103,18 @@ public class PriceAlertService {
 
     public List<PriceAlertResponse> getByUser(String userId) {
         UUID userUuid = UUID.fromString(userId);
-        return alertRepository.findByUserIdOrderByCreatedAtDesc(userUuid)
-            .stream()
-            .map(alert -> {
-                Product product = productRepository.findById(alert.getProductId()).orElse(null);
-                return toResponse(alert, product);
-            })
-            .collect(Collectors.toList());
+        List<PriceAlert> alerts = alertRepository.findByUserIdOrderByCreatedAtDesc(userUuid);
+        if (alerts.isEmpty()) return List.of();
+
+        // Batch load tất cả products trong 1 query (tránh N+1)
+        List<UUID> productIds = alerts.stream()
+                .map(PriceAlert::getProductId).distinct().toList();
+        Map<UUID, Product> productMap = productRepository.findAllByIdIn(productIds)
+                .stream().collect(Collectors.toMap(Product::getId, p -> p));
+
+        return alerts.stream()
+                .map(alert -> toResponse(alert, productMap.get(alert.getProductId())))
+                .collect(Collectors.toList());
     }
 
     @Transactional

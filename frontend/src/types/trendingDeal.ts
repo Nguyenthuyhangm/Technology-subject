@@ -32,4 +32,6 @@ export type TrendingDealDto = {
   discountScore?: number
   trustScore?: number
   freshnessScore?: number
+  /** true = backend phát hiện dấu hiệu tăng giá ảo trước khi giảm */
+  isFakePromo?: boolean | null
 }

@@ -11,7 +11,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "product_listing", indexes = {
-        @Index(name = "idx_product_listing_product_id", columnList = "product_id")
+        @Index(name = "idx_product_listing_product_id", columnList = "product_id"),
+        @Index(name = "idx_product_listing_crawl_time", columnList = "crawl_time")
 })
 @Getter
 @Setter
@@ -40,6 +41,10 @@ public class ProductListing {
 
     @Column(length = 500)
     private String platformImageUrl;
+
+    @Column(name = "status", nullable = false)
+@Builder.Default
+private String status = "active";
 
     /**
      * Điểm tin cậy listing (0.0–1.0).

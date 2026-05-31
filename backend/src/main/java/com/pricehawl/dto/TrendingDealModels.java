@@ -43,6 +43,7 @@ public final class TrendingDealModels {
         private Double discountScore;
         private Double trustScore;
         private Double freshnessScore;
+        private Boolean isFakePromo;
     }
 
     public record TrendingDealsSnapshot(

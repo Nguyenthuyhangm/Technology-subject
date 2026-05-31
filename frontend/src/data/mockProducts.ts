@@ -378,6 +378,15 @@ export const getProductsByIds = (ids: string[]): Product[] =>
 
 /** Gắn mock `Product` (đủ trường) với hình dạng API `ProductSearch` cho card/UI tìm kiếm */
 export function toProductSearch(product: Product): ProductSearch {
+    const bestPlatform = product.platforms.reduce((best, current) =>
+        current.finalPrice < best.finalPrice ? current : best
+    );
+
+    const originalPrice = bestPlatform.originalPrice ?? bestPlatform.currentPrice;
+    const discountPct = originalPrice > 0
+        ? Math.round(((originalPrice - bestPlatform.finalPrice) / originalPrice) * 100)
+        : 0;
+
     return {
         id: product.id,
         name: product.name,
@@ -391,6 +400,12 @@ export function toProductSearch(product: Product): ProductSearch {
         brandName: product.brand,
         score: Math.min(1, product.rating / 5),
         imageUrl: product.images[0] ?? '',
+
+        bestPrice: bestPlatform.finalPrice,
+        originalPrice,
+        discountPct,
+        bestPlatform: bestPlatform.platform,
+
         platforms: product.platforms.map((p) => ({
             platform: p.platform,
             url: p.url,

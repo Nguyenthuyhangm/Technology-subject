@@ -121,7 +121,6 @@ export function TrendingDealRow({
             </p>
           )}
 
-          <TrendingDealScoreBreakdown d={d} />
         </div>
 
         {/* Price */}
@@ -146,18 +145,8 @@ export function TrendingDealRow({
           )}
 
           {/* Deal score pill */}
-          <div className="mt-3 flex items-center gap-2">
-            <div className="h-1 flex-1 overflow-hidden rounded-full bg-stone-200/80 dark:bg-stone-700/60">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-[#C9A9B0] to-[#8E6A72]"
-                style={{ width: `${dealScorePct}%` }}
-              />
-            </div>
-            <span className="text-[10px] tabular-nums text-stone-400 dark:text-stone-500">
-              {dealScorePct}%
-            </span>
-          </div>
-          <p className="mt-0.5 text-[10px] text-stone-400 dark:text-stone-500">Deal score</p>
+          
+          
         </div>
       </Link>
     </div>

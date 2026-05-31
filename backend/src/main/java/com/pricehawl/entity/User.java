@@ -47,4 +47,6 @@ public class User {
     @UpdateTimestamp
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
+    @JsonProperty("premium_expires_at")
+    private LocalDateTime premiumExpiresAt;
 }

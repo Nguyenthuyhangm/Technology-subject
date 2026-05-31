@@ -20,7 +20,7 @@ public class Notification {
     @Column(name = "alert_id")
     private UUID alertId;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_id")
     private UUID productId;
 
     @Column(name = "title", nullable = false)

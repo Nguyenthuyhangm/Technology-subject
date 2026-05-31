@@ -3,6 +3,8 @@ package com.pricehawl.service;
 import com.pricehawl.dto.WishlistResponse;
 import com.pricehawl.entity.Wishlist;
 import com.pricehawl.exception.ResourceNotFoundException;
+import com.pricehawl.entity.User;
+import com.pricehawl.repository.UserRepository;
 import com.pricehawl.repository.WishlistRepository;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,10 @@ public class WishlistService {
 
     @Autowired
     private WishlistRepository wishlistRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    private static final int FREE_WISHLIST_LIMIT = 20;
     /**
      * Trả về danh sách wishlist chi tiết của user.
      * Dùng WishlistResponse để FE nhận được đầy đủ thông tin như tên, ảnh, giá...
@@ -32,19 +37,46 @@ public class WishlistService {
         return wishlistRepository.findDetailedWishlistByUserId(userId);
     }
 
-    public Wishlist addToWishlist(UUID userId, UUID productId) {
+    public Wishlist addToWishlist(
+            UUID userId,
+            UUID productId
+    ) {
         if (userId == null || productId == null) {
-            throw new IllegalArgumentException("userId và productId không được null");
+            throw new IllegalArgumentException(
+                    "userId và productId không được null"
+            );
         }
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
 
         if (wishlistRepository.existsByUserIdAndProductId(userId, productId)) {
             return null;
         }
 
-        Wishlist wishlist = new Wishlist();
+        long count = wishlistRepository.countByUserId(userId);
+
+        boolean isPremium =
+                "premium".equalsIgnoreCase(
+                        user.getPlan()
+                );
+
+        if (!isPremium &&
+                count >= FREE_WISHLIST_LIMIT) {
+            throw new IllegalStateException(
+                    "Bạn đã đạt giới hạn "
+                            + FREE_WISHLIST_LIMIT
+                            + " wishlist cho tài khoản free."
+            );
+        }
+
+        Wishlist wishlist =
+                new Wishlist();
+
         wishlist.setUserId(userId);
         wishlist.setProductId(productId);
-        return wishlistRepository.save(wishlist);
+
+        return wishlistRepository
+                .save(wishlist);
     }
 
     /**

@@ -1,9 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import perfumeImage from '../assets/perfume.jpg';
 
-type Mode = 'login' | 'register' | 'forgot' // ✅ THÊM: mode 'forgot'
+type Mode = 'login' | 'register' | 'forgot'
 
 interface FormState {
     email: string
@@ -13,9 +14,8 @@ interface FormState {
 }
 
 const FONT_STACK = {
-    serif: '"Times New Roman", Georgia, serif',
-    sans:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    serif: '"Playfair Display", "Times New Roman", Georgia, serif',
+    sans: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
 }
 
 export default function AuthPage() {
@@ -24,7 +24,7 @@ export default function AuthPage() {
     const [form, setForm] = useState<FormState>({ email: '', password: '', name: '', phone: '' })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const [success, setSuccess] = useState('') // ✅ THÊM: thông báo thành công
+    const [success, setSuccess] = useState('')
     const [showConfirmMessage, setShowConfirmMessage] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,6 @@ export default function AuthPage() {
         setSuccess('')
     }
 
-    // ✅ THÊM: xử lý OAuth Google
     const handleGoogleLogin = async () => {
         setLoading(true)
         const { error } = await supabase.auth.signInWithOAuth({
@@ -46,7 +45,6 @@ export default function AuthPage() {
         setLoading(false)
     }
 
-    // ✅ THÊM: xử lý quên mật khẩu
     const handleForgotPassword = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!form.email) {
@@ -113,80 +111,93 @@ export default function AuthPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#0F0D0C] flex flex-col lg:flex-row" style={{ fontFamily: FONT_STACK.sans }}>
-
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12 relative bg-[#FAF8F5] dark:bg-[#0F0D0C]">
-                <div className="absolute top-12 left-12 cursor-pointer" onClick={() => navigate('/')}>
-                    <span className="text-3xl font-bold text-[#B7848C]" style={{ fontFamily: FONT_STACK.serif }}>PriceHawk</span>
+        <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex flex-col lg:flex-row" style={{ fontFamily: FONT_STACK.sans }}>
+            
+            {/* Left Panel: Form */}
+            <div className="w-full lg:w-[45%] flex flex-col justify-center px-8 sm:px-16 xl:px-24 relative bg-white dark:bg-[#0A0A0A] py-12 lg:py-0">
+                {/* Logo */}
+                <div className="absolute top-8 left-8 sm:top-10 sm:left-10 cursor-pointer" onClick={() => navigate('/')}>
+                    <span className="text-2xl font-normal tracking-tight text-stone-900 dark:text-white transition-opacity hover:opacity-80" style={{ fontFamily: FONT_STACK.serif }}>
+                        Price<span className="italic text-[#B7848C]">Hawk</span>
+                    </span>
                 </div>
 
-                <div className="max-w-md w-full">
+                <div className="max-w-[380px] w-full mx-auto mt-10 lg:mt-0">
                     {showConfirmMessage ? (
-                        <div className="text-center space-y-8 animate-in fade-in zoom-in duration-500">
-                            <h2 className="text-5xl text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.serif }}>Kích hoạt tài khoản</h2>
-                            <p className="text-stone-600 dark:text-stone-400 text-xl leading-relaxed">
-                                Một liên kết xác thực đã được gửi đến <br /><b>{form.email}</b>.
-                                Vui lòng kiểm tra hộp thư Gmail để hoàn tất.
+                        <div className="text-center space-y-6 animate-in fade-in zoom-in duration-500">
+                            <div className="w-16 h-16 bg-[#B7848C]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg className="w-8 h-8 text-[#B7848C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h2 className="text-2xl font-medium text-stone-900 dark:text-white" style={{ fontFamily: FONT_STACK.serif }}>Kiểm tra email của bạn</h2>
+                            <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
+                                Chúng tôi đã gửi một liên kết xác thực đến <span className="font-medium text-stone-800 dark:text-stone-200">{form.email}</span>. Vui lòng kiểm tra hộp thư để kích hoạt tài khoản.
                             </p>
                             <button
                                 onClick={() => { setShowConfirmMessage(false); setMode('login'); }}
-                                className="text-[#B7848C] font-bold border-b-2 border-[#B7848C] pb-1 uppercase tracking-widest text-sm"
+                                className="mt-4 text-sm font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors"
                             >
-                                Quay lại Đăng nhập
+                                ← Quay lại đăng nhập
                             </button>
                         </div>
 
-                        // ✅ THÊM: màn hình quên mật khẩu
                     ) : mode === 'forgot' ? (
-                        <div className="space-y-8">
-                            <h1 className="text-5xl text-center text-stone-900 dark:text-stone-100 tracking-tight" style={{ fontFamily: FONT_STACK.serif }}>
-                                Quên mật khẩu
-                            </h1>
-                            <p className="text-center text-stone-500 dark:text-stone-400 text-sm">
-                                Nhập email để nhận liên kết đặt lại mật khẩu
-                            </p>
+                        <div className="space-y-6 animate-in fade-in duration-300">
+                            <div>
+                                <h1 className="text-3xl font-medium text-stone-900 dark:text-white" style={{ fontFamily: FONT_STACK.serif }}>
+                                    Khôi phục mật khẩu
+                                </h1>
+                                <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+                                    Nhập email của bạn, chúng tôi sẽ gửi liên kết để tạo mật khẩu mới.
+                                </p>
+                            </div>
 
-                            {error && <p className="text-red-500 text-xs text-center py-3 bg-red-50 dark:bg-red-900/20 rounded-lg">{error}</p>}
-                            {success && <p className="text-green-600 text-xs text-center py-3 bg-green-50 dark:bg-green-900/20 rounded-lg">{success}</p>}
+                            {error && <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-500/10 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-500/20">{error}</div>}
+                            {success && <div className="p-3 text-sm text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 rounded-lg border border-emerald-100 dark:border-emerald-500/20">{success}</div>}
 
-                            <form onSubmit={handleForgotPassword} className="space-y-8">
-                                <Field label="Email" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} />
+                            <form onSubmit={handleForgotPassword} className="space-y-5">
+                                <Field label="Email" name="email" type="email" placeholder="Nhập địa chỉ email" value={form.email} onChange={handleChange} />
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-5 bg-[#B7848C] hover:bg-[#a1737a] text-white rounded-full text-lg font-bold uppercase tracking-[0.2em] transition-all disabled:opacity-50"
+                                    className="w-full py-3.5 bg-stone-900 hover:bg-stone-800 dark:bg-white dark:hover:bg-stone-200 text-white dark:text-stone-900 rounded-xl text-sm font-medium transition-all disabled:opacity-50 mt-2 shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
                                 >
-                                    {loading ? 'Đang gửi...' : 'Gửi email'}
+                                    {loading ? 'Đang gửi...' : 'Gửi liên kết khôi phục'}
                                 </button>
                             </form>
 
-                            <p className="text-center text-sm text-stone-500 dark:text-stone-400">
+                            <div className="text-center">
                                 <button
                                     type="button"
                                     onClick={() => { setMode('login'); setError(''); setSuccess('') }}
-                                    className="font-bold text-stone-900 dark:text-stone-100 border-b-2 border-stone-200 dark:border-stone-700 hover:border-[#B7848C] transition-colors"
+                                    className="text-sm font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors"
                                 >
-                                    Quay lại Đăng nhập
+                                    ← Quay lại đăng nhập
                                 </button>
-                            </p>
+                            </div>
                         </div>
 
                     ) : (
-                        <>
-                            <h1 className="text-6xl text-center mb-10 text-stone-900 dark:text-stone-100 tracking-tight" style={{ fontFamily: FONT_STACK.serif }}>
-                                {mode === 'login' ? 'Đăng nhập' : 'Đăng ký'}
-                            </h1>
+                        <div className="space-y-6 animate-in fade-in duration-300">
+                            <div>
+                                <h1 className="text-[2rem] font-medium text-stone-900 dark:text-white leading-tight" style={{ fontFamily: FONT_STACK.serif }}>
+                                    {mode === 'login' ? 'Chào mừng trở lại' : 'Tạo tài khoản mới'}
+                                </h1>
+                                <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+                                    {mode === 'login' ? 'Vui lòng đăng nhập để tiếp tục' : 'Đăng ký để trải nghiệm mua sắm thông minh'}
+                                </p>
+                            </div>
 
-                            {error && <p className="text-red-500 text-xs mb-6 text-center py-3 bg-red-50 dark:bg-red-900/20 rounded-lg">{error}</p>}
+                            {error && <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-500/10 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-500/20">{error}</div>}
 
-                            {/* ✅ Nút Google OAuth */}
                             <button
                                 type="button"
                                 onClick={handleGoogleLogin}
                                 disabled={loading}
-                                className="w-full mb-8 py-3 border border-stone-200 dark:border-stone-700 rounded-full flex items-center justify-center gap-3 hover:bg-stone-50 dark:hover:bg-stone-800/50 transition text-sm text-stone-700 dark:text-stone-300 disabled:opacity-50"
+                                className="w-full py-3 flex items-center justify-center gap-3 bg-white dark:bg-[#141414] border border-stone-200 dark:border-stone-800 rounded-xl text-sm font-medium text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800/80 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)] disabled:opacity-50"
                             >
-                                <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24">
                                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -195,77 +206,86 @@ export default function AuthPage() {
                                 Tiếp tục với Google
                             </button>
 
-                            {/* Divider */}
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="flex-1 h-px bg-stone-200 dark:bg-stone-800" />
-                                <span className="text-xs text-stone-400 uppercase tracking-widest">hoặc</span>
-                                <div className="flex-1 h-px bg-stone-200 dark:bg-stone-800" />
+                            <div className="flex items-center gap-4 py-2">
+                                <div className="flex-1 h-px bg-stone-100 dark:bg-stone-800" />
+                                <span className="text-xs font-medium text-stone-400 uppercase tracking-widest">hoặc</span>
+                                <div className="flex-1 h-px bg-stone-100 dark:bg-stone-800" />
                             </div>
 
-                            <form onSubmit={handleAuth} className="space-y-10">
+                            <form onSubmit={handleAuth} className="space-y-4">
                                 {mode === 'register' && (
-                                    <>
-                                        <Field label="Họ và tên" name="name" type="text" placeholder="Họ và tên" value={form.name} onChange={handleChange} />
-                                        <Field label="Số điện thoại" name="phone" type="tel" placeholder="Số điện thoại" value={form.phone} onChange={handleChange} />
-                                    </>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <Field label="Họ và tên" name="name" type="text" placeholder="Nguyễn Văn A" value={form.name} onChange={handleChange} />
+                                        <Field label="Số điện thoại" name="phone" type="tel" placeholder="090 123 4567" value={form.phone} onChange={handleChange} />
+                                    </div>
                                 )}
-                                <Field label="Email" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} />
-                                <Field label="Mật khẩu" name="password" type="password" placeholder="••••••••" value={form.password} onChange={handleChange} />
-
-                                {/* ✅ THÊM: nút quên mật khẩu - chỉ hiện ở mode login */}
-                                {mode === 'login' && (
-                                    <div className="text-right -mt-6">
+                                <Field label="Email" name="email" type="email" placeholder="name@example.com" value={form.email} onChange={handleChange} />
+                                
+                                <div className="space-y-1 relative">
+                                    <Field label="Mật khẩu" name="password" type="password" placeholder="••••••••" value={form.password} onChange={handleChange} />
+                                    {mode === 'login' && (
                                         <button
                                             type="button"
                                             onClick={() => { setMode('forgot'); setError(''); setSuccess('') }}
-                                            className="text-xs text-stone-400 hover:text-[#B7848C] transition"
+                                            className="absolute right-0 top-0 text-[13px] font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors"
                                         >
                                             Quên mật khẩu?
                                         </button>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
 
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-6 bg-[#B7848C] hover:bg-[#a1737a] text-white rounded-full text-lg font-bold uppercase tracking-[0.25em] shadow-2xl shadow-[#B7848C]/30 transition-all active:scale-[0.96] disabled:opacity-50 mt-4"
+                                    className="w-full py-3.5 bg-stone-900 hover:bg-stone-800 dark:bg-white dark:hover:bg-stone-200 text-white dark:text-stone-900 rounded-xl text-sm font-medium transition-all disabled:opacity-50 mt-6 shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
                                 >
-                                    {loading ? 'Đang xử lý...' : (mode === 'login' ? 'Đăng nhập' : 'Tạo tài khoản')}
+                                    {loading ? 'Đang xử lý...' : (mode === 'login' ? 'Đăng nhập' : 'Đăng ký')}
                                 </button>
                             </form>
 
-                            <p className="text-center text-sm text-stone-500 mt-10 tracking-wide">
-                                {mode === 'login' ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'} {' '}
-                                <button type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError('') }} className="font-bold text-stone-900 dark:text-stone-100 border-b-2 border-stone-200 dark:border-stone-700 hover:border-[#B7848C] transition-colors ml-2">
-                                    {mode === 'login' ? 'Đăng ký ngay' : 'Đăng nhập ngay'}
+                            <p className="text-center text-sm text-stone-500 pt-2">
+                                {mode === 'login' ? 'Bạn chưa có tài khoản?' : 'Đã có tài khoản?'} {' '}
+                                <button 
+                                    type="button" 
+                                    onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError('') }} 
+                                    className="font-medium text-stone-900 dark:text-white hover:underline underline-offset-4 decoration-stone-300"
+                                >
+                                    {mode === 'login' ? 'Tạo tài khoản' : 'Đăng nhập'}
                                 </button>
                             </p>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
 
-            <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-stone-900">
+            {/* Right Panel: Image Split */}
+            <div className="hidden lg:block lg:w-[55%] relative overflow-hidden bg-stone-100 dark:bg-stone-900">
                 <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-110 opacity-70"
+                    className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: `url(${perfumeImage})` }}
                 />
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="relative z-10 m-auto text-center px-16 pointer-events-none">
-                    <h2 className="text-7xl lg:text-8xl text-white leading-[1.1] font-normal tracking-tight drop-shadow-2xl" style={{ fontFamily: FONT_STACK.serif }}>
-                        Mua sắm <span className="italic font-light opacity-80">tinh tế,</span><br />
-                        thấy đúng <span className="text-[#B7848C]">giá đẹp.</span>
+                {/* Lớp overlay gradient thay vì bệt đen mờ, giúp text nổi nhưng vẫn thấy rõ hình ảnh */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                
+                <div className="absolute bottom-20 left-20 right-20 z-10 pointer-events-none text-white">
+                    <h2 className="text-[3.5rem] leading-[1.1] font-normal tracking-tight" style={{ fontFamily: FONT_STACK.serif }}>
+                        Mua sắm <span className="italic text-white/80">tinh tế,</span><br />
+                        thấy đúng <span className="text-[#E8C2C7]">giá đẹp.</span>
                     </h2>
+                    <p className="mt-4 text-white/70 text-lg font-light max-w-md">
+                        Trải nghiệm không gian mua sắm tuyển chọn với mức giá được tối ưu hóa tốt nhất cho bạn.
+                    </p>
                 </div>
             </div>
         </div>
     )
 }
 
+// Component Field được thiết kế lại tối giản, sạch sẽ hơn
 function Field({ label, name, type, placeholder, value, onChange }: any) {
     return (
-        <div className="space-y-3 relative group">
-            <label className="block text-[12px] uppercase tracking-[0.3em] font-black text-stone-400 ml-1">
+        <div className="space-y-1.5 w-full">
+            <label className="block text-[13px] font-medium text-stone-700 dark:text-stone-300">
                 {label}
             </label>
             <input
@@ -274,9 +294,8 @@ function Field({ label, name, type, placeholder, value, onChange }: any) {
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                className="w-full px-1 py-4 text-2xl bg-transparent border-b-2 border-stone-200 dark:border-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-300 dark:placeholder-stone-700 focus:outline-none focus:border-[#B7848C] transition-all duration-300 font-medium"
+                className="w-full px-4 py-3 text-sm bg-stone-50 dark:bg-[#141414] border border-stone-200 dark:border-stone-800 rounded-xl text-stone-900 dark:text-white placeholder-stone-400 dark:placeholder-stone-600 focus:outline-none focus:ring-2 focus:ring-stone-900/10 dark:focus:ring-white/10 focus:border-stone-900 dark:focus:border-white transition-all duration-200"
             />
-            <div className="absolute bottom-0 left-0 w-0 h-[3px] bg-[#B7848C] transition-all duration-500 group-focus-within:w-full" />
         </div>
     )
 }
