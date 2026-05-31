@@ -9,5 +9,6 @@
     "[java]": {
         "editor.defaultFormatter": "redhat.java"
     },
-    "redhat.telemetry.enabled": false
+    "redhat.telemetry.enabled": false,
+    "java.debug.settings.onBuildFailureProceed": true
 }
