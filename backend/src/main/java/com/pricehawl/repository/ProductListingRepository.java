@@ -217,6 +217,17 @@ public interface ProductListingRepository
 
     List<ProductListing> findByProductIdAndPlatformNameIgnoreCase(UUID productId, String platformName);
 
+    /**
+     * TỐI ƯU: Lấy danh sách listing kèm theo Platform để tránh lỗi N+1 query.
+     */
+    @Query("""
+        SELECT l FROM ProductListing l 
+        JOIN FETCH l.platform 
+        WHERE l.product.id = :productId 
+        AND l.status <> 'hidden'
+    """)
+    List<ProductListing> findByProductIdWithPlatform(@Param("productId") UUID productId);
+
     List<ProductListing> findByPlatformNameIgnoreCase(String platformName);
 
     long countByPlatformNameIgnoreCase(String platformName);

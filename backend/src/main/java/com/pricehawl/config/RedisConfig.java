@@ -18,33 +18,28 @@ import java.time.Duration;
 public class RedisConfig {
 
     @Bean
-    public CacheManager cacheManager(
-            RedisConnectionFactory factory
-    ) {
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+        // Cấu hình ObjectMapper để hỗ trợ Java 8 Time (LocalDateTime)
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        mapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        GenericJackson2JsonRedisSerializer serializer =
-                new GenericJackson2JsonRedisSerializer(
-                        new ObjectMapper()
-                );
+        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(mapper);
 
-        RedisCacheConfiguration defaultConfig =
-                RedisCacheConfiguration.defaultCacheConfig()
-                        .serializeValuesWith(
-                                RedisSerializationContext
-                                        .SerializationPair
-                                        .fromSerializer(serializer)
-                        );
+        RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(1)) // Mặc định cache 1 tiếng
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
 
-        RedisCacheConfiguration searchConfig =
-                defaultConfig
-                        .entryTtl(Duration.ofMinutes(5));
+        // Cấu hình riêng cho product-search (5 phút)
+        RedisCacheConfiguration searchConfig = defaultConfig.entryTtl(Duration.ofMinutes(5));
+        
+        // Cấu hình riêng cho price-history (10 phút - để giá cập nhật mới liên tục)
+        RedisCacheConfiguration historyConfig = defaultConfig.entryTtl(Duration.ofMinutes(10));
 
         return RedisCacheManager.builder(factory)
                 .cacheDefaults(defaultConfig)
-                .withCacheConfiguration(
-                        "product-search",
-                        searchConfig
-                )
+                .withCacheConfiguration("product-search", searchConfig)
+                .withCacheConfiguration("priceHistory", historyConfig) // Khớp với tên ở @Cacheable
                 .build();
     }
 }
