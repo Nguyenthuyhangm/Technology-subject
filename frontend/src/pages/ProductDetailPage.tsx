@@ -7,6 +7,7 @@ import ProductSummary from '../components/product/ProductSummary';
 import QuickCompareStrip from '../components/product/QuickCompareStrip';
 import PriceChart from '../components/product/PriceChart';
 import AlertModal from '../components/alert/AlertModal';
+import SimilarProductsSection from '../components/product/SimilarProductsSection';
 
 import { priceComparison, priceHistory } from '../service/ProductService';
 import type { PriceComparison, PriceHistory, ProductSearch } from '../types/product';
@@ -24,34 +25,48 @@ export default function ProductDetailPage() {
 
     const [comparison, setComparison] = useState<PriceComparison | null>(null);
     const [history, setHistory] = useState<PriceHistory | null>(null);
-    const [loading, setLoading] = useState(true);
+    
+    // TÁCH LOADING:
+    const [compLoading, setCompLoading] = useState(true); 
+    const [histLoading, setHistLoading] = useState(true);
+    
     const [alertOpen, setAlertOpen] = useState(false);
 
     useEffect(() => {
         if (!id) return;
         let cancelled = false;
-        void (async () => {
-            setLoading(true);
-            try {
-                const [comp, hist] = await Promise.all([
-                    priceComparison(id),
-                    priceHistory(id),
-                ]);
-                if (cancelled) return;
-                setComparison(normalizePriceComparison(comp));
-                setHistory(hist);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        })();
+
+        // Reset trạng thái khi đổi sản phẩm
+        setCompLoading(true);
+        setHistLoading(true);
+
+        // 1. Lấy giá so sánh (Ưu tiên hiện trước)
+        priceComparison(id).then(comp => {
+            if (cancelled) return;
+            setComparison(normalizePriceComparison(comp));
+            setCompLoading(false); // Xong phát hiện bảng giá ngay!
+        }).catch(err => {
+            console.error("Lỗi fetch so sánh giá:", err);
+            if (!cancelled) setCompLoading(false);
+        });
+
+        // 2. Lấy lịch sử giá (Chấp nhận hiện sau)
+        priceHistory(id).then(hist => {
+            if (cancelled) return;
+            setHistory(hist);
+            setHistLoading(false);
+        }).catch(err => {
+            console.error("Lỗi fetch lịch sử giá:", err);
+            if (!cancelled) setHistLoading(false);
+        });
+
         return () => { cancelled = true; };
     }, [id]);
 
     const bestPrice = comparison?.comparisons?.[0]?.price ?? 0;
 
-    if (loading && previewData) {
+    // Giao diện khi ĐANG TẢI GIÁ SÀN (Dùng previewData từ trang Search truyền sang để hiện Skeleton)
+    if (compLoading && previewData) {
         return (
             <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
                 <div className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:px-10">
@@ -83,10 +98,14 @@ export default function ProductDetailPage() {
         );
     }
 
-    if (loading) {
+    // Nếu không có cả previewData lẫn dữ liệu thật
+    if (compLoading) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-[#FCF8F4] dark:bg-[#0F0D0C]">
-                <p className="text-sm text-stone-400 dark:text-stone-500">Đang tải...</p>
+                <div className="text-center">
+                    <div className="mb-4 h-8 w-8 animate-spin rounded-full border-4 border-[#8D7663] border-t-transparent mx-auto"></div>
+                    <p className="text-sm text-stone-400 dark:text-stone-500">Đang tìm giá tốt nhất...</p>
+                </div>
             </div>
         );
     }
@@ -106,6 +125,7 @@ export default function ProductDetailPage() {
 
     return (
         <div className="min-h-screen bg-[#FCF8F4] dark:bg-[#0F0D0C] text-stone-900 dark:text-stone-100" style={{ fontFamily: FONT_STACK.sans }}>
+            {/* Background Decor */}
             <div className="pointer-events-none fixed left-[-10%] top-[-15%] h-[42vw] w-[42vw] rounded-full bg-[#F7ECEE] dark:bg-[#2A1F1A] opacity-30 blur-[120px]" />
             <div className="pointer-events-none fixed bottom-[-10%] right-[-6%] h-[32vw] w-[32vw] rounded-full bg-[#F4EEE7] dark:bg-[#1A1F2A] opacity-90 blur-[120px]" />
 
@@ -123,7 +143,6 @@ export default function ProductDetailPage() {
                         <ProductGallery images={comparison.imageUrls} title={comparison.productName} showLowestBadge={false} />
                     </div>
                     <div>
-                        {/* Truyền onAlertClick xuống ProductSummary */}
                         <ProductSummary
                             comparison={comparison}
                             onAlertClick={() => setAlertOpen(true)}
@@ -135,9 +154,19 @@ export default function ProductDetailPage() {
                     <QuickCompareStrip items={comparison.comparisons} />
                 </section>
 
+                {/* KHU VỰC BIỂU ĐỒ - LOAD RIÊNG */}
                 <section className="mt-16">
-                    {history && <PriceChart platforms={history.platforms} title="Biến động giá gần đây" />}
+                    {histLoading ? (
+                        <div className="h-64 flex flex-col items-center justify-center rounded-[30px] border border-dashed border-stone-200 dark:border-stone-700 bg-white/50 dark:bg-stone-900/50">
+                             <div className="mb-3 h-6 w-6 animate-spin rounded-full border-2 border-stone-300 border-t-stone-500"></div>
+                             <p className="text-stone-400 text-sm italic">Đang phân tích lịch sử giá...</p>
+                        </div>
+                    ) : (
+                        history && <PriceChart platforms={history.platforms} title="Biến động giá gần đây" />
+                    )}
                 </section>
+
+                {id && <SimilarProductsSection key={id} productId={id} />}
             </div>
 
             {id && (

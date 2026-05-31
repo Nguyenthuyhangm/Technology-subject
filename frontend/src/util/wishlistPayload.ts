@@ -83,5 +83,6 @@ export function wishlistDisplayFromPayload(payload: WishlistAddPayload): Wishlis
   }
 
   // Fallback
-  return { productId, id: String(payload.id), name: (payload as any).name ?? '' };
+  const anyPayload = payload as any;
+return { productId, id: String(anyPayload.id), name: anyPayload.name ?? '' };
 }

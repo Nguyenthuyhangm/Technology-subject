@@ -31,164 +31,216 @@ public interface ProductListingRepository
             """)
     List<ProductListing> findByProductIdInAndPlatformNameInIgnoreCase(
             @Param("productIds") Collection<UUID> productIds,
-            @Param("platforms") Collection<String> platformsLowercased
-    );
+            @Param("platforms") Collection<String> platformsLowercased);
 
     // =========================
     // LOGIC MỚI - AUTO CRAWL GIAI ĐOẠN 1
     // =========================
 
-    /**
-     * Lấy listing Cocolux thuộc wishlist và đã quá hạn refresh.
-     *
-     * Vì Wishlist entity của bạn dùng:
-     * - private UUID productId;
-     *
-     * nên query phải dùng:
-     * - w.productId = p.id
-     *
-     * KHÔNG được dùng:
-     * - w.product.id
-     */
     @Query("""
-        SELECT pl
-        FROM ProductListing pl
-        JOIN FETCH pl.product p
-        JOIN FETCH pl.platform pf
-        WHERE LOWER(pf.name) = LOWER(:platformName)
-          AND EXISTS (
-              SELECT 1
-              FROM Wishlist w
-              WHERE w.productId = p.id
-          )
-          AND (
-              pl.crawlTime IS NULL
-              OR pl.crawlTime <= :thresholdTime
-          )
-        ORDER BY pl.crawlTime ASC NULLS FIRST, pl.updatedAt ASC
-    """)
+                SELECT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE LOWER(pf.name) = LOWER(:platformName)
+                  AND EXISTS (
+                      SELECT 1
+                      FROM Wishlist w
+                      WHERE w.productId = p.id
+                  )
+                  AND (
+                      pl.crawlTime IS NULL
+                      OR pl.crawlTime <= :thresholdTime
+                  )
+                ORDER BY pl.crawlTime ASC NULLS FIRST, pl.updatedAt ASC
+            """)
     List<ProductListing> findListingsForWishlistRefresh(
             @Param("platformName") String platformName,
-            @Param("thresholdTime") LocalDateTime thresholdTime
-    );
+            @Param("thresholdTime") LocalDateTime thresholdTime);
 
-    /**
-     * Lấy listing Cocolux KHÔNG thuộc wishlist và đã quá hạn refresh.
-     */
     @Query("""
-        SELECT pl
-        FROM ProductListing pl
-        JOIN FETCH pl.product p
-        JOIN FETCH pl.platform pf
-        WHERE LOWER(pf.name) = LOWER(:platformName)
-          AND NOT EXISTS (
-              SELECT 1
-              FROM Wishlist w
-              WHERE w.productId = p.id
-          )
-          AND (
-              pl.crawlTime IS NULL
-              OR pl.crawlTime <= :thresholdTime
-          )
-        ORDER BY pl.crawlTime ASC NULLS FIRST, pl.updatedAt ASC
-    """)
+                SELECT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE LOWER(pf.name) = LOWER(:platformName)
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM Wishlist w
+                      WHERE w.productId = p.id
+                  )
+                  AND (
+                      pl.crawlTime IS NULL
+                      OR pl.crawlTime <= :thresholdTime
+                  )
+                ORDER BY pl.crawlTime ASC NULLS FIRST, pl.updatedAt ASC
+            """)
     List<ProductListing> findListingsForNormalRefresh(
             @Param("platformName") String platformName,
-            @Param("thresholdTime") LocalDateTime thresholdTime
-    );
+            @Param("thresholdTime") LocalDateTime thresholdTime);
 
     @Query("""
-    SELECT pl
-    FROM ProductListing pl
-    JOIN FETCH pl.product p
-    JOIN FETCH pl.platform pf
-    WHERE p.id IN :productIds
-""")
+                SELECT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE p.id IN :productIds
+            """)
     List<ProductListing> findByProductIds(@Param("productIds") List<UUID> productIds);
 
-    // ===================================================
-// THÊM VÀO ProductListingRepository.java
-// (thêm vào cuối, sau các method hiện có)
-// ===================================================
-
     // =========================
-    // AUTO CRAWL - PRIORITY QUERIES
+    // AUTO CRAWL - PRIORITY QUERIES (có filter crawl_time, dùng cho scheduler)
     // =========================
 
-    /**
-     * HIGH priority: listing có price_alert active, đến hạn refresh (mỗi 1h).
-     */
     @Query("""
-        SELECT DISTINCT pl
-        FROM ProductListing pl
-        JOIN FETCH pl.product p
-        JOIN FETCH pl.platform pf
-        WHERE EXISTS (
-            SELECT 1 FROM PriceAlert a
-            WHERE a.productId = p.id
-              AND a.isActive = true
-        )
-        AND (
-            pl.crawlTime IS NULL
-            OR pl.crawlTime <= :thresholdTime
-        )
-        ORDER BY pl.crawlTime ASC NULLS FIRST
-    """)
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                AND (
+                    pl.crawlTime IS NULL
+                    OR pl.crawlTime <= :thresholdTime
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
     List<ProductListing> findHighPriorityListings(
-            @Param("thresholdTime") LocalDateTime thresholdTime
-    );
+            @Param("thresholdTime") LocalDateTime thresholdTime);
 
-    /**
-     * MEDIUM priority: listing trong wishlist (nhưng KHÔNG có alert), mỗi 6h.
-     */
     @Query("""
-        SELECT DISTINCT pl
-        FROM ProductListing pl
-        JOIN FETCH pl.product p
-        JOIN FETCH pl.platform pf
-        WHERE EXISTS (
-            SELECT 1 FROM Wishlist w
-            WHERE w.productId = p.id
-        )
-        AND NOT EXISTS (
-            SELECT 1 FROM PriceAlert a
-            WHERE a.productId = p.id
-              AND a.isActive = true
-        )
-        AND (
-            pl.crawlTime IS NULL
-            OR pl.crawlTime <= :thresholdTime
-        )
-        ORDER BY pl.crawlTime ASC NULLS FIRST
-    """)
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE EXISTS (
+                    SELECT 1 FROM Wishlist w
+                    WHERE w.productId = p.id
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                AND (
+                    pl.crawlTime IS NULL
+                    OR pl.crawlTime <= :thresholdTime
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
     List<ProductListing> findMediumPriorityListings(
-            @Param("thresholdTime") LocalDateTime thresholdTime
-    );
+            @Param("thresholdTime") LocalDateTime thresholdTime);
+
+    @Query("""
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM Wishlist w
+                    WHERE w.productId = p.id
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                AND (
+                    pl.crawlTime IS NULL
+                    OR pl.crawlTime <= :thresholdTime
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
+    List<ProductListing> findLowPriorityListings(
+            @Param("thresholdTime") LocalDateTime thresholdTime);
+
+    // =========================
+    // FORCE QUERIES (không filter crawl_time, dùng khi admin bấm Trigger)
+    // =========================
+
+    @Query("""
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
+    List<ProductListing> findAllHighPriorityListings();
+
+    @Query("""
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE EXISTS (
+                    SELECT 1 FROM Wishlist w
+                    WHERE w.productId = p.id
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
+    List<ProductListing> findAllMediumPriorityListings();
+
+    @Query("""
+                SELECT DISTINCT pl
+                FROM ProductListing pl
+                JOIN FETCH pl.product p
+                JOIN FETCH pl.platform pf
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM Wishlist w
+                    WHERE w.productId = p.id
+                )
+                AND NOT EXISTS (
+                    SELECT 1 FROM PriceAlert a
+                    WHERE a.productId = p.id
+                      AND a.isActive = true
+                )
+                ORDER BY pl.crawlTime ASC NULLS FIRST
+            """)
+    List<ProductListing> findAllLowPriorityListings();
+
+    // =========================
+    // MISC
+    // =========================
+
+    List<ProductListing> findByProductIdAndPlatformNameIgnoreCase(UUID productId, String platformName);
 
     /**
-     * LOW priority: listing thường (không wishlist, không alert), mỗi 24h.
+     * TỐI ƯU: Lấy danh sách listing kèm theo Platform để tránh lỗi N+1 query.
      */
     @Query("""
-        SELECT DISTINCT pl
-        FROM ProductListing pl
-        JOIN FETCH pl.product p
-        JOIN FETCH pl.platform pf
-        WHERE NOT EXISTS (
-            SELECT 1 FROM Wishlist w
-            WHERE w.productId = p.id
-        )
-        AND NOT EXISTS (
-            SELECT 1 FROM PriceAlert a
-            WHERE a.productId = p.id
-              AND a.isActive = true
-        )
-        AND (
-            pl.crawlTime IS NULL
-            OR pl.crawlTime <= :thresholdTime
-        )
-        ORDER BY pl.crawlTime ASC NULLS FIRST
+        SELECT l FROM ProductListing l 
+        JOIN FETCH l.platform 
+        WHERE l.product.id = :productId 
+        AND l.status <> 'hidden'
     """)
-    List<ProductListing> findLowPriorityListings(
-            @Param("thresholdTime") LocalDateTime thresholdTime
-    );
+    List<ProductListing> findByProductIdWithPlatform(@Param("productId") UUID productId);
+
+    List<ProductListing> findByPlatformNameIgnoreCase(String platformName);
+
+    long countByPlatformNameIgnoreCase(String platformName);
+
+    @Query("SELECT COUNT(pl) FROM ProductListing pl WHERE LOWER(pl.platformName) = LOWER(:platform) AND pl.crawlTime > :since")
+    long countByPlatformNameIgnoreCaseAndCrawlTimeAfter(@Param("platform") String platform, @Param("since") LocalDateTime since);
+
+    @Query("SELECT MAX(pl.crawlTime) FROM ProductListing pl WHERE LOWER(pl.platformName) = LOWER(:platform)")
+    LocalDateTime findMaxCrawlTimeByPlatform(@Param("platform") String platform);
+
+    List<ProductListing> findByInStockFalse();
+
+    List<ProductListing> findByInStockFalseAndUpdatedAtBefore(LocalDateTime before);
+
+    long countByInStockFalseAndUpdatedAtBefore(LocalDateTime before);
 }

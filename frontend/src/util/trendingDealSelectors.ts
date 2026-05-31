@@ -59,16 +59,14 @@ export function trendingDealToProductSearch(d: TrendingDealDto): ProductSearch {
   return {
     id: d.productId,
     name: d.productName,
-    brand: '',
-    model: '',
-    category: '',
-    images: image ? [image] : [],
-    description: '',
-    categoryName: '',
     brandName: '',
-    score: clamp01(d.dealScore ?? 0),
+    categoryName: '',
     imageUrl: image,
-    platforms: [platform],
+    bestPrice: n.price > 0 ? n.price : 0,
+    originalPrice: n.originalPrice,
+    discountPct: n.discountPct,
+    bestPlatform: d.platformName,
+    score: clamp01(d.dealScore ?? 0),
   }
 }
 

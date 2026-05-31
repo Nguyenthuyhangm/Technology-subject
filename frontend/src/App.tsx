@@ -13,10 +13,10 @@ import TrendingDealsPage from './pages/TrendingDealsPage'
 import AuthPage from './pages/AuthPage'
 import ProfilePage from './pages/ProfilePage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
-import PaymentPage from "./pages/PaymentPage";
+import AdminPage from './pages/AdminPage'
+import PaymentPage from './pages/PaymentPage'
 
-export default function App(): JSX.Element {
-  return (
+export default function App(): React.ReactElement {  return (
     <BrowserRouter>
       <AuthProvider>
         <WishlistProvider>
@@ -39,6 +39,7 @@ export default function App(): JSX.Element {
               <Route path="/deals" element={<DealsPage />} />
               <Route path="/trending-deals" element={<TrendingDealsPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="/payment/qr" element={<PaymentPage />} />
             </Route>
 

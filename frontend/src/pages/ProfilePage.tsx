@@ -27,6 +27,12 @@ function isPremiumActive(expire?: string | null): boolean {
     return new Date(expire) > new Date()
 }
 
+function daysRemaining(expire?: string | null): number {
+    if (!expire) return 0
+    const diff = new Date(expire).getTime() - Date.now()
+    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)))
+}
+
 function Toast({ message, type }: { message: string; type: 'success' | 'error' }) {
     if (!message) return null
     return (
@@ -94,11 +100,8 @@ export default function ProfilePage() {
     const { user, session, refreshProfile } = useAuth()
     const navigate = useNavigate()
     const [paymentOpen, setPaymentOpen] = useState(false);
-    const [selectedPlan, setSelectedPlan] =
-        useState<"MONTHLY" | "QUARTERLY" | "YEARLY">(
-            "MONTHLY"
-        );
-    const [paymentStep, setPaymentStep] = useState<1 | 2>(1);
+    const [paymentLoading, setPaymentLoading] = useState(false);
+    const [hasPendingOrder, setHasPendingOrder] = useState(false);
     const [apiProfile, setApiProfile] = useState<UserProfile | null>(null)
     const [fetchLoading, setFetchLoading] = useState(true)
     const [fetchError, setFetchError] = useState('')
@@ -140,6 +143,21 @@ export default function ProfilePage() {
     }, [session?.access_token])
 
     useEffect(() => { fetchProfileFromAPI() }, [fetchProfileFromAPI])
+
+    // Check xem có order đang chờ duyệt không — poll mỗi 15s
+    useEffect(() => {
+        if (!session?.access_token) return
+        const checkPending = () => {
+            fetch(`${BACKEND_URL}/api/payments/my-pending`, {
+                headers: { Authorization: `Bearer ${session.access_token}` },
+            }).then(res => res.ok ? res.json() : null)
+              .then(data => { if (data != null) setHasPendingOrder(data.hasPending) })
+              .catch(() => {})
+        }
+        checkPending()
+        const interval = setInterval(checkPending, 15_000)
+        return () => clearInterval(interval)
+    }, [session?.access_token])
 
     const showSuccess = (msg: string) => {
         setSuccess(msg); setError('')
@@ -291,40 +309,51 @@ export default function ProfilePage() {
 
                             <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
                                 {apiProfile?.plan === 'premium'
-                                    ? `Hết hạn: ${formatDate((apiProfile as any)?.premium_expires_at)}`
+                                    ? `Hết hạn: ${formatDate(apiProfile.premium_expires_at)}`
                                     : 'Nâng cấp để mở khóa unlimited alerts, wishlist và priority crawl'}
                             </p>
 
                             {apiProfile?.plan === 'premium' && (
-                                <p
-                                    className={`mt-2 text-xs font-medium ${
-                                        isPremiumActive((apiProfile as any)?.premium_expires_at)
+                                <div className="mt-2 flex items-center gap-2">
+                                    <p className={`text-xs font-medium ${
+                                        isPremiumActive(apiProfile.premium_expires_at)
                                             ? 'text-emerald-600 dark:text-emerald-400'
                                             : 'text-red-500 dark:text-red-400'
-                                    }`}
-                                >
-                                    {isPremiumActive((apiProfile as any)?.premium_expires_at)
-                                        ? 'Đang hoạt động'
-                                        : 'Đã hết hạn'}
-                                </p>
+                                    }`}>
+                                        {isPremiumActive(apiProfile.premium_expires_at)
+                                            ? 'Đang hoạt động'
+                                            : 'Đã hết hạn'}
+                                    </p>
+                                    {isPremiumActive(apiProfile.premium_expires_at) && (
+                                        <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+                                            Còn {daysRemaining(apiProfile.premium_expires_at)} ngày
+                                        </span>
+                                    )}
+                                </div>
                             )}
                         </div>
 
-                        <button
-                            onClick={() => {
-                                setPaymentOpen(true);
-                                setPaymentStep(1);
-                            }}
-                            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-                                apiProfile?.plan === 'premium'
-                                    ? 'border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
-                                    : 'bg-[#B7848C] text-white hover:opacity-90'
-                            }`}
-                        >
-                            {apiProfile?.plan === 'premium'
-                                ? 'Renew Plan'
-                                : 'Upgrade'}
-                        </button>
+                        {/* Nút Upgrade — ẩn khi premium còn hạn hoặc đang chờ duyệt */}
+                        {hasPendingOrder ? (
+                            <span className="rounded-full border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 px-4 py-2.5 text-xs font-semibold text-amber-700 dark:text-amber-400">
+                                ⏳ Đang chờ duyệt
+                            </span>
+                        ) : apiProfile?.plan === 'premium' && isPremiumActive(apiProfile.premium_expires_at) ? (
+                            <span className="rounded-full border border-stone-200 dark:border-stone-700 px-4 py-2.5 text-xs font-semibold text-stone-400 dark:text-stone-500 cursor-not-allowed">
+                                Còn hiệu lực
+                            </span>
+                        ) : (
+                            <button
+                                onClick={() => setPaymentOpen(true)}
+                                className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                                    apiProfile?.plan === 'premium'
+                                        ? 'border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
+                                        : 'bg-[#B7848C] text-white hover:opacity-90'
+                                }`}
+                            >
+                                {apiProfile?.plan === 'premium' ? 'Renew Plan' : 'Upgrade'}
+                            </button>
+                        )}
                     </div>
                 </section>
                 {/* Toast */}
@@ -505,16 +534,36 @@ export default function ProfilePage() {
             </main>
             <PaymentMethodModal
                 open={paymentOpen}
-                onClose={() =>
-                    setPaymentOpen(false)
-                }
-                onConfirm={(method) => {
-                    console.log("PAY:", method);
-                    setPaymentOpen(false);
-                    navigate("/payment/qr");
-                    return;
-                    // bước sau gọi backend
-                    // handleUpgradePlan(method)
+                loading={paymentLoading}
+                onClose={() => setPaymentOpen(false)}
+                onConfirm={async (plan) => {
+                    if (!session?.access_token) return
+                    setPaymentLoading(true)
+                    try {
+                        const res = await fetch(`${BACKEND_URL}/api/payments/create`, {
+                            method: 'POST',
+                            headers: {
+                                Authorization: `Bearer ${session.access_token}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ plan, method: 'BANK_QR' }),
+                        })
+                        if (!res.ok) throw new Error(`Lỗi ${res.status}`)
+                        const order = await res.json()
+                        setPaymentOpen(false)
+                        navigate('/payment/qr', {
+                            state: {
+                                orderId: order.id,
+                                transferCode: order.transferCode,
+                                amount: order.amount,
+                                plan,
+                            },
+                        })
+                    } catch (e: any) {
+                        showError(e.message ?? 'Không thể tạo đơn thanh toán')
+                    } finally {
+                        setPaymentLoading(false)
+                    }
                 }}
             />
         </div>

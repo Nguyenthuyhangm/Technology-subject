@@ -32,8 +32,13 @@ export interface ProductSearch {
   id: string;
 
   name: string;
-
+ brand?: string;
+    model?: string;
+    category?: string;
+    subcategory?: string;
   brandName: string;
+    images?: string[];
+    description?: string;
 
   categoryName: string;
 
@@ -48,6 +53,14 @@ export interface ProductSearch {
   bestPlatform: string;
 
   score: number;
+  platforms?: {
+        platform: string;
+        url: string;
+        platformImageUrl: string;
+        finalPrice: number;
+        isOfficial: boolean;
+    }[];
+  
 }
 
 // Map từ PriceComparisonResponse

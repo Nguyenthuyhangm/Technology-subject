@@ -6,20 +6,27 @@ spring:
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      maximum-pool-size: 3
-      minimum-idle: 1
-      idle-timeout: 10000
-      max-lifetime: 30000
+      # Tăng số lượng kết nối để không phải xếp hàng chờ (Queueing)
+      maximum-pool-size: 6
+      minimum-idle: 5
+      # CỰC KỲ QUAN TRỌNG: Giữ kết nối luôn "nóng" sang Hàn Quốc để giảm ping
+      keepalive-time: 30000 
+      idle-timeout: 60000
+      max-lifetime: 1800000
       connection-timeout: 30000
 
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
+        # Tối ưu hóa việc lấy dữ liệu hàng loạt
+        jdbc.batch_size: 25
+        order_inserts: true
+        order_updates: true
 
   elasticsearch:
     uris: http://localhost:9200
@@ -36,20 +43,13 @@ spring:
 server:
   port: 8080
 
-supabase:
-  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
-  api:
-    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
-
 logging:
   level:
     root: WARN
     org.springframework.security: WARN
-    # com.pricehawl.service.PriceRefreshScheduler: INFO
-    # com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
-    # com.pricehawl.service.crawler: DEBUG
-    # com.pricehawl.service.AlertQueueConsumer: DEBUG
-
+    # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
+    com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
+    com.pricehawl.service.crawler: INFO
 
 pricehawk:
   debug:
@@ -57,12 +57,30 @@ pricehawk:
 
   scheduler:
     price-refresh:
-      enabled: true
+      enabled: false
       cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
       max-items-per-run: 50
+
   crawler:
     watsons-script: "backend/watsons-price.js"
+    cocolux-script: "backend/cocolux-price.js"
+    thread-pool-size: 5
 
 resend:
   api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+
+ai:
+  base-url: https://generativelanguage.googleapis.com
+  api-key: AIzaSyDPtoRBuHYLFfDmLSj9PvvcWuFXzlSnqZA
+  model: gemini-2.5-flash
+  enable-search: true
+
+# AccessTrade & Other configs
+accesstrade:
+  api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
+
+supabase:
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
+  api:
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"

@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -102,13 +103,18 @@ public class PriceAlertService {
 
     public List<PriceAlertResponse> getByUser(String userId) {
         UUID userUuid = UUID.fromString(userId);
-        return alertRepository.findByUserIdOrderByCreatedAtDesc(userUuid)
-            .stream()
-            .map(alert -> {
-                Product product = productRepository.findById(alert.getProductId()).orElse(null);
-                return toResponse(alert, product);
-            })
-            .collect(Collectors.toList());
+        List<PriceAlert> alerts = alertRepository.findByUserIdOrderByCreatedAtDesc(userUuid);
+        if (alerts.isEmpty()) return List.of();
+
+        // Batch load tất cả products trong 1 query (tránh N+1)
+        List<UUID> productIds = alerts.stream()
+                .map(PriceAlert::getProductId).distinct().toList();
+        Map<UUID, Product> productMap = productRepository.findAllByIdIn(productIds)
+                .stream().collect(Collectors.toMap(Product::getId, p -> p));
+
+        return alerts.stream()
+                .map(alert -> toResponse(alert, productMap.get(alert.getProductId())))
+                .collect(Collectors.toList());
     }
 
     @Transactional

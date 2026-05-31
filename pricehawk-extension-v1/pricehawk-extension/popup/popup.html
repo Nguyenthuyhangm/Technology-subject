@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PriceHawk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 300px;
+      min-height: 200px;
+      background: #fdf8f5;
+      color: #5a3e3e;
+      font-family: 'Sora', 'Segoe UI', sans-serif;
+      font-size: 13px;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #f9ede8 0%, #fdf0ea 60%, #fef8f0 100%);
+      border-bottom: 1px solid #ecd8cf;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    /* Gold shimmer line at top */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c9a84c, #e8c97a, #c9a84c, transparent);
+    }
+
+    .logo-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f5e6e0, #fdf0ea);
+      border: 2px solid #d4a89a;
+      box-shadow: 0 2px 8px #c9a84c30, 0 0 0 3px #f5e0d820;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-wrap img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .header-text h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #7a4a4a;
+      letter-spacing: 0.3px;
+    }
+
+    .header-text p {
+      font-size: 10px;
+      color: #b08878;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* ── Status ── */
+    .status-section {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f0ddd8;
+      background: #fffaf8;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #9a7070;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #b5d5a0;
+      flex-shrink: 0;
+      animation: blink 2s ease-in-out infinite;
+      box-shadow: 0 0 4px #82c46080;
+    }
+
+    .dot.inactive {
+      background: #d4b8b0;
+      animation: none;
+      box-shadow: none;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Platforms ── */
+    .platforms {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0ddd8;
+      background: #fdf8f5;
+    }
+
+    .platforms-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #c9a84c;
+      margin-bottom: 9px;
+    }
+
+    .platform-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: #f5ece8;
+      color: #c0a090;
+      border: 1px solid #e8d0c8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, #fdf0e8, #fce8f0);
+      color: #a06060;
+      border-color: #d4a08880;
+      box-shadow: 0 1px 4px #c9a84c18;
+    }
+
+    /* ── Info box ── */
+    .info-box {
+      padding: 12px 16px 14px;
+      background: #fdf8f5;
+    }
+
+    .info-box p {
+      font-size: 11px;
+      color: #9a8080;
+      line-height: 1.7;
+    }
+
+    .info-box .highlight {
+      color: #c9a84c;
+      font-weight: 700;
+    }
+
+    /* ── Auth section ── */
+    .auth-section {
+      padding: 9px 16px;
+      border-bottom: 1px solid #f0ddd8;
+      background: #fdf8f5;
+    }
+
+    .auth-logged-in {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auth-avatar {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .auth-email {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6a4040;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+
+    .auth-status-ok {
+      font-size: 10px;
+      color: #5a9a6a;
+      margin-top: 1px;
+    }
+
+    .auth-logged-out {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .auth-logged-out span {
+      font-size: 11px;
+      color: #b09090;
+    }
+
+    .auth-login-btn {
+      font-size: 10px;
+      font-weight: 600;
+      color: #c9a84c;
+      text-decoration: none;
+      padding: 3px 10px;
+      border: 1px solid #d4b870;
+      border-radius: 12px;
+      background: #fffbf0;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .auth-login-btn:hover {
+      background: #fef4cc;
+      border-color: #c9a84c;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 9px 16px;
+      border-top: 1px solid #f0ddd8;
+      text-align: center;
+      font-size: 10px;
+      color: #c4a898;
+      background: linear-gradient(135deg, #fdf0ea, #fef8f4);
+      letter-spacing: 0.2px;
+    }
+
+    .footer .brand { color: #c9a84c; font-weight: 700; }
+    .footer .heart { color: #d4a5a5; font-size: 11px; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <img src="../assets/icons/jellyfish-ai.png" alt="Jellyfish">
+    </div>
+    <div class="header-text">
+      <h1>PriceHawk</h1>
+      <p>So sánh giá thông minh ✦</p>
+    </div>
+  </div>
+
+  <div class="status-section">
+    <div class="status-row" id="status-row">
+      <div class="dot inactive" id="status-dot"></div>
+      <span id="status-text">Mở trang sản phẩm để bắt đầu</span>
+    </div>
+  </div>
+
+  <div class="auth-section" id="auth-section">
+    <!-- populated by popup.js -->
+  </div>
+
+  <div class="platforms">
+    <div class="platforms-label">✦ Hỗ trợ các sàn</div>
+    <div class="platform-chips">
+      <span class="chip">🛒 Shopee</span>
+      <span class="chip">🛍️ Lazada</span>
+      <span class="chip active">📦 Tiki</span>
+      <span class="chip active">🌿 Hasaki</span>
+      <span class="chip active">💊 Watsons</span>
+      <span class="chip active">💄 Guardian</span>
+      <span class="chip active">✨ Cocolux</span>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p>
+      Mở trang sản phẩm bất kỳ trên các sàn được hỗ trợ.<br/>
+      <span class="highlight">PriceHawk</span> sẽ tự động hiển thị panel so sánh giá ở góc màn hình.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="brand">Price✦Hawk</span> v1.0 &nbsp;<span class="heart">♡</span>&nbsp; Made with love
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
