@@ -5,9 +5,8 @@ import './index.css'
 import { WishlistProvider } from './context/WishlistProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+    // Bỏ thẻ <React.StrictMode> đi
     <WishlistProvider>
       <App />
     </WishlistProvider>
-  </React.StrictMode>
 );

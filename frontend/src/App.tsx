@@ -16,8 +16,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import AdminPage from './pages/AdminPage'
 import PaymentPage from './pages/PaymentPage'
 
-export default function App(): JSX.Element {
-  return (
+export default function App(): React.ReactElement {  return (
     <BrowserRouter>
       <AuthProvider>
         <WishlistProvider>

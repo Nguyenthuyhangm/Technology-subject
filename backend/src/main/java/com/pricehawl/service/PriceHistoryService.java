@@ -2,7 +2,6 @@ package com.pricehawl.service;
 
 import com.pricehawl.dto.PriceHistoryResponse;
 import com.pricehawl.entity.PriceRecord;
-import com.pricehawl.repository.PlatformRepository;
 import com.pricehawl.repository.PriceRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,27 +18,37 @@ import java.util.stream.Collectors;
 public class PriceHistoryService {
 
     private final PriceRecordRepository priceRecordRepository;
-    private final PlatformRepository platformRepository;
+    
 
     public PriceHistoryResponse getPriceHistory(UUID productId) {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
 
+        // 1. Fetch dữ liệu một lần duy nhất (Repository đã có JOIN FETCH platform)
         List<PriceRecord> priceRecords = priceRecordRepository
             .findPriceHistoryLast30Days(productId, thirtyDaysAgo);
 
-        // Nhóm theo platform_id (lấy từ ProductListing)
+        if (priceRecords.isEmpty()) {
+            return PriceHistoryResponse.builder()
+                .productId(productId)
+                .platforms(List.of())
+                .build();
+        }
+
+        // 2. Nhóm theo Platform ID
         Map<Integer, List<PriceRecord>> groupedByPlatform = priceRecords.stream()
             .collect(Collectors.groupingBy(pr -> pr.getProductListing().getPlatform().getId()));
 
-        // Lấy động từ DB thay vì hardcode [1, 2, 3]
-        List<PriceHistoryResponse.PlatformPriceData> platformData = groupedByPlatform.keySet().stream()
-            .map(platformId -> {
-                String platformName = platformRepository.findById(platformId)
-                    .map(p -> p.getName())
-                    .orElse("Unknown");
+        // 3. Map sang DTO mà KHÔNG gọi thêm Repository
+        List<PriceHistoryResponse.PlatformPriceData> platformData = groupedByPlatform.entrySet().stream()
+            .map(entry -> {
+                Integer platformId = entry.getKey();
+                List<PriceRecord> platformRecords = entry.getValue();
+                
+                // Lấy thông tin Platform trực tiếp từ Record đầu tiên (đã được JOIN FETCH)
+                var firstRecord = platformRecords.get(0);
+                String platformName = firstRecord.getProductListing().getPlatform().getName();
 
-                List<PriceRecord> platformRecords = groupedByPlatform.get(platformId);
-
+                // Chuyển đổi danh sách các điểm giá
                 List<PriceHistoryResponse.PricePoint> pricePoints = platformRecords.stream()
                     .map(pr -> PriceHistoryResponse.PricePoint.builder()
                         .crawledAt(pr.getCrawledAt())
@@ -47,19 +56,17 @@ public class PriceHistoryService {
                         .build())
                     .collect(Collectors.toList());
 
-                Integer latestPrice = platformRecords.stream()
-                    .max(Comparator.comparing(PriceRecord::getCrawledAt))
-                    .map(PriceRecord::getPrice)
-                    .orElse(null);
+                // Tìm giá mới nhất
+                Integer latestPrice = platformRecords.get(platformRecords.size() - 1).getPrice();
 
-                Double averagePrice30Days = platformRecords.isEmpty()
-                    ? null
-                    : platformRecords.stream()
-                        .collect(Collectors.averagingInt(PriceRecord::getPrice));
+                // Tính toán trung bình cộng 30 ngày
+                double averagePrice30Days = platformRecords.stream()
+                        .mapToInt(PriceRecord::getPrice)
+                        .average()
+                        .orElse(0.0);
 
-                Boolean fakePriceIncreaseWarning = latestPrice != null
-                    && averagePrice30Days != null
-                    && latestPrice > averagePrice30Days;
+                // Cảnh báo tăng giá ảo (Latest > Average)
+                boolean fakePriceIncreaseWarning = latestPrice > averagePrice30Days && averagePrice30Days > 0;
 
                 return PriceHistoryResponse.PlatformPriceData.builder()
                     .platformId(platformId)

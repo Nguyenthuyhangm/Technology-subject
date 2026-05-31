@@ -6,10 +6,13 @@ spring:
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      maximum-pool-size: 3
-      minimum-idle: 1
-      idle-timeout: 10000
-      max-lifetime: 30000
+      # Tăng số lượng kết nối để không phải xếp hàng chờ (Queueing)
+      maximum-pool-size: 6
+      minimum-idle: 5
+      # CỰC KỲ QUAN TRỌNG: Giữ kết nối luôn "nóng" sang Hàn Quốc để giảm ping
+      keepalive-time: 30000 
+      idle-timeout: 60000
+      max-lifetime: 1800000
       connection-timeout: 30000
 
   jpa:
@@ -20,6 +23,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
+        # Tối ưu hóa việc lấy dữ liệu hàng loạt
+        jdbc.batch_size: 25
+        order_inserts: true
+        order_updates: true
 
   elasticsearch:
     uris: http://localhost:9200
@@ -36,32 +43,13 @@ spring:
 server:
   port: 8080
 
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-    enabled: true
-  swagger-ui:
-    path: /swagger-ui.html
-    enabled: true
-    operations-sorter: method
-    tags-sorter: alpha
-    display-request-duration: true
-  show-actuator: false
-
-supabase:
-  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
-  api:
-    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
-
 logging:
   level:
     root: WARN
     org.springframework.security: WARN
-    # com.pricehawl.service.PriceRefreshScheduler: INFO
+    # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
-    # com.pricehawl.service.crawler.CrawlerRateLimiter: DEBUG
-    com.pricehawl.service.crawler: DEBUG
-    # com.pricehawl.service.AlertQueueConsumer: DEBUG
+    com.pricehawl.service.crawler: INFO
 
 pricehawk:
   debug:
@@ -88,5 +76,11 @@ ai:
   model: ${AI_MODEL:gemini-2.5-flash}
   enable-search: true
 
+# AccessTrade & Other configs
 accesstrade:
   api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
+
+supabase:
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
+  api:
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"

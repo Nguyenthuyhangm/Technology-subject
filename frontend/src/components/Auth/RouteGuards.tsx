@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-
-export function ProtectedRoute(): JSX.Element {
+import React from 'react';
+export function ProtectedRoute(): React.ReactElement{
     const { session, loading } = useAuth()
 
     if (loading) {
@@ -13,7 +13,7 @@ export function ProtectedRoute(): JSX.Element {
     return <Outlet />
 }
 
-export function GuestRoute(): JSX.Element {
+export function GuestRoute(): React.ReactElement {
     const { session, loading } = useAuth()
 
     if (loading) return <div>Loading...</div>
