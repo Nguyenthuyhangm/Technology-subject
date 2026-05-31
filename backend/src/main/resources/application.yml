@@ -72,7 +72,7 @@ resend:
 
 ai:
   base-url: https://generativelanguage.googleapis.com
-  api-key: AIzaSyDPtoRBuHYLFfDmLSj9PvvcWuFXzlSnqZA
+  api-key: AQ.Ab8RN6IR3KQZcinpjM6G7UdfSwl9RXfXXO8JEknANTOX960EOQ
   model: gemini-2.5-flash
   enable-search: true
 
