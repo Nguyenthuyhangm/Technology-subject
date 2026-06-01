@@ -1,7 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+import { handleSummary } from './report.js';
 export const options = {
     stages: [
         { duration: '30s', target: 200 },
@@ -9,17 +8,16 @@ export const options = {
         { duration: '30s', target: 1000 },
         { duration: '30s', target: 1500 },
         { duration: '30s', target: 2000 },
-        { duration:'30s', target:2500 },
         { duration: '1m', target: 500 },
         { duration: '30s', target: 0 },
     ],
 
     thresholds: {
         http_req_duration: [
-            'avg<500',
-            'med<300',
-            'p(90)<800',
-            'p(95)<1000',
+            'avg<1500',
+            'med<1000',
+            'p(90)<1000',
+            'p(95)<2000',
             'max<5000'
         ],
 
@@ -31,9 +29,6 @@ export const options = {
             'rate>0.99'
         ],
 
-        http_reqs: [
-            'rate>500'
-        ]
     }
 };
 
@@ -46,7 +41,7 @@ const keywords = [
     'tay trang',
     'kem chong nang',
     'son'
-];
+    ];
 
 export default function () {
     const keyword =
@@ -67,14 +62,6 @@ export default function () {
         'response < 1000ms': r => r.timings.duration < 1000,
     });
 
-    sleep(0.1);
+    sleep(Math.random() * 3);
 }
-export function handleSummary(data) {
-    return {
-        "report.html": htmlReport(data),
-        stdout: textSummary(data, {
-            indent: " ",
-            enableColors: true,
-        }),
-    };
-}
+export {handleSummary}

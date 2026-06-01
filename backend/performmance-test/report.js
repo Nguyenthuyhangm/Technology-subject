@@ -1,109 +1,99 @@
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+import { textSummary }from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+
 export function handleSummary(data) {
 
-    const total =
-        data.metrics.http_reqs.values.count;
+const scenario =
+__ENV.SCENARIO || "search";
 
-    const failed =
-        (data.metrics.http_req_failed.values.rate*100)
-            .toFixed(2);
+const thresholdPassed =
+Object.values(data.metrics)
+.every(
+metric =>
+!metric.thresholds ||
+Object.values(metric.thresholds)
+.every(t => t.ok)
+);
 
-    const avg =
-        data.metrics.http_req_duration.values.avg
-            .toFixed(2);
+const report = {
 
-    const p90 =
-        data.metrics.http_req_duration.values["p(90)"]
-            .toFixed(2);
+scenario,
 
-    const p95 =
-        data.metrics.http_req_duration.values["p(95)"]
-            .toFixed(2);
+summary: {
 
-    const max =
-        data.metrics.http_req_duration.values.max
-            .toFixed(2);
+totalRequests:
+data.metrics.http_reqs?.values?.count ?? 0,
 
-    const peak =
-        data.metrics.vus_max.values.max;
+failedRequests:
+(
+(
+data.metrics.http_req_failed?.values?.rate
+?? 0
+)
+*100
+).toFixed(2),
 
-    const html = `
+peakUsers:
+data.metrics.vus_max?.values?.max ?? 0,
 
-<div class="summary">
+thresholds:
+thresholdPassed
+? "PASS"
+: "FAIL"
 
-<div class="card">
-<h3>Total Requests</h3>
-<div class="value">${total}</div>
-</div>
+},
 
-<div class="card">
-<h3>Failed Requests</h3>
-<div class="value">${failed}%</div>
-</div>
+performance: {
 
-<div class="card">
-<h3>P95</h3>
-<div class="value">${p95} ms</div>
-</div>
+avg:
+(
+data.metrics.http_req_duration?.values?.avg
+?? 0
+).toFixed(2),
 
-<div class="card">
-<h3>Thresholds</h3>
-<div class="value">
-${
-        data.root_group.checks
-            ? "PASS"
-            : "FAIL"
-    }
-</div>
-</div>
+p90:
+(
+data.metrics.http_req_duration?.values?.["p(90)"]
+?? 0
+).toFixed(2),
 
-</div>
+p95:
+(
+data.metrics.http_req_duration?.values?.["p(95)"]
+?? 0
+).toFixed(2),
 
-<table>
-
-<tr>
-<td>Total Requests</td>
-<td>${total}</td>
-</tr>
-
-<tr>
-<td>Average Response</td>
-<td>${avg} ms</td>
-</tr>
-
-<tr>
-<td>P90</td>
-<td>${p90} ms</td>
-</tr>
-
-<tr>
-<td>P95</td>
-<td>${p95} ms</td>
-</tr>
-
-<tr>
-<td>Max Duration</td>
-<td>${max} ms</td>
-</tr>
-
-<tr>
-<td>Error Rate</td>
-<td>${failed}%</td>
-</tr>
-
-<tr>
-<td>Peak Users</td>
-<td>${peak}</td>
-</tr>
-
-</table>
-
-`;
-
-    return {
-        "report.html": html,
-        stdout: textSummary(data)
-    };
+max:
+(
+data.metrics.http_req_duration?.values?.max
+?? 0
+).toFixed(2)
 
 }
+
+};
+
+return {
+
+[
+`results/${scenario}.json`
+]:
+
+JSON.stringify(
+report,
+null,
+2
+),
+
+stdout:
+textSummary(
+data,
+{
+indent:" ",
+enableColors:true
+}
+)
+
+};
+
+}
+

@@ -1,0 +1,13 @@
+{
+  "scenario": "PriceHistory",
+  "summary": {
+    "totalRequests": 5924,
+    "failedRequests": "1.24",
+    "peakUsers": 250,
+    "thresholds": "PASS" },
+  "performance": {
+    "avg": "742.18",
+    "p90": "1146.32",
+    "p95": "1388.55",
+    "max": "2764.71" }
+}

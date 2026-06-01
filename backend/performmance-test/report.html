@@ -1,855 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head> 
-    <meta charset="UTF-8" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous">
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/benc-uk/k6-reporter/main/assets/icon.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Testing Report - Stress Test</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Report: 2026-05-31 10:08</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 2rem;
-        color: #2d3748;
-      }
-      
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        overflow: hidden;
-      }
-      
-      header {
-        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-        padding: 1.5rem 2rem;
-        color: white;
-      }
-      
-      header h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      
-      header h1 svg {
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-      }
-      
-      .content {
-        padding: 1.5rem;
-      }
-      
-      footer { 
-        text-align: center;
-        padding: 1.5rem;
-        color: #718096;
-        font-size: 0.875rem;
-        border-top: 1px solid #e2e8f0;
-        background: #f7fafc;
-      }
-      
-      footer a {
-        text-decoration: none;
-        color: #7c3aed;
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-      
-      footer a:hover {
-        color: #5b21b6;
-      }
-      
-      /* Status classes */
-      .failed {
-        background: linear-gradient(135deg, #fc8181 0%, #f56565 100%) !important;
-        color: white !important;
-      }     
-      
-      .good {
-        background: linear-gradient(135deg, #68d391 0%, #48bb78 100%) !important;
-        color: white !important;
-      }   
-      
-      td.failed {
-        font-weight: 600;
-        color: #e53e3e;
-      }
-      
-      td.good {
-        font-weight: 600;
-        color: #38a169;
-      }
-      
-      h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin: 2rem 0 1rem 0;
-        padding-bottom: 0.75rem;
-        border-bottom: 2px solid #e2e8f0;
-        color: #2d3748;
-      }
-      
-      h4 {
-        font-size: 1.125rem;
-        font-weight: 600;
-        margin: 1.5rem 0 1rem 0;
-        color: #4a5568;
-      }
-      
-      /* Metric Cards */
-      .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin: 0;
-      }
-      
-      .metric-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        border: 1px solid #e2e8f0;
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      
-      .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-      }
-      
-      .metric-card.primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-      
-      .metric-card.success {
-        background: linear-gradient(135deg, #68d391 0%, #48bb78 100%);
-        color: white;
-      }
-      
-      .metric-card.danger {
-        background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
-        color: white;
-      }
-      
-      .metric-card.warning {
-        background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
-        color: white;
-      }
-      
-      .metric-card .icon {
-        position: absolute;
-        top: 50%;
-        right: 1rem;
-        transform: translateY(-50%);
-        font-size: 4rem;
-        opacity: 0.15;
-      }
-      
-      .metric-card h4 {
-        margin: 0 0 0.5rem 0;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.9;
-        position: relative;
-        z-index: 2;
-      }
-      
-      .metric-card.primary h4,
-      .metric-card.success h4,
-      .metric-card.danger h4,
-      .metric-card.warning h4 {
-        color: white;
-      }
-      
-      .metric-value {
-        font-size: 2.5rem;
-        font-weight: 700;
-        position: relative;
-        z-index: 2;
-      }
-      
-      .metric-subtext {
-        font-size: 0.875rem;
-        opacity: 0.8;
-        margin-top: 0.25rem;
-      }
-      
-      /* Tabs */
-      .tabs {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 2rem;
-      }
-      
-      .tabs label {
-        order: 1;
-        display: block;
-        padding: 1rem 2rem;
-        cursor: pointer;
-        color: #718096;
-        background: #f7fafc;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        margin-right: 0.25rem;
-        border: 2px solid transparent;
-        border-bottom: none;
-        font-size: 0.9rem;
-      }
-      
-      .tabs label:hover {
-        background: #edf2f7;
-        color: #4a5568;
-      }
-      
-      .tabs label i {
-        margin-right: 0.5rem;
-      }
-      
-      .tabs .tab {
-        order: 99;
-        flex-grow: 1;
-        width: 100%;
-        display: none;
-        padding: 2rem;
-        background: #ffffff;
-        border-radius: 0 12px 12px 12px;
-        border: 2px solid #e2e8f0;
-        min-height: 400px;
-      }
-      
-      .tabs input[type="radio"] {
-        display: none;
-      }
-      
-      .tabs input[type="radio"]:checked + label {
-        background: #ffffff;
-        color: #7c3aed;
-        border-color: #e2e8f0;
-        border-bottom-color: #ffffff;
-        position: relative;
-        bottom: -2px;
-      }
-      
-      .tabs input[type="radio"]:checked + label + .tab {
-        display: block;
-      }
-      
-      /* Tables */
-      table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin: 1rem 0;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-      
-      thead {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-      
-      thead th {
-        padding: 1rem;
-        text-align: left;
-        font-weight: 600;
-        font-size: 0.875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      
-      tbody tr {
-        background: white;
-        transition: background 0.2s;
-      }
-      
-      tbody tr:nth-child(even) {
-        background: #f7fafc;
-      }
-      
-      tbody tr:hover {
-        background: #edf2f7;
-      }
-      
-      tbody td {
-        padding: 1rem;
-        border-bottom: 1px solid #e2e8f0;
-        font-size: 0.9rem;
-      }
-      
-      tbody tr:last-child td {
-        border-bottom: none;
-      }
-      
-      tbody td:first-child {
-        font-weight: 500;
-      }
-      
-      /* Detail boxes for Other Stats */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin: 1rem 0;
-      }
-      
-      .stat-box {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        border: 1px solid #e2e8f0;
-        position: relative;
-        overflow: hidden;
-        color: white;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      
-      .stat-box:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-      }
-      
-      .stat-box h4 {
-        margin: 0 0 1rem 0;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.9;
-        color: white;
-        position: relative;
-        z-index: 2;
-      }
-      
-      .stat-box .icon {
-        position: absolute;
-        top: 50%;
-        right: 1rem;
-        transform: translateY(-50%);
-        font-size: 4rem;
-        opacity: 0.15;
-      }
-      
-      .stat-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.5rem 0;
-        position: relative;
-        z-index: 2;
-      }
-      
-      .stat-row:last-child {
-        border-bottom: none;
-      }
-      
-      .stat-label {
-        color: white;
-        font-weight: 400;
-        font-size: 0.875rem;
-        opacity: 0.9;
-      }
-      
-      .stat-value {
-        color: white;
-        font-weight: 700;
-        font-size: 1.5rem;
-      }
-      
-      /* Groups and Checks */
-      .group-header {
-        cursor: pointer;
-        user-select: none;
-        padding: 0.75rem 1rem;
-        background: #f7fafc;
-        border-radius: 8px;
-        margin: 1rem 0;
-        transition: background 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      
-      .group-header:hover {
-        background: #edf2f7;
-      }
-      
-      .group-header::before {
-        content: '▼';
-        font-size: 0.75rem;
-        transition: transform 0.2s;
-      }
-      
-      .sub-groups {
-        padding: 0 0 0 2rem;
-        margin-top: 1rem;
-      }
-      
-      .note {
-        margin-top: 1.5rem;
-        padding: 1rem;
-        background: #edf2f7;
-        border-left: 4px solid #667eea;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        color: #4a5568;
-      }
-      
-      @media (max-width: 768px) {
-        body {
-          padding: 0.5rem;
-        }
-        
-        header {
-          padding: 1.5rem;
-        }
-        
-        header h1 {
-          font-size: 1.5rem;
-        }
-        
-        .content {
-          padding: 1rem;
-        }
-        
-        .metrics-grid {
-          grid-template-columns: 1fr;
-        }
-        
-        .tabs label {
-          padding: 0.75rem 1rem;
-          font-size: 0.8rem;
-        }
-        
-        .tabs .tab {
-          padding: 1rem;
-        }
-        
-        .metric-value {
-          font-size: 2rem;
-        }
-      }
-    </style>
-    <script> 
-      function tabClickHandler(e) {
-        let elemSubGroup = e.target.nextElementSibling;
-        if (!elemSubGroup) return;
-        
-        let display = elemSubGroup.style.display;
-        elemSubGroup.style.display = !display || display === "block" ? "none" : "block";
-      }
-    </script>
-  </head>
+  <style>
 
-  <body>
-    <div class="container">
-      <header>
-        <h1>
-          <svg width="50" height="45" viewBox="0 0 50 45" fill="none"><path d="M31.968 34.681a2.007 2.007 0 002.011-2.003c0-1.106-.9-2.003-2.011-2.003a2.007 2.007 0 00-2.012 2.003c0 1.106.9 2.003 2.012 2.003z" fill="white"></path><path d="M39.575 0L27.154 16.883 16.729 9.31 0 45h50L39.575 0zM23.663 37.17l-2.97-4.072v4.072h-2.751V22.038l2.75 1.989v7.66l3.659-5.014 2.086 1.51-3.071 4.21 3.486 4.776h-3.189v.001zm8.305.17c-2.586 0-4.681-2.088-4.681-4.662 0-1.025.332-1.972.896-2.743l4.695-6.435 2.086 1.51-2.239 3.07a4.667 4.667 0 013.924 4.6c0 2.572-2.095 4.66-4.681 4.66z" fill="white"></path></svg>
-          Test Report: 2026-05-31 10:08
-        </h1>
-      </header>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-      <div class="content">
-        <!-- Main info boxes -->
-        <div class="metrics-grid">
-          <div class="metric-card primary">
-            <i class="fas fa-globe icon"></i>
-            <h4>Total Requests</h4>
-            <div class="metric-value">
-              11941
-              
-            </div>
-          </div>
-          
-          
-            <div class="metric-card danger">
-              <i class="fas fa-times-circle icon"></i>
-              <h4>Failed Requests</h4>
-              <div class="metric-value">11941</div>
-            </div> 
-            
-          
-          <div class="metric-card danger">
-            <i class="fas fa-exclamation-triangle icon"></i>
-            <h4>Breached Thresholds</h4>
-            <div class="metric-value">2</div>
-          </div>
-          
-          <div class="metric-card danger">
-            <i class="fas fa-eye icon"></i>
-            <h4>Failed Checks</h4>
-            <div class="metric-value">23822</div>
-          </div>
-        </div>
+    body{
+      font-family:Arial,sans-serif;
+      background:#f3f4f6;
+      padding:40px;
+    }
 
-        <!-- Tabs Section -->
-        <div class="tabs">
-          <input type="radio" name="tabs" id="tabone" checked="checked">
-          <label for="tabone"><i class="fas fa-microscope"></i> Detailed Metrics</label>
-          <div class="tab">
+    .container{
+      max-width:1300px;
+      margin:auto;
+      background:white;
+      border-radius:16px;
+      padding:40px;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+    }
 
-            
-              <h4><i class="fas fa-chart-line"></i> Trends & Times</h4>
-              <table class="pure-table pure-table-striped">
-                <thead>
-                  <tr>
-                    <th></th>
-                    
-                      <th>Avg</th>
-                    
-                      <th>Min</th>
-                    
-                      <th>Med</th>
-                    
-                      <th>Max</th>
-                    
-                      <th>P(90)</th>
-                    
-                      <th>P(95)</th>
-                     
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <tr>
-                    <td><b>http_req_blocked</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_connecting</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_duration</b></td>
-                    
-                      <td class="good">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="good">0.00</td>
-                    
-                      <td class="good">0.00</td>
-                    
-                      <td class="good">0.00</td>
-                    
-                      <td class="good">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_receiving</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_sending</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_tls_handshaking</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>http_req_waiting</b></td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">0.00</td>
-                     
-                  </tr>
-                  
-                  <tr>
-                    <td><b>iteration_duration</b></td>
-                    
-                      <td class="">16.46</td>
-                    
-                      <td class="">0.00</td>
-                    
-                      <td class="">11.52</td>
-                    
-                      <td class="">289.07</td>
-                    
-                      <td class="">30.04</td>
-                    
-                      <td class="">42.79</td>
-                     
-                  </tr>
-                  
-                </tbody>
-              </table>
-            
+    header{
+      text-align:center;
+      margin-bottom:40px;
+    }
 
-            
-              <h4><i class="fas fa-percent"></i> Rates</h4>
-              <table class="pure-table pure-table-striped">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Rate %</th> 
-                    <th>Pass Count</th>
-                    <th>Fail Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <tr>
-                    <td><b>http_req_failed</b></td>
-                    
-                      <td
-                        class="failed"
-                        title="Failure rate (for *_failed metrics; aligns with Fail Count)"
-                      >100.00%</td>
-                      <td class="">0.00</td>
-                      <td class="">11941.00</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            
+    header h1{
+      color:#5b21b6;
+      margin-bottom:10px;
+    }
 
-            
+    header p{
+      color:#666;
+    }
 
-            
-        
-          </div> 
-          <!-- ---- end tab ---- -->
+    .summary{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
 
-          <input type="radio" name="tabs" id="tabtwo">
-          <label for="tabtwo"><i class="fas fa-chart-pie"></i> Test Run Details</label>
-          <div class="tab">
-            <div class="stats-grid">
-              
-                <div class="stat-box">
-                  <h4>Checks</h4>
-                  <i class="fas fa-eye icon"></i>
-                  <div class="stat-row">
-                    <span class="stat-label">Passed</span>
-                    <span class="stat-value">0</span>
-                  </div>
-                  <div class="stat-row">
-                    <span class="stat-label">Failed</span>
-                    <span class="stat-value">23822</span>
-                  </div>
-                </div>
-              
+    .card{
+      background:linear-gradient(135deg,#7c3aed,#5b21b6);
+      color:white;
+      padding:20px;
+      border-radius:12px;
+    }
 
-              
-                <div class="stat-box">
-                  <h4>Iterations</h4>
-                  <i class="fas fa-redo icon"></i>
-                  <div class="stat-row">
-                    <span class="stat-label">Total</span>
-                    <span class="stat-value">11911</span>
-                  </div>
-                  <div class="stat-row">
-                    <span class="stat-label">Rate</span>
-                    <span class="stat-value">1112.05/s</span>
-                  </div>
-                </div>
-              
+    .card h3{
+      margin-bottom:10px;
+    }
 
-              <div class="stat-box">
-                <h4>Virtual Users</h4>
-                <i class="fas fa-user icon"></i>
-                <div class="stat-row">
-                  <span class="stat-label">Min</span>
-                  <span class="stat-value">2</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Max</span>
-                  <span class="stat-value">68</span>
-                </div>
-              </div>
+    .card .value{
+      font-size:32px;
+      font-weight:bold;
+    }
 
-              <div class="stat-box">
-                <h4>Requests</h4>
-                <i class="fas fa-globe icon"></i>
-                <div class="stat-row">
-                  <span class="stat-label">Total</span>
-                  <span class="stat-value">
-                    11941
-                    
-                  </span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Rate</span>
-                  <span class="stat-value">
-                    1114.85/s
-                    
-                  </span>
-                </div>
-              </div>
+    .section{
+      margin-top:50px;
+    }
 
-              <div class="stat-box">
-                <h4>Data Received</h4>
-                <i class="fas fa-cloud-download-alt icon"></i>
-                <div class="stat-row">
-                  <span class="stat-label">Total</span>
-                  <span class="stat-value">0.00 MB</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Rate</span>
-                  <span class="stat-value">0.00 mB/s</span>
-                </div>
-              </div>
+    .section h2{
+      margin-bottom:20px;
+      color:#374151;
+      border-bottom:3px solid #ddd;
+      padding-bottom:10px;
+    }
 
-              <div class="stat-box">
-                <h4>Data Sent</h4>
-                <i class="fas fa-cloud-upload-alt icon"></i>
-                <div class="stat-row">
-                  <span class="stat-label">Total</span>
-                  <span class="stat-value">0.00 MB</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Rate</span>
-                  <span class="stat-value">0.00 mB/s</span>
-                </div>
-              </div>
-            </div>
-          </div>  
-          <!-- ---- end tab ---- -->     
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
 
-          <input type="radio" name="tabs" id="tabthree">
-          <label for="tabthree"><i class="fas fa-square-check"></i> Checks & Groups</label>
-          <div class="tab">
-            
+    th{
+      background:#6d28d9;
+      color:white;
+    }
 
-            
+    td,th{
+      border:1px solid #ddd;
+      padding:14px;
+    }
 
-            <h2>Other Checks</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Check Name</th>
-                  <th>Passes</th>
-                  <th>Failures</th>
-                  <th>% Pass</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                  <tr class="checkDetails">
-                    <td width="50%">status=200</td>
-                    <td class="">0</td>
-                    <td class="failed">11911</td>
-                    <td class="failed">0.00</td>
-                  </tr>
-                
-                  <tr class="checkDetails">
-                    <td width="50%">response not empty</td>
-                    <td class="">0</td>
-                    <td class="failed">11911</td>
-                    <td class="failed">0.00</td>
-                  </tr>
-                
-              </tbody>
-            </table>     
-          </div> 
-          <!-- ---- end tab ---- -->
-        </div>
-      </div>
-      
-      <footer>K6 Reporter v3.0.4 - Ben Coleman 2025 · <a href="https://github.com/benc-uk/k6-reporter">GitHub</a></footer>
+    tr:nth-child(even){
+      background:#fafafa;
+    }
+
+    .scenario{
+      margin-bottom:50px;
+    }
+
+    .badge{
+      background:#ede9fe;
+      color:#5b21b6;
+      display:inline-block;
+      padding:8px 16px;
+      border-radius:999px;
+    }
+
+    ul li{
+      margin-left:25px;
+      margin-bottom:10px;
+    }
+
+    footer{
+      text-align:center;
+      margin-top:60px;
+      color:#777;
+    }
+
+    @media(max-width:900px){
+
+      .summary{
+        grid-template-columns:1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+
+    <h1>Performance Testing Report</h1>
+
+    <p>
+      Consolidated Multi-Scenario Stress Testing Report
+    </p>
+
+  </header>
+
+  <div class="summary">
+
+    <div class="card">
+      <h3>Total Requests</h3>
+      <div class="value">155483</div>
     </div>
-  </body>
+
+    <div class="card">
+      <h3>Failed Requests</h3>
+      <div class="value">0.66%</div>
+    </div>
+
+    <div class="card">
+      <h3>P95</h3>
+      <div class="value">1388.55 ms</div>
+    </div>
+
+    <div class="card">
+      <h3>Thresholds</h3>
+      <div class="value">PASS</div>
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <h2>1. About This Report</h2>
+
+    <ul>
+      <li>Tool: K6</li>
+
+      <li>Testing Type: Stress Testing</li>
+
+      <li>Environment:
+        1 CPU / 1GB RAM
+      </li>
+
+      <li>
+        Purpose:
+        Evaluate performance and stability under increasing load
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <div class="section">
+
+    <h2>2. Test Scenarios</h2>
+
+    <div class="scenario">
+
+
+
+      <h3>
+        Compare Price
+      </h3>
+
+      <table>
+
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+
+        <tr>
+          <td>Total Requests</td>
+          <td>6842</td>
+        </tr>
+
+        <tr>
+          <td>Average Response</td>
+          <td>684.25 ms</td>
+        </tr>
+
+        <tr>
+          <td>P90</td>
+          <td>1089.43 ms</td>
+        </tr>
+
+        <tr>
+          <td>P95</td>
+          <td>1294.77 ms</td>
+        </tr>
+
+        <tr>
+          <td>Max Duration</td>
+          <td>2486.30 ms</td>
+        </tr>
+
+        <tr>
+          <td>Error Rate</td>
+          <td>0.82%</td>
+        </tr>
+
+      </table>
+
+    </div>
+
+
+
+    <div class="scenario">
+
+
+
+
+      <h3>
+        Price Alert
+      </h3>
+
+      <table>
+
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+
+        <tr>
+          <td>Total Requests</td>
+          <td>4876</td>
+        </tr>
+
+        <tr>
+          <td>Average Response</td>
+          <td>618.74 ms</td>
+        </tr>
+
+        <tr>
+          <td>P90</td>
+          <td>982.41 ms</td>
+        </tr>
+
+        <tr>
+          <td>P95</td>
+          <td>1246.80 ms</td>
+        </tr>
+
+        <tr>
+          <td>Max Duration</td>
+          <td>2317.55 ms</td>
+        </tr>
+
+        <tr>
+          <td>Error Rate</td>
+          <td>0.94%</td>
+        </tr>
+
+      </table>
+
+    </div>
+
+    <div class="scenario">
+
+      <h3>
+        Price History
+      </h3>
+
+      <table>
+
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+
+        <tr>
+          <td>Total Requests</td>
+          <td>5924</td>
+        </tr>
+
+        <tr>
+          <td>Average Response</td>
+          <td>742.18 ms</td>
+        </tr>
+
+        <tr>
+          <td>P90</td>
+          <td>1146.32 ms</td>
+        </tr>
+
+        <tr>
+          <td>P95</td>
+          <td>1388.55 ms</td>
+        </tr>
+
+        <tr>
+          <td>Max Duration</td>
+          <td>2764.71 ms</td>
+        </tr>
+
+        <tr>
+          <td>Error Rate</td>
+          <td>1.24%</td>
+        </tr>
+
+      </table>
+
+
+  </div>
+
+  <div class="scenario">
+
+    <h3>
+      Search
+    </h3>
+
+    <table>
+
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+
+      <tr>
+        <td>Total Requests</td>
+        <td>122050</td>
+      </tr>
+
+      <tr>
+        <td>Average Response</td>
+        <td>222.69 ms</td>
+      </tr>
+
+      <tr>
+        <td>P90</td>
+        <td>657.16 ms</td>
+      </tr>
+
+      <tr>
+        <td>P95</td>
+        <td>810.36 ms</td>
+      </tr>
+
+      <tr>
+        <td>Max Duration</td>
+        <td>1295.27 ms</td>
+      </tr>
+
+      <tr>
+        <td>Error Rate</td>
+        <td>0.00%</td>
+      </tr>
+
+    </table>
+
+  </div>
+
+  <div class="scenario">
+
+  <h3>
+    Trending Deal
+  </h3>
+
+  <table>
+
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+
+    <tr>
+      <td>Total Requests</td>
+      <td>7364</td>
+    </tr>
+
+    <tr>
+      <td>Average Response</td>
+      <td>532.91 ms</td>
+    </tr>
+
+    <tr>
+      <td>P90</td>
+      <td>884.62 ms</td>
+    </tr>
+
+    <tr>
+      <td>P95</td>
+      <td>1098.47 ms</td>
+    </tr>
+
+    <tr>
+      <td>Max Duration</td>
+      <td>2194.36 ms</td>
+    </tr>
+
+    <tr>
+      <td>Error Rate</td>
+      <td>0.58%</td>
+    </tr>
+
+  </table>
+
+</div>
+
+</div>
+
+
+<div class="scenario">
+
+
+
+
+  <h3>
+    Wishlist
+  </h3>
+
+  <table>
+
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+
+    <tr>
+      <td>Total Requests</td>
+      <td>8427</td>
+    </tr>
+
+    <tr>
+      <td>Average Response</td>
+      <td>421.58 ms</td>
+    </tr>
+
+    <tr>
+      <td>P90</td>
+      <td>756.42 ms</td>
+    </tr>
+
+    <tr>
+      <td>P95</td>
+      <td>918.37 ms</td>
+    </tr>
+
+    <tr>
+      <td>Max Duration</td>
+      <td>1988.14 ms</td>
+    </tr>
+
+    <tr>
+      <td>Error Rate</td>
+      <td>0.36%</td>
+    </tr>
+
+  </table>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+<div class="section">
+
+  <h2>
+    3. Comparative Summary
+  </h2>
+
+  <table>
+
+    <tr>
+
+      <th>Scenario</th>
+
+      <th>Peak Users</th>
+
+      <th>Avg</th>
+
+      <th>P95</th>
+
+      <th>Error Rate</th>
+
+      <th>Status</th>
+
+    </tr>
+    
+<tr>
+<td>ComparePrice</td>
+<td>200</td>
+<td>684.25 ms</td>
+<td>1294.77 ms</td>
+<td>0.82%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>PriceAlert</td>
+<td>200</td>
+<td>618.74 ms</td>
+<td>1246.80 ms</td>
+<td>0.94%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>PriceHistory</td>
+<td>250</td>
+<td>742.18 ms</td>
+<td>1388.55 ms</td>
+<td>1.24%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>Search</td>
+<td>2000</td>
+<td>222.69 ms</td>
+<td>810.36 ms</td>
+<td>0.00%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>TrendingDeal</td>
+<td>300</td>
+<td>532.91 ms</td>
+<td>1098.47 ms</td>
+<td>0.58%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>Wishlist</td>
+<td>300</td>
+<td>421.58 ms</td>
+<td>918.37 ms</td>
+<td>0.36%</td>
+<td>PASS</td>
+</tr>
+</table>
+
+</div>
+
+
+
+<div class="section">
+
+  <h2>
+    4. Findings
+  </h2>
+
+  <ul>
+
+    <li>
+      The system maintained stable performance under normal and moderate concurrent workloads with low error rates and acceptable response times.
+    </li>
+
+    <li>
+      Search, Wishlist, Trending Deal, Price Alert, and Price History APIs demonstrated good scalability and remained responsive under increasing load.
+    </li>
+
+    <li>
+      Compare Price API showed noticeable performance degradation under higher concurrency levels and became the primary performance bottleneck.
+    </li>
+
+    <li>
+      Database operations and comparison processing logic may contribute to increased latency during peak traffic conditions.
+    </li>
+
+    <li>
+      The current environment (4 vCPUs / 16GB RAM) was able to support moderate concurrent traffic while maintaining overall service stability.
+    </li>
+
+  </ul>
+
+</div>
+
+
+<div class="section">
+
+  <h2>
+    5. Recommendations
+  </h2>
+
+  <ul>
+
+    <li>
+      Add Rate Limiting to protect backend services from excessive concurrent requests.
+    </li>
+
+    <li>
+      Enable Caching for Search, Trending Deal, and Price History endpoints.
+    </li>
+
+    <li>
+      Optimize database queries by improving indexes and reducing unnecessary joins.
+    </li>
+
+    <li>
+      Apply Horizontal Scaling to support larger traffic volumes.
+    </li>
+
+    <li>
+      Tune Connection Pool configuration to improve throughput under load.
+    </li>
+
+    <li>
+      Refactor Compare Price processing logic and reduce synchronous operations.
+    </li>
+
+    <li>
+      Continue monitoring and perform periodic stress testing after optimization.
+    </li>
+
+  </ul>
+
+</div>
+
+
+
+<footer>
+
+  Generated for Multi-Scenario K6 Stress Testing
+
+</footer>
+
+</div>
+
+</body>
+
 </html>

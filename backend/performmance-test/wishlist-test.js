@@ -70,7 +70,78 @@ export default function () {
         userId,
         productId,
     });
+    import http from 'k6/http';
+    import { check, sleep } from 'k6';
 
+    export const options = {
+        stages: [
+            { duration: '1m', target: 20 },
+            { duration: '1m', target: 50 },
+            { duration: '1m', target: 100 },
+            { duration: '1m', target: 200 },
+            { duration: '1m', target: 0 },
+        ],
+
+        thresholds: {
+            http_req_duration: [
+                'avg<500',
+                'p(95)<1000'
+            ],
+
+            http_req_failed: [
+                'rate<0.01'
+            ],
+
+            checks: [
+                'rate>0.99'
+            ]
+        }
+    };
+
+    const BASE_URL = 'http://localhost:8080';
+
+    const TOKEN = __ENV.TOKEN;
+
+    const USERS = [
+        '0f28c675-f8e6-4044-9958-ff0708270a9a',
+    ];
+
+    function auth() {
+        return {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+            }
+        };
+    }
+
+    export default function () {
+
+        const userId =
+            USERS[Math.floor(Math.random() * USERS.length)];
+
+        const res = http.get(
+            `${BASE_URL}/api/wishlist/${userId}`,
+            {
+                ...auth(),
+                tags: {
+                    endpoint: 'wishlist_get'
+                }
+            }
+        );
+
+        check(res, {
+            'status=200':
+                r => r.status === 200,
+
+            'response not empty':
+                r => r.body && r.body.length > 0,
+
+            'response < 1000ms':
+                r => r.timings.duration < 1000,
+        });
+
+        sleep(1);
+    }
     res = http.post(
         `${BASE_URL}/api/wishlist/add`,
         payload,
