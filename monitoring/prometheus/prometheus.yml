@@ -9,35 +9,25 @@ scrape_configs:
   # Prometheus self-monitoring
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
 
-  # ── SYSTEM METRICS: LINUX ──────────────────────────────────────
-  # node-exporter chạy trong Docker với profile=linux (Ubuntu production)
-  # Metrics: node_cpu_seconds_total, node_memory_*, node_filesystem_*
+  # ── SYSTEM METRICS: LINUX (Ubuntu server) ─────────────────────
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['node-exporter:9100']
         labels:
           instance: 'server'
-          os: 'linux'
 
-  # ── SYSTEM METRICS: WINDOWS ────────────────────────────────────
-  # windows_exporter chạy NATIVE trên máy Windows (không phải trong Docker)
-  # Cài đặt: xem MONITORING.md § Windows Setup
-  # Mặc định listen port 9182 trên máy host
-  # Metrics: windows_cpu_time_total, windows_memory_*, windows_logical_disk_*
+  # ── SYSTEM METRICS: WINDOWS (máy dev cá nhân) ─────────────────
+  # Chạy windows_exporter.exe trên máy Windows trước khi dùng
   - job_name: 'windows-exporter'
     static_configs:
       - targets: ['host.docker.internal:9182']
         labels:
           instance: 'dev-windows'
-          os: 'windows'
-    # Không báo lỗi khi windows_exporter không chạy (sẽ hiện DOWN trong Prometheus)
 
   # ── BACKEND API ────────────────────────────────────────────────
-  # Spring Boot chạy native trên host (không phải Docker)
-  # host.docker.internal → IP của máy host
-  # Windows/Mac: tự resolve; Ubuntu: cần extra_hosts (đã cấu hình trong docker-compose)
+  # host.docker.internal resolve được nhờ extra_hosts trong docker-compose
   - job_name: 'backend-api'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 10s
@@ -47,7 +37,6 @@ scrape_configs:
           service: 'backend'
 
   # ── BLACKBOX EXPORTER ──────────────────────────────────────────
-  # Kiểm tra HTTP endpoints từ góc nhìn bên ngoài (availability + latency)
   - job_name: 'blackbox-http'
     metrics_path: /probe
     params:
