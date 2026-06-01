@@ -1,16 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
-    username: "postgres.astkanfsacxriwprspqr"
-    password: "PriceHawl123@"
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      # Tăng số lượng kết nối để không phải xếp hàng chờ (Queueing)
-      maximum-pool-size: 6
       minimum-idle: 5
-      # CỰC KỲ QUAN TRỌNG: Giữ kết nối luôn "nóng" sang Hàn Quốc để giảm ping
-      keepalive-time: 30000 
+      keepalive-time: 30000
       idle-timeout: 60000
       max-lifetime: 1800000
       connection-timeout: 30000
@@ -23,17 +20,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
-        # Tối ưu hóa việc lấy dữ liệu hàng loạt
         jdbc.batch_size: 25
         order_inserts: true
         order_updates: true
 
   elasticsearch:
-    uris: http://localhost:9200
+    uris: ${ELASTICSEARCH_URI:http://localhost:9200}
+
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
   flyway:
     enabled: true
@@ -41,46 +38,58 @@ spring:
     baseline-on-migrate: true
 
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 
 logging:
   level:
     root: WARN
     org.springframework.security: WARN
-    # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
     com.pricehawl.service.crawler: INFO
 
 pricehawk:
   debug:
-    price-refresh-dir: "./debug/price-refresh"
+    price-refresh-dir: ${PRICE_REFRESH_DEBUG_DIR:./debug/price-refresh}
 
   scheduler:
     price-refresh:
-      enabled: false
+      enabled: ${PRICE_REFRESH_SCHEDULER_ENABLED:false}
       cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
       max-items-per-run: 50
 
   crawler:
-    watsons-script: "backend/watsons-price.js"
-    cocolux-script: "backend/cocolux-price.js"
+    watsons-script: ${WATSONS_SCRIPT:backend/watsons-price.js}
+    cocolux-script: ${COCOLUX_SCRIPT:backend/cocolux-price.js}
     thread-pool-size: 5
 
 resend:
-  api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+  api-key: ${RESEND_API_KEY:}
 
 ai:
-  base-url: https://generativelanguage.googleapis.com
-  api-key: AQ.Ab8RN6IR3KQZcinpjM6G7UdfSwl9RXfXXO8JEknANTOX960EOQ
-  model: gemini-2.5-flash
-  enable-search: true
+  base-url: ${AI_BASE_URL:https://generativelanguage.googleapis.com}
+  api-key: ${AI_API_KEY:}
+  model: ${AI_MODEL:gemini-2.5-flash}
+  enable-search: ${AI_ENABLE_SEARCH:true}
 
-# AccessTrade & Other configs
 accesstrade:
-  api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
+  api-key: ${ACCESSTRADE_API_KEY:}
 
 supabase:
-  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
+  url: ${SUPABASE_URL}
   api:
-    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+    key: ${SUPABASE_API_KEY}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        hikaricp.connections.usage: true
