@@ -1,0 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'pricehawk-monitor'
+    environment: 'production'
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  # ── SYSTEM METRICS: LINUX (Ubuntu server) ─────────────────────
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          instance: 'server'
+
+  # ── SYSTEM METRICS: WINDOWS (máy dev cá nhân) ─────────────────
+  # Chạy windows_exporter.exe trên máy Windows trước khi dùng
+  - job_name: 'windows-exporter'
+    static_configs:
+      - targets: ['host.docker.internal:9182']
+        labels:
+          instance: 'dev-windows'
+
+  # ── BACKEND API ────────────────────────────────────────────────
+  # host.docker.internal resolve được nhờ extra_hosts trong docker-compose
+  - job_name: 'backend-api'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+        labels:
+          service: 'backend'
+
+  # ── BLACKBOX EXPORTER ──────────────────────────────────────────
+  - job_name: 'blackbox-http'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - 'http://host.docker.internal:8080/actuator/health'
+          - 'http://host.docker.internal:8080/api/products'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115

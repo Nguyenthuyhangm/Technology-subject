@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -18,7 +19,8 @@ import java.time.Duration;
 public class RedisConfig {
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory factory) {
+    @Primary
+    public CacheManager redisCacheManager(RedisConnectionFactory factory) {
         // Cấu hình ObjectMapper để hỗ trợ Java 8 Time (LocalDateTime)
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
@@ -32,7 +34,7 @@ public class RedisConfig {
 
         // Cấu hình riêng cho product-search (5 phút)
         RedisCacheConfiguration searchConfig = defaultConfig.entryTtl(Duration.ofMinutes(5));
-        
+
         // Cấu hình riêng cho price-history (10 phút - để giá cập nhật mới liên tục)
         RedisCacheConfiguration historyConfig = defaultConfig.entryTtl(Duration.ofMinutes(10));
 
