@@ -4,7 +4,6 @@ import com.pricehawl.dto.UpdatePreferencesRequest;
 import com.pricehawl.dto.UpdateUserRequest;
 import com.pricehawl.entity.User;
 import com.pricehawl.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,62 +21,304 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepository repo;
 
     @InjectMocks
-    private UserService userService;
+    private UserService service;
 
-    private UUID userId;
-    private User mockUser;
+    // =========================
+    // getOrCreate
+    // =========================
 
-    @BeforeEach
-    void setUp() {
-        userId = UUID.randomUUID();
-        mockUser = User.builder()
-                .id(userId)
-                .email("phuong@example.com")
-                .name("phuong")
-                .plan("free")
+    @Test
+    void shouldReturnExistingUser() {
+
+        UUID id = UUID.randomUUID();
+
+        User user = User.builder()
+                .id(id)
+                .email("test@gmail.com")
+                .name("test")
                 .build();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.of(user));
+
+        User result = service.getOrCreate(
+                id,
+                "test@gmail.com"
+        );
+
+        assertEquals(id, result.getId());
+
+        verify(repo, never())
+                .save(any());
     }
 
     @Test
-    void getOrCreate_UserExists_ReturnsExistingUser() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
+    void shouldCreateNewUserWhenNotExists() {
 
-        User result = userService.getOrCreate(userId, "phuong@example.com");
+        UUID id = UUID.randomUUID();
 
-        assertEquals(mockUser.getEmail(), result.getEmail());
-        verify(userRepository, never()).save(any());
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
+
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.getOrCreate(
+                        id,
+                        "john@gmail.com"
+                );
+
+        assertEquals(id, result.getId());
+        assertEquals("john@gmail.com", result.getEmail());
+        assertEquals("john", result.getName());
+
+        assertEquals("free", result.getPlan());
+        assertEquals("system", result.getTheme());
+        assertEquals("vi", result.getLanguage());
+
+        verify(repo).save(any(User.class));
+    }
+
+    // =========================
+    // createFromAuth
+    // =========================
+
+    @Test
+    void shouldReturnExistingUserFromAuth() {
+
+        UUID id = UUID.randomUUID();
+
+        User existing =
+                User.builder()
+                        .id(id)
+                        .email("existing@gmail.com")
+                        .build();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.of(existing));
+
+        User result =
+                service.createFromAuth(
+                        id,
+                        "new@gmail.com",
+                        "John",
+                        "0123"
+                );
+
+        assertSame(existing, result);
+
+        verify(repo, never())
+                .save(any());
     }
 
     @Test
-    void update_ValidRequest_UpdatesNameAndPhone() {
-        UpdateUserRequest req = new UpdateUserRequest();
-        req.setName("Phuong Le");
-        req.setPhone("0987654321");
+    void shouldCreateUserFromAuthUsingProvidedName() {
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
-        when(userRepository.save(any())).thenReturn(mockUser);
+        UUID id = UUID.randomUUID();
 
-        User updatedUser = userService.update(userId, req);
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
 
-        assertEquals("Phuong Le", updatedUser.getName());
-        assertEquals("0987654321", updatedUser.getPhone());
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.createFromAuth(
+                        id,
+                        "john@gmail.com",
+                        "John Doe",
+                        "0988888888"
+                );
+
+        assertEquals("John Doe", result.getName());
+        assertEquals("0988888888", result.getPhone());
+
+        verify(repo).save(any(User.class));
     }
 
     @Test
-    void updatePreferences_ValidRequest_UpdatesThemeAndLang() {
-        UpdatePreferencesRequest req = new UpdatePreferencesRequest();
+    void shouldCreateUserFromAuthUsingEmailPrefixWhenNameBlank() {
+
+        UUID id = UUID.randomUUID();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
+
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.createFromAuth(
+                        id,
+                        "abc@gmail.com",
+                        "",
+                        "099999999"
+                );
+
+        assertEquals("abc", result.getName());
+    }
+
+    @Test
+    void shouldCreateUserFromAuthUsingEmailPrefixWhenNameNull() {
+
+        UUID id = UUID.randomUUID();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
+
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.createFromAuth(
+                        id,
+                        "demo@gmail.com",
+                        null,
+                        null
+                );
+
+        assertEquals("demo", result.getName());
+    }
+
+    // =========================
+    // update
+    // =========================
+
+    @Test
+    void shouldUpdateNameAndPhone() {
+
+        UUID id = UUID.randomUUID();
+
+        User user = User.builder()
+                .id(id)
+                .name("Old")
+                .phone("111")
+                .build();
+
+        UpdateUserRequest req =
+                new UpdateUserRequest();
+
+        req.setName("New Name");
+        req.setPhone("222");
+
+        when(repo.findById(id))
+                .thenReturn(Optional.of(user));
+
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.update(id, req);
+
+        assertEquals("New Name", result.getName());
+        assertEquals("222", result.getPhone());
+    }
+
+    @Test
+    void shouldUpdateOnlyName() {
+
+        UUID id = UUID.randomUUID();
+
+        User user = User.builder()
+                .id(id)
+                .name("Old")
+                .phone("111")
+                .build();
+
+        UpdateUserRequest req =
+                new UpdateUserRequest();
+
+        req.setName("Updated");
+
+        when(repo.findById(id))
+                .thenReturn(Optional.of(user));
+
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.update(id, req);
+
+        assertEquals("Updated", result.getName());
+        assertEquals("111", result.getPhone());
+    }
+
+    @Test
+    void shouldThrowWhenUserNotFoundForUpdate() {
+
+        UUID id = UUID.randomUUID();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
+
+        RuntimeException ex =
+                assertThrows(
+                        RuntimeException.class,
+                        () -> service.update(
+                                id,
+                                new UpdateUserRequest()
+                        )
+                );
+
+        assertTrue(
+                ex.getMessage().contains("User not found")
+        );
+    }
+
+    // =========================
+    // updatePreferences
+    // =========================
+
+    @Test
+    void shouldUpdatePreferences() {
+
+        UUID id = UUID.randomUUID();
+
+        User user =
+                User.builder()
+                        .id(id)
+                        .theme("system")
+                        .language("vi")
+                        .build();
+
+        UpdatePreferencesRequest req =
+                new UpdatePreferencesRequest();
+
         req.setTheme("dark");
         req.setLanguage("en");
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(mockUser));
-        when(userRepository.save(any())).thenReturn(mockUser);
+        when(repo.findById(id))
+                .thenReturn(Optional.of(user));
 
-        User result = userService.updatePreferences(userId, req);
+        when(repo.save(any(User.class)))
+                .thenAnswer(i -> i.getArgument(0));
+
+        User result =
+                service.updatePreferences(id, req);
 
         assertEquals("dark", result.getTheme());
         assertEquals("en", result.getLanguage());
     }
+
+    @Test
+    void shouldThrowWhenUserNotFoundForPreferences() {
+
+        UUID id = UUID.randomUUID();
+
+        when(repo.findById(id))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                RuntimeException.class,
+                () -> service.updatePreferences(
+                        id,
+                        new UpdatePreferencesRequest()
+                )
+        );
+    }
 }
+

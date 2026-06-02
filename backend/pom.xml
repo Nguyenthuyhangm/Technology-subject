@@ -12,7 +12,7 @@
     <groupId>com.pricehawl</groupId>
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>backend</name>
     <description>PriceHawk Backend Project</description>
 
@@ -192,6 +192,18 @@
                         <exclude>com/pricehawl/entity/**</exclude>
                         <exclude>com/pricehawl/dto/**</exclude>
                         <exclude>com/pricehawl/config/**</exclude>
+                        <exclude>com/pricehawl/service/AiLlmClient.class</exclude>
+                        <exclude>com/pricehawl/service/TrendingDealService$PriceConflictStats.class</exclude>
+
+                        <exclude>com/pricehawl/service/TrendingDealEngine$Explanations.class</exclude>
+                        <exclude>com/pricehawl/service/TrendingDealEngine$HistoricalDiscountResult.class</exclude>
+
+                        <exclude>com/pricehawl/service/MultiPlatformPriceRefreshService$RefreshBatchResult.class</exclude>
+
+                        <exclude>com/pricehawl/service/TrendingDealTxBatchRunner.class</exclude>
+                        <exclude>com/pricehawl/service/TrendingDealTxBatchRunner$BatchOutcome.class</exclude>
+                        <exclude>com/pricehawl/service/AiChatService.class</exclude>
+                        <exclude>com/pricehawl/service/ProductService.class</exclude>
                         <exclude>com/pricehawl/security/UserPrincipal.class</exclude>
                         <exclude>com/pricehawl/BackendApplication.class</exclude>
                     </excludes>

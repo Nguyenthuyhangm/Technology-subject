@@ -1,22 +1,25 @@
 package com.pricehawl.service;
 
+import com.pricehawl.dto.WishlistResponse;
 import com.pricehawl.entity.User;
 import com.pricehawl.entity.Wishlist;
 import com.pricehawl.exception.ResourceNotFoundException;
 import com.pricehawl.repository.UserRepository;
 import com.pricehawl.repository.WishlistRepository;
+import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,124 +32,368 @@ class WishlistServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private WishlistService service;
+    private WishlistService wishlistService;
 
     private UUID userId;
     private UUID productId;
-    private User freeUser;
-    private User premiumUser;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         userId = UUID.randomUUID();
         productId = UUID.randomUUID();
-        freeUser = User.builder().id(userId).email("free@test.com").name("Free").plan("free").build();
-        premiumUser = User.builder().id(userId).email("premium@test.com").name("Premium").plan("premium").build();
     }
 
-    // ── getWishlistByUser ─────────────────────────────────────────────────────
+    // ====================================================
+    // getWishlistByUser
+    // ====================================================
 
     @Test
-    void getWishlistByUser_nullUserId_throwsIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> service.getWishlistByUser(null));
-    }
+    void getWishlistByUser_shouldThrowWhenUserIdNull() {
 
-    // ── addToWishlist ─────────────────────────────────────────────────────────
-
-    @Test
-    void addToWishlist_nullUserId_throwsIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> service.addToWishlist(null, productId));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> wishlistService.getWishlistByUser(null)
+        );
     }
 
     @Test
-    void addToWishlist_nullProductId_throwsIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> service.addToWishlist(userId, null));
+    void getWishlistByUser_shouldReturnWishlist() {
+
+        List<WishlistResponse> expected = List.of();
+
+        when(wishlistRepository.findDetailedWishlistByUserId(userId))
+                .thenReturn(expected);
+
+        List<WishlistResponse> result =
+                wishlistService.getWishlistByUser(userId);
+
+        assertSame(expected, result);
+
+        verify(wishlistRepository)
+                .findDetailedWishlistByUserId(userId);
+    }
+
+    // ====================================================
+    // addToWishlist
+    // ====================================================
+
+    @Test
+    void addToWishlist_shouldThrowWhenUserIdNull() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> wishlistService.addToWishlist(
+                        null,
+                        productId
+                )
+        );
     }
 
     @Test
-    void addToWishlist_userNotFound_throwsResourceNotFound() {
-        when(userRepository.findById(userId)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class, () -> service.addToWishlist(userId, productId));
+    void addToWishlist_shouldThrowWhenProductIdNull() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> wishlistService.addToWishlist(
+                        userId,
+                        null
+                )
+        );
     }
 
     @Test
-    void addToWishlist_alreadyExists_returnsNull() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(true);
+    void addToWishlist_shouldThrowWhenUserNotFound() {
 
-        Wishlist result = service.addToWishlist(userId, productId);
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> wishlistService.addToWishlist(
+                        userId,
+                        productId
+                )
+        );
+    }
+
+    @Test
+    void addToWishlist_shouldReturnNullWhenAlreadyExists() {
+
+        User user =
+                User.builder()
+                        .id(userId)
+                        .plan("free")
+                        .build();
+
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.of(user));
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        Wishlist result =
+                wishlistService.addToWishlist(
+                        userId,
+                        productId
+                );
+
         assertNull(result);
-        verify(wishlistRepository, never()).save(any());
+
+        verify(wishlistRepository, never())
+                .save(any());
     }
 
     @Test
-    void addToWishlist_freeUserAtLimit_throwsIllegalState() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(false);
-        when(wishlistRepository.countByUserId(userId)).thenReturn(20L);
+    void addToWishlist_shouldThrowWhenFreeLimitReached() {
 
-        assertThrows(IllegalStateException.class, () -> service.addToWishlist(userId, productId));
-        verify(wishlistRepository, never()).save(any());
+        User user =
+                User.builder()
+                        .id(userId)
+                        .plan("free")
+                        .build();
+
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.of(user));
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(false);
+
+        when(wishlistRepository.countByUserId(userId))
+                .thenReturn(20L);
+
+        assertThrows(
+                IllegalStateException.class,
+                () -> wishlistService.addToWishlist(
+                        userId,
+                        productId
+                )
+        );
     }
 
     @Test
-    void addToWishlist_premiumUserAtLimit_savesSuccessfully() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(premiumUser));
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(false);
-        when(wishlistRepository.countByUserId(userId)).thenReturn(20L);
+    void addToWishlist_shouldAllowPremiumUserOverLimit() {
+
+        User user =
+                User.builder()
+                        .id(userId)
+                        .plan("premium")
+                        .build();
+
         Wishlist saved = new Wishlist();
-        saved.setUserId(userId);
-        saved.setProductId(productId);
-        when(wishlistRepository.save(any())).thenReturn(saved);
 
-        Wishlist result = service.addToWishlist(userId, productId);
-        assertNotNull(result);
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.of(user));
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(false);
+
+        when(wishlistRepository.countByUserId(userId))
+                .thenReturn(999L);
+
+        when(wishlistRepository.save(any(Wishlist.class)))
+                .thenReturn(saved);
+
+        Wishlist result =
+                wishlistService.addToWishlist(
+                        userId,
+                        productId
+                );
+
+        assertSame(saved, result);
     }
 
     @Test
-    void addToWishlist_freeUserBelowLimit_savesSuccessfully() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(freeUser));
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(false);
-        when(wishlistRepository.countByUserId(userId)).thenReturn(5L);
+    void addToWishlist_shouldSaveSuccessfullyForFreeUser() {
+
+        User user =
+                User.builder()
+                        .id(userId)
+                        .plan("free")
+                        .build();
+
         Wishlist saved = new Wishlist();
-        when(wishlistRepository.save(any())).thenReturn(saved);
 
-        Wishlist result = service.addToWishlist(userId, productId);
-        assertNotNull(result);
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.of(user));
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(false);
+
+        when(wishlistRepository.countByUserId(userId))
+                .thenReturn(5L);
+
+        when(wishlistRepository.save(any(Wishlist.class)))
+                .thenReturn(saved);
+
+        Wishlist result =
+                wishlistService.addToWishlist(
+                        userId,
+                        productId
+                );
+
+        assertSame(saved, result);
     }
 
-    // ── removeFromWishlist ────────────────────────────────────────────────────
+    // ====================================================
+    // removeFromWishlist
+    // ====================================================
 
     @Test
-    void removeFromWishlist_nullUserId_throwsIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> service.removeFromWishlist(null, productId));
+    void removeFromWishlist_shouldThrowWhenUserIdNull() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> wishlistService.removeFromWishlist(
+                        null,
+                        productId
+                )
+        );
     }
 
     @Test
-    void removeFromWishlist_nullProductId_throwsIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> service.removeFromWishlist(userId, null));
+    void removeFromWishlist_shouldThrowWhenProductIdNull() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        null
+                )
+        );
     }
 
     @Test
-    void removeFromWishlist_notExists_throwsResourceNotFound() {
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(false);
-        assertThrows(ResourceNotFoundException.class, () -> service.removeFromWishlist(userId, productId));
+    void removeFromWishlist_shouldThrowWhenNotExists() {
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(false);
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
     }
 
     @Test
-    void removeFromWishlist_exists_deletesSuccessfully() {
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(true);
-        when(wishlistRepository.deleteByUserIdAndProductId(userId, productId)).thenReturn(1);
+    void removeFromWishlist_shouldDeleteSuccessfully() {
 
-        assertDoesNotThrow(() -> service.removeFromWishlist(userId, productId));
-        verify(wishlistRepository).deleteByUserIdAndProductId(userId, productId);
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        when(wishlistRepository.deleteByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(1);
+
+        assertDoesNotThrow(
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
     }
 
     @Test
-    void removeFromWishlist_deleteReturns0_throwsResourceNotFound() {
-        when(wishlistRepository.existsByUserIdAndProductId(userId, productId)).thenReturn(true);
-        when(wishlistRepository.deleteByUserIdAndProductId(userId, productId)).thenReturn(0);
+    void removeFromWishlist_shouldThrowWhenDeleteAffectedZero() {
 
-        assertThrows(ResourceNotFoundException.class, () -> service.removeFromWishlist(userId, productId));
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        when(wishlistRepository.deleteByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(0);
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
+    }
+
+    @Test
+    void removeFromWishlist_shouldRethrowDataIntegrityViolationException() {
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        when(wishlistRepository.deleteByUserIdAndProductId(
+                userId,
+                productId
+        )).thenThrow(new DataIntegrityViolationException("DB"));
+
+        assertThrows(
+                DataIntegrityViolationException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
+    }
+
+    @Test
+    void removeFromWishlist_shouldRethrowPersistenceException() {
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        when(wishlistRepository.deleteByUserIdAndProductId(
+                userId,
+                productId
+        )).thenThrow(new PersistenceException("JPA"));
+
+        assertThrows(
+                PersistenceException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
+    }
+
+    @Test
+    void removeFromWishlist_shouldRethrowGenericException() {
+
+        when(wishlistRepository.existsByUserIdAndProductId(
+                userId,
+                productId
+        )).thenReturn(true);
+
+        when(wishlistRepository.deleteByUserIdAndProductId(
+                userId,
+                productId
+        )).thenThrow(new RuntimeException("Unknown"));
+
+        assertThrows(
+                RuntimeException.class,
+                () -> wishlistService.removeFromWishlist(
+                        userId,
+                        productId
+                )
+        );
     }
 }
+

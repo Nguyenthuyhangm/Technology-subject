@@ -1,5 +1,6 @@
 package com.pricehawl.service;
 
+import com.pricehawl.dto.TrendingDealModels;
 import com.pricehawl.entity.Platform;
 import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.ProductListing;
@@ -261,5 +262,268 @@ class TrendingDealEngineTest {
         // Đột ngột giảm sâu >72% trong 2 ngày gần đây
         records.add(rec(28_000, 105_000, 73f, true, LocalDateTime.now().minusHours(10)));
         assertTrue(TrendingDealEngine.isLikelyFakePromo(records));
+    }
+    @Test
+    void isEligibleForTrending_nullListing() {
+
+        assertFalse(
+                TrendingDealEngine.isEligibleForTrending(
+                        null,
+                        List.of()
+                )
+        );
+    }
+    @Test
+    void isEligibleForTrending_outOfStock() {
+
+        ProductListing listing = listing(1.0, true);
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(100000)
+                        .inStock(false)
+                        .crawledAt(LocalDateTime.now())
+                        .build();
+
+        assertFalse(
+                TrendingDealEngine.isEligibleForTrending(
+                        listing,
+                        List.of(latest)
+                )
+        );
+    }
+    @Test
+    void isEligibleForTrending_success() {
+
+        ProductListing listing = listing(1.0, true);
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(100000)
+                        .inStock(true)
+                        .crawledAt(LocalDateTime.now())
+                        .build();
+
+        assertTrue(
+                TrendingDealEngine.isEligibleForTrending(
+                        listing,
+                        List.of(latest)
+                )
+        );
+    }
+    @Test
+    void score_noLatest_returnsZero() {
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0, true),
+                        List.of()
+                );
+
+        assertEquals(0.0,
+                result.totalDealScore());
+    }
+    @Test
+    void score_normalCase() {
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(70000)
+                        .originalPrice(100000)
+                        .discountPct(30f)
+                        .inStock(true)
+                        .crawledAt(LocalDateTime.now())
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0, true),
+                        List.of(latest)
+                );
+
+        assertTrue(
+                result.totalDealScore() > 0
+        );
+    }
+    @Test
+    void score_nullTrust() {
+
+        ProductListing listing =
+                ProductListing.builder()
+                        .trustScore(null)
+                        .build();
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(LocalDateTime.now())
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing,
+                        List.of(latest)
+                );
+
+        assertNotNull(result);
+    }
+    @Test
+    void score_trustGreaterThanOne() {
+
+        ProductListing listing =
+                ProductListing.builder()
+                        .trustScore(5.0)
+                        .build();
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(LocalDateTime.now())
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing,
+                        List.of(latest)
+                );
+
+        assertTrue(
+                result.trustScore() <= 1.0
+        );
+    }
+    @Test
+    void score_freshnessUnder2Hours() {
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(
+                                LocalDateTime.now()
+                                        .minusMinutes(30))
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0,true),
+                        List.of(latest)
+                );
+
+        assertEquals(
+                1.0,
+                result.freshnessScore()
+        );
+    }
+    @Test
+    void score_freshness2To6Hours() {
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(
+                                LocalDateTime.now()
+                                        .minusHours(3)
+                        )
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0, true),
+                        List.of(latest)
+                );
+
+        assertEquals(
+                0.80,
+                result.freshnessScore(),
+                0.0001
+        );
+    }
+    @Test
+    void score_freshness6To12Hours() {
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(
+                                LocalDateTime.now()
+                                        .minusHours(8)
+                        )
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0, true),
+                        List.of(latest)
+                );
+
+        assertEquals(
+                0.60,
+                result.freshnessScore(),
+                0.0001
+        );
+    }
+    @Test
+    void score_freshnessOver12Hours() {
+
+        PriceRecord latest =
+                PriceRecord.builder()
+                        .price(80000)
+                        .originalPrice(100000)
+                        .discountPct(20f)
+                        .inStock(true)
+                        .crawledAt(
+                                LocalDateTime.now()
+                                        .minusHours(24)
+                        )
+                        .build();
+
+        TrendingDealModels.DealScoreCalculation result =
+                TrendingDealEngine.score(
+                        listing(1.0, true),
+                        List.of(latest)
+                );
+
+        assertEquals(
+                0.40,
+                result.freshnessScore(),
+                0.0001
+        );
+    }
+    @Test
+    void isLikelyFakePromo_inflatedOriginalPricePattern() {
+
+        LocalDateTime now =
+                LocalDateTime.now();
+
+        List<PriceRecord> records =
+                new ArrayList<>();
+
+        records.add(rec(100000,100000,10f,true,now.minusDays(10)));
+        records.add(rec(100000,100000,10f,true,now.minusDays(9)));
+        records.add(rec(100000,100000,10f,true,now.minusDays(8)));
+
+        records.add(rec(50000,150000,70f,true,now.minusDays(2)));
+        records.add(rec(50000,150000,70f,true,now.minusDays(1)));
+        records.add(rec(50000,150000,70f,true,now));
+
+        assertTrue(
+                TrendingDealEngine.isLikelyFakePromo(
+                        records
+                )
+        );
     }
 }
