@@ -54,6 +54,7 @@ public class SecurityConfig {
                         // Auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/actuator/prometheus", "/actuator/health", "/actuator/info").permitAll()
 
                         // Public GET APIs
                         .requestMatchers(HttpMethod.GET,
@@ -62,9 +63,12 @@ public class SecurityConfig {
                                 "/api/trending-deals/**",
                                 "/api/v1/price-history/**",
                                 "/api/compare/**",
-                                "/api/go/**",               // affiliate redirect
+                                "/api/go/**",
                                 "/api/recommendations/**"
                         ).permitAll()
+
+                        // Metrics
+                        .requestMatchers(HttpMethod.POST, "/api/metrics/frontend").permitAll()
 
                         // AI Chat dùng POST nên phải permit riêng
                         .requestMatchers(HttpMethod.POST,
