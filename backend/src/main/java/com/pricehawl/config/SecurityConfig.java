@@ -51,10 +51,17 @@ public class SecurityConfig {
                         // Cho phép preflight request từ frontend
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        // Actuator endpoints cho monitoring
+                        .requestMatchers(
+                                "/actuator/health",
+                                "/actuator/health/**",
+                                "/actuator/info",
+                                "/actuator/prometheus"
+                        ).permitAll()
+
                         // Auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/actuator/prometheus", "/actuator/health", "/actuator/info").permitAll()
 
                         // Public GET APIs
                         .requestMatchers(HttpMethod.GET,
@@ -63,12 +70,9 @@ public class SecurityConfig {
                                 "/api/trending-deals/**",
                                 "/api/v1/price-history/**",
                                 "/api/compare/**",
-                                "/api/go/**",
+                                "/api/go/**",               // affiliate redirect
                                 "/api/recommendations/**"
                         ).permitAll()
-
-                        // Metrics
-                        .requestMatchers(HttpMethod.POST, "/api/metrics/frontend").permitAll()
 
                         // AI Chat dùng POST nên phải permit riêng
                         .requestMatchers(HttpMethod.POST,

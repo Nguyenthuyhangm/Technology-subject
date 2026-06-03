@@ -4,6 +4,17 @@
  */
 
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+// Ensure any unexpected errors are returned as JSON so Java caller can parse them
+process.on('unhandledRejection', (err) => {
+    console.log(JSON.stringify({ error: true, message: err && err.message ? err.message : String(err) }));
+    process.exit(1);
+});
+process.on('uncaughtException', (err) => {
+    console.log(JSON.stringify({ error: true, message: err && err.message ? err.message : String(err) }));
+    process.exit(1);
+});
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const productUrl = process.argv[2];
@@ -25,19 +36,47 @@ const USER_AGENTS = [
 const randomUA = () => USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
 const randomDelay = () => Math.floor(Math.random() * 2000) + 1000; // 1-3s random
 
+const resolveChromeExecutable = () => {
+    const candidates = [
+        process.env.PUPPETEER_EXECUTABLE_PATH,
+        process.env.CHROME_PATH,
+        '/usr/bin/chromium',
+        '/usr/bin/chromium-browser',
+        '/usr/bin/google-chrome',
+        '/opt/google/chrome/chrome'
+    ];
+
+    for (const p of candidates) {
+        if (p && fs.existsSync(p)) {
+            return p;
+        }
+    }
+
+    return null;
+};
+
 (async () => {
-    const browser = await puppeteer.launch({
-        headless: 'new',
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu',
-            '--disable-blink-features=AutomationControlled',
-            '--disable-features=IsolateOrigins,site-per-process',
-            '--window-size=1920,1080'
-        ]
-    });
+    let browser = null;
+    try {
+        const executablePath = resolveChromeExecutable();
+        browser = await puppeteer.launch({
+            headless: 'new',
+            executablePath: executablePath || undefined,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--disable-blink-features=AutomationControlled',
+                '--disable-features=IsolateOrigins,site-per-process',
+                '--window-size=1920,1080'
+            ]
+        });
+
+    } catch (err) {
+        console.log(JSON.stringify({ error: true, message: 'Failed to launch browser: ' + (err && err.message ? err.message : String(err)) }));
+        process.exit(1);
+    }
 
     try {
         const page = await browser.newPage();

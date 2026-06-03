@@ -1,129 +1,117 @@
-# Hướng dẫn chạy Monitoring Stack — PriceHawk
+# Hướng dẫn chạy Monitoring Stack — PriceHawk trên Ubuntu headless
 
-## Yêu cầu
+## Kết luận nhanh
 
-- Docker Desktop đang chạy
-- Port 3000, 9090, 9115 chưa bị dùng
+Monitoring stack có thể chạy trên Ubuntu server không có giao diện nếu bạn dùng Docker Engine + Docker Compose plugin.
 
----
+Để đọc đủ số liệu, backend cần có:
 
-## Bước 1 — Tạo file .env
+- `spring-boot-starter-actuator`
+- `micrometer-registry-prometheus`
 
-```powershell
+Sau khi sửa backend, Prometheus sẽ đọc được:
+
+- system metrics từ `node-exporter`
+- health check từ `/actuator/health`
+- metrics ứng dụng từ `/actuator/prometheus`
+- probe availability từ `blackbox-exporter`
+
+## Cần cài gì trên Ubuntu
+
+- Docker Engine
+- Docker Compose plugin
+- `curl`
+
+Nếu muốn truy cập dashboard từ máy cá nhân, bạn có thể mở port hoặc dùng SSH tunnel. Server không cần GUI.
+
+## Bước 1 — Tạo file `.env`
+
+```bash
 cd monitoring
-copy .env.example .env
+cp .env.example .env
 ```
 
----
+Nếu máy bạn chưa có `.env.example`, file mẫu này đã được bổ sung trong thư mục `monitoring/`.
 
-## Bước 2 — Khởi động stack
+## Bước 2 — Chạy monitoring stack
 
-```powershell
+```bash
 cd monitoring
-docker compose up -d prometheus grafana blackbox-exporter
+docker compose --profile linux up -d
 ```
 
-Kiểm tra tất cả đang chạy:
+`--profile linux` sẽ bật `node-exporter` cho Ubuntu.
 
-```powershell
+Kiểm tra service:
+
+```bash
 docker compose ps
 ```
 
----
+## Bước 3 — Kiểm tra backend metrics
 
-## Bước 3 — Cài System Metrics (CPU / RAM / Disk)
-
-Chọn theo hệ điều hành của bạn:
-
----
-
-### Windows
-
-**1. Tải windows_exporter:**
-
-Vào link sau, tải file `windows_exporter-x.x.x-amd64.exe`:
-
-```
-https://github.com/prometheus-community/windows_exporter/releases/latest
-```
-
-Đổi tên file vừa tải thành `windows_exporter.exe`, lưu vào thư mục bất kỳ, ví dụ `D:\tools\`.
-
-**2. Chạy:**
-
-```powershell
-cd D:\tools
-.\windows_exporter.exe
-```
-
-Terminal sẽ hiện log và giữ nguyên — để mở terminal này.
-
-**3. Kiểm tra:**
-
-Mở browser vào `http://localhost:9182/metrics` — phải thấy hàng nghìn dòng text.
-
-**4. (Tuỳ chọn) Cài như service để tự chạy khi khởi động:**
-
-Mở PowerShell với quyền **Administrator**:
-
-```powershell
-cd D:\tools
-.\windows_exporter.exe --service install
-Start-Service windows_exporter
-```
-
----
-
-### Linux / Ubuntu
-
-Node-exporter đã có trong docker-compose, chạy thêm lệnh sau:
+Backend phải chạy và publish port `8080` ra host. Sau đó kiểm tra:
 
 ```bash
-cd monitoring
-docker compose --profile linux up -d node-exporter
+curl http://localhost:8080/actuator/health
+curl http://localhost:8080/actuator/prometheus | head -20
 ```
 
-Kiểm tra:
+Nếu hai lệnh trên chưa ra dữ liệu, Prometheus sẽ không có đủ metric để hiển thị dashboard backend.
+
+## Bước 4 — Kiểm tra Prometheus targets
 
 ```bash
-curl http://localhost:9100/metrics | head -20
+curl http://localhost:9090/targets
 ```
 
----
+Các target nên thấy `UP`:
 
-## Bước 4 — Truy cập và xem Dashboard
+| Target | Mục đích |
+|--------|----------|
+| `prometheus` | Tự giám sát |
+| `node-exporter` | CPU / RAM / Disk của Ubuntu |
+| `backend-api` | Metrics Spring Boot |
+| `blackbox-http` | Probe HTTP health |
 
-| Mục | URL | Tài khoản |
-|-----|-----|-----------|
-| **Grafana** (dashboard chính) | http://localhost:3000 | admin / admin123 |
-| **Prometheus** (xem raw metrics) | http://localhost:9090 | không cần |
+## Bước 5 — Truy cập Grafana khi server không có GUI
 
-**Xem dashboard trong Grafana:**
+### Cách 1: mở port trực tiếp trên browser của máy cá nhân
 
-1. Vào http://localhost:3000
-2. Đăng nhập: `admin` / `admin123`
-3. Menu trái → **Dashboards** → chọn **PriceHawk Overview**
+```text
+http://<server-ip>:3000
+http://<server-ip>:9090
+```
 
-**Xem targets Prometheus đang scrape:**
+### Cách 2: dùng SSH tunnel, an toàn hơn
 
-Vào http://localhost:9090/targets — kiểm tra các target sau:
+```bash
+ssh -L 3000:localhost:3000 -L 9090:localhost:9090 user@<server-ip>
+```
 
-| Target | Trạng thái |
-|--------|-----------|
-| prometheus | UP |
-| backend-api | UP (khi Spring Boot đang chạy) |
-| blackbox-http | UP |
-| windows-exporter | UP (Windows — khi windows_exporter.exe đang chạy) |
-| node-exporter | UP (Linux — khi chạy `--profile linux`) |
+Sau đó mở trên máy cá nhân:
 
----
+- `http://localhost:3000`
+- `http://localhost:9090`
+
+Thông tin đăng nhập Grafana mặc định:
+
+- user: `admin`
+- password: `admin123` hoặc giá trị `GRAFANA_PASSWORD` trong `.env`
+
+## Ghi chú quan trọng
+
+- `windows_exporter` không cần dùng trên Ubuntu.
+- `node-exporter` đã nằm sẵn trong `monitoring/docker-compose.yml`, chỉ cần bật profile `linux`.
+- Nếu backend chưa bật Actuator/Micrometer, dashboard sẽ chỉ có phần system metrics và probe, không có số liệu HTTP request/latency của ứng dụng.
 
 ## Lệnh hữu ích
 
-```powershell
-# Xem logs một service
+```bash
+# Xem logs
 docker compose logs grafana --tail=50
 docker compose logs prometheus --tail=50
+docker compose logs blackbox-exporter --tail=50
 
 # Restart một service
 docker compose restart grafana

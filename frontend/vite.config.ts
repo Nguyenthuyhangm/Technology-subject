@@ -58,6 +58,12 @@ export default defineConfig({
         // không cần rewrite path (backend đã có `/api/**`).
       },
 
+      '/users': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+      },
+
       // --- Endpoint legacy `/products/**` -----------------------------------
       // `ProductController` hiện đã mount cả `/products` + `/api/products`,
       // nhưng FE cũ vẫn có chỗ gọi `fetch('http://localhost:8080/products/…')`.

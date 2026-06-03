@@ -1,13 +1,16 @@
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: "postgres.astkanfsacxriwprspqr"
+    password: "PriceHawl123@"
     driver-class-name: org.postgresql.Driver
 
     hikari:
+      # Tăng số lượng kết nối để không phải xếp hàng chờ (Queueing)
+      maximum-pool-size: 6
       minimum-idle: 5
-      keepalive-time: 30000
+      # CỰC KỲ QUAN TRỌNG: Giữ kết nối luôn "nóng" sang Hàn Quốc để giảm ping
+      keepalive-time: 30000 
       idle-timeout: 60000
       max-lifetime: 1800000
       connection-timeout: 30000
@@ -20,76 +23,78 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
+        # Tối ưu hóa việc lấy dữ liệu hàng loạt
         jdbc.batch_size: 25
         order_inserts: true
         order_updates: true
 
   elasticsearch:
-    uris: ${ELASTICSEARCH_URI:http://localhost:9200}
-
+    uris: ${SPRING_ELASTICSEARCH_URIS:http://localhost:9200}
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
 
   flyway:
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never
+  metrics:
+    tags:
+      application: backend
+
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8080
 
 logging:
   level:
     root: WARN
     org.springframework.security: WARN
+    # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
     com.pricehawl.service.crawler: INFO
 
 pricehawk:
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:80,http://localhost:8824,http://127.0.0.1:80,http://127.0.0.1:8824,http://192.168.1.57:80,http://192.168.1.57:8824,http://pricehawk.site:80,http://pricehawk.site:8824,http://www.pricehawk.site:80,http://www.pricehawk.site:8824"
   debug:
-    price-refresh-dir: ${PRICE_REFRESH_DEBUG_DIR:./debug/price-refresh}
+    price-refresh-dir: "./debug/price-refresh"
 
   scheduler:
     price-refresh:
-      enabled: ${PRICE_REFRESH_SCHEDULER_ENABLED:false}
+      enabled: false
       cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
       max-items-per-run: 50
 
   crawler:
-    watsons-script: ${WATSONS_SCRIPT:backend/watsons-price.js}
-    cocolux-script: ${COCOLUX_SCRIPT:backend/cocolux-price.js}
+    watsons-script: "watsons-price.js"
+    cocolux-script: "cocolux-price.js"
     thread-pool-size: 5
 
 resend:
-  api-key: ${RESEND_API_KEY:}
+  api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
 
 ai:
-  base-url: ${AI_BASE_URL:https://generativelanguage.googleapis.com}
-  api-key: ${AI_API_KEY:}
-  model: ${AI_MODEL:gemini-2.5-flash}
-  enable-search: ${AI_ENABLE_SEARCH:true}
+  base-url: https://generativelanguage.googleapis.com
+  api-key: AQ.Ab8RN6IR3KQZcinpjM6G7UdfSwl9RXfXXO8JEknANTOX960EOQ
+  model: gemini-2.5-flash
+  enable-search: true
 
+# AccessTrade & Other configs
 accesstrade:
-  api-key: ${ACCESSTRADE_API_KEY:}
+  api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
 
 supabase:
-  url: ${SUPABASE_URL}
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
-    key: ${SUPABASE_API_KEY}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
-  endpoint:
-    prometheus:
-      enabled: true
-  metrics:
-    distribution:
-      percentiles-histogram:
-        http.server.requests: true
-        hikaricp.connections.usage: true
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"

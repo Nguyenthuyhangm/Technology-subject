@@ -1,8 +1,5 @@
 import axios, { type AxiosInstance } from 'axios';
-import type { AxiosError } from "axios";
 import { supabase } from '../lib/supabaseClient';
-import { monitor } from '../util/monitoring';
-
 
 // BIẾN GLOBAL ĐỂ CACHE TOKEN
 let cachedToken: string | null = null;
@@ -47,18 +44,5 @@ apiClient.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error);
 });
-apiClient.interceptors.response.use(
-  (response) => {
-    monitor.recordApiRequest(false);
-    return response;
-  },
-  (error: AxiosError) => {
-    const url = error.config?.url ?? '';
-    if (!url.includes('/metrics/frontend')) {
-      monitor.recordApiRequest(true);
-    }
-    return Promise.reject(error);
-  }
-);
 
 export default apiClient;

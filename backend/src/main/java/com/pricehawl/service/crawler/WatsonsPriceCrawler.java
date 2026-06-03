@@ -10,10 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +30,13 @@ public class WatsonsPriceCrawler implements PlatformPriceCrawler {
     private static final String PLATFORM = "watsons";
     private static final Pattern PRODUCT_CODE_PATTERN =
             Pattern.compile("/p/((?:BP|WP)_[A-Za-z0-9]+)");
+    private static final List<String> NODE_CANDIDATES = Arrays.asList(
+            System.getenv("PRICEHAWK_CRAWLER_NODE_BINARY"),
+            "node",
+            "nodejs",
+            "/usr/local/bin/node",
+            "/usr/bin/node"
+    );
 
     @Value("${pricehawk.crawler.watsons-script:watsons-price.js}")
     private String scriptPath;
@@ -50,15 +62,11 @@ public class WatsonsPriceCrawler implements PlatformPriceCrawler {
             throw new IllegalArgumentException("Cannot extract product code from: " + productUrl);
         }
 
+        String resolvedScriptPath = resolveScriptPath(scriptPath);
+
         Process process = null;
         try {
-            ProcessBuilder pb = new ProcessBuilder("node", scriptPath, productUrl);
-            pb.redirectErrorStream(false);
-
-            // Set working directory về thư mục backend (nơi chứa watsons-price.js)
-            pb.directory(new File(System.getProperty("user.dir")));
-
-            process = pb.start();
+            process = startNodeProcess(resolvedScriptPath, productUrl);
 
             String stdout = readStream(process.getInputStream());
             String stderr = readStream(process.getErrorStream());
@@ -74,18 +82,10 @@ public class WatsonsPriceCrawler implements PlatformPriceCrawler {
                 log.debug("Watsons stderr: {}", stderr.trim());
             }
 
-            // Tìm dòng JSON trong stdout
-            String jsonLine = null;
-            for (String line : stdout.split("\\R")) {
-                line = line.trim();
-                if (line.startsWith("{") && line.endsWith("}")) {
-                    jsonLine = line;
-                    break;
-                }
-            }
+            String jsonLine = extractJsonLine(stdout + System.lineSeparator() + stderr);
 
             if (jsonLine == null) {
-                throw new RuntimeException("No JSON from Watsons script. stdout=" + stdout);
+                throw new RuntimeException("No JSON from Watsons script. exitCode=" + process.exitValue() + " scriptPath=" + resolvedScriptPath + " stdout=" + stdout + " stderr=" + stderr);
             }
 
             JsonNode root = objectMapper.readTree(jsonLine);
@@ -151,5 +151,65 @@ public class WatsonsPriceCrawler implements PlatformPriceCrawler {
         if (url == null) return null;
         Matcher m = PRODUCT_CODE_PATTERN.matcher(url);
         return m.find() ? m.group(1) : null;
+    }
+
+    private String extractJsonLine(String output) {
+        if (output == null || output.isBlank()) {
+            return null;
+        }
+
+        for (String line : output.split("\\R")) {
+            line = line.trim();
+            if (line.startsWith("{") && line.endsWith("}")) {
+                return line;
+            }
+        }
+
+        return null;
+    }
+
+    private String resolveScriptPath(String configuredPath) {
+        if (configuredPath == null || configuredPath.isBlank()) {
+            throw new IllegalArgumentException("Watsons script path is empty");
+        }
+
+        Path directPath = Path.of(configuredPath);
+        if (Files.exists(directPath)) {
+            return directPath.toString();
+        }
+
+        String fileName = directPath.getFileName().toString();
+        Path strippedBackendPrefix = Path.of(fileName);
+        if (Files.exists(strippedBackendPrefix)) {
+            return strippedBackendPrefix.toString();
+        }
+
+        Path backendRelativePath = Path.of("backend", fileName);
+        if (Files.exists(backendRelativePath)) {
+            return backendRelativePath.toString();
+        }
+
+        throw new IllegalArgumentException("Watsons crawler script not found. Tried: " + directPath + ", " + strippedBackendPrefix + ", " + backendRelativePath);
+    }
+
+    private Process startNodeProcess(String scriptPath, String productUrl) throws IOException {
+        IOException lastException = null;
+        for (String nodeBinary : NODE_CANDIDATES) {
+            if (nodeBinary == null || nodeBinary.isBlank()) {
+                continue;
+            }
+
+            ProcessBuilder pb = new ProcessBuilder(nodeBinary, scriptPath, productUrl);
+            pb.redirectErrorStream(false);
+            pb.directory(new File(System.getProperty("user.dir")));
+
+            try {
+                return pb.start();
+            } catch (IOException ex) {
+                lastException = ex;
+            }
+        }
+
+        throw new IOException("Unable to start Node.js for Watsons crawler. Set PRICEHAWK_CRAWLER_NODE_BINARY or install Node.js in the runtime container.", lastException);
     }
 }

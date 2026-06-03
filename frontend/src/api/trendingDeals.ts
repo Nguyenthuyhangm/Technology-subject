@@ -4,16 +4,16 @@ import type { AxiosResponse } from 'axios'
 
 /**
  * Base URL API:
- * - Nếu VITE_API_BASE_URL=http://localhost:8080      → dùng http://localhost:8080
- * - Nếu VITE_API_BASE_URL=http://localhost:8080/api  → tự bỏ /api để tránh /api/api
- * - Nếu không set env → dùng http://localhost:8080
+ * - Nếu VITE_API_BASE_URL=https://example.com/api    → dùng https://example.com/api
+ * - Nếu VITE_API_BASE_URL=/api                       → dùng /api
+ * - Nếu không set env → dùng /api
  */
 export function getApiBaseUrl(): string {
   const v = import.meta.env.VITE_API_BASE_URL as string | undefined
   const normalized = v != null ? String(v).trim().replace(/\/$/, '') : ''
 
   if (!normalized) {
-    return 'http://localhost:8080'
+    return '/api'
   }
 
   if (normalized.endsWith('/api')) {

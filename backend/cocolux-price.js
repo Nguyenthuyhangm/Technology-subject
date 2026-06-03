@@ -4,9 +4,38 @@
  */
 
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+process.on('unhandledRejection', (err) => {
+    console.log(JSON.stringify({ error: true, message: err && err.message ? err.message : String(err) }));
+    process.exit(1);
+});
+process.on('uncaughtException', (err) => {
+    console.log(JSON.stringify({ error: true, message: err && err.message ? err.message : String(err) }));
+    process.exit(1);
+});
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const productUrl = process.argv[2];
+
+const resolveChromeExecutable = () => {
+    const candidates = [
+        process.env.PUPPETEER_EXECUTABLE_PATH,
+        process.env.CHROME_PATH,
+        '/usr/bin/chromium',
+        '/usr/bin/chromium-browser',
+        '/usr/bin/google-chrome',
+        '/opt/google/chrome/chrome'
+    ];
+
+    for (const p of candidates) {
+        if (p && fs.existsSync(p)) {
+            return p;
+        }
+    }
+
+    return null;
+};
 
 if (!productUrl) {
     console.log(JSON.stringify({ error: true, message: 'productUrl is required' }));
@@ -14,10 +43,19 @@ if (!productUrl) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch({
-        headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
-    });
+    let browser = null;
+    try {
+        const executablePath = resolveChromeExecutable();
+        browser = await puppeteer.launch({
+            headless: 'new',
+            executablePath: executablePath || undefined,
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+        });
+
+    } catch (err) {
+        console.log(JSON.stringify({ error: true, message: 'Failed to launch browser: ' + (err && err.message ? err.message : String(err)) }));
+        process.exit(1);
+    }
 
     try {
         const page = await browser.newPage();

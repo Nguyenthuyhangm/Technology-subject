@@ -10,10 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -21,6 +26,13 @@ public class CocoluxPriceCrawler implements PlatformPriceCrawler {
 
     private static final Logger log = LoggerFactory.getLogger(CocoluxPriceCrawler.class);
     private static final String PLATFORM = "cocolux";
+    private static final List<String> NODE_CANDIDATES = Arrays.asList(
+            System.getenv("PRICEHAWK_CRAWLER_NODE_BINARY"),
+            "node",
+            "nodejs",
+            "/usr/local/bin/node",
+            "/usr/bin/node"
+    );
 
     @Value("${pricehawk.crawler.cocolux-script:backend/cocolux-price.js}")
     private String scriptPath;
@@ -41,13 +53,11 @@ public class CocoluxPriceCrawler implements PlatformPriceCrawler {
 
     @Override
     public PriceSnapshotDTO crawl(String productUrl) throws Exception {
+        String resolvedScriptPath = resolveScriptPath(scriptPath);
+
         Process process = null;
         try {
-            ProcessBuilder pb = new ProcessBuilder("node", scriptPath, productUrl);
-            pb.redirectErrorStream(false);
-            pb.directory(new File(System.getProperty("user.dir")));
-
-            process = pb.start();
+            process = startNodeProcess(resolvedScriptPath, productUrl);
 
             String stdout = readStream(process.getInputStream());
             String stderr = readStream(process.getErrorStream());
@@ -63,18 +73,10 @@ public class CocoluxPriceCrawler implements PlatformPriceCrawler {
                 log.debug("Cocolux stderr: {}", stderr.trim());
             }
 
-            // Tìm dòng JSON trong stdout
-            String jsonLine = null;
-            for (String line : stdout.split("\\R")) {
-                line = line.trim();
-                if (line.startsWith("{") && line.endsWith("}")) {
-                    jsonLine = line;
-                    break;
-                }
-            }
+            String jsonLine = extractJsonLine(stdout + System.lineSeparator() + stderr);
 
             if (jsonLine == null) {
-                throw new RuntimeException("No JSON from Cocolux script. stdout=" + stdout);
+                throw new RuntimeException("No JSON from Cocolux script. exitCode=" + process.exitValue() + " scriptPath=" + resolvedScriptPath + " stdout=" + stdout + " stderr=" + stderr);
             }
 
             JsonNode root = objectMapper.readTree(jsonLine);
@@ -134,5 +136,65 @@ public class CocoluxPriceCrawler implements PlatformPriceCrawler {
             return OffsetDateTime.parse(value).toLocalDateTime();
         } catch (Exception ignored) {}
         return LocalDateTime.now();
+    }
+
+    private String extractJsonLine(String output) {
+        if (output == null || output.isBlank()) {
+            return null;
+        }
+
+        for (String line : output.split("\\R")) {
+            line = line.trim();
+            if (line.startsWith("{") && line.endsWith("}")) {
+                return line;
+            }
+        }
+
+        return null;
+    }
+
+    private String resolveScriptPath(String configuredPath) {
+        if (configuredPath == null || configuredPath.isBlank()) {
+            throw new IllegalArgumentException("Cocolux script path is empty");
+        }
+
+        Path directPath = Path.of(configuredPath);
+        if (Files.exists(directPath)) {
+            return directPath.toString();
+        }
+
+        String fileName = directPath.getFileName().toString();
+        Path strippedBackendPrefix = Path.of(fileName);
+        if (Files.exists(strippedBackendPrefix)) {
+            return strippedBackendPrefix.toString();
+        }
+
+        Path backendRelativePath = Path.of("backend", fileName);
+        if (Files.exists(backendRelativePath)) {
+            return backendRelativePath.toString();
+        }
+
+        throw new IllegalArgumentException("Cocolux crawler script not found. Tried: " + directPath + ", " + strippedBackendPrefix + ", " + backendRelativePath);
+    }
+
+    private Process startNodeProcess(String scriptPath, String productUrl) throws IOException {
+        IOException lastException = null;
+        for (String nodeBinary : NODE_CANDIDATES) {
+            if (nodeBinary == null || nodeBinary.isBlank()) {
+                continue;
+            }
+
+            ProcessBuilder pb = new ProcessBuilder(nodeBinary, scriptPath, productUrl);
+            pb.redirectErrorStream(false);
+            pb.directory(new File(System.getProperty("user.dir")));
+
+            try {
+                return pb.start();
+            } catch (IOException ex) {
+                lastException = ex;
+            }
+        }
+
+        throw new IOException("Unable to start Node.js for Cocolux crawler. Set PRICEHAWK_CRAWLER_NODE_BINARY or install Node.js in the runtime container.", lastException);
     }
 }
