@@ -1,8 +1,11 @@
-package com.pricehawl.service;
+package com.pricehawl.exception;
 
 import com.pricehawl.entity.Platform;
 import com.pricehawl.entity.PriceRecord;
 import com.pricehawl.entity.ProductListing;
+import com.pricehawl.service.TrendingDealEngine;
+import com.pricehawl.service.TrendingDealEngine.HistoricalDiscountResult;
+
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -262,4 +265,13 @@ class TrendingDealEngineTest {
         records.add(rec(28_000, 105_000, 73f, true, LocalDateTime.now().minusHours(10)));
         assertTrue(TrendingDealEngine.isLikelyFakePromo(records));
     }
+    @Test
+void trendingDealsComputationException_withCause_storesMessageAndCause() {
+    Throwable cause = new RuntimeException("root cause");
+    TrendingDealsComputationException ex =
+            new TrendingDealsComputationException("something went wrong", cause);
+
+    assertEquals("something went wrong", ex.getMessage());
+    assertEquals(cause, ex.getCause());
+}
 }

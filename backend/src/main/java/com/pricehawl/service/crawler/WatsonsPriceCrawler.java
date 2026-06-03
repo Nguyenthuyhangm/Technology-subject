@@ -117,7 +117,7 @@ public class WatsonsPriceCrawler implements PlatformPriceCrawler {
         }
     }
 
-    private String readStream(java.io.InputStream is) throws Exception {
+    protected String readStream(java.io.InputStream is) throws Exception {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, StandardCharsets.UTF_8))) {
