@@ -266,12 +266,12 @@ class TrendingDealEngineTest {
         assertTrue(TrendingDealEngine.isLikelyFakePromo(records));
     }
     @Test
-void trendingDealsComputationException_withCause_storesMessageAndCause() {
-    Throwable cause = new RuntimeException("root cause");
-    TrendingDealsComputationException ex =
-            new TrendingDealsComputationException("something went wrong", cause);
+    void trendingDealsComputationException_withCause_storesMessageAndCause() {
+        Throwable cause = new RuntimeException("root cause");
+        TrendingDealsComputationException ex =
+                new TrendingDealsComputationException("something went wrong", cause);
 
-    assertEquals("something went wrong", ex.getMessage());
-    assertEquals(cause, ex.getCause());
-}
+        assertEquals("something went wrong", ex.getMessage());
+        assertEquals(cause, ex.getCause());
+    }
 }
