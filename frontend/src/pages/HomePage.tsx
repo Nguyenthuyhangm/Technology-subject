@@ -112,7 +112,7 @@ export default function HomePage() {
               className="mt-4 text-6xl leading-[0.98] tracking-[-0.03em] text-stone-900 dark:text-stone-100 md:text-7xl xl:text-[5.6rem]"
               style={{ fontFamily: FONT_STACK.serif }}
             >
-              Mua sắm tinh tée,
+              Mua sắm tinh tée phuong,
               <br />
               thấy đúng <span className="text-[#B7848C]">giá đẹp</span>.
             </h1>
