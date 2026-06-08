@@ -1,5 +1,5 @@
 import apiClient from '../api/apiClient';
-import type { ProductSearch, PriceComparison, PriceHistory } from '../types/product';
+import type { ProductSearch, PriceComparison, PriceHistory, ProductVideo } from '../types/product';
 
 export interface SearchProductsOptions {
   platforms?: string[];
@@ -47,5 +47,10 @@ export async function priceHistory(productId: string): Promise<PriceHistory> {
 
 export async function getProductsByCategory(slug: string): Promise<ProductSearch[]> {
   const res = await apiClient.get(`/products/category/${encodeURIComponent(slug)}`);
+  return res.data;
+}
+
+export async function productVideos(productId: string): Promise<ProductVideo[]> {
+  const res = await apiClient.get(`/products/${productId}/videos`);
   return res.data;
 }

@@ -2,8 +2,10 @@ package com.pricehawl.controller;
 
 import com.pricehawl.dto.AiRecommendationDTO;
 import com.pricehawl.dto.ProductSearchDTO;
+import com.pricehawl.dto.ProductVideoDTO;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.service.ProductSearchService;
+import com.pricehawl.service.ProductVideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,13 @@ public class ProductController {
 
     private final ProductSearchService service;
     private final AiChatRepository aiChatRepository;
+    private final ProductVideoService productVideoService;
 
-    public ProductController(ProductSearchService service, AiChatRepository aiChatRepository) {
+    public ProductController(ProductSearchService service, AiChatRepository aiChatRepository,
+                             ProductVideoService productVideoService) {
         this.service = service;
         this.aiChatRepository = aiChatRepository;
+        this.productVideoService = productVideoService;
     }
 
     @GetMapping("/search")
@@ -61,5 +66,10 @@ public class ProductController {
     public String syncSearchIndex() {
         service.syncAll();
         return "SYNC OK";
+    }
+
+    @GetMapping("/{productId}/videos")
+    public List<ProductVideoDTO> getVideosByProduct(@PathVariable UUID productId) {
+        return productVideoService.getVideosByProductId(productId);
     }
 }

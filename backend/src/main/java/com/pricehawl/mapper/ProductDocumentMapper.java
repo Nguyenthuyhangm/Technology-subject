@@ -3,6 +3,7 @@ package com.pricehawl.mapper;
 import com.pricehawl.document.ProductDocument;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
+import com.pricehawl.util.VietnameseNormalizer;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -22,6 +23,8 @@ public class ProductDocumentMapper {
         doc.setId(product.getId().toString());
 
         doc.setName(product.getName());
+
+        doc.setNameNormalize(VietnameseNormalizer.normalize(product.getName()));
 
         doc.setDescription(product.getDescription());
 

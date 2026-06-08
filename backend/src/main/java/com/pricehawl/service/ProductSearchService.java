@@ -8,6 +8,7 @@ import com.pricehawl.mapper.ProductDocumentMapper;
 import com.pricehawl.repository.ProductRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.repository.ProductSearchRepository;
+import com.pricehawl.util.VietnameseNormalizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,10 +68,8 @@ public class ProductSearchService {
                 searchRepository.search(keyword);
 
         if (docs.isEmpty()) {
-
-            System.out.println("KHONG TIM THAY DOCUMENT");
-
-            return List.of();
+            System.out.println("KHONG TIM THAY DOCUMENT - goi fallback");
+            return searchFallback(keyword);
         }
 
         // 2. Map DTO trực tiếp từ ES document
@@ -120,7 +119,22 @@ public class ProductSearchService {
         List<Product> products = productRepository
                 .findByNameContainingIgnoreCase(keyword);
 
-        return products.stream()
+        if (!products.isEmpty()) {
+            return products.stream()
+                    .map(p -> ProductSearchDTO.builder()
+                            .id(p.getId())
+                            .name(p.getName())
+                            .categoryName(p.getCategory() != null ? p.getCategory().getName() : null)
+                            .brandName(p.getBrand() != null ? p.getBrand().getName() : null)
+                            .imageUrl(p.getImageUrl())
+                            .build())
+                    .toList();
+        }
+
+        String normalizedKeyword = VietnameseNormalizer.normalize(keyword);
+        List<Product> allProducts = productRepository.findAll();
+        return allProducts.stream()
+                .filter(p -> VietnameseNormalizer.normalize(p.getName()).contains(normalizedKeyword))
                 .map(p -> ProductSearchDTO.builder()
                         .id(p.getId())
                         .name(p.getName())

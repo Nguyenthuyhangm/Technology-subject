@@ -39,5 +39,7 @@ public class ProductDocument {
 
     private String promotionLabel;
 
+    private String nameNormalize;
+
     private Double score;
 }
