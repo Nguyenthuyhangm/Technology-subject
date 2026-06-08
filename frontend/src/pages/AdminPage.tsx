@@ -10,6 +10,7 @@ import CrawlerTab from '../components/admin/CrawlerTab';
 import VideosTab from '../components/admin/VideosTab';
 import AffiliateTab from '../components/admin/AffiliateTab';
 import PaymentsTab from '../components/admin/PaymentsTab';
+import AdminChatPanel from '../components/chat/AdminChatPanel';
 import apiClient from '../api/apiClient';
 
 export default function AdminPage() {

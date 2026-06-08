@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase';
 import { wishlistService } from '../service/wishlistApi';
 import type { WishlistAddPayload, WishlistDisplayItem } from '../types/wishlist';
 import { WishlistContext } from './wishlistContext';

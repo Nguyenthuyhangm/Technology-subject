@@ -4,6 +4,7 @@ import com.pricehawl.dto.AiRecommendationDTO;
 import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.dto.ProductSearchDTO;
 import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.entity.ProductListing;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.service.ProductDupeService;
@@ -24,17 +25,25 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 public class ProductController {
 
+    private record ByUrlResponse(String productId, String productName) {}
+
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductSearchService service;
     private final AiChatRepository aiChatRepository;
     private final ProductVideoService productVideoService;
+    private final ProductListingRepository listingRepository;
+    private final ProductDupeService productDupeService;
 
     public ProductController(ProductSearchService service, AiChatRepository aiChatRepository,
-                             ProductVideoService productVideoService) {
+                             ProductVideoService productVideoService,
+                             ProductListingRepository listingRepository,
+                             ProductDupeService productDupeService) {
         this.service = service;
         this.aiChatRepository = aiChatRepository;
         this.productVideoService = productVideoService;
+        this.listingRepository = listingRepository;
+        this.productDupeService = productDupeService;
     }
 
     @GetMapping("/search")
@@ -109,5 +118,10 @@ public class ProductController {
     @GetMapping("/{productId}/videos")
     public List<ProductVideoDTO> getVideosByProduct(@PathVariable UUID productId) {
         return productVideoService.getVideosByProductId(productId);
+    }
+
+    @GetMapping("/{productId}/dupes")
+    public List<ProductDupeDTO> getDupes(@PathVariable UUID productId) {
+        return productDupeService.getDupes(productId);
     }
 }

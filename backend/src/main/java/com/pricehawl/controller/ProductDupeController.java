@@ -1,10 +1,12 @@
 package com.pricehawl.controller;
 
+import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.service.ProductDupeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin/dupes")
@@ -15,9 +17,12 @@ public class ProductDupeController {
 
     @PostMapping("/rebuild")
     public String rebuild() {
-
         productDupeService.buildAllDupes();
-
         return "DONE";
+    }
+
+    @GetMapping("/products/{productId}/dupes")
+    public List<ProductDupeDTO> getDupes(@PathVariable UUID productId) {
+        return productDupeService.getDupes(productId);
     }
 }
