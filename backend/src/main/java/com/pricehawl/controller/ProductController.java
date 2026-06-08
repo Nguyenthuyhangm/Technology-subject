@@ -1,10 +1,12 @@
 package com.pricehawl.controller;
 
 import com.pricehawl.dto.AiRecommendationDTO;
+import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.dto.ProductSearchDTO;
 import com.pricehawl.entity.ProductListing;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.repository.ProductListingRepository;
+import com.pricehawl.service.ProductDupeService;
 import com.pricehawl.service.ProductSearchService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,13 +29,23 @@ public class ProductController {
     private final ProductSearchService service;
     private final AiChatRepository aiChatRepository;
     private final ProductListingRepository listingRepository;
+    private final ProductDupeService productDupeService;
 
     public ProductController(ProductSearchService service,
                              AiChatRepository aiChatRepository,
-                             ProductListingRepository listingRepository) {
+                             ProductListingRepository listingRepository,
+                             ProductDupeService productDupeService) {
         this.service = service;
         this.aiChatRepository = aiChatRepository;
         this.listingRepository = listingRepository;
+        this.productDupeService = productDupeService;
+    }
+
+    @GetMapping("/{productId}/dupes")
+    public List<ProductDupeDTO> getDupes(
+            @PathVariable UUID productId
+    ) {
+        return productDupeService.getDupes(productId);
     }
 
     @GetMapping("/search")

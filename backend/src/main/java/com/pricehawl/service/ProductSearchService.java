@@ -170,4 +170,38 @@ public class ProductSearchService {
         log.info("Indexed | productId={} | bestPrice={} | bestPlatform={}",
                 productId, doc.getBestPrice(), doc.getBestPlatform());
     }
+
+    // =========================
+    // 🔍 7. FIND BY IDS
+    // =========================
+    @Transactional(readOnly = true)
+    public List<ProductSearchDTO> findByIds(List<UUID> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> documentIds = ids.stream()
+                .map(UUID::toString)
+                .toList();
+
+        Iterable<ProductDocument> docs = searchRepository.findAllById(documentIds);
+
+        List<ProductSearchDTO> result = new ArrayList<>();
+        docs.forEach(doc -> result.add(
+                ProductSearchDTO.builder()
+                        .id(UUID.fromString(doc.getId()))
+                        .name(doc.getName())
+                        .brandName(doc.getBrandName())
+                        .categoryName(doc.getCategoryName())
+                        .imageUrl(doc.getImageUrl())
+                        .bestPrice(doc.getBestPrice())
+                        .originalPrice(doc.getOriginalPrice())
+                        .discountPct(doc.getDiscountPct())
+                        .bestPlatform(doc.getBestPlatform())
+                        .score(doc.getScore())
+                        .build()
+        ));
+
+        return result;
+    }
 }

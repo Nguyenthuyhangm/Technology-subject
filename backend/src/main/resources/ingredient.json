@@ -1,0 +1,82 @@
+{
+  "salicylic_acid": 10,
+  "niacinamide": 10,
+  "glycolic_acid": 10,
+  "lactic_acid": 9,
+  "capryloyl_salicylic_acid": 9,
+  "ascorbic_acid": 10,
+  "ascorbyl_glucoside": 8,
+  "3_o_ethyl_ascorbic_acid": 9,
+  "magnesium_ascorbyl_phosphate": 8,
+  "sodium_ascorbyl_phosphate": 8,
+  "arbutin": 9,
+  "alpha_arbutin": 10,
+  "phenylethyl_resorcinol": 9,
+
+  "panthenol": 8,
+  "allantoin": 8,
+  "madecassoside": 9,
+  "beta_glucan": 8,
+  "ectoin": 9,
+  "bisabolol": 7,
+
+  "sodium_hyaluronate": 8,
+  "hydrolyzed_hyaluronic_acid": 8,
+  "hydrolyzed_sodium_hyaluronate": 8,
+  "sodium_acetylated_hyaluronate": 8,
+  "hydroxypropyltrimonium_hyaluronate": 8,
+  "sodium_hyaluronate_crosspolymer": 8,
+
+  "ceramide_np": 9,
+  "glucosyl_ceramide": 9,
+  "squalane": 8,
+  "glycerin": 5,
+  "betaine": 5,
+  "hydroxyethyl_urea": 6,
+  "sodium_pca": 6,
+  "pca": 5,
+
+  "zinc_pca": 8,
+  "zinc_gluconate": 7,
+  "zinc_sulfate": 7,
+  "sulfur": 10,
+  "piroctone_olamine": 10,
+  "selenium_sulfide": 10,
+  "isopropyl_methylphenol": 8,
+  "o_cymen_5_ol": 8,
+
+  "dipotassium_glycyrrhizate": 7,
+  "glycyrrhetinic_acid": 7,
+
+  "retinyl_palmitate": 8,
+
+  "tea_tree_oil": 6,
+  "melaleuca_alternifolia_leaf_oil": 6,
+
+  "tocopherol": 4,
+  "tocopheryl_acetate": 4,
+
+  "caffeine": 5,
+  "taurine": 5,
+  "arginine": 5,
+
+  "water": 0,
+  "aqua": 0,
+  "alcohol": 0,
+  "alcohol_denat": 0,
+  "ethanol": 0,
+
+  "butylene_glycol": 1,
+  "propanediol": 1,
+  "pentylene_glycol": 1,
+  "propylene_glycol": 1,
+
+  "dimethicone": 1,
+  "cyclopentasiloxane": 1,
+  "carbomer": 0,
+  "triethanolamine": 0,
+  "disodium_edta": 0,
+  "phenoxyethanol": 0,
+  "fragrance": 0,
+  "parfum": 0
+}
