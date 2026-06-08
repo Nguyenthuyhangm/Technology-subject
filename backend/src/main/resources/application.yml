@@ -1,12 +1,13 @@
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: "postgres.astkanfsacxriwprspqr"
+    password: "PriceHawl123@"
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      minimum-idle: 5
+      maximum-pool-size: 3
+      minimum-idle: 1
       keepalive-time: 30000
       idle-timeout: 60000
       max-lifetime: 1800000
@@ -76,9 +77,10 @@ accesstrade:
   api-key: ${ACCESSTRADE_API_KEY:}
 
 supabase:
-  url: ${SUPABASE_URL}
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
-    key: ${SUPABASE_API_KEY}
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
 
 management:
   endpoints:
