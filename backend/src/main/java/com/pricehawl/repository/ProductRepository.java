@@ -21,4 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
      * Fallback search (chỉ dùng khi Elasticsearch lỗi)
      */
     List<Product> findByNameContainingIgnoreCase(String keyword);
+
+    List<Product> findByCategoryId(Integer categoryId);
 }
