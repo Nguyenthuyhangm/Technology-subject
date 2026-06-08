@@ -128,25 +128,6 @@ export interface PromotionEvent {
   type: string;
 }
 
-export interface ProductVideo {
-  id: string;
-  title: string;
-  videoUrl: string;
-  thumbnailUrl: string | null;
-  publicId: string | null;
-  duration: number | null;
-  createdAt: string;
-  createdBy: string | null;
-  productIds: string[];
-  productNames: string[];
-  productCount: number;
-  status: 'active' | 'error';
-}
-
-export type MediaItem =
-  | { type: 'image'; url: string }
-  | { type: 'video'; video: ProductVideo };
-
 /** Bản ghi sàn đầy đủ — dùng trong mockProducts */
 export interface PlatformPrice {
   platform: string;

@@ -11,14 +11,16 @@ import java.util.List;
 public interface ProductSearchRepository
         extends ElasticsearchRepository<ProductDocument, String> {
 
+    /**
+     * Search đa field + hỗ trợ sai chính tả (fuzzy)
+     */
     @Query("""
     {
       "multi_match": {
         "query": "?0",
-        "fields": ["name", "nameNormalize", "categoryName", "brandName"],
+        "fields": ["name", "categoryName", "brandName"],
         "fuzziness": "AUTO",
-        "operator": "or",
-        "type": "best_fields"
+        "operator": "and"
       }
     }
     """)

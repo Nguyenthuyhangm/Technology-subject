@@ -3,12 +3,12 @@ package com.pricehawl.controller;
 import com.pricehawl.dto.AiRecommendationDTO;
 import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.dto.ProductSearchDTO;
-import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.entity.ProductListing;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.service.ProductDupeService;
 import com.pricehawl.service.ProductSearchService;
-import com.pricehawl.service.ProductVideoService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +28,24 @@ public class ProductController {
 
     private final ProductSearchService service;
     private final AiChatRepository aiChatRepository;
-    private final ProductVideoService productVideoService;
+    private final ProductListingRepository listingRepository;
+    private final ProductDupeService productDupeService;
 
-    public ProductController(ProductSearchService service, AiChatRepository aiChatRepository,
-                             ProductVideoService productVideoService) {
+    public ProductController(ProductSearchService service,
+                             AiChatRepository aiChatRepository,
+                             ProductListingRepository listingRepository,
+                             ProductDupeService productDupeService) {
         this.service = service;
         this.aiChatRepository = aiChatRepository;
-        this.productVideoService = productVideoService;
+        this.listingRepository = listingRepository;
+        this.productDupeService = productDupeService;
+    }
+
+    @GetMapping("/{productId}/dupes")
+    public List<ProductDupeDTO> getDupes(
+            @PathVariable UUID productId
+    ) {
+        return productDupeService.getDupes(productId);
     }
 
     @GetMapping("/search")
@@ -106,8 +117,6 @@ public class ProductController {
         return "SYNC OK";
     }
 
-    @GetMapping("/{productId}/videos")
-    public List<ProductVideoDTO> getVideosByProduct(@PathVariable UUID productId) {
-        return productVideoService.getVideosByProductId(productId);
-    }
+    // ── Inner DTO ──────────────────────────────────────────────
+    record ByUrlResponse(String productId, String productName) {}
 }
