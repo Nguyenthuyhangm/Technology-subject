@@ -1,0 +1,14 @@
+{
+  "scenario": "ComparePrice",
+  "summary": {
+    "totalRequests": 6842,
+    "failedRequests": "0.82",
+    "peakUsers": 200,
+    "thresholds": "PASS" },
+  "performance": {
+    "avg": "684.25",
+    "p90": "1089.43",
+    "p95": "1294.77",
+    "max": "2486.30"
+  }
+}

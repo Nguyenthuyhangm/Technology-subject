@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance } from 'axios';
+import type { AxiosError } from "axios";
 import { supabase } from '../lib/supabaseClient';
 import { monitor } from '../util/monitoring';
 

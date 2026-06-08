@@ -1,0 +1,17 @@
+
+{
+"scenario": "Wishlist",
+"summary": {
+"totalRequests": 8427,
+"failedRequests": "0.36",
+"peakUsers": 300,
+"thresholds": "PASS"
+},
+"performance": {
+"avg": "421.58",
+"p90": "756.42",
+"p95": "918.37",
+"max": "1988.14"
+}
+}
+
