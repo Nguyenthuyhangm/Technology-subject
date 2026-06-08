@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+ import java.util.Optional;
 
 @Repository
 public interface ProductListingRepository
@@ -243,4 +244,5 @@ public interface ProductListingRepository
     List<ProductListing> findByInStockFalseAndUpdatedAtBefore(LocalDateTime before);
 
     long countByInStockFalseAndUpdatedAtBefore(LocalDateTime before);
+     Optional<ProductListing> findByUrl(String url);
 }

@@ -1,12 +1,13 @@
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: "postgres.astkanfsacxriwprspqr"
+    password: "PriceHawl123@"
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      minimum-idle: 5
+      maximum-pool-size: 3
+      minimum-idle: 1
       keepalive-time: 30000
       idle-timeout: 60000
       max-lifetime: 1800000
@@ -33,19 +34,28 @@ spring:
       port: ${REDIS_PORT:6379}
 
   flyway:
-    enabled: true
-    locations: classpath:db/migration
-    baseline-on-migrate: true
+    enabled: false
 
 server:
   port: ${SERVER_PORT:8080}
 
 logging:
+  file:
+    name: logs/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30        # giữ tối đa 30 ngày log
+      file-name-pattern: logs/app.log.%d{yyyy-MM-dd}.%i.gz
   level:
     root: WARN
-    org.springframework.security: WARN
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
     com.pricehawl.service.crawler: INFO
+    com.pricehawl: DEBUG
 
 pricehawk:
   debug:
@@ -76,9 +86,13 @@ accesstrade:
   api-key: ${ACCESSTRADE_API_KEY:}
 
 supabase:
-  url: ${SUPABASE_URL}
+  url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
-    key: ${SUPABASE_API_KEY}
+    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
+chat:
+  admin-emails: lethituphuong151020055@gmail.com,trangdinhhuyen269@gmail.com,23020661@vnu.edu.vn,moimoicutenhut@gmail.com,dminhanh2810@gmail.com
+
 
 management:
   endpoints:

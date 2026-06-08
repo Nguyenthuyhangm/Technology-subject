@@ -56,6 +56,7 @@ export default function AdminPage() {
         { key: 'crawler', label: 'Crawler', badge: 0 },
         { key: 'affiliate', label: 'Affiliate', badge: 0 },
         { key: 'payments', label: 'Thanh toán', badge: pendingCount },
+        { key: 'chat', label: 'Chat hỗ trợ', badge: 0 },
     ] as const;
 
     return (
@@ -128,6 +129,7 @@ export default function AdminPage() {
                 <div className={activeTab === 'crawler' ? '' : 'hidden'}><CrawlerTab /></div>
                 <div className={activeTab === 'affiliate' ? '' : 'hidden'}><AffiliateTab /></div>
                 <div className={activeTab === 'payments' ? '' : 'hidden'}><PaymentsTab /></div>
+                <div className={activeTab === 'chat' ? '' : 'hidden'}><AdminChatPanel /></div>
             </main>
         </div>
     );

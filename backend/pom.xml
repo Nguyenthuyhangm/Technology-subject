@@ -31,11 +31,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-text</artifactId>
+    <version>1.11.0</version>
+</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -102,6 +107,13 @@
             <groupId>com.auth0</groupId>
             <artifactId>jwks-rsa</artifactId>
             <version>0.22.1</version>
+        </dependency>
+
+        <!-- Tạo PDF báo cáo tình trạng da -->
+        <dependency>
+            <groupId>com.github.librepdf</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.3.39</version>
         </dependency>
 
         <dependency>
@@ -210,7 +222,7 @@
                         <exclude>com/pricehawl/config/**</exclude>
                         <exclude>com/pricehawl/service/AiLlmClient.class</exclude>
                         <exclude>com/pricehawl/service/TrendingDealService$PriceConflictStats.class</exclude>
-
+                        <exclude>com/pricehawl/controller/**</exclude>
                         <exclude>com/pricehawl/service/TrendingDealEngine$Explanations.class</exclude>
                         <exclude>com/pricehawl/service/TrendingDealEngine$HistoricalDiscountResult.class</exclude>
 
@@ -220,6 +232,8 @@
                         <exclude>com/pricehawl/service/TrendingDealTxBatchRunner$BatchOutcome.class</exclude>
                         <exclude>com/pricehawl/service/AiChatService.class</exclude>
                         <exclude>com/pricehawl/service/ProductService.class</exclude>
+                        <exclude>com/pricehawl/service/SkinAdviceService.class</exclude>
+                        <exclude>com/pricehawl/service/SkinAdvicePdfService.class</exclude>
                         <exclude>com/pricehawl/security/UserPrincipal.class</exclude>
                         <exclude>com/pricehawl/BackendApplication.class</exclude>
                     </excludes>

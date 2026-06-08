@@ -79,6 +79,21 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/api/ai-chat/**"
                         ).permitAll()
+                        // On-demand crawl — extension gọi không cần auth
+.requestMatchers(HttpMethod.POST,
+        "/api/crawl/on-demand"
+).permitAll()
+.requestMatchers(HttpMethod.GET,
+        "/api/crawl/jobs/**"
+).permitAll()
+
+                        // WebSocket handshake endpoint
+                        .requestMatchers("/ws/**").permitAll()
+
+                        // Chat REST endpoints — require auth (handled in controller)
+                        .requestMatchers("/api/chat/**").authenticated()
+                        // Skin Advice: phân tích da + tải PDF
+                        .requestMatchers("/api/skin-advice/**").permitAll()
 
                         // Các API còn lại cần đăng nhập
                         .anyRequest().authenticated()
