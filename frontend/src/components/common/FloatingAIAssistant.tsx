@@ -47,8 +47,8 @@ const formatAssistantContent = (content: string) => {
     .replace(/Trả lời ngắn:\s*/g, 'Trả lời ngắn:\n')
     .replace(/Gợi ý nhanh:\s*/g, 'Gợi ý nhanh:\n')
 
-    // Mỗi dấu "-" thành một dòng bullet riêng
-    .replace(/\s*-\s*/g, '\n- ')
+    // Chỉ tách bullet dạng " - ", không phá tên như La Roche-Posay
+    .replace(/\s+-\s+(?=[A-ZÀ-Ỵ0-9])/g, '\n- ')
 
     // Kết luận tách riêng ra
     .replace(/\s*Kết luận:\s*/g, '\n\nKết luận: ')
@@ -418,6 +418,14 @@ export default function FloatingAIAssistant({
             </div>
           </div>
         )}
+
+        <button
+          type="button"
+          onClick={() => navigate('/skin-advice')}
+          className="rounded-full border border-[#E9D8DE] bg-white/90 px-4 py-2 text-xs font-medium text-[#8E6A72] shadow-[0_10px_24px_rgba(142,106,114,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-[#FFF7F9]"
+        >
+          Tư vấn tình trạng da
+        </button>
 
         <button
           type="button"
