@@ -36,20 +36,28 @@ spring:
       port: 6379
 
   flyway:
-    enabled: true
-    locations: classpath:db/migration
-    baseline-on-migrate: true
+    enabled: false
 
 server:
   port: 8080
 
 logging:
+  file:
+    name: logs/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30        # giữ tối đa 30 ngày log
+      file-name-pattern: logs/app.log.%d{yyyy-MM-dd}.%i.gz
   level:
     root: WARN
-    org.springframework.security: WARN
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
     # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
     com.pricehawl.service.crawler: INFO
+    com.pricehawl: DEBUG
 
 pricehawk:
   debug:
@@ -84,6 +92,9 @@ supabase:
   url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
     key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
+chat:
+  admin-emails: lethituphuong151020055@gmail.com,trangdinhhuyen269@gmail.com,23020661@vnu.edu.vn,moimoicutenhut@gmail.com,dminhanh2810@gmail.com
 
 
 management:

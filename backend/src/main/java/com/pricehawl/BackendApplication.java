@@ -27,7 +27,7 @@ public class BackendApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Sync all products from database to Elasticsearch on startup
         System.out.println("Starting database sync to Elasticsearch...");
-        productSearchService.syncAll();
+        //productSearchService.syncAll();
         System.out.println(" Database sync completed successfully!");
     }
 }
