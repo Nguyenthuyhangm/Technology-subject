@@ -17,9 +17,10 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductSearchService {
@@ -35,7 +36,6 @@ public class ProductSearchService {
     // =========================
     @Transactional
     public void syncAll() {
-
         searchRepository.deleteAll();
         List<ProductDocument> docs = productRepository.findAll()
                 .stream()
@@ -43,8 +43,7 @@ public class ProductSearchService {
                 .toList();
 
         searchRepository.saveAll(docs);
-
-        System.out.println("SYNCED DOCS = " + docs.size());
+        log.info("SYNCED DOCS = {}", docs.size());
     }
 
     // =========================
@@ -60,63 +59,42 @@ public class ProductSearchService {
     )
     @Transactional
     public List<ProductSearchDTO> search(String keyword) {
-
-        // 1. Search Elasticsearch
-        System.out.println("SEARCH FROM ELASTIC");
-        List<ProductDocument> docs =
-                searchRepository.search(keyword);
+        log.info("SEARCH FROM ELASTIC | keyword={}", keyword);
+        List<ProductDocument> docs = searchRepository.search(keyword);
 
         if (docs.isEmpty()) {
-
-            System.out.println("KHONG TIM THAY DOCUMENT");
-
+            log.warn("KHONG TIM THAY DOCUMENT | keyword={}", keyword);
             return List.of();
         }
 
-        // 2. Map DTO trực tiếp từ ES document
-        List<ProductSearchDTO> result = docs.stream()
-
+        return docs.stream()
                 .map(doc -> ProductSearchDTO.builder()
-
                         .id(UUID.fromString(doc.getId()))
-
                         .name(doc.getName())
-
                         .brandName(doc.getBrandName())
-
                         .categoryName(doc.getCategoryName())
-
                         .imageUrl(doc.getImageUrl())
-
                         .bestPrice(doc.getBestPrice())
-
                         .originalPrice(doc.getOriginalPrice())
-
                         .discountPct(doc.getDiscountPct())
-
                         .bestPlatform(doc.getBestPlatform())
-
                         .score(doc.getScore())
-
                         .build())
-
                 .toList();
-
-
-        return result;
     }
+
     @CacheEvict(
             value = "product-search",
             allEntries = true
     )
     public void clearSearchCache() {
     }
+
     // =========================
     // 🛟 3. FALLBACK (nếu ES lỗi)
     // =========================
     @Transactional
     public List<ProductSearchDTO> searchFallback(String keyword) {
-
         List<Product> products = productRepository
                 .findByNameContainingIgnoreCase(keyword);
 
@@ -139,6 +117,10 @@ public class ProductSearchService {
         ProductDocument doc = documentMapper.toDocument(product);
         searchRepository.save(doc);
     }
+
+    // =========================
+    // ⚡ 5. PARTIAL UPDATE BEST PRICE
+    // =========================
     @Transactional
     public void updateBestPriceOnly(
             UUID productId,
@@ -169,5 +151,23 @@ public class ProductSearchService {
                 IndexCoordinates.of("products")
         );
         clearSearchCache();
+    }
+
+    // =========================
+    // 🔄 6. INDEX BY ID
+    // =========================
+    @Transactional
+    public void indexProductById(UUID productId) {
+        List<Product> products = productRepository.findAllByIdIn(List.of(productId));
+        if (products.isEmpty()) {
+            log.warn("indexProductById: not found | productId={}", productId);
+            return;
+        }
+        Product product = products.get(0);
+        ProductDocument doc = documentMapper.toDocument(product);
+        searchRepository.save(doc);
+        clearSearchCache();
+        log.info("Indexed | productId={} | bestPrice={} | bestPlatform={}",
+                productId, doc.getBestPrice(), doc.getBestPlatform());
     }
 }

@@ -79,6 +79,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/api/ai-chat/**"
                         ).permitAll()
+                        // On-demand crawl — extension gọi không cần auth
+.requestMatchers(HttpMethod.POST,
+        "/api/crawl/on-demand"
+).permitAll()
+.requestMatchers(HttpMethod.GET,
+        "/api/crawl/jobs/**"
+).permitAll()
 
                         // Các API còn lại cần đăng nhập
                         .anyRequest().authenticated()

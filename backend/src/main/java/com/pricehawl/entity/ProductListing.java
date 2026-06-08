@@ -43,8 +43,8 @@ public class ProductListing {
     private String platformImageUrl;
 
     @Column(name = "status", nullable = false)
-@Builder.Default
-private String status = "active";
+    @Builder.Default
+    private String status = "active";
 
     /**
      * Điểm tin cậy listing (0.0–1.0).
@@ -96,6 +96,9 @@ private String status = "active";
     @Column(name = "is_flash_sale")
     private Boolean isFlashSale;
 
+    @Column(name = "is_fake_promo", nullable = false)
+    @Builder.Default
+    private Boolean isFakePromo = false;
     /**
      * History records.
      *
@@ -107,12 +110,7 @@ private String status = "active";
      *
      * KHÔNG dùng cho search page nữa.
      */
-    @OneToMany(
-            mappedBy = "productListing",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "productListing", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("crawledAt DESC")
     @Builder.Default
     private List<PriceRecord> priceRecords = new ArrayList<>();
