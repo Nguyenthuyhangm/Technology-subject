@@ -9,6 +9,7 @@ import PriceChart from '../components/product/PriceChart';
 import AlertModal from '../components/alert/AlertModal';
 import SimilarProductsSection from '../components/product/SimilarProductsSection';
 import ProductVideosSection from '../components/product/ProductVideosSection';
+import ProductsDupeSection from "../components/product/ProductDupeSection";
 
 import { priceComparison, priceHistory } from '../service/ProductService';
 import type { PriceComparison, PriceHistory, ProductSearch } from '../types/product';
@@ -169,6 +170,12 @@ export default function ProductDetailPage() {
 
                 {id && <ProductVideosSection productId={id} />}
 
+                {id && (
+                    <ProductsDupeSection
+                        key={`dupe-${id}`}
+                        productId={id}
+                    />
+                )}
                 {id && <SimilarProductsSection key={id} productId={id} />}
             </div>
 
