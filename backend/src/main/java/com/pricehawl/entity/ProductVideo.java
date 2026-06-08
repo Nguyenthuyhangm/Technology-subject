@@ -34,6 +34,9 @@ public class ProductVideo {
     @Column(name = "public_id", length = 500)
     private String publicId;
 
+    @Column(name = "youtube_id", length = 100)
+    private String youtubeId;
+
     @Column
     private Integer duration;
 

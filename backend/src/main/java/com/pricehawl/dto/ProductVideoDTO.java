@@ -10,6 +10,7 @@ public record ProductVideoDTO(
     String videoUrl,
     String thumbnailUrl,
     String publicId,
+    String youtubeId,
     Integer duration,
     LocalDateTime createdAt,
     UUID createdBy,

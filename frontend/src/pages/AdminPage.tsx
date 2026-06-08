@@ -7,16 +7,16 @@ import OverviewTab from '../components/admin/OverviewTab';
 import UsersTab from '../components/admin/UsersTab';
 import ProductsTab from '../components/admin/ProductsTab';
 import CrawlerTab from '../components/admin/CrawlerTab';
+import VideosTab from '../components/admin/VideosTab';
 import AffiliateTab from '../components/admin/AffiliateTab';
 import PaymentsTab from '../components/admin/PaymentsTab';
-import VideosTab from '../components/admin/VideosTab';
 import apiClient from '../api/apiClient';
 
 export default function AdminPage() {
     const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<
-        'overview' | 'users' | 'products' | 'crawler' | 'affiliate' | 'payments' | 'videos'
+        'overview' | 'users' | 'products' | 'crawler' | 'videos' | 'affiliate' | 'payments'
     >('overview');
     const [pendingCount, setPendingCount] = useState(0);
 
@@ -52,8 +52,8 @@ export default function AdminPage() {
         { key: 'overview', label: 'Tổng quan', badge: 0 },
         { key: 'users', label: 'Người dùng', badge: 0 },
         { key: 'products', label: 'Sản phẩm', badge: 0 },
-        { key: 'videos', label: 'Video', badge: 0 },
         { key: 'crawler', label: 'Crawler', badge: 0 },
+        { key: 'videos', label: 'Videos', badge: 0 },
         { key: 'affiliate', label: 'Affiliate', badge: 0 },
         { key: 'payments', label: 'Thanh toán', badge: pendingCount },
     ] as const;
@@ -124,8 +124,8 @@ export default function AdminPage() {
                 <div className={activeTab === 'overview' ? '' : 'hidden'}><OverviewTab /></div>
                 <div className={activeTab === 'users' ? '' : 'hidden'}><UsersTab /></div>
                 <div className={activeTab === 'products' ? '' : 'hidden'}><ProductsTab /></div>
-                <div className={activeTab === 'videos' ? '' : 'hidden'}><VideosTab /></div>
                 <div className={activeTab === 'crawler' ? '' : 'hidden'}><CrawlerTab /></div>
+                <div className={activeTab === 'videos' ? '' : 'hidden'}><VideosTab /></div>
                 <div className={activeTab === 'affiliate' ? '' : 'hidden'}><AffiliateTab /></div>
                 <div className={activeTab === 'payments' ? '' : 'hidden'}><PaymentsTab /></div>
             </main>

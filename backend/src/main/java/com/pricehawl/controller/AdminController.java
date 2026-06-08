@@ -1,20 +1,19 @@
 package com.pricehawl.controller;
 
+import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.dto.ProductVideoDetailDTO;
+import com.pricehawl.dto.ProductVideoSummaryDTO;
 import com.pricehawl.entity.AffiliateClick;
 import com.pricehawl.entity.CrawlError;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductListing;
 import com.pricehawl.entity.User;
-import com.pricehawl.dto.ProductVideoDTO;
 import com.pricehawl.repository.*;
 import com.pricehawl.service.AccessTradeService;
-import com.pricehawl.service.CloudinaryService;
 import com.pricehawl.service.MultiPlatformPriceRefreshService;
-import com.pricehawl.service.ProductVideoService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +45,7 @@ public class AdminController {
     private final AccessTradeService accessTradeService;
     private final MultiPlatformPriceRefreshService refreshService;
     private final com.pricehawl.repository.PaymentRepository paymentRepository;
-    private final ProductVideoService productVideoService;
-    private final CloudinaryService cloudinaryService;
+    private final com.pricehawl.service.ProductVideoService productVideoService;
 
     private final ExecutorService adminCrawlerPool = Executors.newSingleThreadExecutor();
     private volatile Future<?> currentCrawlerTask = null;
@@ -546,94 +544,18 @@ public ResponseEntity<Map<String, Object>> getAffiliateClicks(
             "topProducts", topProducts,
             "totalClicks", total  // Fix #1: luôn là tổng thực sự
         ));
-}
-
-    // ── Product Video ────────────────────────────────────────────────────────
-
-    @PostMapping("/videos/upload")
-    public ResponseEntity<?> uploadVideo(
-            @RequestParam("file") org.springframework.web.multipart.MultipartFile file,
-            @RequestParam("title") String title,
-            @RequestParam(value = "productIds", required = false) String productIdsRaw
-    ) {
-        String contentType = file.getContentType();
-        if (contentType == null || (!contentType.equals("video/mp4") && !contentType.equals("video/webm"))) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Chỉ chấp nhận định dạng MP4 hoặc WebM"));
-        }
-        if (file.getSize() > 20 * 1024 * 1024) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Dung lượng video tối đa 20MB"));
-        }
-        try {
-            String ext = contentType.equals("video/webm") ? "webm" : "mp4";
-            String filename = UUID.randomUUID() + "." + ext;
-
-            Map<String, Object> uploadResult = cloudinaryService.uploadVideo(file.getBytes(), filename);
-            String videoUrl = (String) uploadResult.get("url");
-            String publicId = (String) uploadResult.get("publicId");
-            int duration = (int) uploadResult.get("duration");
-            String thumbnailUrl = (String) uploadResult.get("thumbnailUrl");
-
-            if (duration > 10) {
-                cloudinaryService.deleteResource(publicId);
-                return ResponseEntity.badRequest().body(Map.of("error", "Video tối đa 10 giây"));
-            }
-
-            List<UUID> productIdList = parseProductIds(productIdsRaw);
-            ProductVideoDTO dto = new ProductVideoDTO(
-                null, title, videoUrl, thumbnailUrl, publicId, duration, null, null,
-                productIdList, null, null, null
-            );
-            return ResponseEntity.ok(productVideoService.createVideo(dto));
-        } catch (Exception e) {
-            log.error("Upload video failed", e);
-            return ResponseEntity.internalServerError().body(Map.of("error", "Upload thất bại: " + e.getMessage()));
-        }
     }
 
-    private List<UUID> parseProductIds(String raw) {
-        if (raw == null || raw.isBlank()) return List.of();
-        return Arrays.stream(raw.split(","))
-            .map(String::trim)
-            .filter(s -> !s.isEmpty())
-            .map(UUID::fromString)
-            .collect(Collectors.toList());
+    // ── Video Management ─────────────────────────────────────────────────────
+
+    @GetMapping("/videos/summary")
+    public ResponseEntity<List<ProductVideoSummaryDTO>> getVideoSummary() {
+        return ResponseEntity.ok(productVideoService.getVideoSummaryByProduct());
     }
 
-    @PostMapping("/videos")
-    public ResponseEntity<ProductVideoDTO> createVideo(@RequestBody ProductVideoDTO request) {
-        return ResponseEntity.ok(productVideoService.createVideo(request));
-    }
-
-    @GetMapping("/videos")
-    public ResponseEntity<Map<String, Object>> getAllVideos(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size,
-            @RequestParam(required = false) String search
-    ) {
-        if (page != null && size != null) {
-            Page<ProductVideoDTO> paged = productVideoService.getVideosPaginated(page, size, search);
-            return ResponseEntity.ok(Map.of(
-                "videos", paged.getContent(),
-                "total", paged.getTotalElements(),
-                "pages", paged.getTotalPages(),
-                "page", page,
-                "size", size,
-                "totalProducts", productVideoService.getTotalProductCount()
-            ));
-        }
-        return ResponseEntity.ok(Map.of(
-            "videos", productVideoService.getAllVideos(),
-            "total", productVideoService.getAllVideos().size(),
-            "totalProducts", productVideoService.getTotalProductCount()
-        ));
-    }
-
-    @PatchMapping("/videos/{videoId}")
-    public ResponseEntity<ProductVideoDTO> updateVideo(
-            @PathVariable UUID videoId,
-            @RequestBody ProductVideoDTO request
-    ) {
-        return ResponseEntity.ok(productVideoService.updateVideo(videoId, request));
+    @GetMapping("/videos/{productId}")
+    public ResponseEntity<List<ProductVideoDetailDTO>> getVideoDetails(@PathVariable UUID productId) {
+        return ResponseEntity.ok(productVideoService.getVideoDetailsByProductId(productId));
     }
 
     @DeleteMapping("/videos/{videoId}")

@@ -69,4 +69,15 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductListing> listings;
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private Boolean isActive = true;
+
+    @Column(name = "last_crawled_at")
+    private LocalDateTime lastCrawledAt;
+
+    @Column(name = "no_video_found", nullable = false)
+    @Builder.Default
+    private Boolean noVideoFound = false;
 }

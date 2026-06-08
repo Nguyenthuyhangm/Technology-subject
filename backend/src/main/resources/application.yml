@@ -85,11 +85,6 @@ supabase:
   api:
     key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
 
-cloudinary:
-  cloud-name: ${CLOUDINARY_CLOUD_NAME:dxi0dwl7d}
-  api-key: ${CLOUDINARY_API_KEY:793441711574582}
-  api-secret: ${CLOUDINARY_API_SECRET:A_2TBmXzGcqvs4jovacMBkid8cw}
-
 management:
   endpoints:
     web:

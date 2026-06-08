@@ -1,6 +1,8 @@
 package com.pricehawl.service;
 
 import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.dto.ProductVideoDetailDTO;
+import com.pricehawl.dto.ProductVideoSummaryDTO;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductVideo;
 import com.pricehawl.entity.ProductVideoMapping;
@@ -14,8 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,7 +30,6 @@ public class ProductVideoService {
     private final ProductVideoRepository videoRepository;
     private final ProductVideoMappingRepository mappingRepository;
     private final ProductRepository productRepository;
-    private final CloudinaryService cloudinaryService;
 
     public List<ProductVideoDTO> getAllVideos() {
         return videoRepository.findAllOrderByCreatedAtDesc().stream()
@@ -56,6 +57,34 @@ public class ProductVideoService {
             .collect(Collectors.toList());
     }
 
+    public List<ProductVideoSummaryDTO> getVideoSummaryByProduct() {
+        List<Object[]> results = videoRepository.findVideoSummaryByProduct();
+        return results.stream()
+            .map(row -> new ProductVideoSummaryDTO(
+                (UUID) row[0],
+                (String) row[1],
+                ((Number) row[2]).intValue(),
+                row[3] != null ? ((Timestamp) row[3]).toLocalDateTime() : null
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public List<ProductVideoDetailDTO> getVideoDetailsByProductId(UUID productId) {
+        List<Object[]> results = videoRepository.findVideoDetailsByProductId(productId);
+        return results.stream()
+            .map(row -> new ProductVideoDetailDTO(
+                (UUID) row[0],
+                (String) row[1],
+                (String) row[2],
+                (String) row[3],
+                (String) row[4],
+                row[5] != null ? ((Number) row[5]).intValue() : null,
+                row[6] != null ? ((Timestamp) row[6]).toLocalDateTime() : null,
+                (String) row[7]
+            ))
+            .collect(Collectors.toList());
+    }
+
     @Transactional
     public ProductVideoDTO createVideo(ProductVideoDTO dto) {
         if (dto.productIds() != null && !dto.productIds().isEmpty()) {
@@ -76,6 +105,7 @@ public class ProductVideoService {
             .videoUrl(dto.videoUrl())
             .thumbnailUrl(dto.thumbnailUrl())
             .publicId(dto.publicId())
+            .youtubeId(dto.youtubeId())
             .duration(dto.duration())
             .createdBy(dto.createdBy())
             .build();
@@ -98,10 +128,6 @@ public class ProductVideoService {
     public void deleteVideo(UUID videoId) {
         ProductVideo video = videoRepository.findById(videoId)
             .orElseThrow(() -> new RuntimeException("Video not found: " + videoId));
-
-        if (video.getPublicId() != null && !video.getPublicId().isBlank()) {
-            cloudinaryService.deleteResource(video.getPublicId());
-        }
 
         mappingRepository.deleteByVideoId(videoId);
         videoRepository.delete(video);
@@ -176,6 +202,7 @@ public class ProductVideoService {
             video.getVideoUrl(),
             video.getThumbnailUrl(),
             video.getPublicId(),
+            video.getYoutubeId(),
             video.getDuration(),
             video.getCreatedAt(),
             video.getCreatedBy(),
