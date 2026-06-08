@@ -85,6 +85,8 @@ public class SecurityConfig {
 
                         // Chat REST endpoints — require auth (handled in controller)
                         .requestMatchers("/api/chat/**").authenticated()
+                        // Skin Advice: phân tích da + tải PDF
+                        .requestMatchers("/api/skin-advice/**").permitAll()
 
                         // Các API còn lại cần đăng nhập
                         .anyRequest().authenticated()

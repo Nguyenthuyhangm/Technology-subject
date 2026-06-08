@@ -16,8 +16,10 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import AdminPage from './pages/AdminPage'
 import PaymentPage from './pages/PaymentPage'
 import UserChatWidget from './components/chat/UserChatWidget'
+import SkinAdvicePage from './pages/SkinAdvicePage'
 
-export default function App(): React.ReactElement {  return (
+export default function App(): React.ReactElement {
+  return (
     <BrowserRouter>
       <AuthProvider>
         <WishlistProvider>
@@ -43,6 +45,7 @@ export default function App(): React.ReactElement {  return (
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/payment/qr" element={<PaymentPage />} />
+              <Route path="/skin-advice" element={<SkinAdvicePage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />
