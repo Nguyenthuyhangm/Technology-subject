@@ -1,6 +1,4 @@
 spring:
-  main:
-    lazy-initialization: true
   cache:
     type: none
   datasource:
@@ -16,13 +14,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     enabled: false
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
-      - org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
-  elasticsearch:
-    uris: http://localhost:19200
-  data:
-    redis:
-      host: localhost
-      port: 16379
