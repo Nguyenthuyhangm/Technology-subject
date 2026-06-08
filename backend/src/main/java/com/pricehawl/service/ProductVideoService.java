@@ -1,6 +1,8 @@
 package com.pricehawl.service;
 
 import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.dto.ProductVideoDetailDTO;
+import com.pricehawl.dto.ProductVideoSummaryDTO;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductVideo;
 import com.pricehawl.entity.ProductVideoMapping;
@@ -14,8 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,7 +32,6 @@ public class ProductVideoService {
     private final ProductVideoRepository videoRepository;
     private final ProductVideoMappingRepository mappingRepository;
     private final ProductRepository productRepository;
-    private final CloudinaryService cloudinaryService;
 
     public List<ProductVideoDTO> getAllVideos() {
         return videoRepository.findAllOrderByCreatedAtDesc().stream()
@@ -56,6 +59,97 @@ public class ProductVideoService {
             .collect(Collectors.toList());
     }
 
+    public List<ProductVideoSummaryDTO> getVideoSummaryByProduct() {
+        List<Object[]> results = videoRepository.findVideoSummaryByProduct();
+        return results.stream()
+            .map(row -> new ProductVideoSummaryDTO(
+                (UUID) row[0],
+                (String) row[1],
+                ((Number) row[2]).intValue(),
+                row[3] != null ? ((Timestamp) row[3]).toLocalDateTime() : null
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public List<ProductVideoSummaryDTO> getVideoSummaryByProduct(int page, int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<Object[]> results = videoRepository.findVideoSummaryByProduct(pageable);
+        return results.getContent().stream()
+            .map(row -> new ProductVideoSummaryDTO(
+                (UUID) row[0],
+                (String) row[1],
+                ((Number) row[2]).intValue(),
+                row[3] != null ? ((Timestamp) row[3]).toLocalDateTime() : null
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public List<ProductVideoSummaryDTO> getVideoSummaryByProduct(int page, int size, String search) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<Object[]> results;
+        if (search != null && !search.isBlank()) {
+            results = videoRepository.findVideoSummaryByProductWithSearch(search, pageable);
+        } else {
+            results = videoRepository.findVideoSummaryByProduct(pageable);
+        }
+        return results.getContent().stream()
+            .map(row -> new ProductVideoSummaryDTO(
+                (UUID) row[0],
+                (String) row[1],
+                ((Number) row[2]).intValue(),
+                row[3] != null ? ((Timestamp) row[3]).toLocalDateTime() : null
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public long countVideoSummaryByProduct() {
+        return videoRepository.countVideoSummaryByProduct();
+    }
+
+    public long countVideoSummaryByProduct(String search) {
+        if (search != null && !search.isBlank()) {
+            return videoRepository.countVideoSummaryByProductWithSearch(search);
+        }
+        return videoRepository.countVideoSummaryByProduct();
+    }
+
+    public List<ProductVideoDetailDTO> getVideoDetailsByProductId(UUID productId) {
+        List<Object[]> results = videoRepository.findVideoDetailsByProductId(productId);
+        return results.stream()
+            .map(row -> new ProductVideoDetailDTO(
+                (UUID) row[0],
+                (String) row[1],
+                (String) row[2],
+                (String) row[3],
+                (String) row[4],
+                row[5] != null ? ((Number) row[5]).intValue() : null,
+                row[6] != null ? ((Timestamp) row[6]).toLocalDateTime() : null,
+                (String) row[7]
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public List<ProductVideoDetailDTO> getVideoDetailsByProductId(UUID productId, int page, int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<Object[]> results = videoRepository.findVideoDetailsByProductId(productId, pageable);
+        return results.getContent().stream()
+            .map(row -> new ProductVideoDetailDTO(
+                (UUID) row[0],
+                (String) row[1],
+                (String) row[2],
+                (String) row[3],
+                (String) row[4],
+                row[5] != null ? ((Number) row[5]).intValue() : null,
+                row[6] != null ? ((Timestamp) row[6]).toLocalDateTime() : null,
+                (String) row[7]
+            ))
+            .collect(Collectors.toList());
+    }
+
+    public long countVideoDetailsByProductId(UUID productId) {
+        return videoRepository.countVideoDetailsByProductId(productId);
+    }
+
     @Transactional
     public ProductVideoDTO createVideo(ProductVideoDTO dto) {
         if (dto.productIds() != null && !dto.productIds().isEmpty()) {
@@ -76,6 +170,7 @@ public class ProductVideoService {
             .videoUrl(dto.videoUrl())
             .thumbnailUrl(dto.thumbnailUrl())
             .publicId(dto.publicId())
+            .youtubeId(dto.youtubeId())
             .duration(dto.duration())
             .createdBy(dto.createdBy())
             .build();
@@ -98,10 +193,6 @@ public class ProductVideoService {
     public void deleteVideo(UUID videoId) {
         ProductVideo video = videoRepository.findById(videoId)
             .orElseThrow(() -> new RuntimeException("Video not found: " + videoId));
-
-        if (video.getPublicId() != null && !video.getPublicId().isBlank()) {
-            cloudinaryService.deleteResource(video.getPublicId());
-        }
 
         mappingRepository.deleteByVideoId(videoId);
         videoRepository.delete(video);
@@ -163,10 +254,15 @@ public class ProductVideoService {
             .map(ProductVideoMapping::getProductId)
             .collect(Collectors.toList());
 
+        Map<UUID, String> productNameMap = productIds.isEmpty()
+            ? Map.of()
+            : productRepository.findAllById(productIds).stream()
+                .collect(Collectors.toMap(Product::getId, Product::getName));
+
         List<String> productNames = productIds.stream()
-            .map(pid -> productRepository.findById(pid).map(Product::getName).orElse(null))
-            .filter(name -> name != null)
-            .collect(Collectors.toList());
+            .map(productNameMap::get)
+            .filter(Objects::nonNull)
+            .toList();
 
         String status = (video.getVideoUrl() != null && !video.getVideoUrl().isBlank()) ? "active" : "error";
 
@@ -176,6 +272,7 @@ public class ProductVideoService {
             video.getVideoUrl(),
             video.getThumbnailUrl(),
             video.getPublicId(),
+            video.getYoutubeId(),
             video.getDuration(),
             video.getCreatedAt(),
             video.getCreatedBy(),

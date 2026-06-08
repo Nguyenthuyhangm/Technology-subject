@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
-import ProductGallery, { buildMediaItems } from '../components/product/ProductGallery';
+import ProductGallery from '../components/product/ProductGallery';
 import ProductSummary from '../components/product/ProductSummary';
 import QuickCompareStrip from '../components/product/QuickCompareStrip';
 import PriceChart from '../components/product/PriceChart';
 import AlertModal from '../components/alert/AlertModal';
 import SimilarProductsSection from '../components/product/SimilarProductsSection';
+import ProductVideosSection from '../components/product/ProductVideosSection';
 import ProductsDupeSection from "../components/product/ProductDupeSection";
 
-import { priceComparison, priceHistory, productVideos } from '../service/ProductService';
-import type { PriceComparison, PriceHistory, ProductSearch, ProductVideo } from '../types/product';
+import { priceComparison, priceHistory } from '../service/ProductService';
+import type { PriceComparison, PriceHistory, ProductSearch } from '../types/product';
 import { normalizePriceComparison } from '../util/normalizeOfferPrices';
 
 const FONT_STACK = {
@@ -26,8 +27,7 @@ export default function ProductDetailPage() {
 
     const [comparison, setComparison] = useState<PriceComparison | null>(null);
     const [history, setHistory] = useState<PriceHistory | null>(null);
-    const [videos, setVideos] = useState<ProductVideo[]>([]);
-
+    
     // TÁCH LOADING:
     const [compLoading, setCompLoading] = useState(true); 
     const [histLoading, setHistLoading] = useState(true);
@@ -46,7 +46,7 @@ export default function ProductDetailPage() {
         priceComparison(id).then(comp => {
             if (cancelled) return;
             setComparison(normalizePriceComparison(comp));
-            setCompLoading(false);
+            setCompLoading(false); // Xong phát hiện bảng giá ngay!
         }).catch(err => {
             console.error("Lỗi fetch so sánh giá:", err);
             if (!cancelled) setCompLoading(false);
@@ -61,12 +61,6 @@ export default function ProductDetailPage() {
             console.error("Lỗi fetch lịch sử giá:", err);
             if (!cancelled) setHistLoading(false);
         });
-
-        // 3. Lấy video sản phẩm
-        productVideos(id).then(vids => {
-            if (cancelled) return;
-            setVideos(vids ?? []);
-        }).catch(() => {});
 
         return () => { cancelled = true; };
     }, [id]);
@@ -148,7 +142,7 @@ export default function ProductDetailPage() {
 
                 <section className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-start">
                     <div>
-                        <ProductGallery mediaItems={buildMediaItems(comparison.imageUrls, videos[0] ?? null)} title={comparison.productName} showLowestBadge={false} />
+                        <ProductGallery images={comparison.imageUrls} title={comparison.productName} showLowestBadge={false} />
                     </div>
                     <div>
                         <ProductSummary
@@ -173,6 +167,9 @@ export default function ProductDetailPage() {
                         history && <PriceChart platforms={history.platforms} title="Biến động giá gần đây" />
                     )}
                 </section>
+
+                {id && <ProductVideosSection productId={id} />}
+
                 {id && (
                     <ProductsDupeSection
                         key={`dupe-${id}`}

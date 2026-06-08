@@ -128,12 +128,14 @@ export interface PromotionEvent {
   type: string;
 }
 
-export interface ProductVideo {
+/** YouTube video metadata stored from crawl (no video file download) */
+export interface YouTubeVideo {
   id: string;
   title: string;
   videoUrl: string;
   thumbnailUrl: string | null;
   publicId: string | null;
+  youtubeId: string;
   duration: number | null;
   createdAt: string;
   createdBy: string | null;
@@ -143,9 +145,25 @@ export interface ProductVideo {
   status: 'active' | 'error';
 }
 
-export type MediaItem =
-  | { type: 'image'; url: string }
-  | { type: 'video'; video: ProductVideo };
+/** DTO tổng hợp video theo sản phẩm - cấp 1 Admin */
+export interface VideoSummary {
+  productId: string;
+  productName: string;
+  videoCount: number;
+  latestCrawlDate: string | null;
+}
+
+/** DTO chi tiết video - cấp 2 Admin */
+export interface VideoDetail {
+  videoId: string;
+  title: string;
+  videoUrl: string;
+  thumbnailUrl: string | null;
+  youtubeId: string;
+  duration: number | null;
+  createdAt: string | null;
+  productName: string;
+}
 
 /** Bản ghi sàn đầy đủ — dùng trong mockProducts */
 export interface PlatformPrice {
