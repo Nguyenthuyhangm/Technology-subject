@@ -14,4 +14,5 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     // Tìm danh mục theo slug (ví dụ: "sua-rua-mat")
     Optional<Category> findBySlug(String slug);
+     Optional<Category> findByName(String name);
 }

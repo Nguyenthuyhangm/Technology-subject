@@ -106,3 +106,61 @@ async function searchAndGetProductId(keyword) {
 
   return { productId, firstResult: firstItem };
 }
+async function triggerOnDemandCrawl(productName, sourceUrl, sourcePlatform, accessToken) {
+  // Tăng timeout lên 25s — backend cần thời gian khởi động async job
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 60000); // 25s thay vì 10s
+  
+  try {
+    const headers = { "Content-Type": "application/json;charset=UTF-8" };
+    if (accessToken) headers["Authorization"] = `Bearer ${accessToken}`;
+
+    const res = await fetch(`${CONFIG.BACKEND_URL}/api/crawl/on-demand`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ productName, sourceUrl, sourcePlatform }),
+      signal: controller.signal
+    });
+
+    if (res.status === 429) throw new Error("RATE_LIMITED");
+    if (res.status === 400) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || "Bad request");
+    }
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(id);
+  }
+}
+ 
+/**
+ * Đọc trạng thái job crawl (dùng cho polling mỗi 5 giây).
+ * Endpoint: GET /api/crawl/jobs/{jobId}
+ *
+ * @param {string} jobId - UUID string từ triggerOnDemandCrawl()
+ * @returns {OnDemandCrawlJobDTO|null} null nếu job không tồn tại / hết TTL
+ *
+ * Shape của return value khi status="DONE":
+ * {
+ *   jobId, status: "DONE", productId: "uuid",
+ *   platformsFound: 4, finishedAt: "ISO string"
+ * }
+ *
+ * Shape khi status="RUNNING":
+ * {
+ *   jobId, status: "RUNNING", productId: null,
+ *   platformsFound: 2, triggeredAt: "ISO string"
+ * }
+ */
+async function pollCrawlJob(jobId) {
+  const res = await fetchWithTimeout(
+    `${CONFIG.BACKEND_URL}/api/crawl/jobs/${jobId}`,
+    { headers: { "Accept": "application/json" } }
+  );
+ 
+  if (res.status === 404) return null; // Job hết hạn hoặc không tồn tại
+  if (!res.ok) throw new Error(`API error ${res.status}`);
+ 
+  return await res.json();
+}

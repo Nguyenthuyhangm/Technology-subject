@@ -425,14 +425,27 @@ function renderComparison(compareData, priceHistory) {
   if (priceHistory?.priceHistory) {
     histPlatforms = priceHistory.priceHistory?.platforms || [];
     if (histPlatforms.length > 0) {
-      const warns = histPlatforms.filter(p => p.fakePriceIncreaseWarning)
-        .map(p => `<div class="ph-chart-warn">⚠️ ${p.platformName}: Nghi tăng giá ảo</div>`).join("");
-      html += `
-        <div class="ph-section-title" style="margin-top:12px;border-top:1px solid #f5e8e2;padding-top:10px;">📊 Lịch sử giá (30 ngày)</div>
-        <div class="ph-chart-wrap">
-          <canvas id="ph-price-chart"></canvas>
-          ${warns}
-        </div>`;
+      // Kiểm tra có sàn nào có hơn 1 điểm dữ liệu không
+      const hasHistory = histPlatforms.some(p => p.prices && p.prices.length > 1);
+      if (hasHistory) {
+        const warns = histPlatforms.filter(p => p.fakePriceIncreaseWarning)
+          .map(p => `<div class="ph-chart-warn">⚠️ ${p.platformName}: Nghi tăng giá ảo</div>`).join("");
+        html += `
+          <div class="ph-section-title" style="margin-top:12px;border-top:1px solid #f5e8e2;padding-top:10px;">📊 Lịch sử giá (30 ngày)</div>
+          <div class="ph-chart-wrap">
+            <canvas id="ph-price-chart"></canvas>
+            ${warns}
+          </div>`;
+      } else {
+        // Sản phẩm mới — chỉ có 1 điểm dữ liệu
+        html += `
+          <div class="ph-section-title" style="margin-top:12px;border-top:1px solid #f5e8e2;padding-top:10px;">
+            📊 Lịch sử giá
+          </div>
+          <div class="ph-empty" style="padding:10px 0;font-size:12px;color:#b09090">
+            Sản phẩm mới — lịch sử giá sẽ cập nhật sau 24 giờ
+          </div>`;
+      }
     }
   }
 
