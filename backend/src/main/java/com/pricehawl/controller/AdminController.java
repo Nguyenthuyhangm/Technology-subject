@@ -546,16 +546,28 @@ public ResponseEntity<Map<String, Object>> getAffiliateClicks(
         ));
     }
 
-    // ── Video Management ─────────────────────────────────────────────────────
+    // Video Management
 
     @GetMapping("/videos/summary")
-    public ResponseEntity<List<ProductVideoSummaryDTO>> getVideoSummary() {
-        return ResponseEntity.ok(productVideoService.getVideoSummaryByProduct());
+    public ResponseEntity<List<ProductVideoSummaryDTO>> getVideoSummary(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String search) {
+        List<ProductVideoSummaryDTO> data = productVideoService.getVideoSummaryByProduct(page, size, search);
+        long total = productVideoService.countVideoSummaryByProduct(search);
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(total))
+                .body(data);
     }
 
     @GetMapping("/videos/{productId}")
-    public ResponseEntity<List<ProductVideoDetailDTO>> getVideoDetails(@PathVariable UUID productId) {
-        return ResponseEntity.ok(productVideoService.getVideoDetailsByProductId(productId));
+    public ResponseEntity<List<ProductVideoDetailDTO>> getVideoDetails(
+            @PathVariable UUID productId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(productVideoService.countVideoDetailsByProductId(productId)))
+                .body(productVideoService.getVideoDetailsByProductId(productId, page, size));
     }
 
     @DeleteMapping("/videos/{videoId}")
