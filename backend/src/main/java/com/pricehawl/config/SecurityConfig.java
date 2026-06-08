@@ -80,6 +80,11 @@ public class SecurityConfig {
                                 "/api/ai-chat/**"
                         ).permitAll()
 
+                        // WebSocket handshake endpoint
+                        .requestMatchers("/ws/**").permitAll()
+
+                        // Chat REST endpoints — require auth (handled in controller)
+                        .requestMatchers("/api/chat/**").authenticated()
                         // Skin Advice: phân tích da + tải PDF
                         .requestMatchers("/api/skin-advice/**").permitAll()
 

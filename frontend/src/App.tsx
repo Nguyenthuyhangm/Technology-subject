@@ -15,6 +15,7 @@ import ProfilePage from './pages/ProfilePage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import AdminPage from './pages/AdminPage'
 import PaymentPage from './pages/PaymentPage'
+import UserChatWidget from './components/chat/UserChatWidget'
 import SkinAdvicePage from './pages/SkinAdvicePage'
 
 export default function App(): React.ReactElement {
@@ -22,6 +23,7 @@ export default function App(): React.ReactElement {
     <BrowserRouter>
       <AuthProvider>
         <WishlistProvider>
+          <UserChatWidget />
           <Routes>
 
             {/* Guest */}

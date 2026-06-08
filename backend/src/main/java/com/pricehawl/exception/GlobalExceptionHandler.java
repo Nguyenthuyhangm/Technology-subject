@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -111,6 +112,14 @@ public class GlobalExceptionHandler {
         }
         String message = ex.getReason() != null ? ex.getReason() : status.getReasonPhrase();
         return build(status, message, null);
+    }
+
+    // 403: admin-only endpoint bị truy cập bởi non-admin
+    // Phải tách riêng vì handler Exception.class bên dưới sẽ nuốt AccessDeniedException thành 500
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
+        log.warn("Access denied: {}", ex.getMessage());
+        return build(HttpStatus.FORBIDDEN, ex.getMessage(), null);
     }
 
     // 500: fallback — log full stacktrace để debug
