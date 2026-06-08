@@ -1,0 +1,1602 @@
+{
+  "Serum": [
+    {
+      "id": "95a79897-3e61-4c58-ac1e-631c9b41a932",
+      "canonical_name": "Head & Shoulders DermaXPro Hair Revitaliser Leave-On Scalp Serum"
+    },
+    {
+      "id": "80de3c95-a3d7-4b31-b7a0-d4a22f9dbf28",
+      "canonical_name": "L'Oréal Paris UV Defender Invisible Fluid SPF50+ Pa++++"
+    },
+    {
+      "id": "f17b3046-b8c8-4400-86c2-34e2837e5910",
+      "canonical_name": "La Roche-Posay Uv air Serum Sunscreen"
+    },
+    {
+      "id": "42c63c7a-7f10-4aa6-b206-704a019363ca",
+      "canonical_name": "La Roche-Posay Pure Vitamin C10 Serum"
+    },
+    {
+      "id": "3ba4527d-3eb2-4b86-8aed-2b63466b4442",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Serum"
+    },
+    {
+      "id": "4665a509-73cf-47eb-b0bd-05705afaf230",
+      "canonical_name": "Melano CC Premium Brightening Essence"
+    },
+    {
+      "id": "cf739d3d-e580-453a-88fb-ca9887ac67dc",
+      "canonical_name": "Hada Labo Premium Rejuvenation Serum Mask"
+    },
+    {
+      "id": "def2cd81-f916-4e35-b041-9c874c859713",
+      "canonical_name": "Hada Labo Premium Whitening Serum Mask"
+    },
+    {
+      "id": "6e674c47-ff93-4b5d-a992-f250ba578dde",
+      "canonical_name": "Hada Labo Premium Pore Care Serum Mask"
+    },
+    {
+      "id": "cd68a494-bd44-4594-b9f7-a209a9a0992e",
+      "canonical_name": "L'Oréal Paris Infallible 24H Tinted Serum Light"
+    },
+    {
+      "id": "a663df09-7dbe-4952-93a8-fc7c0848aff8",
+      "canonical_name": "L'Oréal Paris Infallible 24H Tinted Serum Rosy Light"
+    },
+    {
+      "id": "542b1e60-b03d-4bdf-b818-0d23bb5e9de9",
+      "canonical_name": "L'Oréal Paris Infallible 24H Tinted Serum Very Light"
+    },
+    {
+      "id": "7880cf6a-e5fd-4dbd-ab0e-e9e04be19170",
+      "canonical_name": "L'Oréal Paris Elseve Extraordinary Oil Serum"
+    },
+    {
+      "id": "a54b8363-afc0-48ae-be24-4237444c7f2c",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Instant Glowing Serum Mask"
+    },
+    {
+      "id": "82b87af3-ddc4-45d0-bf1e-2528039a2515",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Plumping Fresh Mix Serum Mask"
+    },
+    {
+      "id": "bd9da576-4138-45ac-a2fb-0ec3d428fde2",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Anti-Dark Spot Brightening Serum"
+    },
+    {
+      "id": "2d4609c1-08e3-47b1-8563-d6abf5652d93",
+      "canonical_name": "La Roche-Posay Cicaplast B5 Serum"
+    },
+    {
+      "id": "7b2fbc2b-edfe-43a6-81cb-266ea9bdd31f",
+      "canonical_name": "La Roche-Posay Hyalu B5 Serum"
+    },
+    {
+      "id": "73a48c02-b0f4-422d-941c-67a8906065df",
+      "canonical_name": "Hada Labo Premium Hydrating Serum Mask"
+    },
+    {
+      "id": "231380a7-0063-458c-a3f4-fabe79914be9",
+      "canonical_name": "Hada Labo Premium Pore Care Serum Mask"
+    },
+    {
+      "id": "eb86871d-3933-429d-8686-eda9efd82fc3",
+      "canonical_name": "Hada Labo Premium Rejuvenation Serum Mask"
+    },
+    {
+      "id": "1a2a0b2b-d056-4531-b385-e3f15c3b438f",
+      "canonical_name": "NIVEA Whitening Deep Serum Hokkaido Rose Roll On"
+    },
+    {
+      "id": "e94b9edf-b42f-4c66-a1f5-fb5288f01ffa",
+      "canonical_name": "NIVEA Luminous 630 Spotclear Intensive Treatment Serum"
+    },
+    {
+      "id": "355e33ce-e016-4818-abb8-48d522ba8b19",
+      "canonical_name": "NIVEA Vitamin Body Serum Super 10"
+    },
+    {
+      "id": "85c88162-4207-4782-9954-4ef5dd974835",
+      "canonical_name": "Acnes Vitamin C Serum"
+    },
+    {
+      "id": "3f4e216c-3323-47a7-9f85-d1be0409d9ae",
+      "canonical_name": "Acnes Lab C15 Serum"
+    },
+    {
+      "id": "6c391234-d8cb-4d3b-a5c7-807d601d089f",
+      "canonical_name": "Hada Labo Pro-Aging Retinol B3 Serum"
+    },
+    {
+      "id": "078dbec1-3c69-4075-af6d-f1fcbc0d383c",
+      "canonical_name": "Acnes 25+ Facial Serum"
+    },
+    {
+      "id": "98f830d0-b75a-4666-9bfe-89b2b407fc9d",
+      "canonical_name": "NIVEA Sun Protect & White Body Serum SPF50 PA+++"
+    },
+    {
+      "id": "6e33a37a-685a-405a-acfb-70473f772e36",
+      "canonical_name": "NIVEA Sun Serum SPF50 PA+++ Tone Up"
+    },
+    {
+      "id": "187a9b3e-08d8-490a-b131-5166e6118526",
+      "canonical_name": "Hada Labo Acne Care Calming Serum"
+    },
+    {
+      "id": "5a777a10-8954-4c76-8db7-d7ff051d7212",
+      "canonical_name": "Acnes Lab B5 Recovery Serum"
+    },
+    {
+      "id": "f205c371-6f3a-4255-bd17-ed2897733ee7",
+      "canonical_name": "Hada Labo Advanced Nourish Hyaluronic Acid Serum"
+    },
+    {
+      "id": "0123e5ff-b506-431a-bbf7-d3f2fff9bc5d",
+      "canonical_name": "NIVEA Vitamin Super C+ Body Serum SPF50 PA+++"
+    },
+  {
+    "id": "154049f3-9268-4786-9180-4f5e7ae42310",
+    "canonical_name": "NIVEA Extra Bright Repair & Protect Body Serum"
+  },
+  {
+    "id": "894015f3-8f10-4ab6-820f-ad3329829bd3",
+    "canonical_name": "NIVEA Extra White Night Nourish Body Serum"
+  },
+  {
+    "id": "88568542-597b-4b2c-b09b-475f5f277f93",
+    "canonical_name": "NIVEA Luminous 630 Body Serum"
+  },
+  {
+    "id": "d7a9a4b0-da98-49c1-9912-be95dcc0df02",
+    "canonical_name": "Hada Labo Perfect White Tranexamic Acid Serum"
+  },
+  {
+    "id": "168a704a-a200-45d4-b5e3-44338eaef49e",
+    "canonical_name": "Enchanteur Brighten & Fade Dark Spot Serum Deodorant"
+  },
+  {
+    "id": "e1a7abfb-6f72-4bc4-8e56-c99d79f16eb6",
+    "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid + Caffeine Eye Serum"
+  },
+  {
+    "id": "82bbbf8d-3afb-44fc-bb49-41865902ab11",
+    "canonical_name": "L'Oréal Paris Glycolic Bright 8% Glycolic Acid Serum"
+  },
+  {
+    "id": "2dde2e58-e9fb-4f8a-a5dd-44107ba5d53c",
+    "canonical_name": "Melano CC Premium Brightening Essence"
+  },
+  {
+    "id": "86cdcfe3-cea8-41e6-a819-3c18c2afb026",
+    "canonical_name": "Cocoon Inca Inchi Hair Repair Serum"
+  },
+  {
+    "id": "099e442f-6950-4489-9c8f-9074ae348f7a",
+    "canonical_name": "Acnes Lab C10 Serum"
+  },
+  {
+    "id": "063ae1ef-cfcd-4dc0-acff-5a5e62b5eeb6",
+    "canonical_name": "Skin Aqua Nexta Shield Serum UV Milk SPF50+ PA++++"
+  },
+  {
+    "id": "0adfe522-d562-43c9-848c-4c2b5ec5fb4e",
+    "canonical_name": "Cocoon Winter Melon Serum"
+  },
+  {
+    "id": "ecef3026-b2c8-4f29-b5bf-fe31ff42d1db",
+    "canonical_name": "Skin Aqua Tone Up UV Essence SPF50+ PA++++"
+  },
+  {
+    "id": "f9b5d66b-c6ac-48f3-9219-78b17e4fcf1e",
+    "canonical_name": "NIVEA Vitamin Body Serum Super 10"
+  },
+  {
+    "id": "b6d8e51b-951e-40e4-a7cd-9da5a04fc39e",
+    "canonical_name": "La Roche-Posay Effaclar Serum"
+  },
+  {
+    "id": "260db726-91a0-4dd0-b967-88914bed0a30",
+    "canonical_name": "La Roche-Posay Retinol B3 Serum"
+  },
+  {
+    "id": "55900085-eb4b-4dc0-b6ad-c7e8fc006219",
+    "canonical_name": "Cocoon Rose Serum"
+  },
+  {
+    "id": "a8510a25-a77d-4d0d-84e8-7be7e4844456",
+    "canonical_name": "L'Oréal Professionnel Serioxyl Denser Hair Serum"
+  },
+  {
+    "id": "800d260c-793f-4937-8eb4-540573f255d3",
+    "canonical_name": "La Roche-Posay Hyalu B5 Serum"
+  },
+  {
+    "id": "bca1e67e-72cf-403a-958d-8094344a8b5b",
+    "canonical_name": "L'Oréal Professionnel Serioxyl Stemoxydine 5% Serum"
+  },
+  {
+    "id": "c35ed9f6-0bcc-49b9-bab9-8a25c8ec23dc",
+    "canonical_name": "Cocoon Hung Yen Turmeric Vitamin C Serum"
+  },
+  {
+    "id": "be3f6eea-46e2-42f8-ac0c-741203a5bf10",
+    "canonical_name": "Skin Aqua Nexta Shield Serum UV Essence SPF50+ PA++++"
+  },
+  {
+    "id": "a0c1717a-58b5-4504-b1d1-637e5afb717e",
+    "canonical_name": "Melano CC Whitening Essence"
+  },
+  {
+    "id": "b64a2d8c-d15d-49fd-a010-84ec63b1f829",
+    "canonical_name": "Cocoon Hau Giang Lotus Essence Mist"
+  }
+],
+  "Toner": [
+    {
+      "id": "f1cc8b74-ff2b-4390-bb65-59e6ecafaa5d",
+      "canonical_name": "Hada Labo Advanced Nourish Hydrating Lotion"
+    },
+    {
+      "id": "f31fbbea-df64-48ed-a8bd-0a43e624d756",
+      "canonical_name": "Hada Labo Gokujyun Premium Hydrating Lotion"
+    },
+    {
+      "id": "918a2c75-0de3-4ec3-af72-f4bba4502c1a",
+      "canonical_name": "Cocoon Winter Melon Toner"
+    },
+    {
+      "id": "a26ff620-8066-4b90-b85d-a1c116f9dd63",
+      "canonical_name": "Nivea Pearl White Toner"
+    },
+    {
+      "id": "a5f4473b-22e4-4e20-9b7e-0d22d4025df6",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Peeling Toner"
+    },
+    {
+      "id": "3dc7c40d-ed03-4681-be28-8a15c00ef60e",
+      "canonical_name": "Cocoon Hau Giang Lotus Toner"
+    },
+    {
+      "id": "88cbac26-618b-4fbb-aaaf-7ee898991057",
+      "canonical_name": "Acnes Blemish Control Toner"
+    },
+    {
+      "id": "73720ad7-353b-49d1-8b3d-3178d50e3468",
+      "canonical_name": "Hada Labo Advanced Nourish Lotion Light"
+    }
+  ],
+  "Dầu xả": [
+    {
+      "id": "efd72f77-6c9f-4311-afdd-c6ad46d7850f",
+      "canonical_name": "Cocoon Pomelo Conditioner"
+    },
+    {
+      "id": "67a8bfd3-0099-4fda-8f78-5c4c673c3c4a",
+      "canonical_name": "L'Oréal Paris Elseve Extraordinary Oil Conditioner"
+    },
+    {
+      "id": "7c028473-b477-41c5-879f-e0ba28e0f02b",
+      "canonical_name": "L'Oréal Paris Elseve Full Resist Conditioner"
+    },
+    {
+      "id": "a431bf00-51a3-4e54-b318-a2590e7a354f",
+      "canonical_name": "Selsun Anti-Dandruff Conditioner"
+    },
+    {
+      "id": "717a664e-f2c5-4b11-a977-e257f1d8e428",
+      "canonical_name": "Tsubaki Premium Volume & Repair Conditioner"
+    },
+    {
+      "id": "24427f06-42ff-4f45-a3b3-7ecbb88375b9",
+      "canonical_name": "Tsubaki Premium Moist & Repair Conditioner"
+    },
+    {
+      "id": "2852b38f-9fa0-49ef-8a07-1b356d90e35a",
+      "canonical_name": "Tsubaki Premium Volume & Repair Conditioner"
+    },
+    {
+      "id": "a36b04f7-bfad-4262-a91d-2f4505fe99b7",
+      "canonical_name": "Tsubaki Premium Cool & Repair Conditioner"
+    },
+    {
+      "id": "c53de5b3-7428-45fc-b343-654d9276662a",
+      "canonical_name": "L'Oréal Paris Elseve Hyaluron Pure Conditioner"
+    },
+    {
+      "id": "0cd6d758-2e12-40ad-ad2c-2ffb15343c04",
+      "canonical_name": "L'Oréal Paris Elseve Total Repair 5 Conditioner"
+    },
+    {
+      "id": "f3aeeaa7-8213-408d-ba5e-e401f4af3826",
+      "canonical_name": "Tsubaki Premium Ex Intensive Repair Conditioner"
+    }
+  ],
+  "Mặt nạ": [
+    {
+      "id": "d9d448a1-1117-4ffc-bbac-c3c558f179d4",
+      "canonical_name": "Cocoon Pomelo Hair Mask"
+    },
+    {
+      "id": "1b8d768f-4229-436e-ad65-6ea6e5f4a1c0",
+      "canonical_name": "Cocoon Winter Melon Face Mask"
+    },
+    {
+      "id": "737bd91a-d390-4ce0-83ba-39c375c33a2b",
+      "canonical_name": "Cocoon Hung Yen Turmeric Face Mask"
+    },
+    {
+      "id": "8f1063be-7930-4a8a-a852-364dc4c04375",
+      "canonical_name": "Hada Labo Hydrating Facial Mask"
+    },
+    {
+      "id": "8b1d6add-35c5-4e56-9d5d-751df2617e42",
+      "canonical_name": "Melano CC Brightening Mask"
+    },
+    {
+      "id": "280ada96-cc95-4b19-a67e-5bcf9e8b52d2",
+      "canonical_name": "Tsubaki Premium Repair Hair Mask"
+    },
+    {
+      "id": "d4dfdd98-d55e-4734-8dd1-59a164c7b422",
+      "canonical_name": "Tsubaki Premium Hair Mask"
+    }
+  ],
+  "Dầu gội": [
+    {
+      "id": "bc193770-4de3-48da-a236-dd998894fe36",
+      "canonical_name": "Head & Shoulders Dry Scalp Care 2-in-1"
+    },
+    {
+      "id": "e51bcf17-ce6e-44b8-9b04-8359815c2b90",
+      "canonical_name": "Head & Shoulders Classic Clean 2-in-1"
+    },
+    {
+      "id": "c9523b5a-3585-4d29-b765-e73e593e3410",
+      "canonical_name": "Cocoon Pomelo Shampoo"
+    },
+    {
+      "id": "c4559c92-07e6-41c1-990c-fad53fef34d5",
+      "canonical_name": "Head & Shoulders Clinical Strength Shampoo"
+    },
+    {
+      "id": "7d30e3dd-c257-4b11-a478-e0fdd367eeed",
+      "canonical_name": "Head & Shoulders Smooth & Silky Shampoo"
+    },
+    {
+      "id": "17a9032c-9e9f-4995-9128-1ec5f9751753",
+      "canonical_name": "Head & Shoulders AntiBac Shampoo"
+    },
+    {
+      "id": "8820e594-9003-43d1-a7ab-8385ec581b35",
+      "canonical_name": "Head & Shoulders Anti Hairfall Shampoo"
+    },
+    {
+      "id": "a346301b-db19-4b27-82b3-17a61135beba",
+      "canonical_name": "Head & Shoulders Cool Menthol Shampoo"
+    },
+    {
+      "id": "3a5803b8-a064-486f-b82a-e8af66f9b5f9",
+      "canonical_name": "Head & Shoulders Itchy Scalp Care Shampoo"
+    },
+    {
+      "id": "088e11fc-1d55-49b7-be75-29c7a090916c",
+      "canonical_name": "L'Oréal Paris Elseve Extraordinary Oil Shampoo"
+    },
+    {
+      "id": "b0bf67bb-684c-4136-a44e-581e704d21b2",
+      "canonical_name": "L'Oréal Paris Elseve Full Resist Shampoo"
+    },
+    {
+      "id": "288f0dcb-be27-4e9d-bfee-39e5eed8045c",
+      "canonical_name": "L'Oréal Paris Elseve Color Protect Shampoo"
+    },
+    {
+      "id": "7eb66c9a-64e8-4221-8edb-82cadcea97c3",
+      "canonical_name": "L'Oréal Professionnel Serie Expert Blondifier Gloss Shampoo"
+    },
+    {
+      "id": "1a97bada-ba8e-4930-aec9-276e59d4eb8c",
+      "canonical_name": "L'Oréal Paris Elseve Hyaluron Pure Shampoo"
+    },
+    {
+      "id": "d0afb268-79db-4961-8f15-180206ce7039",
+      "canonical_name": "Head & Shoulders Sub Zero Shampoo"
+    },
+    {
+      "id": "3e1cf7fd-d81b-4e12-a17e-5b0684d9baaf",
+      "canonical_name": "Head & Shoulders Ultra Men Cool Menthol Shampoo"
+    },
+    {
+      "id": "6a25b94f-007b-42b3-b17b-5803307501d5",
+      "canonical_name": "Selsun Anti-Dandruff Shampoo"
+    },
+    {
+      "id": "46972716-1580-4f0b-9578-e0572161bd3c",
+      "canonical_name": "Tsubaki Premium Volume & Repair Shampoo"
+    },
+    {
+      "id": "331ec280-58ab-4ea5-b3e3-fc84e0e75e7d",
+      "canonical_name": "Head & Shoulders DermaXPro Scalp Care + Hair Revitaliser"
+    },
+    {
+      "id": "4b26131f-c028-44c8-a7da-0e3b1a30a491",
+      "canonical_name": "Head & Shoulders Classic Clean Shampoo"
+    },
+    {
+      "id": "167b3307-7ed4-43ce-9f03-190b89b431f3",
+      "canonical_name": "Head & Shoulders Men Advanced Series Pure Sport Old Spice 2-in-1"
+    },
+    {
+      "id": "d0a02f83-40b6-43f9-be3c-e5336e8db9d7",
+      "canonical_name": "L'Oréal Paris Elseve Total Repair 5 Shampoo"
+    },
+    {
+      "id": "82524f01-f02c-4389-8374-784f5d64062f",
+      "canonical_name": "Tsubaki Premium Cool & Repair Shampoo"
+    },
+    {
+      "id": "bda4746b-0372-4810-9daf-2b334ecaa36c",
+      "canonical_name": "Tsubaki Premium Ex Intensive Repair Shampoo"
+    }
+  ],
+  "Kem dưỡng": [
+    {
+      "id": "300c3e0f-cbf5-4b1a-94dc-e5ec4ded45e9",
+      "canonical_name": "Hada Labo Advanced Nourish Cream"
+    },
+    {
+      "id": "d71888bb-3b3f-415a-a936-49bde620b77d",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Glowing Night Cream"
+    },
+    {
+      "id": "d77c4a10-302f-451b-b58d-52e21578386f",
+      "canonical_name": "La Roche-Posay Effaclar Duo+M"
+    },
+    {
+      "id": "6ffd8f14-acda-463d-b263-caf2e891d8a7",
+      "canonical_name": "Cocoon Ben Tre Coconut Lip Balm"
+    },
+    {
+      "id": "6c5231d2-ab0a-47d2-b5f9-2386a202af9e",
+      "canonical_name": "L'Oréal Hair Spa Deep Nourishing Creambath"
+    },
+    {
+      "id": "91a1cb93-a39b-4d55-bed2-2a966555821b",
+      "canonical_name": "Acnes Blemish Clear Cream"
+    },
+    {
+      "id": "22c8ce64-caec-4b3d-b9d1-333e3d5c6a40",
+      "canonical_name": "Acnes Vitamin Cream"
+    },
+    {
+      "id": "b8692219-0b42-4a81-ad90-02c0642ce1dc",
+      "canonical_name": "Hada Labo Acne Care Calming Gel Cream"
+    },
+    {
+      "id": "06ad04bb-777a-4ce7-aa2a-d0e9d308a79a",
+      "canonical_name": "OXY Hydrating Gel"
+    },
+    {
+      "id": "dabf4f7c-451d-4543-9276-2c51b6c2c020",
+      "canonical_name": "NIVEA Creme"
+    },
+    {
+      "id": "c19df5a3-1f15-4255-b15e-3ac93a2b68ea",
+      "canonical_name": "Hada Labo Koi-Gokujyun Perfect Gel"
+    },
+    {
+      "id": "02060711-dc1e-4833-bde6-9d0af78898ee",
+      "canonical_name": "NIVEA Soft Cream"
+    },
+    {
+      "id": "7aeb6567-a574-4a8b-9bee-b4c40fe1d93e",
+      "canonical_name": "La Roche-Posay Hyalu B5 Aquagel"
+    },
+    {
+      "id": "1904e6d0-d663-476b-bf44-5a914c85d1cc",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Plumping Day Cream"
+    },
+    {
+      "id": "acb0c3c6-98a8-42d2-8e64-f23a3aced158",
+      "canonical_name": "Hada Labo Pro-Aging Retinol B3 Cream"
+    },
+    {
+      "id": "9d64c115-96a9-457e-83fb-18e1442a2702",
+      "canonical_name": "Acnes Lab Acne Repair Cream"
+    },
+    {
+      "id": "d745aaad-cb10-4b34-9483-7fc178389fca",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Instant Glowing Cream"
+    },
+    {
+      "id": "76dd1627-2db1-4284-bdce-d3481fc6aff3",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Plumping Cream"
+    },
+    {
+      "id": "04d9495b-3d7d-4b23-b20d-bd74f1621ee8",
+      "canonical_name": "La Roche-Posay Cicaplast Baume B5+"
+    },
+    {
+      "id": "ae692637-9b85-42ff-a098-a9c9be169f62",
+      "canonical_name": "La Roche-Posay Lipikar Baume AP+M"
+    },
+    {
+      "id": "9832e047-c49d-4b39-ba64-c793db28f072",
+      "canonical_name": "La Roche-Posay Toleriane Dermallergo Cream"
+    },
+    {
+      "id": "947459ba-dede-40d4-8218-65698fd9aaad",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Glowing Day Cream"
+    },
+    {
+      "id": "b2ee3c9d-81c0-4aee-b358-eb05c4c2c6cf",
+      "canonical_name": "Hada Labo Gokujyun Premium Hyaluronic Eye Cream"
+    },
+    {
+      "id": "641ea594-9ac7-45ed-aa3e-6890afdfe951",
+      "canonical_name": "La Roche-Posay Cicaplast Lips"
+    },
+    {
+      "id": "8fb0fe6b-78e4-424a-8484-269f21363e93",
+      "canonical_name": "OXY Brightening Gel"
+    },
+    {
+      "id": "7417f294-2922-42fa-822e-46c05b5cbf3f",
+      "canonical_name": "Acnes Whitening+ Cream"
+    },
+    {
+      "id": "7f477c04-af14-4a3e-85e8-c488b7ec0e7b",
+      "canonical_name": "Melano CC Whitening Gel"
+    },
+    {
+      "id": "de88c90f-b79a-4756-bb1a-f71f4a225526",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Plumping Night Cream"
+    },
+    {
+      "id": "d4f83d41-88b0-4558-a651-54da92f78324",
+      "canonical_name": "La Roche-Posay Hyalu B5 Cream"
+    },
+    {
+      "id": "2afb64ea-7a54-489a-9347-153546f9cff6",
+      "canonical_name": "NIVEA Original Care Lip Balm"
+    },
+    {
+      "id": "eaad29e4-a5cb-4fd1-b1de-33cff2832c03",
+      "canonical_name": "NIVEA Peach Shine Lip Balm"
+    },
+    {
+      "id": "f395e53d-3f0e-4d24-8439-e78b517daa38",
+      "canonical_name": "LipIce Lip Balm Natural"
+    },
+    {
+      "id": "607605da-e96b-441e-b754-57d27cd03d4a",
+      "canonical_name": "LipIce Creamy Lip Balm Watermelon"
+    },
+    {
+      "id": "b589b0da-af33-4613-965b-28d07bd84add",
+      "canonical_name": "Mentholatum Melty Cream Lip Honey"
+    },
+    {
+      "id": "8620c837-c5de-4cd2-b5cd-f42063d9b3c4",
+      "canonical_name": "Mentholatum Melty Cream Lip Fragrance Free"
+    },
+    {
+      "id": "52294175-bd19-450b-8c43-5dd513dae883",
+      "canonical_name": "Mentholatum Melty Cream Lip Matcha"
+    },
+    {
+      "id": "6b8ec9eb-8d67-480e-9496-0d809b99c92f",
+      "canonical_name": "NIVEA Strawberry Shine Lip Balm"
+    },
+    {
+      "id": "ce9afc03-758c-4eb1-9560-02ae250e00ff",
+      "canonical_name": "Cocoon Rose Aqua Gel Cream"
+    }
+
+  ],
+  "Chăm sóc da": [
+    {
+      "id": "ecd14d0a-4ede-49c9-89cc-12f30ae9d43b",
+      "canonical_name": "L'Oréal Professionnel INOA Hair Color"
+    },
+    {
+      "id": "3ef2321f-ebd9-4bb7-9de8-0e52efa16ceb",
+      "canonical_name": "L'Oréal Paris Elseve Extraordinary Oil Serum"
+    },
+    {
+      "id": "a9f7cc49-f3c8-4557-857e-c2535669ff9d",
+      "canonical_name": "Cocoon Dak Lak Coffee Body Polish"
+    },
+    {
+      "id": "eb6b356d-0438-4c95-8cbb-25a958041563",
+      "canonical_name": "Cocoon Dak Lak Coffee Face Polish"
+    },
+    {
+      "id": "5ecac091-c588-48d9-a37c-465df8756e6d",
+      "canonical_name": "Cocoon Dak Lak Coffee Lip Scrub"
+    },
+    {
+      "id": "74f965d4-2a31-4c79-b873-f106e0a9e990",
+      "canonical_name": "L'Oréal Paris Elseve Extraordinary Oil Serum"
+    },
+    {
+      "id": "ebe434f1-1f89-4b9d-9f84-855d957a3cd6",
+      "canonical_name": "Acnes Soothing Lotion"
+    },
+    {
+      "id": "061d5029-eb13-433c-9392-1bc5d823bec4",
+      "canonical_name": "Hada Labo Pro-Aging Retinol B3 Lotion"
+    },
+    {
+      "id": "f9e9e524-ab06-4d40-a551-c1024c1465e5",
+      "canonical_name": "Cocoon Winter Melon Spot Treatment"
+    },
+    {
+      "id": "12eaa163-4ee0-4643-a336-b8999bbd59ec",
+      "canonical_name": "Hada Labo Advanced Nourish Lotion"
+    },
+    {
+      "id": "b359dbd1-ab4d-4b7c-8de9-64c3d7d75605",
+      "canonical_name": "Hada Labo Perfect White Tranexamic Acid Lotion"
+    },
+    {
+      "id": "6720b18a-cc7d-445a-b1f3-d79ae83ca2c3",
+      "canonical_name": "Acnes Lab C15 Serum"
+    },
+    {
+      "id": "c9ea4b59-3fb6-4383-b19c-34a60a7cee6e",
+      "canonical_name": "Hada Labo Shirojyun Premium Whitening Lotion"
+    },
+    {
+      "id": "bc1a4b11-a956-40c7-856b-666be2036814",
+      "canonical_name": "Melano CC Whitening Lotion Rich"
+    },
+    {
+      "id": "99cce8ba-036f-4ba7-8acf-c30c4848d35a",
+      "canonical_name": "Hada Labo Pro-Aging Retinol B3 Lotion"
+    },
+    {
+      "id": "1018d151-7c76-4342-82a9-c236725b8925",
+      "canonical_name": "Hada Labo Perfect White Tranexamic Acid Lotion"
+    },
+    {
+      "id": "95fa6938-43ed-46cb-9c21-55daaaae3585",
+      "canonical_name": "Hada Labo Perfect White Lotion"
+    },
+    {
+      "id": "f276f842-b3cd-49b5-92f5-d7cd737fd461",
+      "canonical_name": "Acnes Lab C10 Serum"
+    },
+    {
+      "id": "e5a56d6d-6bd4-47de-9beb-705d239f6d3e",
+      "canonical_name": "Melano CC Whitening Lotion"
+    },
+    {
+      "id": "9ec83592-84d2-4944-8144-a2a2f0eccdd0",
+      "canonical_name": "V.Rohto DryEye Eye Drops"
+    },
+    {
+      "id": "9891608d-5e1f-468e-9100-9978bb20f66f",
+      "canonical_name": "V.Rohto Mineral Eye Drops"
+    },
+    {
+      "id": "7d2dd0dd-9e68-4d5f-ad5c-e5bfad2b69b2",
+      "canonical_name": "La Roche-Posay Hyalu B5 Serum"
+    },
+    {
+      "id": "226497e9-7d7a-4e8a-926f-d6cb7e0b656a",
+      "canonical_name": "Cocoon An Giang Palm Sugar Body Scrub"
+    },
+    {
+      "id": "e657a8bb-0456-4d8b-820a-763f1817fc49",
+      "canonical_name": "Acnes Sealing Jell"
+    },
+    {
+      "id": "5839d0c6-18bd-413d-828f-2dd534099340",
+      "canonical_name": "OXY Anti-Acne Spot Gel"
+    },
+    {
+      "id": "46d72c70-e2d2-4d63-902c-299f53632b12",
+      "canonical_name": "Cocoon An Giang Palm Sugar Shower Gel"
+    },
+    {
+      "id": "a40182f5-b6fc-4be6-8755-f09fc1e70feb",
+      "canonical_name": "La Roche-Posay Effaclar Micro-Peeling Purifying Gel"
+    },
+    {
+      "id": "a1f85539-59b3-4eca-aee4-4adb7d07bf5d",
+      "canonical_name": "La Roche-Posay Lipikar Shower Gel"
+    },
+    {
+      "id": "1bfdf118-dbce-4f27-989a-175c3b82754e",
+      "canonical_name": "Acnes Scar Care Gel"
+    },
+    {
+      "id": "4cca373f-fe41-40f8-9ca1-d8c37e952c7e",
+      "canonical_name": "L'Oréal Paris True Match Foundation"
+    },
+    {
+      "id": "4dd0fa1e-375a-40c0-8109-267c93452b79",
+      "canonical_name": "L'Oréal Paris Excellence Crème Hair Color"
+    },
+    {
+      "id": "23b5fe5d-ecfa-41b5-89ba-7977fa896211",
+      "canonical_name": "Cocoon Pomelo Hair Mask"
+    },
+    {
+      "id": "382cec78-f953-494c-bbe7-97617ec10c42",
+      "canonical_name": "L'Oréal Paris Total Repair 5 Hair Mask"
+    },
+    {
+      "id": "7f81e276-d046-4c3a-8d65-141a9bfdd5a2",
+      "canonical_name": "L'Oréal Paris Elseve Full Resist Anti-Hair Fall Spray"
+    },
+    {
+      "id": "03734e6f-a13b-4f5a-85d7-121cdf99b786",
+      "canonical_name": "Lifebuoy Cica & Himalayan Salt Body Wash"
+    },
+    {
+      "id": "0a93001e-933e-4a47-ad7b-a8d82cab1989",
+      "canonical_name": "Lifebuoy Total 10 Soap"
+    },
+    {
+      "id": "ee0bfc12-c6ed-41a8-b559-abf2c3fd44bf",
+      "canonical_name": "Lifebuoy Matcha & Bitter Melon Soap"
+    },
+    {
+      "id": "657e0870-c424-434f-af5f-cbbdbde37653",
+      "canonical_name": "LipIce Sheer Color Sandy Pink"
+    },
+    {
+      "id": "62d9df7b-1d8f-47ad-a066-b55c651d4ace",
+      "canonical_name": "LipIce Lip Balm Lemon"
+    },
+    {
+      "id": "f6048399-3fda-431e-83ae-e5e502b764c0",
+      "canonical_name": "LipIce Sheer Color Fragrance Free"
+    },
+    {
+      "id": "80b6ea42-40a6-4e95-89a8-6f98060cc212",
+      "canonical_name": "LipIce Sheer Color Q Choco Mint"
+    },
+    {
+      "id": "9c7ee669-fb0a-4c47-ba94-c3021c6eaef7",
+      "canonical_name": "LipIce Sheer Color Q Matcha"
+    },
+    {
+      "id": "1f173eac-6c53-4477-9b91-0f3b7be2a0de",
+      "canonical_name": "LipIce Sheer Color Q Tho Bay Mau"
+    },
+    {
+      "id": "aa64ff05-fc76-4fca-a750-cf4bcc712170",
+      "canonical_name": "Cocoon Winter Melon Toner"
+    },
+    {
+      "id": "b2413e2b-567f-4b35-acf1-d52be4a40e34",
+      "canonical_name": "Cocoon Hung Yen Turmeric Toner"
+    },
+    {
+      "id": "a3c4ee4d-fb89-41ab-8ff4-95a17741ed7a",
+      "canonical_name": "Cocoon Gleditsia Scalp Tonic"
+    },
+    {
+      "id": "4b9760e8-7e73-4588-a1dc-d19ff99010fc",
+      "canonical_name": "Cocoon Sachi Hair Tonic"
+    },
+    {
+      "id": "fd10fe7a-b150-44e5-94e7-7628f3d6f2d0",
+      "canonical_name": "Cocoon Pomelo Hair Tonic"
+    },
+    {
+      "id": "b805c307-f744-4a40-b2fe-97f34487c147",
+      "canonical_name": "La Roche-Posay Serozinc"
+    },
+    {
+      "id": "e27f9402-423b-4459-a4bc-89fa3b79b8d0",
+      "canonical_name": "Lifebuoy Matcha & Aloe Hand Wash"
+    },
+    {
+      "id": "ce032eab-fa14-419d-9fa9-f40d85bfd3ff",
+      "canonical_name": "Lifebuoy Moisturizing Hand Wash"
+    },
+    {
+      "id": "43c03629-1579-4537-b28d-aec722ef2c4d",
+      "canonical_name": "Lifebuoy Total 10 Hand Wash"
+    },
+    {
+      "id": "24d0fac5-e6e4-45fe-a35d-8e92d397b261",
+      "canonical_name": "Cocoon Hau Giang Lotus Multipurpose Balm"
+    },
+    {
+      "id": "10d97a44-803d-4356-86f2-f52abe7f6f54",
+      "canonical_name": "Mentholatum Medicated Lip Balm"
+    },
+    {
+      "id": "dfdd21ef-bc99-48fe-9ffe-30cba3b926a5",
+      "canonical_name": "Cocoon Ben Tre Coconut Lip Balm"
+    },
+    {
+      "id": "01909142-c249-43dd-b637-eab954af00ee",
+      "canonical_name": "LipIce Sheer Color Q Choco Mint"
+    },
+    {
+      "id": "10388041-3a82-4b06-8786-7e7170b6fa4a",
+      "canonical_name": "NIVEA Original Care Lip Balm"
+    },
+    {
+      "id": "04bcc272-fea9-4641-a31d-7ef4eef1af47",
+      "canonical_name": "LipIce Sheer Color"
+    },
+    {
+      "id": "3a45de22-8837-4304-85d1-5d32fbac8619",
+      "canonical_name": "LipIce Sheer Color Red"
+    },
+    {
+      "id": "72e73904-d8a6-4bae-87ef-e0e5df3f587a",
+      "canonical_name": "Lip Pure Bergamot Orange"
+    },
+    {
+      "id": "8909f578-d596-47ba-a000-b62e9c61e0fd",
+      "canonical_name": "Lip Pure Cherry Red"
+    },
+      {
+        "id": "5afa50f4-db72-4602-b5cd-c5d52a1f7533",
+        "canonical_name": "Cocoon Winter Melon Gel Cream"
+      },
+      {
+        "id": "b0ed5996-112f-4c02-b919-9186134fc03f",
+        "canonical_name": "Cocoon Hung Yen Turmeric Gel Cream"
+      },
+      {
+        "id": "4cfda321-e4d8-49ef-925a-219831a5ecbd",
+        "canonical_name": "L'Oréal Paris Excellence Creme Hair Color"
+      },
+      {
+        "id": "6733a25e-c4e2-4dff-93d0-123ebbe5d1b7",
+        "canonical_name": "Tsubaki Premium Hair Oil"
+      },
+      {
+        "id": "12c03f5f-0fce-44e5-b84f-cb1bc08377d4",
+        "canonical_name": "Tsubaki Premium Ex Dandruff Care & Repair Treatment"
+      },
+      {
+        "id": "3959feda-dd61-4b10-b9a1-015aa6bf2643",
+        "canonical_name": "Tsubaki Premium Treatment Hair Water"
+      },
+
+      {
+        "id": "dc7b3b16-7ee0-4194-a255-faa0d6fc0ebb",
+        "canonical_name": "Lip Pure Raspberry Pink"
+      },
+      {
+        "id": "ac266239-c7b8-4cb7-9c60-1aa88e6cf428",
+        "canonical_name": "Lip Pure Cherry Red"
+      },
+      {
+        "id": "2ba99c32-ec06-46bb-b805-3946273240a2",
+        "canonical_name": "Lip Pure Apricot Lemon"
+      },
+      {
+        "id": "0222e54f-f603-4abb-813f-98e4392d264d",
+        "canonical_name": "Lip Pure Fragrance Free"
+      },
+      {
+        "id": "9fe209e3-78b7-44c9-87c9-1416f74c0371",
+        "canonical_name": "LipIce Sheer Color Peach Orange"
+      },
+      {
+        "id": "94f5c9f0-a640-4e50-90eb-3705d0bdca70",
+        "canonical_name": "LipIce Sheer Color Juicy Red"
+      },
+      {
+        "id": "0a862869-47a3-4648-9bd5-fe6fbb13e60c",
+        "canonical_name": "LipIce Sheer Color Coral Pink"
+      },
+      {
+        "id": "cbfc6918-276d-4fa5-b2bd-15f639e13453",
+        "canonical_name": "LipIce Sheer Color Sandy Pink"
+      },
+      {
+        "id": "e498f487-eb37-43d6-bb67-f17ebe2a278b",
+        "canonical_name": "LipIce Creamy Lip Balm Fragrance Free"
+      },
+      {
+        "id": "a55c6012-bb01-489b-8186-b5937590ac92",
+        "canonical_name": "Mentholatum Medicated Lip Balm"
+      },
+      {
+        "id": "a885ed85-a6f1-421f-a0d9-b57e46821b70",
+        "canonical_name": "NIVEA Overnight Care Lavender Lip Balm"
+      },
+      {
+        "id": "1997366b-e336-4217-a089-4991efac4758",
+        "canonical_name": "NIVEA Caring Color Lip Balm"
+      },
+      {
+        "id": "827151bd-5439-4b5f-9787-e50c6170d80a",
+        "canonical_name": "Lifebuoy Silver Shield Body Wash"
+      },
+      {
+        "id": "d8fbdbdf-07a1-47b6-ae79-5f0cb59d094c",
+        "canonical_name": "Lifebuoy Total 10 Body Wash"
+      },
+      {
+        "id": "8f6d50fb-1dd0-44ec-b7a6-fb3e38be2bf2",
+        "canonical_name": "Lifebuoy Moisturizing Body Wash"
+      },
+      {
+        "id": "e725aaf0-baeb-4941-99b3-e5e3ba3a721e",
+        "canonical_name": "Lifebuoy Men Cedarwood Body Wash"
+      },
+      {
+        "id": "3c0a97bb-0173-4de2-99f8-bc8bb2ee3e06",
+        "canonical_name": "Enchanteur Charming Body Wash"
+      },
+      {
+        "id": "83c039dc-d460-46f4-bd7f-786d36c4b91c",
+        "canonical_name": "Enchanteur Delightful Body Wash"
+      },
+      {
+        "id": "86fd34b0-31e2-4b50-a64f-78656d089ca2",
+        "canonical_name": "Enchanteur Iris Body Wash"
+      },
+      {
+        "id": "3ab686d6-5691-4f90-964f-21b2eed6f78f",
+        "canonical_name": "Lifebuoy Coffee Scrub Body Wash"
+      },
+      {
+        "id": "cf2ac83b-9c46-47ac-b33f-0869a75e7d35",
+        "canonical_name": "Lifebuoy Matcha & Bitter Melon Body Wash"
+      },
+      {
+        "id": "8bb2ae1a-c6e5-4a25-8c23-e6a605ef2e6a",
+        "canonical_name": "Lifebuoy Cool Fresh Body Wash"
+      },
+      {
+        "id": "e726ea8c-daf7-4e7c-9df0-99e9e67771c2",
+        "canonical_name": "Lifebuoy Tea Tree & Pink Salt Body Wash"
+      },
+      {
+        "id": "525427b9-67ce-488a-aa94-606f1e82684f",
+        "canonical_name": "Enchanteur Romantic Body Wash"
+      },
+      {
+        "id": "ebfbf2b0-4720-4a49-a367-88548f5dbfd5",
+        "canonical_name": "Cocoon Dak Lak Coffee Body Polish"
+      },
+      {
+        "id": "6d2c06a8-0435-4bf0-a03e-077a42f4bed8",
+        "canonical_name": "Cocoon An Giang Palm Sugar Body Polish"
+      },
+      {
+        "id": "5e816a23-fc49-4fb8-bf9d-63fceb4a0ef7",
+        "canonical_name": "Cocoon Gleditsia Scalp Scrub"
+      },
+      {
+        "id": "689d7c8e-a135-49f5-b7ff-870addb3e3ca",
+        "canonical_name": "Cocoon Dak Lak Coffee Face Polish"
+      }
+  ],
+  "Dưỡng thể": [
+    {
+      "id": "f2a8a399-41e0-4d50-9e04-98c444fb014d",
+      "canonical_name": "Cocoon Dak Lak Coffee Body Butter"
+    },
+    {
+      "id": "766bfcd4-7f87-4ec4-864c-692f6bd882b0",
+      "canonical_name": "Moaw Moaws Love Oil"
+    },
+    {
+      "id": "81e8f380-ec69-4211-91ab-354244d207c9",
+      "canonical_name": "Moaw Moaws Brightening Body Oil"
+    },
+    {
+      "id": "b2a0897b-ea54-40e3-ae1e-fdfa8d463514",
+      "canonical_name": "Nivea Extra White C&A Vitamin Body Lotion"
+    },
+    {
+      "id": "2ecab220-8b20-4359-adf7-83bb95891150",
+      "canonical_name": "Nivea Intensive Moisture Body Milk"
+    },
+    {
+      "id": "f88903ef-d855-4831-81e9-11ff596c56f5",
+      "canonical_name": "Nivea Night White Body Lotion"
+    },
+    {
+      "id": "7cafe2b3-ec55-4e47-8afa-75d564a9e2ab",
+      "canonical_name": "Nivea 8 Super Foods Body Lotion"
+    },
+    {
+      "id": "7196e503-9326-45e4-adc6-d9a94070e0e2",
+      "canonical_name": "Nivea Intensive Moisture Body Milk 48H"
+    },
+    {
+      "id": "715ae0c6-b9d5-4690-8b05-9b41f80255ce",
+      "canonical_name": "Nivea Extra White Radiant & Smooth Body Lotion"
+    }
+  ],
+  "Sữa rửa mặt": [
+    {
+      "id": "350cc36e-ad34-4feb-bdd3-4b2e32bb3730",
+      "canonical_name": "La Roche-Posay Effaclar Purifying Foaming Gel"
+    },
+    {
+      "id": "2aff8806-43d7-4a8c-8933-b39f4680c313",
+      "canonical_name": "Acnes Oil Control Cleanser"
+    },
+    {
+      "id": "8554c153-4550-4e67-9ed0-ce82bb37ed28",
+      "canonical_name": "Hada Labo Advanced Nourish Supreme Foaming Wash"
+    },
+    {
+      "id": "3620a105-6a15-44fe-92d6-e5f76a79cc73",
+      "canonical_name": "Hada Labo Gokujyun Foaming Wash"
+    },
+    {
+      "id": "650375a7-f941-4dc5-8a85-3ea333498539",
+      "canonical_name": "Cocoon Winter Melon Cleanser"
+    },
+    {
+      "id": "8a1e1ccf-ad50-400c-ba96-bd7e73a1ddb5",
+      "canonical_name": "Cocoon Dak Lak Coffee Cleanser"
+    },
+    {
+      "id": "49723c98-29be-4b6b-b3fd-793fd2f5a0a2",
+      "canonical_name": "OXY Deep Hydrating Facial Wash"
+    },
+    {
+      "id": "ba39f8ae-e6ef-4510-9703-48c734823bba",
+      "canonical_name": "OXY Acne Prevent Facial Wash"
+    },
+    {
+      "id": "b9e32a30-efac-4bbd-a4a3-577a77c79048",
+      "canonical_name": "OXY Hydrating Facial Wash"
+    },
+    {
+      "id": "b0783c22-f297-4cb3-a664-3bd895693974",
+      "canonical_name": "OXY Deep Wash Scrub Formula"
+    },
+    {
+      "id": "da284871-d9c1-495b-ac08-75f908238d10",
+      "canonical_name": "OXY Black Head Wash"
+    },
+    {
+      "id": "22fac1a3-a17d-4c33-bf9e-ed3e2e3b4a19",
+      "canonical_name": "OXY Perfect Wash"
+    },
+    {
+      "id": "0cdc56ce-fd2f-4fe1-8466-d951baf4178a",
+      "canonical_name": "OXY Oil Acne Wash"
+    },
+    {
+      "id": "58661f02-e460-467a-a745-c374094bb8be",
+      "canonical_name": "OXY White Complete Facial Wash"
+    },
+    {
+      "id": "b3e09f0d-c840-470b-a000-aaaa2ad6d78c",
+      "canonical_name": "L'Oréal Paris Revitalift Anti-Aging Facial Cleanser"
+    },
+    {
+      "id": "c09c5414-8134-4e36-be37-7ea838e92aab",
+      "canonical_name": "La Roche-Posay Lipikar Syndet AP+"
+    },
+    {
+      "id": "e5a7824a-f2d4-4edb-ab4e-fabe09e90762",
+      "canonical_name": "Hada Labo Pro Anti Aging Cleanser"
+    },
+    {
+      "id": "8776acb9-2f0b-4326-b272-220f4a57e63e",
+      "canonical_name": "Nivea Derma Acne Care Cleanser Gel To Foam"
+    },
+    {
+      "id": "8daa22dd-d24f-4352-8f63-e5c67440a676",
+      "canonical_name": "Cocoon Hung Yen Turmeric Cleanser"
+    },
+    {
+      "id": "f44e0fc2-a7c5-4de4-87d1-3f5d18c72528",
+      "canonical_name": "Cocoon Hau Giang Lotus Cleanser"
+    },
+    {
+      "id": "a014170a-d3f3-41ea-a890-67f82c6208aa",
+      "canonical_name": "Hada Labo Advanced Nourish Cleanser"
+    },
+    {
+      "id": "6629ded2-32e7-40a3-8beb-9a31a4dcb046",
+      "canonical_name": "Hada Labo Premium Whitening Cleanser"
+    },
+    {
+      "id": "e15282f1-4f61-40ae-bcbc-dc089811c3ef",
+      "canonical_name": "Melano CC Deep Clear Enzyme Face Wash"
+    },
+    {
+      "id": "0ee2ad6b-9b6f-4367-a048-f1ec87334938",
+      "canonical_name": "Nivea Pearl White Deep Clean Foam"
+    },
+    {
+      "id": "582fc537-8cf4-4dea-a9f6-0d9552beccb4",
+      "canonical_name": "Hada Labo Acne Care Calming Cleanser"
+    },
+    {
+      "id": "c43d7658-78b0-4b29-9e1a-e91ffc4c0b68",
+      "canonical_name": "Nivea Men Bright Oil Clear Foam"
+    },
+    {
+      "id": "86ee68d5-7152-4654-a920-50ccc59bf808",
+      "canonical_name": "Nivea White Oil Control Foam"
+    },
+    {
+      "id": "cb1d5aa5-dca3-4f9a-9549-f2991a4495e5",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Facial Cleanser"
+    },
+    {
+      "id": "eadb68f8-b41d-4a32-bdb8-b8a838d77751",
+      "canonical_name": "L'Oréal Paris Glycolic Bright Cleanser"
+    },
+    {
+      "id": "83bfbbd1-ba93-48d5-b212-79780b2dc595",
+      "canonical_name": "La Roche-Posay Mela B3 Clarifying Micro-Peeling Gel"
+    },
+    {
+      "id": "76cb9850-d53c-4932-bad7-bbd1d119ab15",
+      "canonical_name": "Acnes Creamy Wash"
+    },
+    {
+      "id": "e7a02e43-e494-4dc5-a63e-d047b045cb09",
+      "canonical_name": "Nivea Men Deep Clean Cooling Foam"
+    },
+    {
+      "id": "388feba6-45ac-4357-8133-998ee2756041",
+      "canonical_name": "Nivea Pearl White Clay Foam"
+    },
+    {
+      "id": "3d360b6f-6bdf-4fe5-8b16-bbd8e7b354bd",
+      "canonical_name": "Nivea Pearl White Foam"
+    },
+    {
+      "id": "4b3aec35-7cfa-4c39-94e8-98f1626908dc",
+      "canonical_name": "OXY Hydrating Wash"
+    },
+    {
+      "id": "711c5cdf-b1ad-41ce-bf01-cd432f16cdc8",
+      "canonical_name": "Nivea Men Deep Himalaya Foam"
+    },
+    {
+      "id": "144edba8-ea91-4625-b2bc-bac672ae0811",
+      "canonical_name": "Acnes Foaming Wash"
+    },
+    {
+      "id": "fb0cbe32-1c58-4872-aac1-4fb8f82727e7",
+      "canonical_name": "Nivea Hokkaido Rose Foam Cleanser"
+    },
+    {
+      "id": "3f1bba5e-18e6-48df-9203-ef805a649075",
+      "canonical_name": "Acnes Whitening Plus Facial Wash"
+    },
+    {
+      "id": "e4abd886-9ad9-4aaf-bae7-0b5288bf98e0",
+      "canonical_name": "Acnes Washing Bar"
+    }
+  ],
+  "Kem chống nắng": [
+    {
+      "id": "f6ae574b-c936-419a-b0a6-2a01a0c5f112",
+      "canonical_name": "L'Oréal Paris UV Defender Moist & Fresh"
+    },
+    {
+      "id": "e711f678-7791-4456-a4df-792703b7eaaf",
+      "canonical_name": "L'Oréal Paris UV Defender Matte & Fresh"
+    },
+    {
+      "id": "e2f2c9d4-1695-4235-bfb9-7ea149185b62",
+      "canonical_name": "La Roche-Posay Anthelios UVMune 400 Invisible Fluid"
+    },
+    {
+      "id": "f2dd4dec-f99c-4ac0-b3a3-5e9fba5768b7",
+      "canonical_name": "Cocoon Winter Melon Sunscreen"
+    },
+    {
+      "id": "3027a3e3-d5e0-43d9-be00-2bbb4007f3ff",
+      "canonical_name": "Nivea Extra Bright Repair & Protect Body Lotion SPF30"
+    },
+    {
+      "id": "e76f7bc1-de4c-44cb-812a-ab48b4b17188",
+      "canonical_name": "Skin Aqua UV Body Whitening Lotion"
+    },
+    {
+      "id": "b4be6d38-fb1c-41ee-a2e0-b9de9568cd97",
+      "canonical_name": "Acnes Blemish Control Sunscreen"
+    },
+    {
+      "id": "c631adac-3b37-457c-98eb-972649c160bd",
+      "canonical_name": "La Roche-Posay Anthelios Shaka Fluid"
+    },
+    {
+      "id": "cebed105-1a12-492c-8d4f-3e9c6c3805e2",
+      "canonical_name": "La Roche-Posay Anthelios XL Dry Touch Gel-Cream"
+    },
+    {
+      "id": "f41f8754-d55d-4f97-ae0c-827381b54f07",
+      "canonical_name": "L'Oréal Paris UV Defender Bright & Clear"
+    },
+    {
+      "id": "7bc08bdd-e2c1-44ce-ab09-c97cebf299c4",
+      "canonical_name": "L'Oréal Paris Glycolic-Bright Anti-Dark Spot Daily UV Fluid"
+    },
+      {
+        "id": "87b0fa0b-1521-4090-90d1-27461489708c",
+        "canonical_name": "L'Oréal Paris UV Defender Invisible Resist"
+      },
+      {
+        "id": "81d8401f-a545-4654-a7d1-0d13f42da06f",
+        "canonical_name": "La Roche-Posay Uvidea Anthelios Tone-Up Rosy"
+      },
+      {
+        "id": "48808487-e1d7-48f1-b53b-eb593aaa9c9f",
+        "canonical_name": "La Roche-Posay Anthelios UVMune 400 Oil Control Gel-Cream"
+      },
+      {
+        "id": "3df02025-a3f6-4f56-92db-f82f6fc901ea",
+        "canonical_name": "La Roche-Posay Anthelios Uvidea Tone-Up Light Cream"
+      },
+      {
+        "id": "38920c01-dc33-4845-97c8-cb6612422d44",
+        "canonical_name": "Skin Aqua UV Body Tone Up Lavender Lotion"
+      },
+      {
+        "id": "5dc6f294-ce67-4327-a716-592ea19c6271",
+        "canonical_name": "Nivea Sun Protect White Oil Control"
+      },
+      {
+        "id": "540c1e15-216c-4fd1-9f50-2fd8f3ccaecb",
+        "canonical_name": "Nivea Sun Triple Protect"
+      },
+      {
+        "id": "c5ddb4fd-f885-4732-8320-60ff0bc1eb39",
+        "canonical_name": "Skin Aqua Mild Care Gel"
+      },
+      {
+        "id": "2f595230-9646-420e-a356-af1028a9a5ec",
+        "canonical_name": "Skin Aqua Clear White"
+      },
+      {
+        "id": "c5e2c16f-4a2e-4535-b9eb-e95320d2f2e3",
+        "canonical_name": "Sunplay Baby Mild"
+      },
+      {
+        "id": "b8fd59dc-bcf8-4ca4-8929-e092118f7b02",
+        "canonical_name": "Sunplay Super Block"
+      },
+      {
+        "id": "0a4d8bab-210c-42ad-a9d7-2d18148c8823",
+        "canonical_name": "Hada Labo Koi-Gokujyun UV White Gel"
+      },
+      {
+        "id": "ca3f12d7-b88b-4abb-acf8-b0d4e8d7b4c0",
+        "canonical_name": "L'Oréal Paris Glycolic-Bright Glowing Cream Day"
+      },
+      {
+        "id": "3bafa1c3-bc1e-48a0-b063-957d6b7f30b1",
+        "canonical_name": "LipIce Lip Balm Natural"
+      },
+      {
+        "id": "758e2d63-6194-4476-8dc4-022cf4fd5bca",
+        "canonical_name": "Nivea Sun Protect & Moisture Body Lotion SPF30"
+      },
+      {
+        "id": "845636fc-545a-4a4f-b350-92b1852f84cc",
+        "canonical_name": "Nivea Sun Protect & Moisture Body Lotion SPF50+"
+      },
+      {
+        "id": "f0a1360d-c3bd-4043-a147-55283e4bfb4e",
+        "canonical_name": "Cocoon Winter Melon Sunscreen"
+      },
+      {
+        "id": "36ece6cb-034e-4db1-8b3f-d0d5eee91f64",
+        "canonical_name": "La Roche-Posay Mela B3 UV Daily Moisturizer SPF30"
+      },
+      {
+        "id": "360e4342-2061-41e3-83d0-64a632d74d07",
+        "canonical_name": "La Roche-Posay Anthelios UVMune 400 Oil Control Fluid"
+      },
+      {
+        "id": "985c8f2d-6b9d-40b3-9b43-d0e705dee800",
+        "canonical_name": "Skin Aqua Tone Up UV Milk Lavender"
+      },
+      {
+        "id": "70a13e58-dc0e-4ae1-abb9-be0d29e76a85",
+        "canonical_name": "Skin Aqua Tone Up UV Essence"
+      },
+      {
+        "id": "62a0acd2-0194-4935-9215-4131c775a02e",
+        "canonical_name": "Skin Aqua Acne Clear Milk"
+      },
+      {
+        "id": "c4a72fab-eb82-42a1-ae53-90b0f120e77b",
+        "canonical_name": "Nivea Extra Bright Repair & Protect Body Lotion SPF30"
+      },
+      {
+        "id": "2a150c4a-5fb6-4e36-b51f-a609743c2c30",
+        "canonical_name": "Nivea Extra Bright Repair & Protect Body Lotion SPF50"
+      },
+      {
+        "id": "e684e470-3615-4a36-bcf2-2c51fab338f0",
+        "canonical_name": "Skin Aqua Ultra Protection Mist"
+      }
+
+  ],
+  "Giấy thấm dầu": [
+    {
+      "id": "cfc5f056-98d2-4a71-b5fc-4f074082c747",
+      "name": "Giấy thấm dầu kiểm soát nhờn, ngừa mụn Acnes Oil Remover Paper 100 tờ"
+    }
+  ],
+  "Nước tẩy trang": [
+    {
+      "id": "876c4c4f-24fc-4601-a1e3-677fe9800979",
+      "canonical_name": "L'Oréal Paris Micellar Water 3-in-1 Refreshing"
+    },
+    {
+      "id": "c7393cd9-d6a0-4f52-85ac-04bcf2ac87b0",
+      "canonical_name": "Hada Labo Advanced Nourish Hyaluron Cleansing Oil"
+    },
+    {
+      "id": "18f903c8-a34c-4b8f-b51f-7f6636c09a2f",
+      "canonical_name": "Cocoon Rose Cleansing Oil"
+    },
+    {
+      "id": "bd08b35c-255e-4f05-8998-cc9dba2bca92",
+      "canonical_name": "Acnes Micellar Water"
+    },
+    {
+      "id": "6a7c5471-ef45-44eb-ba0e-8ef96aded987",
+      "canonical_name": "Acnes Make-Up Remover Sheet"
+    },
+    {
+      "id": "05706d1c-f864-4471-b140-a21f0c425f53",
+      "canonical_name": "L'Oréal Paris Revitalift Hyaluronic Acid Micellar Water"
+    },
+    {
+      "id": "1d00a96c-f58e-4525-a762-f972ee5fd0f3",
+      "canonical_name": "L'Oréal Paris Revitalift Crystal Purifying Micellar Water"
+    },
+    {
+      "id": "480d371c-cc41-4daf-8a0d-00c5dfda327f",
+      "canonical_name": "L'Oréal Paris Micellar Water Deep Cleansing"
+    },
+    {
+      "id": "2aa412e5-2b2e-4a29-99f4-71bbcbada79a",
+      "canonical_name": "Cocoon Winter Melon Micellar Water"
+    },
+    {
+      "id": "5e9b5748-5d6b-4265-8a74-4d6f5dbcf66a",
+      "canonical_name": "Nivea Derma Acne Care Micellar Water"
+    },
+    {
+      "id": "fd528026-cd5b-4371-ad6b-c165000f8746",
+      "canonical_name": "La Roche-Posay Micellar Water Ultra Sensitive Skin"
+    },
+    {
+      "id": "94313a74-7b92-4bfe-a9ec-ff0e0fd93f40",
+      "canonical_name": "Nivea Hokkaido Rose Oil Infused Micellar Water"
+    },
+    {
+      "id": "50bb8768-f8c6-4465-b7e6-7112f97f566b",
+      "canonical_name": "Nivea White Oil Clear Micellar Water"
+    },
+    {
+      "id": "215aeb85-6d6c-4b50-aefc-2bda42ca9e71",
+      "canonical_name": "L'Oréal Paris Micellar Water Moisturizing"
+    },
+    {
+      "id": "c8614a63-c945-4b11-bb1e-1976b26de28d",
+      "canonical_name": "La Roche-Posay Effaclar Micellar Water"
+    },
+    {
+      "id": "0ee94ba7-2829-42cb-be2b-b9b273518af6",
+      "canonical_name": "Nivea Pearl White Micellar Water"
+    },
+    {
+      "id": "4ffd516c-6f67-4804-9311-ad8c6bbcde86",
+      "canonical_name": "Hada Labo Micellar Water Acne Care"
+    },
+    {
+      "id": "71b40acc-6d10-40f4-b6b2-c5e0c05aedce",
+      "canonical_name": "Hada Labo Micellar Water Hydrating"
+    },
+    {
+      "id": "1bde4929-5fe6-489d-9bf7-33766a179414",
+      "canonical_name": "Cocoon Hau Giang Lotus Micellar Water"
+    }
+  ],
+  "Lăn/xịt khử mùi": [
+  {
+    "id": "75c8c38e-40b1-4929-86d4-c0333e046d01",
+    "canonical_name": "Nivea Men Whitening Roll On"
+  },
+  {
+    "id": "abb8063f-81ba-4c75-baf7-b6192e69f600",
+    "canonical_name": "Nivea Men Silver Protect Roll On"
+  },
+  {
+    "id": "7134b8f6-1eec-437e-ac4d-38f3b47b053b",
+    "canonical_name": "Nivea Pearl & Beauty Roll On"
+  },
+  {
+    "id": "99ab0c1b-21bb-4587-ba63-5b49ca6131a4",
+    "canonical_name": "Nivea Black & White Invisible Pure Roll On"
+  },
+  {
+    "id": "36e6c507-92a6-490a-9d45-e1cabf230f18",
+    "canonical_name": "Nivea Extra Brightening Roll On"
+  },
+  {
+    "id": "52293c2e-7938-45de-b8ad-1938c1bef1c7",
+    "canonical_name": "Enchanteur Romantic Roll On"
+  },
+  {
+    "id": "0106a9f1-ea4f-490c-82f0-e5f8ba877716",
+    "canonical_name": "Nivea Men Dry Impact Roll On"
+  },
+  {
+    "id": "788c4102-66d1-4cd6-83d4-43fc7399d3f1",
+    "canonical_name": "Nivea Brightening Happy Shave Roll On"
+  },
+  {
+    "id": "c115d682-e1d6-4377-b381-e71b400caf70",
+    "canonical_name": "Nivea Extra Brightening Roll On"
+  },
+  {
+    "id": "72650ed5-ff5a-47b8-8c8c-c1133e94835f",
+    "canonical_name": "Nivea Fresh Energy Roll On"
+  },
+  {
+    "id": "5dda214c-2a8b-45e6-a3be-2644a7b965a8",
+    "canonical_name": "Nivea Dry Comfort Roll On"
+  },
+  {
+    "id": "84c9ac4f-bdf5-41a3-a3ac-ba5c20d8558d",
+    "canonical_name": "Nivea Pearl & Beauty Roll On"
+  },
+  {
+    "id": "f604a269-b295-4d7a-b472-82d4566401bb",
+    "canonical_name": "Nivea Dry Comfort Roll On"
+  },
+  {
+    "id": "86ac344c-3fa4-4351-a936-2ae3541c9b05",
+    "canonical_name": "Nivea Pearl & Beauty Roll On"
+  },
+  {
+    "id": "f6652c5f-b708-4666-ba3a-45d8fcdd106e",
+    "canonical_name": "Nivea Pearl & Beauty Roll On"
+  },
+  {
+    "id": "00d5adfa-7b3a-4114-a147-82d3c49f59d9",
+    "canonical_name": "Nivea Men Deep Charcoal Roll On"
+  },
+  {
+    "id": "d58a8fec-6ff4-46c0-9f9f-907eb3d9305b",
+    "canonical_name": "Nivea Derma Control Restore Roll On"
+  },
+  {
+    "id": "c1abfcb2-df6e-46a1-9b70-e24afd4fb1b2",
+    "canonical_name": "Nivea Derma Restore Spray"
+  },
+  {
+    "id": "a5b67f8e-ff03-49a4-a332-9f0d23bd8573",
+    "canonical_name": "Lifebuoy Lemon Hand Wash"
+  },
+  {
+    "id": "9abb2570-34d1-458c-8393-cad0273fdeb5",
+    "canonical_name": "Enchanteur Brightening Deodorant Stick"
+  },
+  {
+    "id": "75fdcf8e-ed92-48cd-b72a-8fa944ce80d3",
+    "canonical_name": "Nivea Men Silver Protect Stick"
+  },
+  {
+    "id": "24c012ed-b391-4225-a3d0-5f831039510e",
+    "canonical_name": "Enchanteur Sensation Deodorant Spray"
+  },
+  {
+    "id": "8edd5801-0983-4d26-afb7-33372bedb5a7",
+    "canonical_name": "Nivea Men Dry Impact Deodorant Spray"
+  },
+  {
+    "id": "966335a0-af4f-40df-b37d-30d354bb20a7",
+    "canonical_name": "Nivea Men Deep Extreme Deodorant Spray"
+  },
+  {
+    "id": "84a9cd0c-06aa-4e6c-b62d-5f16f9e7706e",
+    "canonical_name": "Nivea Black & White Invisible Pure Deodorant Spray"
+  },
+  {
+    "id": "1664f968-3cfd-4465-9f51-f8a8ad702c00",
+    "canonical_name": "Nivea Men Silver Protect Deodorant Spray"
+  },
+  {
+    "id": "9ac99971-0f6d-4574-b8db-a5fc94b6a3a2",
+    "canonical_name": "Nivea Men Deep Charcoal Deodorant Spray"
+  },
+  {
+    "id": "98379ef8-ba1d-4b42-9bf8-87acafa5ec3c",
+    "canonical_name": "Nivea Black & White Invisible 5in1 Deodorant Spray"
+  },
+  {
+    "id": "21367992-445b-4868-b924-959cc1865b3d",
+    "canonical_name": "Nivea Sweet Floral Deodorant Spray"
+  },
+  {
+    "id": "57345756-1bef-463c-a7db-b62a6091f7e9",
+    "canonical_name": "Nivea Peony Deodorant Spray"
+  },
+  {
+    "id": "2264356e-e774-4c48-a5e6-154bd8836b98",
+    "canonical_name": "Nivea Men Black & White Invisible Active Deodorant Spray"
+  },
+  {
+    "id": "b066ccd5-d0b7-4998-b6f4-75616f4e4632",
+    "canonical_name": "Nivea Pearl & Beauty Deodorant Spray"
+  },
+  {
+    "id": "32245136-3083-4016-a2e1-03a56d937a07",
+    "canonical_name": "Nivea Extra Brightening Vitamin C Deodorant Spray"
+  }
+],
+  "Nước xịt khoáng": [
+    {
+      "id": "591c6f74-8de0-49b6-8c22-578174b399cc",
+      "canonical_name": "La Roche-Posay Thermal Spring Water"
+    },
+    {
+      "id": "69b60776-dded-45fe-aeb5-07268063b16b",
+      "canonical_name": "La Roche-Posay Serozinc"
+    },
+
+    {
+      "id": "57101e29-a6da-44b8-9bf5-280b1925a689",
+      "canonical_name": "Cocoon Turmeric Face Mist"
+    }
+  ],
+  "Tẩy tế bào chết": [
+    {
+      "id": "2b2dd356-689f-42c3-a649-0667bd64087f",
+      "canonical_name": "Cocoon Dak Lak Coffee Lip Scrub"
+    },
+    {
+      "id": "f7a74ede-e0e4-47cb-85b9-260035d7ef8c",
+      "canonical_name": "Cocoon Dak Lak Coffee Body Polish"
+    },
+    {
+      "id": "ead1451e-bc8f-4cc3-9830-76ac8836927f",
+      "canonical_name": "Cocoon Dak Lak Coffee Face Polish"
+    },
+    {
+      "id": "797b061c-9fac-49b8-a3c2-0c32f4c6f3c9",
+      "canonical_name": "Cocoon Dak Lak Coffee Lip Scrub"
+    },
+    {
+      "id": "0e6a7d7c-d849-4e5f-a196-7e3c2f137422",
+      "canonical_name": "Enchanteur Iris Body Scrub"
+    }
+  ],
+  "Sản phẩm trị mụn": [
+    {
+      "id": "003e5836-6906-4e5e-b506-4cddf20a8732",
+      "canonical_name": "Acnes Sealing Jell"
+    },
+    {
+      "id": "6b4d4f05-3626-4371-b8ea-a5d5e46018f2",
+      "canonical_name": "Cocoon Winter Melon Shower Gel"
+    },
+    {
+      "id": "0080c2ec-40d7-4549-a5d5-075549d88cf8",
+      "canonical_name": "Acnes Clear Patch"
+    },
+    {
+      "id": "97c61954-0916-4b85-be42-eca64e43f14c",
+      "canonical_name": "Acnes Clear Patch"
+    }
+  ]
+}
