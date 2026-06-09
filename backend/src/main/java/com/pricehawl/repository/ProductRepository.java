@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     /** Exact match — dùng trong OnDemandImportService để tránh tạo duplicate */
     Optional<Product> findByNameIgnoreCase(String name);
+
+    List<Product> findByCategoryId(Integer categoryId);
 }

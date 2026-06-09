@@ -2,6 +2,7 @@ package com.pricehawl.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -69,4 +70,18 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductListing> listings;
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private Boolean isActive = true;
+
+    @Column(name = "last_crawled_at")
+    private LocalDateTime lastCrawledAt;
+
+    @Column(name = "no_video_found", nullable = false)
+    @Builder.Default
+    private Boolean noVideoFound = false;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<String> ingredients;
 }

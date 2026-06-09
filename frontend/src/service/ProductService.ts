@@ -1,5 +1,5 @@
 import apiClient from '../api/apiClient';
-import type { ProductSearch, PriceComparison, PriceHistory } from '../types/product';
+import type { ProductSearch, PriceComparison, PriceHistory, VideoSummary, VideoDetail } from '../types/product';
 
 export interface SearchProductsOptions {
   platforms?: string[];
@@ -48,4 +48,20 @@ export async function priceHistory(productId: string): Promise<PriceHistory> {
 export async function getProductsByCategory(slug: string): Promise<ProductSearch[]> {
   const res = await apiClient.get(`/products/category/${encodeURIComponent(slug)}`);
   return res.data;
+}
+
+export async function getVideoSummary(page = 0, size = 20, search?: string): Promise<{ data: VideoSummary[]; headers: Record<string, string> }> {
+  const params: Record<string, any> = { page, size };
+  if (search) params.search = search;
+  const res = await apiClient.get('/admin/videos/summary', { params });
+  return { data: res.data, headers: res.headers as Record<string, string> };
+}
+
+export async function getVideoDetails(productId: string, page = 0, size = 20): Promise<{ data: VideoDetail[]; headers: Record<string, string> }> {
+  const res = await apiClient.get(`/admin/videos/${productId}`, { params: { page, size } });
+  return { data: res.data, headers: res.headers as Record<string, string> };
+}
+
+export async function deleteVideo(videoId: string): Promise<void> {
+  await apiClient.delete(`/admin/videos/${videoId}`);
 }

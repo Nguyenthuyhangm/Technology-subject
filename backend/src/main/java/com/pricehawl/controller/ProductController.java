@@ -1,12 +1,15 @@
 package com.pricehawl.controller;
 
 import com.pricehawl.dto.AiRecommendationDTO;
+import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.dto.ProductSearchDTO;
+import com.pricehawl.dto.ProductVideoDTO;
 import com.pricehawl.entity.ProductListing;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.repository.ProductListingRepository;
+import com.pricehawl.service.ProductDupeService;
 import com.pricehawl.service.ProductSearchService;
-import lombok.RequiredArgsConstructor;
+import com.pricehawl.service.ProductVideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +25,25 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 public class ProductController {
 
+    private record ByUrlResponse(String productId, String productName) {}
+
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductSearchService service;
     private final AiChatRepository aiChatRepository;
+    private final ProductVideoService productVideoService;
     private final ProductListingRepository listingRepository;
+    private final ProductDupeService productDupeService;
 
-    public ProductController(ProductSearchService service,
-                             AiChatRepository aiChatRepository,
-                             ProductListingRepository listingRepository) {
+    public ProductController(ProductSearchService service, AiChatRepository aiChatRepository,
+                             ProductVideoService productVideoService,
+                             ProductListingRepository listingRepository,
+                             ProductDupeService productDupeService) {
         this.service = service;
         this.aiChatRepository = aiChatRepository;
+        this.productVideoService = productVideoService;
         this.listingRepository = listingRepository;
+        this.productDupeService = productDupeService;
     }
 
     @GetMapping("/search")
@@ -133,6 +143,13 @@ private String extractSpid(String url) {
         return "SYNC OK";
     }
 
-    // ── Inner DTO ──────────────────────────────────────────────
-    record ByUrlResponse(String productId, String productName) {}
+    @GetMapping("/{productId}/videos")
+    public List<ProductVideoDTO> getVideosByProduct(@PathVariable UUID productId) {
+        return productVideoService.getVideosByProductId(productId);
+    }
+
+    @GetMapping("/{productId}/dupes")
+    public List<ProductDupeDTO> getDupes(@PathVariable UUID productId) {
+        return productDupeService.getDupes(productId);
+    }
 }

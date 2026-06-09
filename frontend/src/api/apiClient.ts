@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from 'axios';
 import type { AxiosError } from "axios";
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase';
 import { monitor } from '../util/monitoring';
 
 

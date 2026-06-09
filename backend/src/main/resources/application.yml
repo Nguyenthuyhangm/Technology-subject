@@ -6,11 +6,9 @@ spring:
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      # Tăng số lượng kết nối để không phải xếp hàng chờ (Queueing)
-      maximum-pool-size: 6
-      minimum-idle: 5
-      # CỰC KỲ QUAN TRỌNG: Giữ kết nối luôn "nóng" sang Hàn Quốc để giảm ping
-      keepalive-time: 30000 
+      maximum-pool-size: 3
+      minimum-idle: 1
+      keepalive-time: 30000
       idle-timeout: 60000
       max-lifetime: 1800000
       connection-timeout: 30000
@@ -23,78 +21,91 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
-        # Tối ưu hóa việc lấy dữ liệu hàng loạt
         jdbc.batch_size: 25
         order_inserts: true
         order_updates: true
 
   elasticsearch:
-    uris: ${SPRING_ELASTICSEARCH_URIS:http://localhost:9200}
+    uris: ${ELASTICSEARCH_URI:http://localhost:9200}
+
   data:
     redis:
-      host: ${SPRING_DATA_REDIS_HOST:localhost}
-      port: ${SPRING_DATA_REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db/migration
     baseline-on-migrate: true
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,prometheus
-  endpoint:
-    health:
-      show-details: never
-  metrics:
-    tags:
-      application: backend
-
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 
 logging:
+  file:
+    name: logs/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30        # giữ tối đa 30 ngày log
+      file-name-pattern: logs/app.log.%d{yyyy-MM-dd}.%i.gz
   level:
     root: WARN
-    org.springframework.security: WARN
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
     # INFO giúp tránh nghẽn I/O hơn so với DEBUG khi hệ thống chạy thực tế
     com.pricehawl.service.MultiPlatformPriceRefreshService: INFO
     com.pricehawl.service.crawler: INFO
+    com.pricehawl: DEBUG
 
 pricehawk:
-  cors:
-    allowed-origins: "http://localhost:5173,http://localhost:80,http://localhost:8824,http://127.0.0.1:80,http://127.0.0.1:8824,http://192.168.1.57:80,http://192.168.1.57:8824,http://pricehawk.site:80,http://pricehawk.site:8824,http://www.pricehawk.site:80,http://www.pricehawk.site:8824"
   debug:
-    price-refresh-dir: "./debug/price-refresh"
+    price-refresh-dir: ${PRICE_REFRESH_DEBUG_DIR:./debug/price-refresh}
 
   scheduler:
     price-refresh:
-      enabled: false
+      enabled: ${PRICE_REFRESH_SCHEDULER_ENABLED:false}
       cron: "0 */15 * * * *"
       zone: "Asia/Bangkok"
       max-items-per-run: 50
 
   crawler:
-    watsons-script: "watsons-price.js"
-    cocolux-script: "cocolux-price.js"
+    watsons-script: ${WATSONS_SCRIPT:backend/watsons-price.js}
+    cocolux-script: ${COCOLUX_SCRIPT:backend/cocolux-price.js}
     thread-pool-size: 5
 
 resend:
-  api-key: re_UHgo6tTR_98Uk3AAy2Af7eYRzTSi7BoxE
+  api-key: ${RESEND_API_KEY:}
 
 ai:
-  base-url: https://generativelanguage.googleapis.com
-  api-key: AQ.Ab8RN6IR3KQZcinpjM6G7UdfSwl9RXfXXO8JEknANTOX960EOQ
-  model: gemini-2.5-flash
-  enable-search: true
+  base-url: ${AI_BASE_URL:https://generativelanguage.googleapis.com}
+  api-key: ${AI_API_KEY:}
+  model: ${AI_MODEL:gemini-2.5-flash}
+  enable-search: ${AI_ENABLE_SEARCH:true}
 
-# AccessTrade & Other configs
 accesstrade:
-  api-key: Ufa06E7uTCRm4kr89slTopHetE6uiZ04
+  api-key: ${ACCESSTRADE_API_KEY:}
 
 supabase:
   url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
     key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
+chat:
+  admin-emails: lethituphuong151020055@gmail.com,trangdinhhuyen269@gmail.com,23020661@vnu.edu.vn,moimoicutenhut@gmail.com,dminhanh2810@gmail.com
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        hikaricp.connections.usage: true
