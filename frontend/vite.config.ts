@@ -62,6 +62,13 @@ export default defineConfig({
         // không cần rewrite path (backend đã có `/api/**`).
       },
 
+      '/ws': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
       '/users': {
         target: 'http://localhost:8080',
         changeOrigin: true,

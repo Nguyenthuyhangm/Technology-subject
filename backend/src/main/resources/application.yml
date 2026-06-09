@@ -36,7 +36,7 @@ spring:
       port: ${SPRING_DATA_REDIS_PORT:6379}
 
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db/migration
     baseline-on-migrate: true
 
@@ -98,3 +98,6 @@ supabase:
   url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
     key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+
+chat:
+  admin-emails: lethituphuong151020055@gmail.com,trangdinhhuyen269@gmail.com,23020661@vnu.edu.vn,moimoicutenhut@gmail.com,dminhanh2810@gmail.com

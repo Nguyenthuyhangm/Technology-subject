@@ -13,7 +13,8 @@ export function getApiBaseUrl(): string {
   const normalized = v != null ? String(v).trim().replace(/\/$/, '') : ''
 
   if (!normalized) {
-    return '/api'
+    // Env rỗng → dùng relative URL để Vite proxy xử lý /api → backend
+    return ''
   }
 
   if (normalized.endsWith('/api')) {
