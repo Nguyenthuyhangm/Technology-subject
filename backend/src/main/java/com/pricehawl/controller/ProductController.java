@@ -59,31 +59,59 @@ public class ProductController {
      * Response: { productId, productName } hoặc 404 nếu không tìm thấy
      */
     @GetMapping("/by-url")
-    public ResponseEntity<?> findByUrl(@RequestParam String url) {
-        if (url == null || url.isBlank()) {
-            return ResponseEntity.badRequest().body("url is required");
-        }
+public ResponseEntity<?> findByUrl(@RequestParam String url) {
+    if (url == null || url.isBlank())
+        return ResponseEntity.badRequest().body("url is required");
 
-        // Thử tìm chính xác trước
-        Optional<ProductListing> listing = listingRepository.findByUrl(url);
+    // Lần 1: exact match
+    Optional<ProductListing> listing = listingRepository.findByUrl(url);
 
-        // Nếu không thấy, thử bỏ query string (vd: ?srsltid=xxx)
-        if (listing.isEmpty() && url.contains("?")) {
-            String urlNoQuery = url.substring(0, url.indexOf("?"));
-            listing = listingRepository.findByUrl(urlNoQuery);
-        }
+    // Lần 2: bỏ hết query string
+    if (listing.isEmpty() && url.contains("?")) {
+        String urlNoQuery = url.substring(0, url.indexOf("?"));
+        listing = listingRepository.findByUrl(urlNoQuery);
 
+        // Lần 3: giữ ?spid= (Tiki)
         if (listing.isEmpty()) {
-            log.debug("by-url not found: {}", url);
-            return ResponseEntity.notFound().build();
+            String spid = extractSpid(url);
+            if (spid != null) {
+                listing = listingRepository.findByUrl(urlNoQuery + "?spid=" + spid);
+            }
         }
 
-        ProductListing pl = listing.get();
-        return ResponseEntity.ok(new ByUrlResponse(
-            pl.getProduct().getId().toString(),
-            pl.getProduct().getName()
-        ));
+        // Lần 4: tìm URL bắt đầu bằng path (không có query string) — cho Hasaki/srsltid
+        if (listing.isEmpty()) {
+            listing = listingRepository.findFirstByUrlStartingWith(urlNoQuery);
+        }
     }
+
+    // Lần 4 nếu URL gốc không có "?"
+    if (listing.isEmpty()) {
+        listing = listingRepository.findFirstByUrlStartingWith(url);
+    }
+
+    if (listing.isEmpty()) {
+        log.debug("by-url not found: {}", url);
+        return ResponseEntity.notFound().build();
+    }
+
+    ProductListing pl = listing.get();
+    return ResponseEntity.ok(new ByUrlResponse(
+        pl.getProduct().getId().toString(),
+        pl.getProduct().getName()
+    ));
+}
+private String extractSpid(String url) {
+    try {
+        String query = url.substring(url.indexOf("?") + 1);
+        for (String param : query.split("&")) {
+            if (param.startsWith("spid=")) {
+                return param.substring(5);
+            }
+        }
+    } catch (Exception e) { /* ignore */ }
+    return null;
+}
 
     @GetMapping("/{id}/similar")
     public List<AiRecommendationDTO> getSimilar(

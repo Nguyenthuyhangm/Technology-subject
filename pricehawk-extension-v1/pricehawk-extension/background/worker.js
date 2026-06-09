@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           // Gọi endpoint mới: GET /api/products/by-url?url=...
           const encoded = encodeURIComponent(payload.url);
           const resp = await fetch(
-            `${CONFIG.API_BASE_URL}/api/products/by-url?url=${encoded}`,
+           `${CONFIG.BACKEND_URL}/api/products/by-url?url=${encoded}`,
             { headers: { "Content-Type": "application/json" } }
           );
 
@@ -190,6 +190,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })();
     return false;
   }
+  // ── GET_PRICE_HISTORY ──
+if (type === "GET_PRICE_HISTORY") {
+  (async () => {
+    try {
+      const cacheKey = `price_history_${payload.productId}`;
+      let data = await cacheGet(cacheKey);
+      if (!data) {
+        data = await getPriceHistory(payload.productId);
+        if (data) await cacheSet(cacheKey, data);
+      }
+      chrome.tabs.sendMessage(tabId, {
+        type: "PRICE_HISTORY_RESULT",
+        payload: {
+          productId: payload.productId,
+          priceHistory: data,   // = { productId, platforms: [...] }
+          seq: payload.seq,
+        },
+      });
+    } catch (err) {
+      chrome.tabs.sendMessage(tabId, {
+        type: "PRICE_HISTORY_ERROR",
+        payload: { message: err.message, seq: payload.seq },
+      });
+    }
+  })();
+  return false;
+}
 
   // ── TRIGGER_ON_DEMAND ──
   if (type === "TRIGGER_ON_DEMAND") {

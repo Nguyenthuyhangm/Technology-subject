@@ -120,68 +120,149 @@ public class OnDemandCrawlService {
     // ================================================================
 
     @Async("onDemandCrawlExecutor")
-    public void executeJobAsync(String jobId, OnDemandCrawlJobDTO job, String searchQuery) {
-        try {
-            updateStatus(jobId, "RUNNING", null, null, 0);
+public void executeJobAsync(String jobId, OnDemandCrawlJobDTO job, String searchQuery) {
+    try {
+        updateStatus(jobId, "RUNNING", null, null, 0);
 
-            // ── Bước 1: Search tìm URL trên 5 sàn ──
-            log.info("Job {} — searching for '{}'", jobId, searchQuery);
-            Map<String, List<SearchResultItem>> allResults =
-                searchService.searchAllPlatforms(searchQuery);
+        // ── Bước 1: Search tìm URL trên 5 sàn ──
+        log.info("Job {} — searching for '{}'", jobId, searchQuery);
+        Map<String, List<SearchResultItem>> allResults =
+            searchService.searchAllPlatforms(searchQuery);
 
-            int platformsFound = (int) allResults.values().stream()
-                .filter(l -> !l.isEmpty()).count();
+        int platformsFound = (int) allResults.values().stream()
+            .filter(l -> !l.isEmpty()).count();
 
-            if (platformsFound == 0) {
-                updateStatus(jobId, "FAILED", null,
-                    "Không tìm được sản phẩm trên bất kỳ sàn nào.", 0);
-                return;
-            }
+        if (platformsFound == 0) {
+            updateStatus(jobId, "FAILED", null,
+                "Không tìm được sản phẩm trên bất kỳ sàn nào.", 0);
+            return;
+        }
 
-            updateStatus(jobId, "RUNNING", null, null, platformsFound);
+        updateStatus(jobId, "RUNNING", null, null, platformsFound);
 
-            // ── Bước 2: Crawl chi tiết từng URL → lấy giá + ảnh chính xác ──
-            log.info("Job {} — enriching {} URLs with detail crawl", jobId, platformsFound);
-            List<SearchResultItem> enriched = enrichWithDetailCrawl(allResults);
+        // ── Bước 2: Crawl chi tiết từng URL → lấy giá + ảnh chính xác ──
+        log.info("Job {} — enriching {} URLs with detail crawl", jobId, platformsFound);
+        List<SearchResultItem> enriched = new ArrayList<>(enrichWithDetailCrawl(allResults));
 
-            if (enriched.isEmpty()) {
-                updateStatus(jobId, "FAILED", null,
-                    "Tìm được URL nhưng không crawl được giá. Thử lại sau.", platformsFound);
-                return;
-            }
+        // ── THÊM: Crawl sourceUrl nếu platform chưa có trong enriched ──
+        if (job.getSourceUrl() != null && !job.getSourceUrl().isBlank()) {
+            String sourcePlatform = job.getSourcePlatform().toLowerCase();
+            boolean alreadyHasSource = enriched.stream()
+                .anyMatch(i -> i.getPlatform().equalsIgnoreCase(sourcePlatform));
 
-            // ── Bước 3: Import DB ──
-            log.info("Job {} — importing {} listings", jobId, enriched.size());
-            UUID productId = importService.importToDb(job.getProductName(), enriched);
-
-            // ── Bước 4: Index Elasticsearch ──
-            try {
-                productSearchService.indexProductById(productId);
-            } catch (Exception e) {
-                log.warn("Job {} — ES index failed (non-fatal): {}", jobId, e.getMessage());
-            }
-
-            // ── Bước 5: Notify user ──
-            if (job.getUserId() != null && !job.getUserId().isBlank()) {
-                try {
-                    notificationService.saveCrawlCompleteNotification(
-                        UUID.fromString(job.getUserId()),
-                        job.getProductName(),
-                        productId
-                    );
-                } catch (Exception e) {
-                    log.warn("Job {} — notify failed (non-fatal): {}", jobId, e.getMessage());
+            if (!alreadyHasSource) {
+                PlatformPriceCrawler crawler = crawlerMap.get(sourcePlatform);
+                if (crawler != null) {
+                    try {
+                        log.info("Job {} — crawling sourceUrl | platform={} | url={}",
+                            jobId, sourcePlatform, job.getSourceUrl());
+                        PriceSnapshotDTO snapshot = crawler.crawl(job.getSourceUrl());
+                        if (snapshot.getPrice() != null && snapshot.getPrice() > 0) {
+                            enriched.add(SearchResultItem.builder()
+                                .platform(sourcePlatform)
+                                .url(job.getSourceUrl())
+                                .price(snapshot.getPrice())
+                                .originalPrice(snapshot.getOriginalPrice())
+                                .name(job.getProductName())
+                                .brand(null)
+                                .build());
+                            log.info("Job {} — sourceUrl crawled OK | price={}",
+                                jobId, snapshot.getPrice());
+                        }
+                    } catch (Exception e) {
+                        log.warn("Job {} — sourceUrl crawl failed (non-fatal): {}",
+                            jobId, e.getMessage());
+                    }
                 }
             }
+        }
 
-            updateStatus(jobId, "DONE", productId.toString(), null, enriched.size());
-            log.info("Job {} — DONE | productId={} | listings={}", jobId, productId, enriched.size());
+        if (enriched.isEmpty()) {
+            updateStatus(jobId, "FAILED", null,
+                "Tìm được URL nhưng không crawl được giá. Thử lại sau.", platformsFound);
+            return;
+        }
+
+        // ── Bước 3: Import DB ──
+        log.info("Job {} — importing {} listings", jobId, enriched.size());
+        UUID productId = importService.importToDb(job.getProductName(), enriched);
+
+        // ── Bước 4: Index Elasticsearch ──
+        try {
+            productSearchService.indexProductById(productId);
+        } catch (Exception e) {
+            log.warn("Job {} — ES index failed (non-fatal): {}", jobId, e.getMessage());
+        }
+
+        // ── Bước 5: Notify user ──
+        if (job.getUserId() != null && !job.getUserId().isBlank()) {
+            try {
+                notificationService.saveCrawlCompleteNotification(
+                    UUID.fromString(job.getUserId()),
+                    job.getProductName(),
+                    productId
+                );
+            } catch (Exception e) {
+                log.warn("Job {} — notify failed (non-fatal): {}", jobId, e.getMessage());
+            }
+        }
+
+        updateStatus(jobId, "DONE", productId.toString(), null, enriched.size());
+        log.info("Job {} — DONE | productId={} | listings={}", jobId, productId, enriched.size());
+
+    } catch (Exception e) {
+        log.error("Job {} — FAILED: {}", jobId, e.getMessage(), e);
+        updateStatus(jobId, "FAILED", null, e.getMessage(), 0);
+    }
+}
+
+private List<SearchResultItem> enrichWithDetailCrawl(
+        Map<String, List<SearchResultItem>> allResults) {
+
+    List<SearchResultItem> enriched = new ArrayList<>();
+
+    for (Map.Entry<String, List<SearchResultItem>> entry : allResults.entrySet()) {
+        String platform = entry.getKey();
+        List<SearchResultItem> items = entry.getValue();
+
+        if (items.isEmpty()) continue;
+        SearchResultItem item = items.get(0);
+
+        if ("tiki".equals(platform) && item.getPrice() != null) {
+            log.info("Tiki — using API price | price={} | url={}", item.getPrice(), item.getUrl());
+            enriched.add(item);
+            continue;
+        }
+
+        PlatformPriceCrawler crawler = crawlerMap.get(platform);
+        if (crawler == null) {
+            log.warn("No crawler for platform={}", platform);
+            continue;
+        }
+
+        try {
+            log.info("Crawling detail | platform={} | url={}", platform, item.getUrl());
+            PriceSnapshotDTO snapshot = crawler.crawl(item.getUrl());
+
+            if (snapshot.getPrice() == null || snapshot.getPrice() <= 0) {
+                log.warn("Detail crawl returned null price | platform={}", platform);
+                continue;
+            }
+
+            item.setPrice(snapshot.getPrice());
+            item.setOriginalPrice(snapshot.getOriginalPrice());
+
+            log.info("Detail crawl OK | platform={} | price={}", platform, snapshot.getPrice());
+            enriched.add(item);
 
         } catch (Exception e) {
-            log.error("Job {} — FAILED: {}", jobId, e.getMessage(), e);
-            updateStatus(jobId, "FAILED", null, e.getMessage(), 0);
+            log.warn("Detail crawl failed | platform={} | url={} | error={}",
+                platform, item.getUrl(), e.getMessage());
         }
     }
+
+    return enriched;
+}
 
     // ================================================================
     // CRAWL CHI TIẾT — dùng lại crawler cũ (HasakiPriceCrawler, etc.)
@@ -193,59 +274,7 @@ public class OnDemandCrawlService {
      *
      * Tiki đã có giá từ API → chỉ cần crawl Hasaki/Guardian/Cocolux/Watsons.
      */
-    private List<SearchResultItem> enrichWithDetailCrawl(
-            Map<String, List<SearchResultItem>> allResults) {
-
-        List<SearchResultItem> enriched = new ArrayList<>();
-
-        for (Map.Entry<String, List<SearchResultItem>> entry : allResults.entrySet()) {
-            String platform = entry.getKey();
-            List<SearchResultItem> items = entry.getValue();
-
-            if (items.isEmpty()) continue;
-            SearchResultItem item = items.get(0); // chỉ lấy kết quả đầu tiên
-
-            // Tiki đã có giá từ API — không cần crawl lại
-            if ("tiki".equals(platform) && item.getPrice() != null) {
-                log.info("Tiki — using API price | price={} | url={}", item.getPrice(), item.getUrl());
-                enriched.add(item);
-                continue;
-            }
-
-            // Hasaki/Guardian/Cocolux/Watsons — crawl trang chi tiết
-            PlatformPriceCrawler crawler = crawlerMap.get(platform);
-            if (crawler == null) {
-                log.warn("No crawler for platform={}", platform);
-                continue;
-            }
-
-            try {
-                log.info("Crawling detail | platform={} | url={}", platform, item.getUrl());
-                PriceSnapshotDTO snapshot = crawler.crawl(item.getUrl());
-
-                if (snapshot.getPrice() == null || snapshot.getPrice() <= 0) {
-                    log.warn("Detail crawl returned null price | platform={}", platform);
-                    continue;
-                }
-
-                // Ghi đè giá bằng data chi tiết
-                item.setPrice(snapshot.getPrice());
-                item.setOriginalPrice(snapshot.getOriginalPrice());
-                // imageUrl giữ nguyên nếu crawler không trả về ảnh
-
-                log.info("Detail crawl OK | platform={} | price={}", platform, snapshot.getPrice());
-                enriched.add(item);
-
-            } catch (Exception e) {
-                log.warn("Detail crawl failed | platform={} | url={} | error={}",
-                    platform, item.getUrl(), e.getMessage());
-                // Bỏ qua sàn này — không add vào enriched
-            }
-        }
-
-        return enriched;
-    }
-
+    
     // ================================================================
     // 3. GET STATUS — extension polling
     // ================================================================

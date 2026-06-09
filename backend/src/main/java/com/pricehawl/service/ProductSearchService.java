@@ -156,18 +156,40 @@ public class ProductSearchService {
     // =========================
     // 🔄 6. INDEX BY ID
     // =========================
-    @Transactional
-    public void indexProductById(UUID productId) {
-        List<Product> products = productRepository.findAllByIdIn(List.of(productId));
-        if (products.isEmpty()) {
-            log.warn("indexProductById: not found | productId={}", productId);
-            return;
-        }
-        Product product = products.get(0);
-        ProductDocument doc = documentMapper.toDocument(product);
-        searchRepository.save(doc);
-        clearSearchCache();
-        log.info("Indexed | productId={} | bestPrice={} | bestPlatform={}",
-                productId, doc.getBestPrice(), doc.getBestPlatform());
+// =========================
+// 🔄 6. INDEX BY ID
+// =========================
+@Transactional
+public void indexProductById(UUID productId) {
+    List<Product> products = productRepository.findAllByIdIn(List.of(productId));
+    if (products.isEmpty()) {
+        log.warn("indexProductById: not found | productId={}", productId);
+        return;
     }
+    Product product = products.get(0);
+
+    // Load listings riêng để tránh lazy load
+    List<ProductListing> listings = listingRepository.findByProductId(productId);
+
+    // Build document
+    ProductDocument doc = documentMapper.toDocument(product);
+
+    // Override bestPrice bằng listings thực tế
+    if (listings != null && !listings.isEmpty()) {
+        listings.stream()
+            .filter(l -> l.getCurrentPrice() != null)
+            .min(Comparator.comparing(ProductListing::getCurrentPrice))
+            .ifPresent(best -> {
+                doc.setBestPrice(best.getCurrentPrice());
+                doc.setOriginalPrice(best.getOriginalPrice());
+                doc.setBestPlatform(best.getPlatformName());
+                doc.setInStock(best.getInStock());
+            });
+    }
+
+    searchRepository.save(doc);
+    clearSearchCache();
+    log.info("Indexed | productId={} | bestPrice={} | bestPlatform={}",
+        productId, doc.getBestPrice(), doc.getBestPlatform());
+}
 }

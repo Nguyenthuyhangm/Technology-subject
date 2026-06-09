@@ -245,4 +245,5 @@ public interface ProductListingRepository
 
     long countByInStockFalseAndUpdatedAtBefore(LocalDateTime before);
      Optional<ProductListing> findByUrl(String url);
+     Optional<ProductListing> findFirstByUrlStartingWith(String urlPrefix);
 }
