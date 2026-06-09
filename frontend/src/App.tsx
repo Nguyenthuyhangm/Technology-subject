@@ -17,6 +17,7 @@ import AdminPage from './pages/AdminPage'
 import PaymentPage from './pages/PaymentPage'
 import UserChatWidget from './components/chat/UserChatWidget'
 import SkinAdvicePage from './pages/SkinAdvicePage'
+import VideoFeedPage from './pages/VideoFeedPage'
 
 export default function App(): React.ReactElement {
   return (
@@ -46,6 +47,7 @@ export default function App(): React.ReactElement {
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/payment/qr" element={<PaymentPage />} />
               <Route path="/skin-advice" element={<SkinAdvicePage />} />
+              <Route path="/video-feed" element={<VideoFeedPage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />

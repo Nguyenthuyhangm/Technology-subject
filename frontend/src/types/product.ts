@@ -165,6 +165,19 @@ export interface VideoDetail {
   productName: string;
 }
 
+/** Video với thông tin sản phẩm - dùng cho User Video Feed */
+export interface VideoWithProduct {
+  videoId: string;
+  productId: string;
+  productName: string;
+  productImageUrl: string;
+  bestPrice: number;
+  bestPlatform: string;
+  videoUrl: string;
+  thumbnailUrl: string | null;
+  youtubeId: string | null;
+}
+
 /** Bản ghi sàn đầy đủ — dùng trong mockProducts */
 export interface PlatformPrice {
   platform: string;

@@ -4,6 +4,7 @@ import com.pricehawl.dto.AiRecommendationDTO;
 import com.pricehawl.dto.ProductDupeDTO;
 import com.pricehawl.dto.ProductSearchDTO;
 import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.dto.VideoWithProductDTO;
 import com.pricehawl.entity.ProductListing;
 import com.pricehawl.repository.AiChatRepository;
 import com.pricehawl.repository.ProductListingRepository;
@@ -141,6 +142,11 @@ private String extractSpid(String url) {
     public String syncSearchIndex() {
         service.syncAll();
         return "SYNC OK";
+    }
+
+    @GetMapping("/videos/active")
+    public List<VideoWithProductDTO> getActiveVideos() {
+        return productVideoService.getActiveVideos();
     }
 
     @GetMapping("/{productId}/videos")

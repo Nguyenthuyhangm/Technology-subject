@@ -3,6 +3,7 @@ package com.pricehawl.service;
 import com.pricehawl.dto.ProductVideoDTO;
 import com.pricehawl.dto.ProductVideoDetailDTO;
 import com.pricehawl.dto.ProductVideoSummaryDTO;
+import com.pricehawl.dto.VideoWithProductDTO;
 import com.pricehawl.entity.Product;
 import com.pricehawl.entity.ProductVideo;
 import com.pricehawl.entity.ProductVideoMapping;
@@ -148,6 +149,23 @@ public class ProductVideoService {
 
     public long countVideoDetailsByProductId(UUID productId) {
         return videoRepository.countVideoDetailsByProductId(productId);
+    }
+
+    public List<VideoWithProductDTO> getActiveVideos() {
+        List<Object[]> results = videoRepository.findActiveVideosWithProduct();
+        return results.stream()
+            .map(row -> new VideoWithProductDTO(
+                (UUID) row[0],
+                (UUID) row[1],
+                (String) row[2],
+                (String) row[3],
+                row[4] != null ? ((Number) row[4]).longValue() : 0L,
+                (String) row[5],
+                (String) row[6],
+                (String) row[7],
+                (String) row[8]
+            ))
+            .collect(Collectors.toList());
     }
 
     @Transactional

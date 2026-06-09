@@ -113,4 +113,30 @@ public interface ProductVideoRepository extends JpaRepository<ProductVideo, UUID
 
     @Query(value = "SELECT COUNT(pv.id) FROM product_video pv JOIN product_video_mapping pvm ON pv.id = pvm.video_id WHERE pvm.product_id = :productId", nativeQuery = true)
     long countVideoDetailsByProductId(@Param("productId") UUID productId);
+
+    @Query(value = """
+        SELECT pv.id as videoId,
+               p.id as productId,
+               p.name as productName,
+               p.image_url as productImageUrl,
+               COALESCE(bp.min_price, 0) as bestPrice,
+               COALESCE(bp.best_platform, 'Shopee') as bestPlatform,
+               pv.video_url as videoUrl,
+               pv.thumbnail_url as thumbnailUrl,
+               pv.youtube_id as youtubeId
+        FROM product_video pv
+        JOIN product_video_mapping pvm ON pv.id = pvm.video_id
+        JOIN product p ON pvm.product_id = p.id
+        LEFT JOIN (
+            SELECT pl.product_id,
+                   MIN(pl.current_price) as min_price,
+                   MAX(pl.platform_name) as best_platform
+            FROM product_listing pl
+            WHERE pl.status <> 'hidden' AND pl.current_price IS NOT NULL
+            GROUP BY pl.product_id
+        ) bp ON bp.product_id = p.id
+        WHERE pv.youtube_id IS NOT NULL AND pv.youtube_id != ''
+        ORDER BY RANDOM()
+        """, nativeQuery = true)
+    List<Object[]> findActiveVideosWithProduct();
 }

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PlayCircle } from 'lucide-react';
 
 type Video = {
   id: string;
@@ -12,6 +14,7 @@ type ProductVideosSectionProps = {
 };
 
 export default function ProductVideosSection({ productId }: ProductVideosSectionProps) {
+  const navigate = useNavigate();
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -59,7 +62,18 @@ export default function ProductVideosSection({ productId }: ProductVideosSection
 
   return (
     <section className="mt-10">
-      <p className="text-lg font-semibold mb-4">Video về sản phẩm</p>
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-lg font-semibold">Video về sản phẩm</p>
+        {videos.length > 0 && (
+          <button
+            onClick={() => navigate(`/video-feed?startVideoId=${productId}&startVideo=${videos[0].id}`)}
+            className="inline-flex items-center gap-2 rounded-full border border-stone-200/80 dark:border-stone-700/60 bg-white/80 dark:bg-stone-800/50 px-4 py-2 text-sm transition hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <PlayCircle size={16} />
+            <span>Xem video</span>
+          </button>
+        )}
+      </div>
       <div
         className="grid gap-3"
         style={{
@@ -69,8 +83,9 @@ export default function ProductVideosSection({ productId }: ProductVideosSection
         {videos.map((video, i) => (
           <div
             key={video.id}
-            className="relative overflow-hidden rounded-xl bg-black"
+            className="relative overflow-hidden rounded-xl bg-black cursor-pointer"
             style={{ aspectRatio: '16/9' }}
+            onClick={() => navigate(`/video-feed?startVideoId=${productId}&startVideo=${video.id}`)}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >

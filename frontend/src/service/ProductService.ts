@@ -1,5 +1,5 @@
 import apiClient from '../api/apiClient';
-import type { ProductSearch, PriceComparison, PriceHistory, VideoSummary, VideoDetail } from '../types/product';
+import type { ProductSearch, PriceComparison, PriceHistory, VideoSummary, VideoDetail, VideoWithProduct } from '../types/product';
 
 export interface SearchProductsOptions {
   platforms?: string[];
@@ -64,4 +64,9 @@ export async function getVideoDetails(productId: string, page = 0, size = 20): P
 
 export async function deleteVideo(videoId: string): Promise<void> {
   await apiClient.delete(`/admin/videos/${videoId}`);
+}
+
+export async function getActiveVideos(): Promise<VideoWithProduct[]> {
+  const res = await apiClient.get('/products/videos/active');
+  return res.data;
 }
