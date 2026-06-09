@@ -8,6 +8,7 @@ import com.pricehawl.mapper.ProductDocumentMapper;
 import com.pricehawl.repository.ProductRepository;
 import com.pricehawl.repository.ProductListingRepository;
 import com.pricehawl.repository.ProductSearchRepository;
+import com.pricehawl.util.VietnameseNormalizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +18,10 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductSearchService {
@@ -35,7 +37,6 @@ public class ProductSearchService {
     // =========================
     @Transactional
     public void syncAll() {
-
         searchRepository.deleteAll();
         List<ProductDocument> docs = productRepository.findAll()
                 .stream()
@@ -43,8 +44,7 @@ public class ProductSearchService {
                 .toList();
 
         searchRepository.saveAll(docs);
-
-        System.out.println("SYNCED DOCS = " + docs.size());
+        log.info("SYNCED DOCS = {}", docs.size());
     }
 
     // =========================
@@ -60,67 +60,61 @@ public class ProductSearchService {
     )
     @Transactional
     public List<ProductSearchDTO> search(String keyword) {
-
-        // 1. Search Elasticsearch
-        System.out.println("SEARCH FROM ELASTIC");
-        List<ProductDocument> docs =
-                searchRepository.search(keyword);
+        log.info("SEARCH FROM ELASTIC | keyword={}", keyword);
+        List<ProductDocument> docs = searchRepository.search(keyword);
 
         if (docs.isEmpty()) {
-
-            System.out.println("KHONG TIM THAY DOCUMENT");
-
-            return List.of();
+            System.out.println("KHONG TIM THAY DOCUMENT - goi fallback");
+            return searchFallback(keyword);
         }
 
-        // 2. Map DTO trực tiếp từ ES document
-        List<ProductSearchDTO> result = docs.stream()
-
+        return docs.stream()
                 .map(doc -> ProductSearchDTO.builder()
-
                         .id(UUID.fromString(doc.getId()))
-
                         .name(doc.getName())
-
                         .brandName(doc.getBrandName())
-
                         .categoryName(doc.getCategoryName())
-
                         .imageUrl(doc.getImageUrl())
-
                         .bestPrice(doc.getBestPrice())
-
                         .originalPrice(doc.getOriginalPrice())
-
                         .discountPct(doc.getDiscountPct())
-
                         .bestPlatform(doc.getBestPlatform())
-
                         .score(doc.getScore())
-
                         .build())
-
                 .toList();
-
-
-        return result;
     }
+
     @CacheEvict(
             value = "product-search",
             allEntries = true
     )
     public void clearSearchCache() {
     }
+
     // =========================
     // 🛟 3. FALLBACK (nếu ES lỗi)
     // =========================
     @Transactional
     public List<ProductSearchDTO> searchFallback(String keyword) {
-
         List<Product> products = productRepository
                 .findByNameContainingIgnoreCase(keyword);
 
-        return products.stream()
+        if (!products.isEmpty()) {
+            return products.stream()
+                    .map(p -> ProductSearchDTO.builder()
+                            .id(p.getId())
+                            .name(p.getName())
+                            .categoryName(p.getCategory() != null ? p.getCategory().getName() : null)
+                            .brandName(p.getBrand() != null ? p.getBrand().getName() : null)
+                            .imageUrl(p.getImageUrl())
+                            .build())
+                    .toList();
+        }
+
+        String normalizedKeyword = VietnameseNormalizer.normalize(keyword);
+        List<Product> allProducts = productRepository.findAll();
+        return allProducts.stream()
+                .filter(p -> VietnameseNormalizer.normalize(p.getName()).contains(normalizedKeyword))
                 .map(p -> ProductSearchDTO.builder()
                         .id(p.getId())
                         .name(p.getName())
@@ -139,6 +133,10 @@ public class ProductSearchService {
         ProductDocument doc = documentMapper.toDocument(product);
         searchRepository.save(doc);
     }
+
+    // =========================
+    // ⚡ 5. PARTIAL UPDATE BEST PRICE
+    // =========================
     @Transactional
     public void updateBestPriceOnly(
             UUID productId,
@@ -169,5 +167,76 @@ public class ProductSearchService {
                 IndexCoordinates.of("products")
         );
         clearSearchCache();
+    }
+
+    // =========================
+    // 🔄 6. INDEX BY ID
+    // =========================
+    @Transactional
+    public void indexProductById(UUID productId) {
+        List<Product> products = productRepository.findAllByIdIn(List.of(productId));
+        if (products.isEmpty()) {
+            log.warn("indexProductById: not found | productId={}", productId);
+            return;
+        }
+        Product product = products.get(0);
+
+        // Load listings riêng để tránh lazy load
+        List<ProductListing> listings = listingRepository.findByProductId(productId);
+
+        // Build document
+        ProductDocument doc = documentMapper.toDocument(product);
+
+        // Override bestPrice bằng listings thực tế
+        if (listings != null && !listings.isEmpty()) {
+            listings.stream()
+                .filter(l -> l.getCurrentPrice() != null)
+                .min(Comparator.comparing(ProductListing::getCurrentPrice))
+                .ifPresent(best -> {
+                    doc.setBestPrice(best.getCurrentPrice());
+                    doc.setOriginalPrice(best.getOriginalPrice());
+                    doc.setBestPlatform(best.getPlatformName());
+                    doc.setInStock(best.getInStock());
+                });
+        }
+
+        searchRepository.save(doc);
+        clearSearchCache();
+        log.info("Indexed | productId={} | bestPrice={} | bestPlatform={}",
+            productId, doc.getBestPrice(), doc.getBestPlatform());
+    }
+
+    // =========================
+    // 🔍 7. FIND BY IDS
+    // =========================
+    @Transactional(readOnly = true)
+    public List<ProductSearchDTO> findByIds(List<UUID> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> documentIds = ids.stream()
+                .map(UUID::toString)
+                .toList();
+
+        Iterable<ProductDocument> docs = searchRepository.findAllById(documentIds);
+
+        List<ProductSearchDTO> result = new ArrayList<>();
+        docs.forEach(doc -> result.add(
+                ProductSearchDTO.builder()
+                        .id(UUID.fromString(doc.getId()))
+                        .name(doc.getName())
+                        .brandName(doc.getBrandName())
+                        .categoryName(doc.getCategoryName())
+                        .imageUrl(doc.getImageUrl())
+                        .bestPrice(doc.getBestPrice())
+                        .originalPrice(doc.getOriginalPrice())
+                        .discountPct(doc.getDiscountPct())
+                        .bestPlatform(doc.getBestPlatform())
+                        .score(doc.getScore())
+                        .build()
+        ));
+
+        return result;
     }
 }

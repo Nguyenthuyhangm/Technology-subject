@@ -254,4 +254,208 @@ public interface AiChatRepository extends JpaRepository<Product, UUID> {
             @Param("productId") UUID productId,
             @Param("limit") int limit
     );
+
+
+    @Query(value = """
+        WITH latest_price AS (
+            SELECT DISTINCT ON (pl.product_id)
+                pl.product_id,
+                pr.price
+            FROM product_listing pl
+            JOIN price_record pr ON pr.product_listing_id = pl.id
+            ORDER BY pl.product_id, pr.price ASC, pr.crawled_at DESC
+        )
+
+        SELECT
+            p.id AS "productId",
+            p.name AS "productName",
+            b.name AS "brandName",
+            c.name AS "categoryName",
+            p.image_url AS "imageUrl",
+            lp.price AS "lowestPrice",
+            0 AS "score",
+            'Phù hợp với tình trạng da người dùng.' AS "reason"
+
+        FROM product p
+        JOIN brand b ON p.brand_id = b.id
+        JOIN category c ON p.category_id = c.id
+        LEFT JOIN latest_price lp ON lp.product_id = p.id
+
+        WHERE
+            (
+                LOWER(COALESCE(p.skin_type, '')) LIKE LOWER(CONCAT('%', :skinType, '%'))
+                OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                OR LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                OR LOWER(b.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            )
+            AND p.image_url IS NOT NULL
+            AND p.image_url <> ''
+
+        ORDER BY
+            CASE WHEN lp.price IS NULL THEN 1 ELSE 0 END,
+            lp.price ASC NULLS LAST,
+            p.created_at DESC
+
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<AiRecommendationDTO> findProductsForSkinAdvice(
+            @Param("skinType") String skinType,
+            @Param("keyword") String keyword,
+            @Param("limit") int limit
+    );
+
+
+    @Query(value = """
+        WITH latest_price AS (
+            SELECT DISTINCT ON (pl.product_id)
+                pl.product_id,
+                pr.price
+            FROM product_listing pl
+            JOIN price_record pr ON pr.product_listing_id = pl.id
+            WHERE pl.product_id IN (:productIds)
+            ORDER BY pl.product_id, pr.price ASC, pr.crawled_at DESC
+        )
+
+        SELECT
+            p.id AS "productId",
+            p.name AS "productName",
+            b.name AS "brandName",
+            c.name AS "categoryName",
+            p.image_url AS "imageUrl",
+            lp.price AS "lowestPrice",
+            0 AS "score",
+            'Phù hợp với báo cáo tình trạng da.' AS "reason"
+
+        FROM product p
+        JOIN brand b ON p.brand_id = b.id
+        JOIN category c ON p.category_id = c.id
+        LEFT JOIN latest_price lp ON lp.product_id = p.id
+
+        WHERE p.id IN (:productIds)
+          AND p.image_url IS NOT NULL
+          AND p.image_url <> ''
+
+        ORDER BY
+            CASE WHEN lp.price IS NULL THEN 1 ELSE 0 END,
+            lp.price ASC NULLS LAST,
+            p.created_at DESC
+        """, nativeQuery = true)
+    List<AiRecommendationDTO> findProductsByIdsForSkinReport(
+            @Param("productIds") List<UUID> productIds
+    );
+
+
+    @Query(value = """
+        WITH latest_price AS (
+            SELECT DISTINCT ON (pl.product_id)
+                pl.product_id,
+                pr.price
+            FROM product_listing pl
+            JOIN price_record pr ON pr.product_listing_id = pl.id
+            ORDER BY pl.product_id, pr.price ASC, pr.crawled_at DESC
+        )
+
+        SELECT
+            p.id AS "productId",
+            p.name AS "productName",
+            b.name AS "brandName",
+            c.name AS "categoryName",
+            p.image_url AS "imageUrl",
+            lp.price AS "lowestPrice",
+
+            (
+                CASE
+                    WHEN :skinType <> ''
+                         AND LOWER(COALESCE(p.skin_type, '')) LIKE LOWER(CONCAT('%', :skinType, '%'))
+                    THEN 5 ELSE 0
+                END
+                +
+                CASE
+                    WHEN :concernKeyword <> ''
+                         AND (
+                            LOWER(p.name) LIKE LOWER(CONCAT('%', :concernKeyword, '%'))
+                            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :concernKeyword, '%'))
+                         )
+                    THEN 3 ELSE 0
+                END
+                +
+                CASE
+                    WHEN :goalKeyword <> ''
+                         AND (
+                            LOWER(p.name) LIKE LOWER(CONCAT('%', :goalKeyword, '%'))
+                            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :goalKeyword, '%'))
+                         )
+                    THEN 2 ELSE 0
+                END
+                +
+                CASE
+                    WHEN lp.price IS NOT NULL THEN 1 ELSE 0
+                END
+            ) AS "score",
+
+            CONCAT(
+                CASE
+                    WHEN :skinType <> ''
+                         AND LOWER(COALESCE(p.skin_type, '')) LIKE LOWER(CONCAT('%', :skinType, '%'))
+                    THEN 'Phù hợp loại da. '
+                    ELSE ''
+                END,
+                CASE
+                    WHEN :concernKeyword <> ''
+                         AND (
+                            LOWER(p.name) LIKE LOWER(CONCAT('%', :concernKeyword, '%'))
+                            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :concernKeyword, '%'))
+                         )
+                    THEN 'Phù hợp vấn đề da. '
+                    ELSE ''
+                END,
+                CASE
+                    WHEN :goalKeyword <> ''
+                         AND (
+                            LOWER(p.name) LIKE LOWER(CONCAT('%', :goalKeyword, '%'))
+                            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :goalKeyword, '%'))
+                         )
+                    THEN 'Phù hợp mục tiêu chăm sóc da. '
+                    ELSE ''
+                END
+            ) AS "reason"
+
+        FROM product p
+        JOIN brand b ON p.brand_id = b.id
+        JOIN category c ON p.category_id = c.id
+        LEFT JOIN latest_price lp ON lp.product_id = p.id
+
+        WHERE
+            p.image_url IS NOT NULL
+            AND p.image_url <> ''
+
+            AND LOWER(p.name) NOT LIKE '%quà tặng%'
+            AND LOWER(p.name) NOT LIKE '%qua tang%'
+            AND LOWER(p.name) NOT LIKE '%sample%'
+            AND LOWER(p.name) NOT LIKE '%mini%'
+            AND LOWER(p.name) NOT LIKE '%combo%'
+            AND LOWER(p.name) NOT LIKE '%set %'
+            AND LOWER(p.name) NOT LIKE '%bộ %'
+
+            AND (
+                LOWER(c.name) LIKE LOWER(CONCAT('%', :stepKeyword, '%'))
+                OR LOWER(p.name) LIKE LOWER(CONCAT('%', :stepKeyword, '%'))
+            )
+
+        ORDER BY
+            "score" DESC,
+            CASE WHEN lp.price IS NULL THEN 1 ELSE 0 END,
+            lp.price ASC NULLS LAST,
+            p.created_at DESC
+
+        LIMIT :limit
+        """, nativeQuery = true)
+    List<AiRecommendationDTO> findProductsForRoutineStep(
+            @Param("stepKeyword") String stepKeyword,
+            @Param("skinType") String skinType,
+            @Param("concernKeyword") String concernKeyword,
+            @Param("goalKeyword") String goalKeyword,
+            @Param("limit") int limit
+    );
+
 }

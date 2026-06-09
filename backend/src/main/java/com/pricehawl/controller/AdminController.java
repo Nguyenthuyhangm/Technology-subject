@@ -1,5 +1,8 @@
 package com.pricehawl.controller;
 
+import com.pricehawl.dto.ProductVideoDTO;
+import com.pricehawl.dto.ProductVideoDetailDTO;
+import com.pricehawl.dto.ProductVideoSummaryDTO;
 import com.pricehawl.entity.AffiliateClick;
 import com.pricehawl.entity.CrawlError;
 import com.pricehawl.entity.Product;
@@ -42,6 +45,7 @@ public class AdminController {
     private final AccessTradeService accessTradeService;
     private final MultiPlatformPriceRefreshService refreshService;
     private final com.pricehawl.repository.PaymentRepository paymentRepository;
+    private final com.pricehawl.service.ProductVideoService productVideoService;
 
     private final ExecutorService adminCrawlerPool = Executors.newSingleThreadExecutor();
     private volatile Future<?> currentCrawlerTask = null;
@@ -540,6 +544,36 @@ public ResponseEntity<Map<String, Object>> getAffiliateClicks(
             "topProducts", topProducts,
             "totalClicks", total  // Fix #1: luôn là tổng thực sự
         ));
-}
-    
+    }
+
+    // Video Management
+
+    @GetMapping("/videos/summary")
+    public ResponseEntity<List<ProductVideoSummaryDTO>> getVideoSummary(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String search) {
+        List<ProductVideoSummaryDTO> data = productVideoService.getVideoSummaryByProduct(page, size, search);
+        long total = productVideoService.countVideoSummaryByProduct(search);
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(total))
+                .body(data);
+    }
+
+    @GetMapping("/videos/{productId}")
+    public ResponseEntity<List<ProductVideoDetailDTO>> getVideoDetails(
+            @PathVariable UUID productId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(productVideoService.countVideoDetailsByProductId(productId)))
+                .body(productVideoService.getVideoDetailsByProductId(productId, page, size));
+    }
+
+    @DeleteMapping("/videos/{videoId}")
+    public ResponseEntity<Void> deleteVideo(@PathVariable UUID videoId) {
+        productVideoService.deleteVideo(videoId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

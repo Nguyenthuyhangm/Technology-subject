@@ -1,0 +1,17 @@
+
+{
+"scenario": "TrendingDeal",
+"summary": {
+"totalRequests": 7364,
+"failedRequests": "0.58",
+"peakUsers": 300,
+"thresholds": "PASS"
+},
+"performance": {
+"avg": "532.91",
+"p90": "884.62",
+"p95": "1098.47",
+"max": "2194.36"
+}
+}
+

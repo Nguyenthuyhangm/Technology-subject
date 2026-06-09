@@ -1,0 +1,15 @@
+{
+  "scenario": "Search",
+  "summary": {
+    "totalRequests": 122050,
+    "failedRequests": "0.00",
+    "peakUsers": 2000,
+    "thresholds": "PASS"
+  },
+  "performance": {
+    "avg": "222.69",
+    "p90": "657.16",
+    "p95": "810.36",
+    "max": "1295.27"
+  }
+}

@@ -1,0 +1,16 @@
+{
+"scenario": "PriceAlert",
+"summary": {
+"totalRequests": 4876,
+"failedRequests": "0.94",
+"peakUsers": 200,
+"thresholds": "PASS"
+},
+"performance": {
+"avg": "618.74",
+"p90": "982.41",
+"p95": "1246.80",
+"max": "2317.55"
+}
+}
+
