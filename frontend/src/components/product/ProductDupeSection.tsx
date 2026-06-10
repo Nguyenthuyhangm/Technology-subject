@@ -90,7 +90,7 @@ export default function ProductDupeSection({ productId }: Props) {
                                         {displayName}
                                     </h3>
                                     <p className="mt-3 text-[1.1rem] font-semibold tracking-tight text-stone-900 dark:text-stone-100">
-                                        {formatPrice(product.lowestPrice)}
+                                        {formatPrice(product.lowestPrice ?? null)}
                                     </p>
                                 </div>
                             </article>

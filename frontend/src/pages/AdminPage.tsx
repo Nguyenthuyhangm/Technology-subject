@@ -17,7 +17,7 @@ export default function AdminPage() {
     const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<
-        'overview' | 'users' | 'products' | 'crawler' | 'videos' | 'affiliate' | 'payments'
+        'overview' | 'users' | 'products' | 'crawler' | 'videos' | 'affiliate' | 'payments'| 'chat'
     >('overview');
     const [pendingCount, setPendingCount] = useState(0);
 

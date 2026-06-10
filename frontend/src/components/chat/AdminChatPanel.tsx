@@ -219,7 +219,8 @@ export default function AdminChatPanel() {
             <div className="mx-3 mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-400">
               <p className="font-semibold mb-1">Không thể tải danh sách</p>
               <p>{convError}</p>
-              <button onClick={loadConversations} className="mt-2 underline hover:no-underline">Thử lại</button>
+              <button onClick={() => loadConversations()} className="mt-2 underline hover:no-underline">Thử lại</button>
+              
             </div>
           )}
           {!loadingConvs && !convError && conversations.length === 0 && (
