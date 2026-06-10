@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
     username: "postgres.astkanfsacxriwprspqr"
-    password: "PriceHawl123@"
+    password: ""
     driver-class-name: org.postgresql.Driver
 
     hikari:
@@ -90,7 +90,7 @@ accesstrade:
 supabase:
   url: "${SUPABASE_URL:https://astkanfsacxriwprspqr.supabase.co}"
   api:
-    key: "${SUPABASE_API_KEY:sb_publishable_eT1klaZ7funqt0MuifuEWA_ea7Zixc9}"
+    key: "${SUPABASE_API_KEY}"
 
 chat:
   admin-emails: lethituphuong151020055@gmail.com,trangdinhhuyen269@gmail.com,23020661@vnu.edu.vn,moimoicutenhut@gmail.com,dminhanh2810@gmail.com
